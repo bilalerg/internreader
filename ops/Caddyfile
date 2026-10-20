@@ -1,0 +1,47 @@
+# InternReader ön kapısı: HTTPS (Caddy sertifikayı kendisi alır ve yeniler), statik site, API ve günlük veri.
+# SITE_ALAN_ADI .env'de tanımlanır (ör. internreader.dev). Tanımlı değilse yerelde localhost'ta çalışır.
+
+{$SITE_ALAN_ADI:localhost} {
+	encode zstd gzip
+
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Permissions-Policy "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+		# Dış kaynaktan script/stil/font yüklenmez; satır içi script Astro adalarının yükleyicisi için gerekli
+		Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+		-Server
+	}
+
+	# Abonelik API'si. İstek gövdesi küçük tutulur (form birkaç yüz bayttır).
+	handle /api/* {
+		request_body {
+			max_size 16KB
+		}
+		reverse_proxy api:8000
+	}
+
+	# Her sabah üretilen herkese açık veri: YALNIZCA bu iki dosya. cikti/ klasöründeki diğer dosyalar
+	# (WhatsApp metinleri, geliştirme e-postaları) dışarı açılmaz.
+	@veri path /veri/ilanlar.json /veri/istatistik.json
+	handle @veri {
+		uri strip_prefix /veri
+		root * /cikti
+		header Cache-Control "public, max-age=300"
+		file_server
+	}
+
+	handle {
+		root * /srv
+		# Dosya adında içerik özeti olan derleme çıktıları hiç değişmez: tarayıcı bir yıl saklayabilir
+		header /_astro/* Cache-Control "public, max-age=31536000, immutable"
+		file_server
+	}
+
+	handle_errors {
+		root * /srv
+		rewrite * /404.html
+		file_server
+	}
+}

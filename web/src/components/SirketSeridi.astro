@@ -1,0 +1,32 @@
+---
+// Her sabah okunan şirketlerden bir şerit: iki satır zıt yönlerde akar, fare üstündeyken durur.
+// Kesintisiz akış için her satır iki kez yazılır; ekran okuyucular için liste ayrıca bir kez düz metin olarak verilir.
+import { sayi } from "../veri/etiketler";
+
+interface Props {
+  firmalar: string[];
+  taranan: number;
+}
+const { firmalar, taranan } = Astro.props;
+const yarim = Math.ceil(firmalar.length / 2);
+const satirlar = [firmalar.slice(0, yarim), firmalar.slice(yarim)];
+---
+
+<section class="overflow-hidden border-y border-cizgi py-9" aria-labelledby="serit-baslik">
+  <p id="serit-baslik" class="etiket mx-auto max-w-[1200px] px-5 md:px-8">
+    Her sabah okunan {sayi(taranan)} şirketten bazıları
+  </p>
+  <p class="sr-only">{firmalar.join(", ")}</p>
+  <div class="serit mt-6 space-y-2" aria-hidden="true">
+    {satirlar.map((satir, i) => (
+      <div class:list={["serit-ic", { ters: i === 1 }]}>
+        {[...satir, ...satir].map((ad) => (
+          <span class="baslik flex items-center whitespace-nowrap pl-8 text-[clamp(1.35rem,2.6vw,2.1rem)] font-[460] italic text-murekkep-2 transition-colors hover:text-murekkep">
+            {ad}
+            <span class="ml-8 inline-block h-1.5 w-1.5 rounded-full bg-fosfor" />
+          </span>
+        ))}
+      </div>
+    ))}
+  </div>
+</section>

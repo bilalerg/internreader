@@ -1,0 +1,74 @@
+---
+// E-postadaki bağlantının açtığı sayfaların ortak gövdesi (onay ve çıkış).
+// Bağlantıyı açmak tek başına işlem yapmaz; kullanıcı butona basınca POST isteği gider. Böylece e-posta güvenlik
+// tarayıcıları bağlantıları önceden açsa bile kendiliğinden onay/çıkış olmaz.
+interface Props {
+  uc: "onay" | "iptal";
+  baslik: string;
+  aciklama: string;
+  dugme: string;
+  basariBaslik: string;
+  basariMetin: string;
+}
+const { uc, baslik, aciklama, dugme, basariBaslik, basariMetin } = Astro.props;
+---
+
+<section class="mx-auto max-w-xl px-5 py-24 md:py-32">
+  <div class="kart p-8 md:p-10" data-jeton-islemi data-uc={uc}>
+    <div data-adim="hazir">
+      <p class="etiket">InternReader</p>
+      <h1 class="baslik mt-4 text-[2.4rem] font-[560]">{baslik}</h1>
+      <p class="mt-4 leading-relaxed text-murekkep-2">{aciklama}</p>
+      <button type="button" class="dugme dugme-ana mt-8" data-dugme>
+        {dugme}
+      </button>
+    </div>
+    <div data-adim="tamam" hidden role="status">
+      <h1 class="baslik text-[2.4rem] font-[560]">
+        <span class="fosfor fosfor-hemen">{basariBaslik}</span>
+      </h1>
+      <p class="mt-4 leading-relaxed text-murekkep-2">{basariMetin}</p>
+      <a href="/" class="dugme dugme-ikincil mt-8">
+        Ana sayfaya dön
+      </a>
+    </div>
+    <div data-adim="hata" hidden role="alert">
+      <h1 class="baslik text-[2.4rem] font-[560]">Bir sorun var.</h1>
+      <p class="mt-4 leading-relaxed text-murekkep-2" data-hata-mesaji></p>
+      <a href="/#bulten" class="dugme dugme-ikincil mt-8">
+        Yeniden kaydol
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  const kutu = document.querySelector<HTMLElement>("[data-jeton-islemi]")!;
+  const goster = (adim: string) =>
+    kutu.querySelectorAll<HTMLElement>("[data-adim]").forEach((el) => (el.hidden = el.dataset.adim !== adim));
+  const hata = (mesaj: string) => {
+    kutu.querySelector("[data-hata-mesaji]")!.textContent = mesaj;
+    goster("hata");
+  };
+
+  const jeton = new URLSearchParams(location.search).get("jeton");
+  if (!jeton) hata("Bağlantı eksik görünüyor. E-postadaki bağlantının tamamını kopyaladığından emin ol.");
+
+  const dugme = kutu.querySelector<HTMLButtonElement>("[data-dugme]")!;
+  dugme.addEventListener("click", async () => {
+    dugme.disabled = true;
+    dugme.textContent = "Bekle…";
+    try {
+      const cevap = await fetch(`/api/abone/${kutu.dataset.uc}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ jeton }),
+      });
+      if (cevap.ok) return goster("tamam");
+      const govde = await cevap.json().catch(() => ({}));
+      hata(govde.mesaj ?? "Bağlantı geçersiz ya da süresi dolmuş.");
+    } catch {
+      hata("Sunucuya ulaşılamadı. Biraz sonra tekrar dene.");
+    }
+  });
+</script>

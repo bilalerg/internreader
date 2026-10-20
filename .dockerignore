@@ -1,0 +1,18 @@
+# İmaja yalnızca çalışması gereken dosyalar girer; gizli bilgiler ve yerel veri asla girmez.
+.git
+.github
+.venv
+.env
+.pytest_cache
+.ruff_cache
+**/__pycache__
+cikti/
+veri/*.db*
+veri/ham_ilanlar.json
+veri/sayfa_onbellek.json
+tests/
+*.md
+web/node_modules/
+web/dist/
+web/.astro/
+.claude/

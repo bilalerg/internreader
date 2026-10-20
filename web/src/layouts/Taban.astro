@@ -1,0 +1,136 @@
+---
+import "@fontsource-variable/fraunces/opsz.css"; // ağırlık + optik boyut eksenleri (full sürümden ~100 KB hafif)
+import "@fontsource-variable/ibm-plex-sans";
+import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/ibm-plex-mono/500.css";
+import "../styles/global.css";
+import Logo from "../components/Logo.astro";
+import { SITE } from "../ayarlar";
+
+interface Props {
+  baslik?: string;
+  aciklama?: string;
+  dizine_ekleme?: boolean; // onay/iptal gibi kişisel sayfalar arama motorlarına girmez
+}
+const { baslik, aciklama = SITE.aciklama, dizine_ekleme = true } = Astro.props;
+const tamBaslik = baslik ? `${baslik} · ${SITE.ad}` : `${SITE.ad} — Türkiye'deki yazılım ve yapay zekâ stajları`;
+const kanonik = new URL(Astro.url.pathname, Astro.site);
+const anaSayfa = Astro.url.pathname === "/";
+const menu = [
+  { ad: "Nasıl çalışır", adres: "/#nasil" },
+  { ad: "Bülteni dene", adres: "/#bulten" },
+  { ad: "SSS", adres: "/#sss" },
+];
+---
+
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <!-- JS açıksa "js" sınıfı: belirme animasyonları yalnızca o zaman gizli başlar (JS kapalıysa içerik hep görünür) -->
+    <script is:inline>
+      document.documentElement.classList.add("js");
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{tamBaslik}</title>
+    <meta name="description" content={aciklama} />
+    <link rel="canonical" href={kanonik} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#f3efe5" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#111214" media="(prefers-color-scheme: dark)" />
+    {!dizine_ekleme && <meta name="robots" content="noindex" />}
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="tr_TR" />
+    <meta property="og:site_name" content={SITE.ad} />
+    <meta property="og:title" content={tamBaslik} />
+    <meta property="og:description" content={aciklama} />
+    <meta property="og:url" content={kanonik} />
+    <meta name="twitter:card" content="summary" />
+  </head>
+  <body class="gren">
+    <a
+      href="#icerik"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[70] focus:rounded-full focus:bg-murekkep focus:px-4 focus:py-2 focus:text-kagit"
+    >
+      İçeriğe geç
+    </a>
+
+    <header class="ust-menu sticky top-0 z-50 border-b border-cizgi/80 bg-kagit/92 backdrop-blur-[2px]">
+      <div class="mx-auto flex h-16 max-w-[1200px] items-center justify-between gap-6 px-5 md:px-8">
+        <a href="/" class="flex items-center gap-2.5" aria-label="InternReader ana sayfa">
+          <Logo />
+          <span class="baslik text-[1.35rem] font-[620] tracking-[-0.02em]">InternReader</span>
+        </a>
+        <nav aria-label="Ana menü" class="hidden items-center gap-7 text-[0.95rem] text-murekkep-2 md:flex">
+          {menu.map((m) => (
+            <a class="transition-colors hover:text-murekkep" href={anaSayfa ? m.adres.slice(1) : m.adres}>
+              {m.ad}
+            </a>
+          ))}
+        </nav>
+        <a href={anaSayfa ? "#bulten" : "/#bulten"} class="dugme dugme-ana miknatis !py-2.5 !px-4 text-[0.92rem]">
+          Ücretsiz abone ol
+        </a>
+      </div>
+    </header>
+
+    <main id="icerik">
+      <slot />
+    </main>
+
+    <footer class="mt-24 border-t border-cizgi">
+      <div class="mx-auto grid max-w-[1200px] gap-10 px-5 py-14 md:grid-cols-[1.4fr_1fr_1fr] md:px-8">
+        <div class="max-w-sm">
+          <a href="/" class="flex items-center gap-2.5">
+            <Logo boyut={24} />
+            <span class="baslik text-xl font-[620]">InternReader</span>
+          </a>
+          <p class="mt-4 text-[0.95rem] leading-relaxed text-murekkep-2">
+            Türkiye'deki yazılım, yapay zekâ ve veri stajları; şirketlerin kendi sayfalarından, her sabah tek e-postada.
+          </p>
+        </div>
+        <div>
+          <p class="etiket">Proje</p>
+          <ul class="mt-4 space-y-2.5 text-[0.95rem]">
+            <li>
+              <a class="hover:underline" href="/#nasil">
+                Nasıl çalışır
+              </a>
+            </li>
+            <li>
+              <a class="hover:underline" href={SITE.githubAdresi} rel="noopener">
+                Açık kaynak kod (GitHub)
+              </a>
+            </li>
+            {SITE.whatsappKanali && (
+              <li>
+                <a class="hover:underline" href={SITE.whatsappKanali} rel="noopener">
+                  WhatsApp kanalı
+                </a>
+              </li>
+            )}
+          </ul>
+        </div>
+        <div>
+          <p class="etiket">Gizlilik</p>
+          <ul class="mt-4 space-y-2.5 text-[0.95rem]">
+            <li>
+              <a class="hover:underline" href="/kvkk">
+                KVKK aydınlatma metni
+              </a>
+            </li>
+            <li class="text-murekkep-2">Çerez ve takip kodu kullanılmaz.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mx-auto flex max-w-[1200px] flex-wrap justify-between gap-3 px-5 pb-10 text-[0.82rem] text-murekkep-3 md:px-8">
+        <span>© {new Date().getFullYear()} InternReader</span>
+        <span>LinkedIn, Kariyer.net gibi platformlardan veri çekmez · robots.txt kurallarına uyar</span>
+      </div>
+    </footer>
+
+    <script>
+      import "../scripts/etkilesim";
+    </script>
+  </body>
+</html>

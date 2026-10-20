@@ -1,0 +1,29 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+
+# Gizli bilgiler (API anahtarı burada)
+.env
+
+# Çalışma verisi: her çalıştırmada yeniden üretilir
+veri/internreader.db*
+veri/ham_ilanlar.json
+veri/sayfa_onbellek.json
+cikti/
+
+# Sunucu yedekleri (ops/crontab)
+yedek/
+
+# Yerel araç ayarları
+.claude/
+
+# Site (web/): indirilen paketler ve derleme çıktısı
+node_modules/
+web/dist/
+web/.astro/
+
+# Değerlendirme seti gerçek ilan metinleri içeriyor (ilan metni yayınlanmaz kuralı): yalnızca yerelde
+veri/degerlendirme/*.jsonl

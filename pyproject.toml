@@ -1,0 +1,33 @@
+[project]
+name = "internreader"
+version = "0.2.0"
+description = "Türkiye'deki yazılım ve yapay zekâ staj ilanlarını şirketlerin kendi sitelerinden toplayıp yapay zekâyla ayıklar."
+requires-python = ">=3.12"
+dependencies = [
+    "anthropic==1.15.0",
+    "pydantic==2.14.1",
+    "requests==2.32.3",
+    "sqlalchemy==2.1.5",
+    "fastapi==0.146.0",
+    "uvicorn[standard]==0.54.0",
+    "email-validator==2.3.0",
+    "alembic==1.20.0",
+]
+
+[project.optional-dependencies]
+postgres = ["psycopg[binary]>=3.2"]
+gelistirme = ["pytest==9.1.1", "ruff==0.17.1", "httpx==0.28.1"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["E501"]  # satır uzunluğunu biçimlendirici (ruff format) yönetir; uzun metinler bölünmez
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff.format]
+line-ending = "lf"  # sunucu Linux; Windows'ta düzenlense de depoda LF kalır

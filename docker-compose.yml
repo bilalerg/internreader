@@ -1,0 +1,102 @@
+# Sunucu düzeni
+#   Sürekli çalışanlar:  db (Postgres) · api (abonelik API'si) · caddy (HTTPS + site + /api yönlendirme)
+#   Zamanlanmış işler:   internreader (her sabah tarama + yayın) · site-derle (ardından siteyi güncel veriyle derler)
+#
+#   ilk kurulum:  mkdir -p cikti && sudo chown 10001:10001 cikti   (konteyner root olmayan kullanıcıyla yazar)
+#                 docker compose up -d db api caddy
+#                 docker compose run --rm internreader ice-aktar veri/firmalar.csv
+#                 docker compose run --rm internreader calistir && docker compose run --rm site-derle
+#   her sabah:    ops/crontab
+# Gizli değerler (.env): ANTHROPIC_API_KEY, POSTGRES_PASSWORD, INTERNREADER_GIZLI_ANAHTAR, SITE_ALAN_ADI, SMTP_*
+# Dışarıya yalnızca Caddy açılır (80/443); veritabanı ve API yalnızca iç ağda.
+
+# API ile her sabahki iş aynı ortamı paylaşır: özellikle gizli anahtar ikisinde de aynı olmalı (iş, bültendeki
+# "abonelikten çık" bağlantısını imzalar; API doğrular)
+x-ortam: &ortam
+  DATABASE_URL: postgresql+psycopg://internreader:${POSTGRES_PASSWORD}@db:5432/internreader
+  INTERNREADER_SITE_ADRESI: https://${SITE_ALAN_ADI:-localhost}
+  INTERNREADER_GIZLI_ANAHTAR: ${INTERNREADER_GIZLI_ANAHTAR:?.env içinde INTERNREADER_GIZLI_ANAHTAR tanımlı olmalı}
+
+x-uygulama: &uygulama
+  build: .
+  image: internreader:latest
+  env_file: .env
+  environment: *ortam
+  depends_on:
+    db:
+      condition: service_healthy
+  volumes:
+    - ./cikti:/uygulama/cikti
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: internreader
+      POSTGRES_USER: internreader
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?.env içinde POSTGRES_PASSWORD tanımlı olmalı}
+    volumes:
+      - pgveri:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U internreader -d internreader"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    <<: *uygulama
+    restart: unless-stopped
+    command: ["api", "--host", "0.0.0.0", "--port", "8000"]
+    environment:
+      <<: *ortam
+      # İstemci IP'si (hız sınırı için) Caddy'nin X-Forwarded-For başlığından okunur; API'ye yalnızca Caddy erişir
+      FORWARDED_ALLOW_IPS: "*"
+    healthcheck: # /api/saglik veritabanını da yoklar; imajda curl yok, Python yeterli
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/saglik', timeout=3)"]
+      interval: 30s
+      timeout: 5s
+      start_period: 20s
+      retries: 3
+
+  caddy:
+    image: caddy:2.10-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      SITE_ALAN_ADI: ${SITE_ALAN_ADI:-localhost}
+    volumes:
+      - ./ops/Caddyfile:/etc/caddy/Caddyfile:ro
+      - site:/srv:ro
+      - ./cikti:/cikti:ro
+      - caddy_veri:/data
+      - caddy_ayar:/config
+    depends_on:
+      api:
+        condition: service_healthy
+
+  internreader:
+    <<: *uygulama
+    profiles: ["is"] # "up" ile kendiliğinden başlamaz; yalnızca "run" ile çalıştırılır
+
+  site-derle:
+    build:
+      context: .
+      dockerfile: web/Dockerfile
+    image: internreader-site:latest
+    environment:
+      INTERNREADER_CIKTI: /cikti
+      INTERNREADER_SITE_ADRESI: https://${SITE_ALAN_ADI:-localhost}
+    volumes:
+      - ./cikti:/cikti:ro
+      - site:/web/dist
+    profiles: ["is"]
+
+volumes:
+  pgveri:
+  site:
+  caddy_veri:
+  caddy_ayar:

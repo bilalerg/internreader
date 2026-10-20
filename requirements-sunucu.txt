@@ -1,0 +1,3 @@
+# Sunucu (Docker) bağımlılıkları: temel paketler + Postgres sürücüsü.
+-r requirements.txt
+psycopg[binary]==3.2.3

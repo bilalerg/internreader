@@ -1,0 +1,15 @@
+---
+// Logo işareti: üç satırlı bir sayfa, ortadaki satırın altı çizili — "okur ve doğru olanı işaretler".
+interface Props {
+  boyut?: number;
+}
+const { boyut = 28 } = Astro.props;
+---
+
+<svg width={boyut} height={boyut} viewBox="0 0 32 32" fill="none" aria-hidden="true">
+  <rect x="5" y="3" width="22" height="26" rx="4" fill="var(--yuzey)" stroke="var(--murekkep)" stroke-width="2"></rect>
+  <path d="M10 10h12" stroke="var(--murekkep-3)" stroke-width="2" stroke-linecap="round"></path>
+  <rect x="8.5" y="14" width="15" height="5" rx="1.5" fill="var(--fosfor)"></rect>
+  <path d="M10 16.5h12" stroke="var(--fosfor-yazi)" stroke-width="2" stroke-linecap="round"></path>
+  <path d="M10 23h8" stroke="var(--murekkep-3)" stroke-width="2" stroke-linecap="round"></path>
+</svg>

@@ -1,0 +1,21 @@
+---
+// Gazete tarzı bölüm başlığı: kalın üst çizgi, bölüm numarası, küçük etiket ve büyük başlık.
+interface Props {
+  no: string;
+  etiket: string;
+  id?: string;
+}
+const { no, etiket, id } = Astro.props;
+---
+
+<header id={id} class="scroll-mt-24" data-belir>
+  <div class="flex items-center justify-between border-t-2 border-murekkep pt-4">
+    <span class="etiket !text-murekkep">
+      {no} — {etiket}
+    </span>
+    <span class="etiket hidden sm:inline">InternReader</span>
+  </div>
+  <h2 class="baslik mt-8 max-w-[22ch] text-[clamp(2.1rem,4.6vw,3.6rem)] font-[540]">
+    <slot />
+  </h2>
+</header>

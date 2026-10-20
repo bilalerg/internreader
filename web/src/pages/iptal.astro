@@ -1,0 +1,15 @@
+---
+import Taban from "../layouts/Taban.astro";
+import JetonIslemi from "../components/JetonIslemi.astro";
+---
+
+<Taban baslik="Abonelikten çık" dizine_ekleme={false}>
+  <JetonIslemi
+    uc="iptal"
+    baslik="Abonelikten çık"
+    aciklama="Çıktığında e-posta adresin ve tercihlerin veritabanından tamamen silinir. İstediğin zaman yeniden kaydolabilirsin."
+    dugme="Abonelikten çık"
+    basariBaslik="Çıktın."
+    basariMetin="E-posta adresin silindi; sana bir daha bülten gelmeyecek. Staj aramanda başarılar!"
+  />
+</Taban>

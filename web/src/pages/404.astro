@@ -1,0 +1,16 @@
+---
+import Taban from "../layouts/Taban.astro";
+---
+
+<Taban baslik="Sayfa bulunamadı" dizine_ekleme={false}>
+  <section class="mx-auto max-w-xl px-5 py-28 text-center md:py-36">
+    <p class="etiket">404</p>
+    <h1 class="baslik mt-5 text-[clamp(2.4rem,6vw,3.6rem)] font-[560]">
+      Bu sayfa <span class="fosfor fosfor-hemen italic">ilanda yok.</span>
+    </h1>
+    <p class="mt-5 leading-relaxed text-murekkep-2">Aradığın sayfa taşınmış ya da hiç olmamış olabilir.</p>
+    <a href="/" class="dugme dugme-ana mt-9">
+      Ana sayfaya dön
+    </a>
+  </section>
+</Taban>

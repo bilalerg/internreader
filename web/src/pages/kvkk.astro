@@ -1,0 +1,112 @@
+---
+import Taban from "../layouts/Taban.astro";
+import { SITE } from "../ayarlar";
+
+const eksik = '<span class="text-kirmizi">(yayından önce eklenecek)</span>';
+const sorumlu = SITE.veriSorumlusu || eksik;
+const iletisim = SITE.iletisimEpostasi
+  ? `<a class="underline" href="mailto:${SITE.iletisimEpostasi}">${SITE.iletisimEpostasi}</a>`
+  : eksik;
+---
+
+<Taban
+  baslik="KVKK aydınlatma metni"
+  aciklama="InternReader bülteni için kişisel verilerin işlenmesine ilişkin aydınlatma metni."
+>
+  <article class="mx-auto max-w-3xl px-5 py-16 md:px-8 md:py-24">
+    <p class="etiket">Sürüm {SITE.kvkkSurumu}</p>
+    <h1 class="baslik mt-4 text-[clamp(2.2rem,5vw,3.4rem)] font-[560]">
+      Kişisel verilerin işlenmesi hakkında aydınlatma metni
+    </h1>
+    <p class="mt-6 text-[1.08rem] leading-[1.75] text-murekkep-2">
+      Bu metin, 6698 sayılı Kişisel Verilerin Korunması Kanunu'nun (KVKK) 10. maddesi uyarınca, InternReader staj ilanı
+      bültenine abone olduğunda kişisel verilerinin nasıl işlendiğini açıklar. Kısaca:{" "}
+      <strong class="text-murekkep">yalnızca e-posta adresini ve bülten tercihlerini</strong> saklarız, bunları yalnızca
+      bülteni göndermek için kullanırız ve abonelikten çıktığın an sileriz.
+    </p>
+
+    <div class="kvkk mt-12 space-y-10 leading-[1.75] text-murekkep-2">
+      <section>
+        <h2>1. Veri sorumlusu</h2>
+        <p>
+          Veri sorumlusu: <Fragment set:html={sorumlu} />. İletişim: <Fragment set:html={iletisim} />.
+        </p>
+      </section>
+
+      <section>
+        <h2>2. Hangi verileri işliyoruz?</h2>
+        <ul>
+          <li>E-posta adresin,</li>
+          <li>bülten tercihlerin (şehir, alan, seviye, gönderim sıklığı),</li>
+          <li>aydınlatma metnini onayladığın tarih ve metnin sürümü, aboneliği onayladığın tarih,</li>
+          <li>kayıt kaynağı (ör. siteden ya da WhatsApp kanalındaki bağlantıdan gelindiği).</li>
+        </ul>
+        <p>
+          Adın, telefonun ya da IP adresin kaydedilmez. Kötüye kullanımı önlemek için aynı ağdan gelen istek sayısı
+          birkaç dakika boyunca yalnızca sunucu belleğinde tutulur ve kaydedilmez. Sitede çerez ve takip kodu
+          kullanılmaz.
+        </p>
+      </section>
+
+      <section>
+        <h2>3. Hangi amaçla ve hangi hukuki sebeple?</h2>
+        <p>
+          Verilerin, seçtiğin tercihlere uygun staj ve iş ilanlarını e-postayla göndermek, aboneliği doğrulamak ve tek
+          tıkla çıkışı sağlamak amacıyla işlenir. Hukuki sebep, kayıt formunda verdiğin{" "}
+          <strong class="text-murekkep">açık rızadır</strong> (KVKK m.5/1). Rızanı, her e-postanın altındaki bağlantıyla
+          istediğin an geri alabilirsin.
+        </p>
+      </section>
+
+      <section>
+        <h2>4. Kimlere aktarılır?</h2>
+        <p>
+          Verilerin satılmaz, reklam amacıyla kimseyle paylaşılmaz. E-postaların gönderilmesi için bir e-posta gönderim
+          hizmeti ve sunucu barındırma hizmeti kullanılır; bu hizmet sağlayıcılar verine yalnızca hizmeti vermek için
+          erişir. Sağlayıcı yurt dışında bulunuyorsa aktarım KVKK'nın 9. maddesindeki usullere uygun yapılır.
+        </p>
+      </section>
+
+      <section>
+        <h2>5. Ne kadar süre saklanır?</h2>
+        <ul>
+          <li>
+            Abone olduğun sürece saklanır; abonelikten çıktığında e-posta adresin ve tercihlerin veritabanından silinir.
+          </li>
+          <li>Kaydolup 72 saat içinde onaylamadığın kayıtlar kendiliğinden silinir.</li>
+          <li>Teknik yedeklerde en fazla 14 gün kalabilir, sonra yedeklerle birlikte silinir.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>6. Hakların</h2>
+        <p>
+          KVKK'nın 11. maddesi uyarınca; verilerinin işlenip işlenmediğini öğrenme, işlenmişse bilgi isteme, amacını
+          öğrenme, aktarıldığı kişileri bilme, eksik ya da yanlışsa düzeltilmesini, silinmesini isteme, itiraz etme ve
+          zarara uğradıysan giderilmesini talep etme haklarına sahipsin. Başvurunu yukarıdaki iletişim adresine
+          iletebilirsin; en geç 30 gün içinde ücretsiz yanıtlanır.
+        </p>
+      </section>
+    </div>
+  </article>
+</Taban>
+
+<style>
+  .kvkk h2 {
+    font-family: var(--font-serif);
+    font-variation-settings: "opsz" 72;
+    font-size: 1.55rem;
+    font-weight: 540;
+    color: var(--murekkep);
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.015em;
+  }
+  .kvkk ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+  .kvkk li + li {
+    margin-top: 0.35rem;
+  }
+</style>

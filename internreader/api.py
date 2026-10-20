@@ -1,0 +1,202 @@
+"""HTTP API: sitenin abonelik formu buraya istek atar.
+
+Uç noktalar (site ile aynı alan adında, /api altında; ters vekil (Caddy) yönlendirir, bu yüzden CORS gerekmez):
+  GET  /api/saglik        izleme için {"durum": "ok"}; veritabanı yoksa 503
+  POST /api/abone         kayıt isteği → onay e-postası (202)
+  POST /api/abone/onay    {"jeton": ...} e-postadaki bağlantının açtığı sayfa çağırır
+  POST /api/abone/iptal   {"jeton": ...} tek tıkla çıkış; kayıt silinir
+
+Güvenlik:
+- IP başına hız sınırı (bellekte; tek sunucu için yeterli).
+- Bal küpü (honeypot): insanların görmediği "web_sitesi" alanını dolduran istek sessizce yok sayılır.
+- Adres sızdırmama: adres kayıtlı olsa da olmasa da aynı cevap döner.
+- Onay ve çıkış GET değil POST: e-posta güvenlik tarayıcıları bağlantıları önceden açınca kendiliğinden onay olmaz.
+Çalıştırma: python -m internreader api   (sunucuda: uvicorn internreader.api:uygulama --factory)
+"""
+
+import logging
+import threading
+import time
+from collections import defaultdict, deque
+from typing import Literal
+
+from fastapi import FastAPI, Request
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
+from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator
+from sqlalchemy import text
+from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.orm import sessionmaker
+
+from internreader import abonelik
+from internreader.ayar import GELISTIRME_ANAHTARI, Ayarlar, ayarlari_oku
+from internreader.db import oturum_fabrikasi
+from internreader.eposta import EpostaGonderici, dogrulama_epostasi, gonderici_olustur
+from internreader.isleme.sehir import SEHIRLER
+
+kayit = logging.getLogger(__name__)
+
+SEHIR_SECENEKLERI = frozenset(SEHIRLER) | {"uzaktan"}
+ALANLAR = ("yazilim", "yapay_zeka", "veri")
+SEVIYELER = ("staj", "uzun_donem_staj", "yari_zamanli", "junior", "yeni_mezun")
+KAYIT_CEVABI = {"mesaj": "Onay bağlantısını e-posta adresine gönderdik. Gelen kutunu (ve spam klasörünü) kontrol et."}
+
+
+class AboneIstegi(BaseModel):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+    eposta: EmailStr = Field(max_length=254)
+    sehirler: list[str] = Field(default_factory=list, max_length=20)  # boş = şehir fark etmez
+    alanlar: list[Literal["yazilim", "yapay_zeka", "veri"]] = Field(default_factory=lambda: list(ALANLAR), min_length=1)
+    seviyeler: list[Literal["staj", "uzun_donem_staj", "yari_zamanli", "junior", "yeni_mezun"]] = Field(
+        default_factory=lambda: list(SEVIYELER), min_length=1
+    )
+    siklik: Literal["gunluk", "haftalik"] = "gunluk"
+    kvkk_onay: bool
+    kaynak: str = Field("site", max_length=40, pattern=r"^[a-z0-9_-]*$")
+    web_sitesi: str = Field("", max_length=300)  # bal küpü
+
+    @field_validator("sehirler")
+    @classmethod
+    def _sehirler_gecerli(cls, deger: list[str]) -> list[str]:
+        if bilinmeyen := set(deger) - SEHIR_SECENEKLERI:
+            raise ValueError(f"bilinmeyen şehir: {', '.join(sorted(bilinmeyen))}")
+        return sorted(set(deger))
+
+    @field_validator("kvkk_onay")
+    @classmethod
+    def _kvkk_onayli(cls, deger: bool) -> bool:
+        if not deger:
+            raise ValueError("aydınlatma metnini onaylaman gerekiyor")
+        return deger
+
+
+class JetonIstegi(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    jeton: str = Field(min_length=10, max_length=200)
+
+
+class HizSiniri:
+    """Kayan pencere: bir anahtar (IP) `pencere_sn` saniyede en fazla `azami` istek yapabilir."""
+
+    def __init__(self, azami: int, pencere_sn: float):
+        self.azami, self.pencere = azami, pencere_sn
+        self._istekler: dict[str, deque] = defaultdict(deque)
+        self._kilit = threading.Lock()
+
+    def izin_ver(self, anahtar: str) -> bool:
+        an = time.monotonic()
+        with self._kilit:
+            kuyruk = self._istekler[anahtar]
+            while kuyruk and kuyruk[0] <= an - self.pencere:
+                kuyruk.popleft()
+            if len(kuyruk) >= self.azami:
+                return False
+            kuyruk.append(an)
+            return True
+
+
+def _hata(kod: int, hata: str, mesaj: str) -> JSONResponse:
+    return JSONResponse(status_code=kod, content={"hata": hata, "mesaj": mesaj})
+
+
+def uygulama_olustur(
+    ayar: Ayarlar,
+    oturum: sessionmaker,
+    gonderici: EpostaGonderici,
+    kayit_siniri: HizSiniri | None = None,
+    jeton_siniri: HizSiniri | None = None,
+) -> FastAPI:
+    # Herkese açık API belgesi kapalı: yalnızca kendi sitemiz kullanıyor
+    app = FastAPI(title="InternReader", docs_url=None, redoc_url=None, openapi_url=None)
+    kayit_siniri = kayit_siniri or HizSiniri(azami=5, pencere_sn=600)
+    jeton_siniri = jeton_siniri or HizSiniri(azami=30, pencere_sn=600)
+
+    def istemci(istek: Request) -> str:
+        # Ters vekil arkasında doğru IP için uvicorn --proxy-headers ile çalıştırılır
+        return istek.client.host if istek.client else "bilinmiyor"
+
+    @app.exception_handler(RequestValidationError)
+    def _dogrulama_hatasi(_: Request, hata: RequestValidationError) -> JSONResponse:
+        # Hangi alanların hatalı olduğu döner (form o alanları işaretler); iç ayrıntılar dışarı verilmez
+        alanlar = sorted({str(h["loc"][-1]) for h in hata.errors() if h.get("loc")})
+        return JSONResponse(
+            status_code=422,
+            content={"hata": "gecersiz_istek", "mesaj": "Formdaki bilgileri kontrol et.", "alanlar": alanlar},
+        )
+
+    @app.get("/api/saglik")
+    def saglik():
+        # İzleme ve Docker sağlık kontrolü: veritabanına ulaşılamıyorsa 503 (kayıt formu da çalışmaz)
+        try:
+            with oturum() as o:
+                o.execute(text("SELECT 1"))
+        except SQLAlchemyError:
+            kayit.exception("Sağlık kontrolü: veritabanına ulaşılamadı")
+            return _hata(503, "veritabani", "Veritabanına ulaşılamıyor.")
+        return {"durum": "ok"}
+
+    @app.post("/api/abone", status_code=202)
+    def abone_ol(govde: AboneIstegi, istek: Request):
+        if not kayit_siniri.izin_ver(istemci(istek)):
+            return _hata(429, "cok_fazla_istek", "Kısa sürede çok fazla deneme oldu. Birkaç dakika sonra tekrar dene.")
+        if govde.web_sitesi:  # bal küpü dolu → bot; aynı cevabı ver, hiçbir şey yapma
+            kayit.info("Bal küpü dolu bir kayıt isteği yok sayıldı")
+            return KAYIT_CEVABI
+        eposta = str(govde.eposta).lower()
+        tercihler = {"sehirler": govde.sehirler, "alanlar": govde.alanlar, "seviyeler": govde.seviyeler}
+        with oturum.begin() as o:
+            jeton = abonelik.kayit_iste(o, eposta, tercihler, govde.siklik, govde.kaynak or "site")
+        if jeton:
+            try:
+                gonderici.gonder(dogrulama_epostasi(eposta, f"{ayar.site_adresi}/onay?jeton={jeton}"))
+            except Exception:
+                kayit.exception("Onay e-postası gönderilemedi")
+                return _hata(
+                    503, "eposta_gonderilemedi", "Onay e-postası şu an gönderilemedi. Biraz sonra tekrar dene."
+                )
+        return KAYIT_CEVABI
+
+    @app.post("/api/abone/onay")
+    def onayla(govde: JetonIstegi, istek: Request):
+        if not jeton_siniri.izin_ver(istemci(istek)):
+            return _hata(429, "cok_fazla_istek", "Kısa sürede çok fazla deneme oldu.")
+        with oturum.begin() as o:
+            tamam = abonelik.onayla(o, govde.jeton)
+        if not tamam:
+            return _hata(
+                400, "gecersiz_jeton", "Bağlantı geçersiz ya da süresi dolmuş. Formdan yeniden kaydolabilirsin."
+            )
+        return {"durum": "onaylandi"}
+
+    @app.post("/api/abone/iptal")
+    def iptal(govde: JetonIstegi, istek: Request):
+        if not jeton_siniri.izin_ver(istemci(istek)):
+            return _hata(429, "cok_fazla_istek", "Kısa sürede çok fazla deneme oldu.")
+        with oturum.begin() as o:
+            tamam = abonelik.iptal_et(o, govde.jeton, ayar.gizli_anahtar)
+        if not tamam:
+            return _hata(400, "gecersiz_jeton", "Bu çıkış bağlantısı geçersiz.")
+        return {"durum": "iptal_edildi"}
+
+    @app.post("/api/abone/iptal-tek")
+    def tek_tikla_iptal(jeton: str, istek: Request):
+        """RFC 8058 tek tıkla çıkış: e-posta istemcisi (Gmail, Yahoo) List-Unsubscribe-Post başlığını görünce bu
+        adrese doğrudan POST atar; gövde "List-Unsubscribe=One-Click" olur ve okunmaz. Jeton adreste gelir."""
+        if not jeton_siniri.izin_ver(istemci(istek)):
+            return _hata(429, "cok_fazla_istek", "Kısa sürede çok fazla deneme oldu.")
+        with oturum.begin() as o:
+            tamam = abonelik.iptal_et(o, jeton[:200], ayar.gizli_anahtar)
+        if not tamam:
+            return _hata(400, "gecersiz_jeton", "Bu çıkış bağlantısı geçersiz.")
+        return {"durum": "iptal_edildi"}
+
+    return app
+
+
+def uygulama() -> FastAPI:
+    """uvicorn için fabrika: ayarları ortamdan okur."""
+    ayar = ayarlari_oku()
+    if ayar.gizli_anahtar == GELISTIRME_ANAHTARI:
+        kayit.warning("INTERNREADER_GIZLI_ANAHTAR tanımlı değil: geliştirme anahtarı kullanılıyor (sunucuda kullanma!)")
+    return uygulama_olustur(ayar, oturum_fabrikasi(ayar.veritabani_url), gonderici_olustur(ayar))
