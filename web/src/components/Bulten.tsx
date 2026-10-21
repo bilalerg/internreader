@@ -165,7 +165,10 @@ export default function Bulten({ ilanlar: gomulu, guncelleme: gomuluTarih }: Pro
           web_sitesi: balKupu,
         }),
       });
-      if (cevap.status === 202) return setDurum({ tur: "tamam", eposta });
+      if (cevap.status === 202) {
+        void import("../scripts/kutlama").then((m) => m.kutla());
+        return setDurum({ tur: "tamam", eposta });
+      }
       const govde = await cevap.json().catch(() => ({}));
       setDurum({
         tur: "hata",
@@ -347,7 +350,7 @@ export default function Bulten({ ilanlar: gomulu, guncelleme: gomuluTarih }: Pro
 
       {/* ---------------- e-posta önizlemesi ---------------- */}
       <div id="onizleme" className="scroll-mt-24 lg:sticky lg:top-24 lg:self-start">
-        <div className="kart isik overflow-hidden" onPointerMove={isikTakip}>
+        <div className="kart isik isiyan-cerceve overflow-hidden" onPointerMove={isikTakip}>
           <div className="space-y-1 border-b border-cizgi bg-kagit-koyu/60 px-5 py-4 font-mono text-[0.74rem] text-murekkep-2">
             <p>
               <span className="text-murekkep-3">Kimden </span>InternReader

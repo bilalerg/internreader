@@ -463,3 +463,96 @@
     box-shadow: 0 0 0 16px transparent;
   }
 }
+
+/* ---------------- 21.10 yenileme ---------------- */
+
+/* Tipografi: başlıklar dengeli kırılır (tek kelime alt satıra düşmez), paragraflarda yetim kelime kalmaz */
+@layer base {
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  p,
+  li {
+    text-wrap: pretty;
+  }
+}
+
+/* Işıyan çerçeve: kartın kenarında dönen ince fosfor ışığı (Magic UI'ın "border beam" fikri; kütüphanesiz,
+   açıyı @property ile tanımlayıp CSS'te canlandırarak) */
+@property --cerceve-aci {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+.isiyan-cerceve {
+  position: relative;
+}
+.isiyan-cerceve::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  padding: 1.5px;
+  border-radius: inherit;
+  background: conic-gradient(from var(--cerceve-aci), transparent 0 76%, var(--fosfor) 88%, transparent 97%);
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  animation: cerceve-don 7s linear infinite;
+  pointer-events: none;
+}
+@keyframes cerceve-don {
+  to {
+    --cerceve-aci: 360deg;
+  }
+}
+
+/* Okuma ilerlemesi: sayfa kaydıkça üstte dolan ince fosfor çizgi. JavaScript yok: animasyon zamana değil
+   sayfanın kaydırma konumuna bağlı (scroll-driven animations). Desteklemeyen tarayıcıda hiç görünmez. */
+.okuma-cubugu {
+  display: none;
+}
+@supports (animation-timeline: scroll()) {
+  .okuma-cubugu {
+    display: block;
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 70;
+    height: 3px;
+    background: var(--fosfor);
+    transform-origin: left;
+    scale: 0 1;
+    animation: okuma-doldur linear both;
+    animation-timeline: scroll(root);
+  }
+  @keyframes okuma-doldur {
+    to {
+      scale: 1 1;
+    }
+  }
+}
+
+/* SSS: <details> yükseklik animasyonuyla yumuşak açılıp kapanır (interpolate-size + ::details-content;
+   desteklemeyen tarayıcıda eskisi gibi anında açılır) */
+details {
+  interpolate-size: allow-keywords;
+}
+details::details-content {
+  block-size: 0;
+  overflow-y: clip;
+  transition:
+    block-size 0.35s ease,
+    content-visibility 0.35s allow-discrete;
+}
+details[open]::details-content {
+  block-size: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .isiyan-cerceve::after {
+    animation: none;
+    opacity: 0.6;
+  }
+}

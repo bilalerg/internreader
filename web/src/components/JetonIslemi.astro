@@ -3,6 +3,7 @@
 // Bağlantıyı açmak tek başına işlem yapmaz; kullanıcı butona basınca POST isteği gider. Böylece e-posta güvenlik
 // tarayıcıları bağlantıları önceden açsa bile kendiliğinden onay/çıkış olmaz.
 interface Props {
+  kutlama?: boolean; // başarıda kısa konfeti (yalnızca abonelik onayında)
   uc: "onay" | "iptal";
   baslik: string;
   aciklama: string;
@@ -10,11 +11,11 @@ interface Props {
   basariBaslik: string;
   basariMetin: string;
 }
-const { uc, baslik, aciklama, dugme, basariBaslik, basariMetin } = Astro.props;
+const { uc, baslik, aciklama, dugme, basariBaslik, basariMetin, kutlama = false } = Astro.props;
 ---
 
 <section class="mx-auto max-w-xl px-5 py-24 md:py-32">
-  <div class="kart p-8 md:p-10" data-jeton-islemi data-uc={uc}>
+  <div class="kart p-8 md:p-10" data-jeton-islemi data-uc={uc} data-kutlama={kutlama ? "" : undefined}>
     <div data-adim="hazir">
       <p class="etiket">InternReader</p>
       <h1 class="baslik mt-4 text-[2.4rem] font-[560]">{baslik}</h1>
@@ -64,7 +65,10 @@ const { uc, baslik, aciklama, dugme, basariBaslik, basariMetin } = Astro.props;
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ jeton }),
       });
-      if (cevap.ok) return goster("tamam");
+      if (cevap.ok) {
+        if (kutu.dataset.kutlama !== undefined) void import("../scripts/kutlama").then((m) => m.kutla());
+        return goster("tamam");
+      }
       const govde = await cevap.json().catch(() => ({}));
       hata(govde.mesaj ?? "Bağlantı geçersiz ya da süresi dolmuş.");
     } catch {

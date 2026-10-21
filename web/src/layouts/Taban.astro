@@ -4,6 +4,7 @@ import "@fontsource-variable/ibm-plex-sans";
 import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource/ibm-plex-mono/500.css";
 import "../styles/global.css";
+import "lenis/dist/lenis.css";
 import Logo from "../components/Logo.astro";
 import { SITE } from "../ayarlar";
 
@@ -48,6 +49,7 @@ const menu = [
     <meta name="twitter:card" content="summary" />
   </head>
   <body class="gren">
+    <div class="okuma-cubugu" aria-hidden="true"></div>
     <a
       href="#icerik"
       class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[70] focus:rounded-full focus:bg-murekkep focus:px-4 focus:py-2 focus:text-kagit"
@@ -131,6 +133,7 @@ const menu = [
 
     <script>
       import "../scripts/etkilesim";
+      import "../scripts/kaydirma";
     </script>
   </body>
 </html>
