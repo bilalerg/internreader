@@ -7,5 +7,9 @@
 # Her gece: veritabanı yedeği (14 gün saklanır). Sunucu dışına kopyalamak ayrıca yapılmalı.
 30 3 * * * cd /opt/internreader && mkdir -p yedek && docker compose exec -T db pg_dump -U internreader internreader | gzip > yedek/internreader_$(date +\%F).sql.gz && find yedek -name '*.sql.gz' -mtime +14 -delete
 
+# Her pazartesi: arama API'siyle listede olmayan firmaları bul (anahtar yoksa kendiliğinden atlanır),
+# ayrıca adresi olmayan 40 firmaya web adresi ara. Yeni firmaların keşfi komutun içinde yapılır; yapay zekâ kullanmaz.
+0 3 * * 1 cd /opt/internreader && docker compose run --rm internreader arama-kesif --web-bul 40 >> /var/log/internreader.log 2>&1
+
 # Ayın 1'i: firmaların ilan sistemi / kariyer sayfası keşfi (yapay zekâ kullanmaz).
 0 3 1 * * cd /opt/internreader && docker compose run --rm internreader kesif >> /var/log/internreader.log 2>&1

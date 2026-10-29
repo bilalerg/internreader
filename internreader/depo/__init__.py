@@ -40,6 +40,7 @@ from internreader.depo.firmalar import (
     ats_kaydini_sifirla,
     firma_anahtari,
     firma_ekle_veya_guncelle,
+    firmayi_kapat,
     kesif_bekleyenler,
     kesif_sonucu_yaz,
 )
@@ -85,6 +86,7 @@ __all__ = [
     "utc",
     "firma_anahtari",
     "firma_ekle_veya_guncelle",
+    "firmayi_kapat",
     "aktif_firmalar",
     "kesif_bekleyenler",
     "kesif_sonucu_yaz",

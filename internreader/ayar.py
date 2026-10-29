@@ -5,7 +5,7 @@ Yerelde varsayılan veritabanı SQLite dosyasıdır; sunucuda DATABASE_URL ile P
 """
 
 import os
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 
 KOK = Path(__file__).resolve().parent.parent
@@ -52,6 +52,17 @@ class Ayarlar:
     eposta_kimden: str  # "InternReader <bulten@alan-adi>"
     eposta_yanit: str  # yanıtların gideceği adres (boş olabilir)
     yz_toplu: bool  # yapay zekâ isteklerini Message Batches API ile yarı fiyatına gönder (sonuç dakikalar sürebilir)
+    arama_saglayici: str = ""  # "serper", "brave" ya da "" (arama keşfi kapalı)
+    arama_anahtari: str = field(default="", repr=False)  # seçilen sağlayıcının API anahtarı; asla yazdırılmaz
+
+
+def arama_ayari() -> tuple[str, str]:
+    """INTERNREADER_ARAMA_SAGLAYICI açıkça verilmemişse anahtarı bulunan ilk sağlayıcı seçilir."""
+    anahtarlar = {"serper": os.getenv("SERPER_API_KEY", ""), "brave": os.getenv("BRAVE_API_KEY", "")}
+    secilen = os.getenv("INTERNREADER_ARAMA_SAGLAYICI", "").strip().lower()
+    if not secilen:
+        secilen = next((ad for ad, anahtar in anahtarlar.items() if anahtar), "")
+    return (secilen, anahtarlar[secilen]) if anahtarlar.get(secilen) else ("", "")
 
 
 GELISTIRME_ANAHTARI = "yalnizca-gelistirme-icin-degistir"
@@ -59,6 +70,7 @@ GELISTIRME_ANAHTARI = "yalnizca-gelistirme-icin-degistir"
 
 def ayarlari_oku() -> Ayarlar:
     env_yukle()
+    arama_saglayici, arama_anahtari = arama_ayari()
     return Ayarlar(
         veritabani_url=os.getenv("DATABASE_URL", f"sqlite:///{(VERI / 'internreader.db').as_posix()}"),
         model=os.getenv("INTERNREADER_MODEL", "claude-haiku-5-5"),
@@ -77,4 +89,6 @@ def ayarlari_oku() -> Ayarlar:
         eposta_kimden=os.getenv("EPOSTA_KIMDEN", "InternReader <bulten@localhost>"),
         eposta_yanit=os.getenv("EPOSTA_YANIT", ""),
         yz_toplu=os.getenv("INTERNREADER_YZ_TOPLU", "0") == "1",
+        arama_saglayici=arama_saglayici,
+        arama_anahtari=arama_anahtari,
     )

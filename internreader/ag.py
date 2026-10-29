@@ -93,13 +93,14 @@ class HttpIstemci:
             icerik = govdeyi_oku(yanit, SAYFA_AZAMI_BAYT)
             return yanit.url, metni_coz(icerik, yanit.headers.get("content-type", ""))
 
-    def json_al(self, url: str):
-        with self.oturum.get(url, timeout=self.zaman_asimi, stream=True) as yanit:
+    def json_al(self, url: str, basliklar: dict | None = None):
+        """basliklar: isteğe özel başlıklar (ör. arama API'sinin anahtarı); oturumun ortak başlıklarına eklenir."""
+        with self.oturum.get(url, headers=basliklar, timeout=self.zaman_asimi, stream=True) as yanit:
             yanit.raise_for_status()
             return json.loads(govdeyi_oku(yanit, JSON_AZAMI_BAYT))
 
-    def json_gonder(self, url: str, govde: dict):
-        with self.oturum.post(url, json=govde, timeout=self.zaman_asimi, stream=True) as yanit:
+    def json_gonder(self, url: str, govde: dict, basliklar: dict | None = None):
+        with self.oturum.post(url, json=govde, headers=basliklar, timeout=self.zaman_asimi, stream=True) as yanit:
             yanit.raise_for_status()
             return json.loads(govdeyi_oku(yanit, JSON_AZAMI_BAYT))
 

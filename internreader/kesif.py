@@ -35,11 +35,18 @@ ATS_DESENLERI = [
     ("breezy", r"([A-Za-z0-9\-]+)\.breezy\.hr"),
     ("smartrecruiters", r"(?:jobs|careers)\.smartrecruiters\.com/([A-Za-z0-9\-_.]+)"),
     ("workday", r"([a-z0-9\-]+\.wd\d+)\.myworkdayjobs\.com/(?:[a-z]{2}-[A-Z]{2}/)?([A-Za-z0-9_\-]+)"),
+    ("bamboohr", r"([A-Za-z0-9\-]+)\.bamboohr\.com"),
+    ("teamtailor", r"([A-Za-z0-9\-]+)\.teamtailor\.com"),
+    ("personio", r"([A-Za-z0-9\-]+)\.jobs\.personio\.(?:de|com)"),
+    # Avature şirketin kendi alan adında çalışır (jobs.siemens.com/en_US/externaljobs/SearchJobs). "SearchJobs" ve
+    # "JobDetail" yol adları Avature'a özgü; en sona konuldu ki daha belirgin desenler önce denensin.
+    ("avature", r"https?://([a-z0-9.\-]+)/((?:[a-z]{2}_[A-Z]{2}/)?[A-Za-z0-9]+)/(?:SearchJobs|JobDetail)\b"),
 ]
 GECERSIZ_SLUG = {"www", "api", "jobs", "embed", "careers", "app", "static", "assets"}
 # Yol parçası olarak eşleşir ("/kariyer", "/careers/"). Eski sürüm "gizlilik" sayfalarını kariyer sanıyordu.
+# Kısa bir ön ek kabul edilir: "/why-join-us" (Kaizen Loyalty, 29.10.2026), "/life-at-x" değil ama "/tech-careers".
 KARIYER_LINKI = re.compile(
-    r"(?i)/(careers?|kariyer|jobs|join-?us|hiring|open-?positions|work-with-us|insan-?kaynaklari|"
+    r"(?i)/(?:[a-z]{2,8}-)?(careers?|kariyer|jobs|join-?us|hiring|open-?positions|work-with-us|insan-?kaynaklari|"
     r"acik-?pozisyonlar?|is-?ilanlari)(?:[/?#.-]|$)"
 )
 YANLIS_SAYFA = re.compile(
@@ -51,14 +58,28 @@ SOSYAL = re.compile(r"(?i)linkedin|twitter|facebook|instagram|youtube|x\.com")
 DOSYA = re.compile(r"(?i)\.(png|jpe?g|gif|svg|webp|ico|pdf|docx?|xlsx?|zip|css|js|woff2?|mp4)(?:[?#]|$)")
 
 # Yoklamada denenecek uç noktalar (yalnızca ilanı olan sonuç kabul edilir)
-YOKLAMA_SIRASI = ["lever", "greenhouse", "ashby", "workable", "smartrecruiters", "recruitee", "breezy"]
+YOKLAMA_SIRASI = [
+    "lever",
+    "greenhouse",
+    "ashby",
+    "workable",
+    "smartrecruiters",
+    "recruitee",
+    "breezy",
+    "bamboohr",
+    "teamtailor",
+    "personio",
+]
 
 
 def sayfadan_ats_bul(metin: str) -> tuple[str, str]:
     for ats, desen in ATS_DESENLERI:
-        bulunan = re.findall(desen, metin, re.I)
+        # Avature'da büyük/küçük harf anlamlı (en_US, SearchJobs); diğer desenler harf duyarsız aranır.
+        bulunan = re.findall(desen, metin) if ats == "avature" else re.findall(desen, metin, re.I)
         if ats == "workday":  # (kiracı.wdN, site) → "kiracı|wdN|site"
             bulunan = ["|".join(t[0].split(".") + [t[1]]) for t in bulunan]
+        elif ats == "avature":  # (alan adı, portal) → "alan-adı|portal"
+            bulunan = ["|".join(t) for t in bulunan]
         bulunan = [s for s in bulunan if s.lower() not in GECERSIZ_SLUG]
         if bulunan:
             return ats, max(set(bulunan), key=bulunan.count)

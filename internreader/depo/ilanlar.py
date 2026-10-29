@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 
 from internreader.db import IlanAyrinti, IlanKaydi, Siniflandirma, simdi
 from internreader.depo._ortak import _parcalar, utc
+from internreader.isleme.maske import kisisel_veriyi_maskele
 from internreader.model import HEDEF_ROLLER, OGRENCI_SEVIYELERI, Ilan
 
 
@@ -33,7 +34,7 @@ def ilanlari_kaydet(oturum: Session, ilanlar: list[Ilan], basarili_firmalar: set
             yeniler.append(kimlik)
         kayit.firma, kayit.baslik, kayit.url, kayit.kaynak = i.firma, i.baslik, i.url, i.kaynak
         kayit.konum, kayit.calisma_tipi, kayit.yayin_tarihi = i.konum, i.calisma_tipi[:80], i.tarih[:10]
-        kayit.aciklama, kayit.etiket = i.aciklama[:20_000], i.etiket
+        kayit.aciklama, kayit.etiket = kisisel_veriyi_maskele(i.aciklama)[:20_000], i.etiket
         kayit.son_gorulme, kayit.aktif = an, True
 
     # "Bu çalıştırmada görülmedi" kümeyle bulunur, zaman damgasıyla değil: saat çözünürlüğü kaba olan sistemlerde

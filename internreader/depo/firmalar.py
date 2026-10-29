@@ -5,10 +5,10 @@ import urllib.parse
 from collections.abc import Iterable
 from datetime import timedelta
 
-from sqlalchemy import select
+from sqlalchemy import select, update
 from sqlalchemy.orm import Session
 
-from internreader.db import Firma, simdi
+from internreader.db import Firma, IlanKaydi, simdi
 from internreader.model import FirmaBilgisi
 
 
@@ -111,3 +111,20 @@ def ats_kaydini_sifirla(oturum: Session, firma_idler: Iterable[int]) -> None:
         firma = oturum.get(Firma, firma_id)
         if firma is not None:
             firma.ats = firma.slug = firma.kesif_tarihi = None
+
+
+def firmayi_kapat(oturum: Session, ad_ya_da_alan: str) -> int:
+    """ "İlanımı kaldır" talebi: firmayı taramadan çıkarır, açık ilanlarını yayından kaldırır. Etkilenen firma sayısı.
+
+    Firma adıyla ("Acme Teknoloji") ya da alan adıyla ("acme.com") bulunur. Kayıt silinmez, `aktif=False` olur:
+    böylece firma listesi yeniden içe aktarılsa da firma geri gelmez (içe aktarma yalnızca boş alanları doldurur).
+    """
+    deger = ad_ya_da_alan.strip()
+    kosul = Firma.ad == deger
+    if "." in deger and " " not in deger:
+        kosul = kosul | (Firma.anahtar == firma_anahtari("", deger))
+    firmalar = list(oturum.scalars(select(Firma).where(kosul)))
+    for f in firmalar:
+        f.aktif = False
+        oturum.execute(update(IlanKaydi).where(IlanKaydi.firma == f.ad).values(aktif=False))
+    return len(firmalar)

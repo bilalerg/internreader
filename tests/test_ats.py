@@ -48,3 +48,107 @@ def test_workday_goreli_tarihi_gercek_tarihe_cevrilir():
     assert workday_tarihi("Posted Yesterday", bugun) == "2026-10-17"
     assert workday_tarihi("Posted 30+ Days Ago", bugun) == "2026-09-18"
     assert workday_tarihi("", bugun) == ""
+
+
+# ---------- 29.10.2026: BambooHR, Teamtailor, Personio, Avature ----------
+def test_bamboohr_ayristirma_konum_ve_uzaktan():
+    from internreader.kaynaklar.ats import bamboohr_ayristir
+
+    veri = {
+        "meta": {"totalCount": 2},
+        "result": [
+            {
+                "id": "3",
+                "jobOpeningName": "Part-Time SW Product Design Engineer",
+                "employmentStatusLabel": "Part-Time",
+                "location": {"city": "Istanbul", "state": "Turkey"},
+                "atsLocation": {"country": None, "city": None},
+                "isRemote": None,
+            },
+            {
+                "id": "7",
+                "jobOpeningName": "Data Intern",
+                "employmentStatusLabel": "Intern",
+                "location": {"city": None, "state": None},
+                "atsLocation": {"country": "Türkiye", "city": "Ankara"},
+                "isRemote": True,
+            },
+        ],
+    }
+    a, b = bamboohr_ayristir("P.I. Works", "piworks", veri)
+    assert a.url == "https://piworks.bamboohr.com/careers/3" and a.kaynak == "bamboohr"
+    assert a.konum == "Istanbul, Turkey" and a.calisma_tipi == "Part-Time"
+    assert b.konum == "Ankara, Türkiye (uzaktan)"
+
+
+TEAMTAILOR_RSS = """<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:tt="https://teamtailor.com/locations"><channel><title>Acme</title>
+<item><title>Backend Intern</title><description>&lt;p&gt;Python &amp;amp; SQL&lt;/p&gt;</description>
+<pubDate>Fri, 23 Oct 2026 08:04:49 +0200</pubDate><link>https://acme.teamtailor.com/jobs/1-backend-intern</link>
+<remoteStatus>hybrid</remoteStatus><tt:locations><tt:location><tt:city>Istanbul</tt:city>
+<tt:country>Turkey</tt:country></tt:location></tt:locations></item>
+<item><title></title><link>https://acme.teamtailor.com/jobs/2</link></item>
+</channel></rss>"""
+
+
+def test_teamtailor_rss_ayristirma():
+    from internreader.kaynaklar.ats import teamtailor_ayristir
+
+    ilanlar = teamtailor_ayristir("Acme", TEAMTAILOR_RSS)
+    assert len(ilanlar) == 1  # başlıksız öğe atlanır
+    i = ilanlar[0]
+    assert i.baslik == "Backend Intern" and i.kaynak == "teamtailor"
+    assert i.konum == "Istanbul, Turkey (hibrit)" and i.tarih == "2026-10-23"
+    assert i.aciklama == "Python & SQL"
+
+
+def test_personio_xml_ayristirma():
+    from internreader.kaynaklar.ats import personio_ayristir
+
+    xml = """<?xml version="1.0" encoding="UTF-8"?><workzag-jobs><position><id>42</id><office>Istanbul</office>
+    <name>Working Student Software</name><employmentType>intern</employmentType><schedule>part-time</schedule>
+    <createdAt>2026-10-20T09:00:00+00:00</createdAt><jobDescriptions><jobDescription><name>Görev</name>
+    <value><![CDATA[<p>FastAPI ve React</p>]]></value></jobDescription></jobDescriptions></position>
+    <position><name>Kimliksiz</name></position></workzag-jobs>"""
+    ilanlar = personio_ayristir("Acme", "acme", xml)
+    assert len(ilanlar) == 1  # kimliği olmayan pozisyonun bağlantısı kurulamaz
+    i = ilanlar[0]
+    assert i.url == "https://acme.jobs.personio.de/job/42" and i.konum == "Istanbul"
+    assert i.calisma_tipi == "intern, part-time" and i.tarih == "2026-10-20" and i.aciklama == "FastAPI ve React"
+
+
+def _avature_rss(*ogeler):
+    govde = "".join(
+        f"<item><title>{b}</title><link>{u}</link><pubDate>Tue, 22 Aug 2023</pubDate></item>" for b, u in ogeler
+    )
+    return f'<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel>{govde}</channel></rss>'
+
+
+def test_avature_aramalari_birlestirir_ve_tekrari_atar():
+    import urllib.parse
+
+    from internreader.kaynaklar.ats import AVATURE_ARAMALARI, avature
+    from tests.conftest import SahteHttp
+
+    kok = "https://jobs.siemens.com/en_US/externaljobs/SearchJobs/feed/?search="
+    sayfalar = {kok + urllib.parse.quote(a): _avature_rss() for a, _ in AVATURE_ARAMALARI}
+    sayfalar[kok + "Istanbul"] = _avature_rss(
+        ("Part-Time Working Student (Software Developer)", "https://jobs.siemens.com/externaljobs/JobDetail/PT/527260"),
+        ("Data Engineer", "https://jobs.siemens.com/externaljobs/JobDetail/DE/1"),
+    )
+    # Aynı ilan yerelleştirilmiş yolla tekrar gelir (aynı kimlik) + Türkiye aramasında yeni bir ilan
+    sayfalar[kok + "Turkey"] = _avature_rss(
+        (
+            "Part-Time Working Student (Software Developer)",
+            "https://jobs.siemens.com/en_US/externaljobs/JobDetail/527260",
+        ),
+        ("Intern Ankara", "https://jobs.siemens.com/externaljobs/JobDetail/IA/9"),
+    )
+    ilanlar = avature(SahteHttp(sayfalar=sayfalar), "Siemens", "jobs.siemens.com|en_US/externaljobs")
+    assert [i.baslik for i in ilanlar] == [
+        "Part-Time Working Student (Software Developer)",
+        "Data Engineer",
+        "Intern Ankara",
+    ]
+    assert ilanlar[0].konum == "Istanbul" and ilanlar[2].konum == "Turkey"
+    assert all(i.tarih == "" for i in ilanlar)  # akıştaki 2023 tarihi güvenilmez, yazılmaz

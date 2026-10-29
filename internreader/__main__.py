@@ -3,6 +3,8 @@
 Kullanım (proje klasöründe):
   python -m internreader ice-aktar veri/firmalar.csv     firma listesini veritabanına al
   python -m internreader kesif [--yokla] [--kaynak K]    firmaların ilan sistemini / kariyer sayfasını bul (ayda bir)
+  python -m internreader arama-kesif [--kuru] [--web-bul N]  arama API'siyle yeni firma bul (haftada bir; anahtar ister)
+  python -m internreader firma-kapat "Acme"               "ilanımı kaldır" talebi: firmayı taramadan ve yayından çıkar
   python -m internreader tara [--yz-tavani 0.50]         ilanları topla + sınıflandır
   python -m internreader yayinla                         README tablosu, JSON ve WhatsApp özeti üret
   python -m internreader bulten-gonder                  abonelere kişiye özel bülten (SMTP yoksa dosyaya yazar)
@@ -22,6 +24,7 @@ from datetime import date
 from pathlib import Path
 
 from internreader import boru, depo
+from internreader.arama import arama_kesfi, web_adresi_bul
 from internreader.ayar import CIKTI, VERI, ayarlari_oku
 from internreader.bakim import bakim_yap
 from internreader.bulten import bultenleri_gonder
@@ -49,6 +52,13 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--sinir", type=int, default=None)
     p.add_argument("--yokla", action="store_true", help="ATS API'lerini firma adından tahminle yokla (yavaş)")
     p.add_argument("--kaynak", default=None, help="yalnızca bu kaynaktan gelen firmalar (ör. tohum_1810)")
+
+    p = alt.add_parser("arama-kesif", help="arama API'siyle listede olmayan firmaları bul (haftada bir)")
+    p.add_argument("--sorgu-siniri", type=int, default=None, help="en fazla kaç sorgu atılsın (kota denemesi için)")
+    p.add_argument("--kuru", action="store_true", help="hiçbir şey yazma, yalnızca bulunacakları raporla")
+    p.add_argument("--web-bul", type=int, default=0, metavar="N", help="ayrıca adresi olmayan N firmaya web adresi ara")
+    p = alt.add_parser("firma-kapat", help='"ilanımı kaldır" talebi: firmayı taramadan ve yayından çıkar')
+    p.add_argument("firma", help='firma adı ("Acme Teknoloji") ya da alan adı ("acme.com")')
 
     for ad in ("tara", "calistir"):
         p = alt.add_parser(ad)
@@ -83,6 +93,18 @@ def main(argv: list[str] | None = None) -> int:
             eski_onbellegi_ice_aktar(oturum, arg.eski_onbellek)
     elif arg.komut == "kesif":
         kesfet(ayar, oturum, arg.sinir, arg.yokla, arg.kaynak)
+    elif arg.komut == "arama-kesif":
+        rapor = {"arama": arama_kesfi(ayar, oturum, arg.sorgu_siniri, arg.kuru)}
+        if arg.web_bul:
+            rapor["web_bul"] = web_adresi_bul(ayar, oturum, arg.web_bul, kuru=arg.kuru)
+        print(json.dumps(rapor, ensure_ascii=False, indent=1))
+    elif arg.komut == "firma-kapat":
+        with oturum.begin() as o:
+            sayi = depo.firmayi_kapat(o, arg.firma)
+        print(f"{sayi} firma kapatıldı." if sayi else f'"{arg.firma}" bulunamadı (ad ya da alan adını kontrol edin).')
+        if sayi:
+            boru.yayinla(oturum)  # README/JSON hemen güncellensin; site sabah derlemesinde güncellenir
+        return 0 if sayi else 1
     elif arg.komut in ("tara", "calistir"):
         yz = boru.yz_olustur(ayar, oturum)  # tarama ve ayrıntılar aynı bütçeyi paylaşır
         rapor = boru.tara(ayar, oturum, yz=yz)

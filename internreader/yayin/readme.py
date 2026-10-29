@@ -27,5 +27,11 @@ def tablo_metni(ilanlar: list[dict], an: datetime) -> str:
             f"| {_hucre(i.get('firma_gorunen') or i['firma'])} | {_hucre(i['baslik'])} | {SEVIYE_ADI.get(i['seviye'], i['seviye'])} | {alan} | "
             f"{_hucre(i['konum']) or 'Türkiye'} | {turkiye_tarihi(i['ilk_gorulme'])} | [Başvur]({guvenli_url(i['url'])}) |"
         )
-    satirlar += ["", "🤖 = ilanda yapay zekâ işin özünde ya da tercih sebebi.", ""]
+    satirlar += [
+        "",
+        "🤖 = ilanda yapay zekâ işin özünde ya da tercih sebebi.",
+        "",
+        "İlanınızın bu listede görünmesini istemiyorsanız bu depoda bir issue açın; 2 iş günü içinde kaldırılır.",
+        "",
+    ]
     return "\n".join(satirlar)

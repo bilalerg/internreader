@@ -96,6 +96,8 @@ cp .env.example .env                                         # ANTHROPIC_API_KEY
 ```bash
 python -m internreader ice-aktar veri/firmalar.csv      # firma listesini veritabanına al
 python -m internreader kesif [--yokla] [--kaynak K]     # ilan sistemi / kariyer sayfası keşfi (ayda bir)
+python -m internreader arama-kesif [--kuru] [--web-bul N]  # arama API'siyle listede olmayan firmaları bul (haftada bir)
+python -m internreader firma-kapat "Acme"                # "ilanımı kaldır" talebi: firmayı taramadan ve yayından çıkar
 python -m internreader tara [--yz-tavani 0.50]          # ilanları topla + sınıflandır
 python -m internreader yayinla                          # cikti/: README tablosu, ilanlar.json, WhatsApp özeti
 python -m internreader calistir                         # tara + ayrıntılar + yayınla + bülten + bakım (her sabah)
@@ -138,13 +140,14 @@ internreader/
   db.py              veritabanı tabloları (SQLite yerelde, Postgres sunucuda)
   sema.py + goc/     şema göçleri (alembic): her açılışta "upgrade head"; Postgres'te kilitle, SQLite'ta batch modu
   depo/              veritabanı işlemleri, konuya göre: firmalar, ilanlar, ayrintilar, aboneler, bulten, kullanim…
-  kaynaklar/         ats.py (8 ilan sistemi), kariyer_sayfasi.py (HTML → metin + bağlantılar)
+  kaynaklar/         ats.py (12 ilan sistemi), kariyer_sayfasi.py (HTML → metin + bağlantılar)
   yz/                istemci.py (bütçe, sigorta, kayıt, toplu mod), sayfa_okuyucu.py, siniflandirici.py,
                      ayrinti_cikarici.py (özet, son başvuru…), degerlendirme.py (doğruluk ölçümü)
-  isleme/            filtre.py (konum, yedek kural), tekillestirme.py
+  isleme/            filtre.py (konum, yedek kural), tekillestirme.py, maske.py (kişisel veri)
   yayin/             readme.py, json_disa.py, whatsapp.py, istatistik.py (sitenin verisi)
   boru.py            iş akışı: katmanları sırayla bağlar
   kesif.py           firmaların ilan sistemini ve kariyer sayfasını bulur
+  arama.py           arama API'siyle listede olmayan firmaları ve adresi bilinmeyen firmaların sitesini bulur
   abonelik.py        çift onaylı kayıt, onay, imzalı çıkış bağlantısı
   eposta.py          gönderici arayüzü: SMTP (465/587) ya da dosyaya yazan (deneme)
   bulten/            secim.py (tercih eşleşmesi), sablon.py (HTML + düz metin, tek tıkla çıkış), gonderim.py
@@ -179,10 +182,13 @@ cron 07:00 ──► internreader calistir (tara + yayınla) ──► site-derl
 mkdir -p cikti && sudo chown 10001:10001 cikti     # konteyner güvenlik için root olmayan kullanıcıyla çalışır
 docker compose up -d db api caddy
 docker compose run --rm internreader ice-aktar veri/firmalar.csv
+docker compose run --rm internreader kesif                  # ilk kurulumda bir kez (~15 dk, yapay zekâ kullanmaz)
+docker compose run --rm internreader arama-kesif --kuru     # anahtar tanımlıysa: önce ne bulacağını gör
+docker compose run --rm internreader arama-kesif --web-bul 40
 docker compose run --rm internreader calistir && docker compose run --rm site-derle
 ```
 
-Günlük zamanlama, gece yedeği ve aylık keşif için `ops/crontab`. Gizli değerler (`ANTHROPIC_API_KEY`,
+Günlük zamanlama, gece yedeği, haftalık arama keşfi ve aylık keşif için `ops/crontab`. Gizli değerler (`ANTHROPIC_API_KEY`,
 `POSTGRES_PASSWORD`, `INTERNREADER_GIZLI_ANAHTAR`, `SITE_ALAN_ADI`) yalnızca sunucudaki `.env` dosyasında durur.
 
 ### Yayına hazırlık listesi
@@ -194,10 +200,16 @@ Günlük zamanlama, gece yedeği ve aylık keşif için `ops/crontab`. Gizli de�
 - [ ] `INTERNREADER_GIZLI_ANAHTAR` uzun ve rastgele; değişirse eski çıkış bağlantıları çalışmaz (geliştirme anahtarıyla
       gerçek gönderim kod tarafından reddedilir)
 - [ ] Alan adının DNS kaydı sunucuya yönlendirilmiş olmalı (Caddy sertifikayı kendisi alır)
+- [ ] (İsteğe bağlı) `SERPER_API_KEY` ya da `BRAVE_API_KEY`: haftalık arama keşfi; yoksa adım atlanır
+- [ ] **Herkese açık duyurudan önce:** İŞKUR'dan yazılı görüş (özel istihdam bürosu izni gerekir mi?). Site CV
+      toplamıyor, başvuru almıyor, ücret almıyor, yalnızca şirketin kendi ilan sayfasına bağlantı veriyor; bu çizgi
+      korunmalı (aday havuzu / işverene ücretli öne çıkarma "aracılık" sayılabilir)
+- [ ] İlan kaldırma talebi gelirse: `python -m internreader firma-kapat "Firma"` (2 iş günü sözü verildi)
 
 ## Yol haritası
 
-- [x] 8 ilan sistemi + kariyer sayfası okuyucu, uydurma koruması
+- [x] 12 ilan sistemi (29.10: BambooHR, Teamtailor, Personio, Avature) + kariyer sayfası okuyucu, uydurma koruması
+- [x] Arama API keşfi (Serper/Brave), kişisel veri maskeleme, "ilanımı kaldır" komutu (29.10)
 - [x] Yapay zekâ sınıflandırma, bütçe tavanları, önbellek
 - [x] Veritabanı (ilk/son görülme, kapanan ilanlar), Docker, CI
 - [x] Site: tanıtım, canlı simülasyonlar, bülten önizlemesi, çift onaylı kayıt, KVKK

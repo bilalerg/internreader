@@ -66,3 +66,20 @@ def test_sitede_bagli_ama_kapali_pano_kaydedilmez():
     firma = FirmaBilgisi(id=1, ad="Complizen", web="https://complizen.ai")
     http = SahteHttp(sayfalar={"https://complizen.ai": '<a href="https://complizen.breezy.hr">Kariyer</a>'})
     assert firmayi_kesfet(http, firma, yokla=False)[:2] == ("", "")  # breezy JSON 404 → pano yok sayılır
+
+
+def test_yeni_ilan_sistemleri_sayfadan_bulunur():
+    assert sayfadan_ats_bul('<a href="https://piworks.bamboohr.com/careers">Kariyer</a>') == ("bamboohr", "piworks")
+    assert sayfadan_ats_bul("https://acme.teamtailor.com/jobs") == ("teamtailor", "acme")
+    assert sayfadan_ats_bul("https://acme-gmbh.jobs.personio.de/") == ("personio", "acme-gmbh")
+    assert sayfadan_ats_bul('href="https://jobs.siemens.com/en_US/externaljobs/SearchJobs/?search=x"') == (
+        "avature",
+        "jobs.siemens.com|en_US/externaljobs",
+    )
+    # Sağlayıcının kendi tanıtım sitesi pano değildir
+    assert sayfadan_ats_bul('<a href="https://www.bamboohr.com/">Powered by BambooHR</a>') == ("", "")
+
+
+def test_on_ekli_kariyer_baglantisi_bulunur():
+    html = '<a href="/why-join-us">Neden biz</a><a href="/blog-careers-tips">x</a><a href="/products">y</a>'
+    assert kariyer_baglantilari("https://www.kaizenloyalty.com/", html) == ["https://www.kaizenloyalty.com/why-join-us"]

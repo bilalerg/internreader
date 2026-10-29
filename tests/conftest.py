@@ -34,17 +34,25 @@ class SahteHttp:
     def __init__(self, jsonlar=None, sayfalar=None):
         self.jsonlar = jsonlar or {}
         self.sayfalar = sayfalar or {}
+        self.istekler = []  # (url, gövde, başlıklar): testler gönderilen sorguyu ve anahtar başlığını denetler
 
-    def json_al(self, url):
+    def _cevap(self, url, govde, basliklar):
+        """Cevap hazır bir değer, fırlatılacak bir hata ya da (url, gövde) → değer fonksiyonu olabilir."""
+        self.istekler.append((url, govde, basliklar))
         for anahtar, deger in self.jsonlar.items():
             if anahtar in url:
-                return deger
+                if isinstance(deger, Exception):
+                    raise deger
+                return deger(url, govde) if callable(deger) else deger
         yanit = requests.Response()
         yanit.status_code, yanit.url = 404, url
         raise requests.HTTPError(f"404 Client Error: Not Found for url: {url}", response=yanit)
 
-    def json_gonder(self, url, govde):
-        return self.json_al(url)
+    def json_al(self, url, basliklar=None):
+        return self._cevap(url, None, basliklar)
+
+    def json_gonder(self, url, govde, basliklar=None):
+        return self._cevap(url, govde, basliklar)
 
     def sayfa(self, url, robots_kontrolu=True):
         if url not in self.sayfalar:
