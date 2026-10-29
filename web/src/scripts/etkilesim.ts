@@ -91,8 +91,82 @@ function miknatislar() {
   });
 }
 
+/** Fareyi yumuşakça izleyen halka; tıklanabilir öğelerin üstünde büyür, yazı alanlarında gizlenir. */
+function imlec() {
+  const halka = document.createElement("div");
+  halka.className = "imlec";
+  halka.setAttribute("aria-hidden", "true");
+  document.body.append(halka);
+  let [x, y, hx, hy] = [-100, -100, -100, -100];
+  addEventListener(
+    "pointermove",
+    (o) => {
+      [x, y] = [o.clientX, o.clientY];
+      halka.toggleAttribute("data-gorunur", true);
+    },
+    { passive: true },
+  );
+  document.documentElement.addEventListener("pointerleave", () => halka.toggleAttribute("data-gorunur", false));
+  addEventListener("pointerover", (o) => {
+    const hedef = o.target as Element;
+    halka.toggleAttribute("data-ustunde", !!hedef.closest("a, button, summary, label, [role=button]"));
+    halka.toggleAttribute("data-yazi", !!hedef.closest("input[type=email], input[type=text], textarea"));
+  });
+  let calisiyor = false;
+  const ciz = () => {
+    hx += (x - hx) * 0.2;
+    hy += (y - hy) * 0.2;
+    halka.style.translate = `${hx}px ${hy}px`;
+    calisiyor = Math.abs(x - hx) + Math.abs(y - hy) > 0.3;
+    if (calisiyor) requestAnimationFrame(ciz);
+  };
+  addEventListener("pointermove", () => !calisiyor && ((calisiyor = true), requestAnimationFrame(ciz)), {
+    passive: true,
+  });
+}
+
+/** Giriş başlığı: fare yaklaştıkça kelimeler kalınlaşır (değişken yazı tipinin "wght" ekseni). */
+function yakinlikYazisi() {
+  const kelimeler = [...document.querySelectorAll<HTMLElement>("h1 .kelime > span")];
+  const sahne = kelimeler[0]?.closest("section");
+  if (!sahne) return;
+  const temel = kelimeler.map((k) => Number(getComputedStyle(k).fontWeight) || 560);
+  const ayarla = (k: HTMLElement, agirlik: number) =>
+    (k.style.fontVariationSettings = `"wght" ${Math.round(agirlik)}, "opsz" 144`);
+  sahne.addEventListener(
+    "pointermove",
+    kareBasina((o: PointerEvent) => {
+      kelimeler.forEach((k, i) => {
+        const r = k.getBoundingClientRect();
+        const uzaklik = Math.hypot(o.clientX - (r.left + r.width / 2), o.clientY - (r.top + r.height / 2));
+        const yakinlik = Math.max(0, 1 - uzaklik / 280);
+        ayarla(k, temel[i] + yakinlik * (850 - temel[i]));
+      });
+    }),
+  );
+  sahne.addEventListener("pointerleave", () => kelimeler.forEach((k, i) => ayarla(k, temel[i])));
+}
+
+/** "Sonraki baskı" geri sayımı: bülten her sabah 07:00'de (Türkiye saati, UTC+3 = 04:00 UTC) çıkar. */
+function sonrakiBaski() {
+  const yer = document.querySelector<HTMLElement>("[data-sonraki-baski]");
+  if (!yer) return;
+  const yaz = () => {
+    const simdi = new Date();
+    const hedef = new Date(Date.UTC(simdi.getUTCFullYear(), simdi.getUTCMonth(), simdi.getUTCDate(), 4));
+    if (hedef <= simdi) hedef.setUTCDate(hedef.getUTCDate() + 1);
+    const dakika = Math.ceil((hedef.getTime() - simdi.getTime()) / 60_000);
+    yer.textContent = `Sonraki baskı ${Math.floor(dakika / 60)} sa ${dakika % 60} dk sonra · her sabah 07:00`;
+  };
+  yaz();
+  setInterval(yaz, 30_000);
+}
+
 belirmeler();
+sonrakiBaski();
 if (fare && !azalt) {
+  imlec();
+  yakinlikYazisi();
   egimler();
   isiklar();
   miknatislar();

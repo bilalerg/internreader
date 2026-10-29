@@ -87,9 +87,9 @@ const sorular = [
 
 <Taban>
   <!-- ================= GİRİŞ ================= -->
-  <section class="mx-auto max-w-[1200px] px-5 pb-20 pt-12 md:px-8 md:pb-28 md:pt-20">
+  <section class="mx-auto max-w-[1200px] px-5 pb-20 pt-12 md:px-8 md:pb-28 md:pt-20" data-giris>
     <div class="grid items-center gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-12">
-      <div>
+      <div data-giris-metin>
         <p class="etiket flex flex-wrap items-center gap-x-3 gap-y-1">
           <span>Yazılım · Yapay zekâ · Veri stajları</span>
           <span aria-hidden="true">/</span>
@@ -148,16 +148,22 @@ const sorular = [
         <p class="mt-6 font-mono text-[0.78rem] text-murekkep-3">
           Ücretsiz · Spam yok · Tek tıkla çıkış · Son tarama {tarihSaat(istatistik.guncelleme)}
         </p>
+        <p class="mt-2 flex items-center gap-2.5 font-mono text-[0.78rem] text-murekkep-2">
+          <span class="nabiz" aria-hidden="true"></span>
+          <span data-sonraki-baski>Yeni baskı her sabah 07:00'de</span>
+        </p>
       </div>
 
-      <div class="derinlik">
-        <TurkiyeRadari
-          client:visible
-          harita={harita}
-          ornekler={haritaOrnekleri}
-          toplam={{ firma: istatistik.taranan_firma, ilan: istatistik.aktif_ilan, ogrenci: istatistik.ogrenci_ilani }}
-          gun={tarihSaat(istatistik.guncelleme).split(",")[0]}
-        />
+      <div data-giris-gorsel>
+        <div class="giris-yuksel">
+          <TurkiyeRadari
+            client:visible
+            harita={harita}
+            ornekler={haritaOrnekleri}
+            toplam={{ firma: istatistik.taranan_firma, ilan: istatistik.aktif_ilan, ogrenci: istatistik.ogrenci_ilani }}
+            gun={tarihSaat(istatistik.guncelleme).split(",")[0]}
+          />
+        </div>
       </div>
     </div>
   </section>
@@ -170,8 +176,8 @@ const sorular = [
       İyi stajlar ilan sitelerine düşmüyor.
     </BolumBasligi>
     <div class="mt-12 grid gap-12 lg:grid-cols-2 lg:gap-16">
-      <div class="space-y-5 text-[1.08rem] leading-[1.75] text-murekkep-2" data-belir>
-        <p>
+      <div class="space-y-5 text-[1.08rem] leading-[1.75] text-murekkep-2">
+        <p class="baslik text-[clamp(1.45rem,2.2vw,1.85rem)] !leading-[1.3] text-murekkep" data-okunan>
           Teknoloji şirketlerinin ve girişimlerin çoğu stajyer ilanını yalnızca{" "}
           <span class="fosfor text-murekkep">kendi kariyer sayfasına</span> ya da Lever, Greenhouse, Workday gibi ilan
           sistemlerine koyar. Büyük platformlarda bu ilanların çoğu hiç görünmez.

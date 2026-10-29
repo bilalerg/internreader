@@ -31,6 +31,11 @@ const menu = [
     <!-- JS açıksa "js" sınıfı: belirme animasyonları yalnızca o zaman gizli başlar (JS kapalıysa içerik hep görünür) -->
     <script is:inline>
       document.documentElement.classList.add("js");
+      // Kayıtlı tema seçimi ilk boyamadan önce uygulanır (yoksa sistem teması)
+      try {
+        const tema = localStorage.getItem("tema");
+        if (tema === "gece" || tema === "gunduz") document.documentElement.dataset.tema = tema;
+      } catch {}
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{tamBaslik}</title>
@@ -57,7 +62,7 @@ const menu = [
       İçeriğe geç
     </a>
 
-    <header class="ust-menu sticky top-0 z-50 border-b border-cizgi/80 bg-kagit/92 backdrop-blur-[2px]">
+    <header class="ust-menu sticky top-0 z-50 border-b border-cizgi/80 bg-kagit/95">
       <div class="mx-auto flex h-16 max-w-[1200px] items-center justify-between gap-6 px-5 md:px-8">
         <a href="/" class="flex items-center gap-2.5" aria-label="InternReader ana sayfa">
           <Logo />
@@ -70,9 +75,36 @@ const menu = [
             </a>
           ))}
         </nav>
-        <a href={anaSayfa ? "#bulten" : "/#bulten"} class="dugme dugme-ana miknatis !py-2.5 !px-4 text-[0.92rem]">
-          Ücretsiz abone ol
-        </a>
+        <div class="flex items-center gap-2">
+          <button
+            type="button"
+            class="tema-dugmesi grid h-10 w-10 place-items-center rounded-full border border-cizgi text-murekkep-2 transition-colors hover:border-murekkep-3 hover:text-murekkep"
+            data-tema-dugmesi
+            aria-label="Gece baskısına geç"
+          >
+            <svg class="ay" width="17" height="17" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <svg class="gunes" width="17" height="17" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8" />
+              <path
+                d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+          <a href={anaSayfa ? "#bulten" : "/#bulten"} class="dugme dugme-ana miknatis !py-2.5 !px-4 text-[0.92rem]">
+            Ücretsiz abone ol
+          </a>
+        </div>
       </div>
     </header>
 
@@ -122,6 +154,20 @@ const menu = [
               </a>
             </li>
             <li class="text-murekkep-2">Çerez ve takip kodu kullanılmaz.</li>
+            <li class="text-murekkep-2">
+              İlanınızın burada görünmesini istemiyor musunuz?{" "}
+              {SITE.iletisimEpostasi ? (
+                <a
+                  class="underline hover:no-underline"
+                  href={`mailto:${SITE.iletisimEpostasi}?subject=${encodeURIComponent("İlan kaldırma talebi")}`}
+                >
+                  Bize yazın
+                </a>
+              ) : (
+                <span class="text-kirmizi">(iletişim adresi yayından önce eklenecek)</span>
+              )}
+              , 2 iş günü içinde kaldırılır.
+            </li>
           </ul>
         </div>
       </div>
@@ -129,11 +175,17 @@ const menu = [
         <span>© {new Date().getFullYear()} InternReader</span>
         <span>LinkedIn, Kariyer.net gibi platformlardan veri çekmez · robots.txt kurallarına uyar</span>
       </div>
+      <div class="overflow-hidden px-3 pb-6 md:px-6" aria-hidden="true">
+        <p class="kunye baslik text-center font-[600] text-murekkep" data-kunye>
+          InternReader
+        </p>
+      </div>
     </footer>
 
     <script>
       import "../scripts/etkilesim";
-      import "../scripts/kaydirma";
+      import "../scripts/sahne";
+      import "../scripts/tema";
     </script>
   </body>
 </html>

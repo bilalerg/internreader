@@ -8,6 +8,7 @@ import {
   type PointerEvent as IsaretciOlayi,
   type ReactNode,
 } from "react";
+import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import type { Ilan } from "../veri/tipler";
 import {
   ALAN_SECENEKLERI,
@@ -143,7 +144,6 @@ export default function Bulten({ ilanlar: gomulu, guncelleme: gomuluTarih }: Pro
   );
   const eksikSecim = alanlar.size === 0 || seviyeler.size === 0;
   // Seçim değişince önizleme listesi yeniden kurulur ve öğeler sırayla belirir
-  const imza = [[...sehirler].sort(), [...alanlar].sort(), [...seviyeler].sort()].map((k) => k.join(",")).join("|");
   const hataliMi = (alan: string) => durum.tur === "hata" && durum.alanlar.includes(alan);
 
   async function gonder(e: FormEvent) {
@@ -350,7 +350,10 @@ export default function Bulten({ ilanlar: gomulu, guncelleme: gomuluTarih }: Pro
 
       {/* ---------------- e-posta önizlemesi ---------------- */}
       <div id="onizleme" className="scroll-mt-24 lg:sticky lg:top-24 lg:self-start">
-        <div className="kart isik isiyan-cerceve overflow-hidden" onPointerMove={isikTakip}>
+        <div className="kart isik relative overflow-hidden" onPointerMove={isikTakip}>
+          <span className="cerceve-isigi" aria-hidden="true">
+            <span />
+          </span>
           <div className="space-y-1 border-b border-cizgi bg-kagit-koyu/60 px-5 py-4 font-mono text-[0.74rem] text-murekkep-2">
             <p>
               <span className="text-murekkep-3">Kimden </span>InternReader
@@ -382,49 +385,61 @@ export default function Bulten({ ilanlar: gomulu, guncelleme: gomuluTarih }: Pro
                 </p>
               </div>
             ) : (
-              <ul key={imza} className="divide-y divide-cizgi">
-                {uyanlar.slice(0, ONIZLEME_SINIRI).map((i, sira) => (
-                  <li key={i.kimlik} className="belir py-3.5 first:pt-0" style={{ animationDelay: `${sira * 55}ms` }}>
-                    <a href={i.url} target="_blank" rel="noopener" className="group block">
-                      <p className="font-mono text-[0.72rem] tracking-wide text-murekkep-3">{i.firma_gorunen}</p>
-                      <p className="mt-1 font-medium leading-snug group-hover:underline group-hover:underline-offset-2">
-                        {i.baslik}
-                      </p>
-                      <p className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1 text-[0.8rem] text-murekkep-2">
-                        <span>{SEVIYE_ADI[i.seviye]}</span>
-                        <span>{ROL_ADI[i.rol]}</span>
-                        <span>
-                          {i.sehirler.length
-                            ? i.sehirler.map(sehirAdi).join(", ")
-                            : i.uzaktan
-                              ? "Uzaktan"
-                              : "Konum belirtilmemiş"}
-                        </span>
-                        {i.ayrinti?.calisma_modeli === "hibrit" && <span>Hibrit</span>}
-                        {i.ayrinti?.son_basvuru && <span>Son başvuru {gunAy(i.ayrinti.son_basvuru)}</span>}
-                        {i.yapay_zeka !== "yok" && <span className="fosfor fosfor-hemen">yapay zekâ</span>}
-                      </p>
-                      {i.ayrinti?.ozet && (
-                        <p className="mt-1.5 line-clamp-2 text-[0.82rem] leading-relaxed text-murekkep-2">
-                          {i.ayrinti.ozet}
-                        </p>
-                      )}
-                      {!!i.ayrinti?.teknolojiler.length && (
-                        <p className="mt-2 flex flex-wrap gap-1.5">
-                          {i.ayrinti.teknolojiler.slice(0, 4).map((t) => (
-                            <span
-                              key={t}
-                              className="rounded-[3px] border border-cizgi px-1.5 py-px font-mono text-[0.66rem] text-murekkep-3"
-                            >
-                              {t}
+              <MotionConfig reducedMotion="user">
+                <ul className="divide-y divide-cizgi">
+                  <AnimatePresence mode="popLayout" initial={false}>
+                    {uyanlar.slice(0, ONIZLEME_SINIRI).map((i, sira) => (
+                      <motion.li
+                        key={i.kimlik}
+                        layout
+                        initial={{ opacity: 0, y: 16 }}
+                        animate={{ opacity: 1, y: 0, transition: { delay: sira * 0.035 } }}
+                        exit={{ opacity: 0, scale: 0.96, transition: { duration: 0.18 } }}
+                        transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                        className="py-3.5 first:pt-0"
+                      >
+                        <a href={i.url} target="_blank" rel="noopener" className="group block">
+                          <p className="font-mono text-[0.72rem] tracking-wide text-murekkep-3">{i.firma_gorunen}</p>
+                          <p className="mt-1 font-medium leading-snug group-hover:underline group-hover:underline-offset-2">
+                            {i.baslik}
+                          </p>
+                          <p className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1 text-[0.8rem] text-murekkep-2">
+                            <span>{SEVIYE_ADI[i.seviye]}</span>
+                            <span>{ROL_ADI[i.rol]}</span>
+                            <span>
+                              {i.sehirler.length
+                                ? i.sehirler.map(sehirAdi).join(", ")
+                                : i.uzaktan
+                                  ? "Uzaktan"
+                                  : "Konum belirtilmemiş"}
                             </span>
-                          ))}
-                        </p>
-                      )}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+                            {i.ayrinti?.calisma_modeli === "hibrit" && <span>Hibrit</span>}
+                            {i.ayrinti?.son_basvuru && <span>Son başvuru {gunAy(i.ayrinti.son_basvuru)}</span>}
+                            {i.yapay_zeka !== "yok" && <span className="fosfor fosfor-hemen">yapay zekâ</span>}
+                          </p>
+                          {i.ayrinti?.ozet && (
+                            <p className="mt-1.5 line-clamp-2 text-[0.82rem] leading-relaxed text-murekkep-2">
+                              {i.ayrinti.ozet}
+                            </p>
+                          )}
+                          {!!i.ayrinti?.teknolojiler.length && (
+                            <p className="mt-2 flex flex-wrap gap-1.5">
+                              {i.ayrinti.teknolojiler.slice(0, 4).map((t) => (
+                                <span
+                                  key={t}
+                                  className="rounded-[3px] border border-cizgi px-1.5 py-px font-mono text-[0.66rem] text-murekkep-3"
+                                >
+                                  {t}
+                                </span>
+                              ))}
+                            </p>
+                          )}
+                        </a>
+                      </motion.li>
+                    ))}
+                  </AnimatePresence>
+                </ul>
+              </MotionConfig>
             )}
             {uyanlar.length > ONIZLEME_SINIRI && (
               <p className="mt-2 border-t border-cizgi pt-3 font-mono text-[0.75rem] text-murekkep-3">

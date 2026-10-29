@@ -259,6 +259,7 @@ export default function TurkiyeRadari({ harita, ornekler, toplam, gun }: Props) 
       if (azalt) ciz(performance.now(), null);
     };
     tema.addEventListener("change", temaDegisti);
+    document.addEventListener("temadegisti", temaDegisti); // menüdeki gündüz/gece düğmesi
 
     if (azalt) {
       // Hareket istemeyen kullanıcı: tek sabit kare, sayaçlar son değerde, iki örnek etiket
@@ -281,6 +282,7 @@ export default function TurkiyeRadari({ harita, ornekler, toplam, gun }: Props) 
       boyutGozcusu.disconnect();
       gorunurlukGozcusu.disconnect();
       tema.removeEventListener("change", temaDegisti);
+      document.removeEventListener("temadegisti", temaDegisti);
     };
   }, [harita, sehirIlanlari]);
 

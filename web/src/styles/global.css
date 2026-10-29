@@ -24,7 +24,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-tema="gunduz"]) {
     --kagit: #111214;
     --kagit-koyu: #17191c;
     --yuzey: #1b1d21;
@@ -39,6 +39,21 @@
     --golge: 0 1px 0 rgba(0, 0, 0, 0.3), 0 16px 40px -20px rgba(0, 0, 0, 0.7);
     color-scheme: dark;
   }
+}
+:root[data-tema="gece"] {
+  --kagit: #111214;
+  --kagit-koyu: #17191c;
+  --yuzey: #1b1d21;
+  --murekkep: #ece6d8;
+  --murekkep-2: #b2ac9e;
+  --murekkep-3: #7f7b72;
+  --cizgi: #2b2e33;
+  --fosfor: #e3d23a;
+  --fosfor-zemin: rgba(227, 210, 58, 0.18);
+  --yesil: #5fb98b;
+  --kirmizi: #e17b63;
+  --golge: 0 1px 0 rgba(0, 0, 0, 0.3), 0 16px 40px -20px rgba(0, 0, 0, 0.7);
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -142,14 +157,22 @@
   /* Gece baskısı: koyu zeminde açık yazının arkasına sarı şerit okunurluğu düşürür; yazı fosfor rengine döner,
      altında ince bir çizgi kalır */
   @media (prefers-color-scheme: dark) {
-    .fosfor {
+    :root:not([data-tema="gunduz"]) .fosfor {
       color: var(--fosfor);
       background-position: 0 96%;
     }
-    .fosfor[data-gorundu],
-    .fosfor-hemen {
+    :root:not([data-tema="gunduz"]) .fosfor[data-gorundu],
+    :root:not([data-tema="gunduz"]) .fosfor-hemen {
       background-size: 100% 0.08em;
     }
+  }
+  :root[data-tema="gece"] .fosfor {
+    color: var(--fosfor);
+    background-position: 0 96%;
+  }
+  :root[data-tema="gece"] .fosfor[data-gorundu],
+  :root[data-tema="gece"] .fosfor-hemen {
+    background-size: 100% 0.08em;
   }
 
   .kart {
@@ -265,14 +288,15 @@
     pointer-events: none;
     z-index: 60;
     opacity: 0.05;
-    mix-blend-mode: multiply;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.9 0'/></filter><rect width='100%' height='100%' filter='url(%23g)'/></svg>");
   }
   @media (prefers-color-scheme: dark) {
-    .gren::before {
-      mix-blend-mode: screen;
+    :root:not([data-tema="gunduz"]) .gren::before {
       opacity: 0.035;
     }
+  }
+  :root[data-tema="gece"] .gren::before {
+    opacity: 0.035;
   }
 }
 
@@ -479,33 +503,29 @@
   }
 }
 
-/* Işıyan çerçeve: kartın kenarında dönen ince fosfor ışığı (Magic UI'ın "border beam" fikri; kütüphanesiz,
-   açıyı @property ile tanımlayıp CSS'te canlandırarak) */
-@property --cerceve-aci {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
-}
-.isiyan-cerceve {
-  position: relative;
-}
-.isiyan-cerceve::after {
-  content: "";
+/* Işıyan çerçeve: kartın kenarında dönen ince fosfor ışığı (Magic UI'ın "border beam" fikri). Degrade bir kez
+   boyanır ve yalnızca döndürülür (transform, GPU'da; her karede yeniden boyama yok); halka maskesi sabit kalır. */
+.cerceve-isigi {
   position: absolute;
   inset: 0;
   z-index: 2;
+  overflow: hidden;
   padding: 1.5px;
   border-radius: inherit;
-  background: conic-gradient(from var(--cerceve-aci), transparent 0 76%, var(--fosfor) 88%, transparent 97%);
   mask:
     linear-gradient(#000 0 0) content-box exclude,
     linear-gradient(#000 0 0);
-  animation: cerceve-don 7s linear infinite;
   pointer-events: none;
+}
+.cerceve-isigi > span {
+  position: absolute;
+  inset: -100%;
+  background: conic-gradient(transparent 0 76%, var(--fosfor) 88%, transparent 97%);
+  animation: cerceve-don 7s linear infinite;
 }
 @keyframes cerceve-don {
   to {
-    --cerceve-aci: 360deg;
+    rotate: 360deg;
   }
 }
 
@@ -550,9 +570,133 @@ details[open]::details-content {
   block-size: auto;
 }
 
+/* Giriş: harita kartı perspektifle, aşağıdan yükselerek girer (kaydırma sahnesi dış kutuyu yönetir) */
+.giris-yuksel {
+  transform-origin: 50% 100%;
+  animation: giris-yuksel 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both;
+}
+@keyframes giris-yuksel {
+  from {
+    opacity: 0;
+    transform: perspective(1200px) rotateX(16deg) translateY(48px) scale(0.96);
+  }
+}
+
+/* Fosfor imleç: fareyi yumuşakça izleyen halka (gündüz mürekkep, gece fosfor) */
+.imlec {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 80;
+  width: 34px;
+  height: 34px;
+  margin: -17px 0 0 -17px;
+  border: 1.5px solid var(--murekkep);
+  border-radius: 999px;
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    width 0.25s ease,
+    height 0.25s ease,
+    margin 0.25s ease,
+    background-color 0.25s ease,
+    opacity 0.2s ease;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema="gunduz"]) .imlec {
+    border-color: var(--fosfor);
+  }
+}
+:root[data-tema="gece"] .imlec {
+  border-color: var(--fosfor);
+}
+
+.imlec[data-gorunur] {
+  opacity: 0.85;
+}
+.imlec[data-ustunde] {
+  width: 58px;
+  height: 58px;
+  margin: -29px 0 0 -29px;
+  background: color-mix(in srgb, var(--fosfor) 22%, transparent);
+}
+.imlec[data-yazi] {
+  opacity: 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .isiyan-cerceve::after {
+  .cerceve-isigi > span {
     animation: none;
     opacity: 0.6;
   }
+}
+
+/* Tema düğmesi: gündüzde ay, gecede güneş görünür (bir sonraki baskıyı gösterir) */
+.tema-dugmesi .gunes {
+  display: none;
+}
+:root[data-tema="gece"] .tema-dugmesi .ay {
+  display: none;
+}
+:root[data-tema="gece"] .tema-dugmesi .gunes {
+  display: block;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema="gunduz"]) .tema-dugmesi .ay {
+    display: none;
+  }
+  :root:not([data-tema="gunduz"]) .tema-dugmesi .gunes {
+    display: block;
+  }
+}
+/* Tema geçişinde sayfa geçişi animasyonları devre dışı: yeni tema dairesel maskeyle açılır (tema.ts) */
+.tema-gecisi::view-transition-old(root),
+.tema-gecisi::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+.tema-gecisi .ust-menu {
+  view-transition-name: none; /* menü de dairenin içinde kalsın */
+}
+
+/* Fareye yakınlıkla kalınlaşan başlık: değişken yazı tipinin ağırlık ekseni yumuşakça değişir */
+h1 .kelime > span {
+  transition: font-variation-settings 0.35s ease;
+}
+
+/* Sonraki baskıya geri sayım: nabız gibi atan fosfor nokta */
+.nabiz {
+  position: relative;
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--fosfor);
+}
+.nabiz::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--fosfor);
+  animation: nabiz 1.8s ease-out infinite;
+}
+@keyframes nabiz {
+  to {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+/* Künye: sayfanın sonunda dev "InternReader" yazısı (gazete künyesi gibi); harfler kaydırdıkça yükselir */
+.kunye {
+  font-size: clamp(2.6rem, 8.5vw, 7.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+  white-space: nowrap;
+}
+
+/* Giriş sahnesi: kaydırınca büyüyen harita sayfayı yana taşırmasın (clip: kaydırma kabı oluşturmaz, yapışkan menü bozulmaz) */
+[data-giris] {
+  overflow-x: clip;
 }
