@@ -119,3 +119,16 @@ def test_saglik_veritabanini_kontrol_eder(ortam):
     ayar = dataclasses.replace(ayarlari_oku(), gizli_anahtar="test-anahtari")
     bozuk = TestClient(uygulama_olustur(ayar, BozukOturum(), SahteGonderici()))
     assert bozuk.get("/api/saglik").status_code == 503
+
+
+def test_gunluk_onay_siniri_kotayi_botlardan_korur(oturum):
+    ayar = dataclasses.replace(
+        ayarlari_oku(), site_adresi="https://internreader.test", gizli_anahtar="test-anahtari", gunluk_onay_siniri=2
+    )
+    gonderici = SahteGonderici()
+    istemci = TestClient(uygulama_olustur(ayar, oturum, gonderici))
+    for i in range(2):
+        assert istemci.post("/api/abone", json={**KAYIT, "eposta": f"o{i}@ornek.com"}).status_code == 202
+    cevap = istemci.post("/api/abone", json={**KAYIT, "eposta": "fazla@ornek.com"})
+    assert cevap.status_code == 503 and cevap.json()["hata"] == "gunluk_sinir"
+    assert len(gonderici.gidenler) == 2  # sınır dolunca e-posta gönderilmez

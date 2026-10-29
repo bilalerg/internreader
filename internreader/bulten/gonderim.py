@@ -28,6 +28,9 @@ from internreader.yayin.whatsapp import taze_mi
 kayit = logging.getLogger(__name__)
 
 
+ARDISIK_HATA_SINIRI = 5  # art arda bu kadar hata: sorun tek abonede değil, gönderimin kendisinde
+
+
 def bultenleri_gonder(
     oturum: sessionmaker, gonderici: EpostaGonderici, ayar: Ayarlar, an: datetime | None = None
 ) -> dict:
@@ -39,11 +42,27 @@ def bultenleri_gonder(
         ilanlar = [i for i in (zenginlestir(x) for x in depo.yayinlanacak_ilanlar(o)) if taze_mi(i, an)]
         aboneler = [(a.id, a.eposta, dict(a.tercihler or {}), a.siklik) for a in depo.gonderime_hazir_aboneler(o, an)]
 
-    rapor = {"hazir_abone": len(aboneler), "gonderilen": 0, "bos": 0, "hata": 0, "ilan": 0}
+    rapor = {"hazir_abone": len(aboneler), "gonderilen": 0, "bos": 0, "hata": 0, "ilan": 0, "ertelendi": 0}
+    ardisik_hata = 0
     # SMTP göndericisi bağlam yöneticisiyse bütün e-postalar tek bağlantıdan gider
     baglam = gonderici if hasattr(gonderici, "__enter__") else nullcontext(gonderici)
     with baglam as g:
-        for abone_id, eposta, tercihler, siklik in aboneler:
+        for sira, (abone_id, eposta, tercihler, siklik) in enumerate(aboneler):
+            if ayar.gunluk_bulten_siniri and rapor["gonderilen"] >= ayar.gunluk_bulten_siniri:
+                # Günlük e-posta bütçesi doldu: kalanlar ertesi gün listenin başında (adil sıra, depo/bulten.py)
+                rapor["ertelendi"] = len(aboneler) - sira
+                kayit.warning(
+                    "Günlük bülten sınırı (%d) doldu; %d abone yarına kaldı",
+                    ayar.gunluk_bulten_siniri,
+                    rapor["ertelendi"],
+                )
+                break
+            if ardisik_hata >= ARDISIK_HATA_SINIRI:
+                rapor["ertelendi"] = len(aboneler) - sira
+                kayit.error(
+                    "Art arda %d gönderim hatası: e-posta kotası ya da SMTP ayarı; gönderim durduruldu", ardisik_hata
+                )
+                break
             with oturum() as o:
                 gonderilmis = depo.gonderilen_kimlikler(o, abone_id)
             secilen = [i for i in ilanlar if i["kimlik"] not in gonderilmis and eslesir(i, tercihler)][:AZAMI_ILAN]
@@ -63,9 +82,11 @@ def bultenleri_gonder(
             try:
                 g.gonder(ileti)
                 durum = "gonderildi"
+                ardisik_hata = 0
             except Exception:  # tek abonenin hatası diğerlerini durdurmaz
                 kayit.exception("Bülten gönderilemedi (abone %d)", abone_id)
                 durum = "hata"
+                ardisik_hata += 1
             with oturum.begin() as o:
                 if durum == "gonderildi":
                     depo.gonderim_kaydet(o, depo.abone_id_ile(o, abone_id), [i["kimlik"] for i in secilen], an)

@@ -22,7 +22,8 @@ git push
 
 ## 2. Neon: veritabanı (5 dk)
 1. `neon.tech` → **Sign up** → **Continue with GitHub**.
-2. Proje oluştur: ad `internreader`, Postgres sürümü varsayılan, bölge **AWS Europe Central 1 (Frankfurt)**.
+2. Proje oluştur: ad `internreader`, Postgres sürümü varsayılan, bölge **AWS US East 2 (Ohio)** (GitHub Actions
+   makineleri ve Vercel'in varsayılan bölgesi Amerika'nın doğusunda; veritabanı yanlarında olunca sorgular hızlı).
 3. **Connect** düğmesi → **Connection pooling** açık olsun → bağlantı adresini kopyala
    (`postgresql://...-pooler...neon.tech/neondb?sslmode=require...`). Bu adres = `DATABASE_URL`.
    Başındaki `postgresql://` olduğu gibi kalabilir; kod sürücüyü kendisi ekler.
@@ -89,6 +90,12 @@ Ertesi sabah 07:00'deki çalışmadan sonra bülten gelir; hemen denemek için A
 - İlan kaldırma talebi gelirse: yerelde `DATABASE_URL`'i Neon adresine ayarlayıp `python -m internreader firma-kapat "Firma"`.
 
 ## Sınırlar ve bilinmesi gerekenler
+- **Ani kalabalık:** site (Vercel CDN) ve API (sunucusuz) kendiliğinden ölçeklenir; veritabanı küçük kalır.
+  **Darboğaz e-posta kotasıdır** (Brevo ücretsiz: günde 300). Kod bunu korur: günde en fazla 250 bülten
+  (`INTERNREADER_GUNLUK_BULTEN_SINIRI`) ve 50 onay e-postası (`INTERNREADER_GUNLUK_ONAY_SINIRI`). Sınır dolunca
+  bülten alamayanlar ertesi gün ilk sırada; onay sınırı dolarsa form "yarın tekrar dene" der. Art arda 5
+  gönderim hatasında bülten durur (kota ya da SMTP sorunu). Aboneler ~200'ü geçince: Brevo ücretli plan ya da
+  haftalık bülteni varsayılan yapmak; değerleri GitHub ve Vercel'de yükselt.
 - **Vercel Hobby ticari olmayan kullanım içindir.** Reklam/sponsor gelirse Pro plan (ayda 20 $) gerekir.
 - **Yapay zekâ harcaması:** çalıştırma başına en fazla 0,50 $, ayda en fazla 2 $ (kod frenler). Kredi bitince sistem yapay
   zekâsız (yedek kurallarla) çalışmaya devam eder.

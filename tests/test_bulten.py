@@ -149,3 +149,30 @@ def test_gercek_smtp_gelistirme_anahtariyla_gonderilmez(oturum):
     ayar = dataclasses.replace(ayarlari_oku(), smtp_sunucu="smtp.ornek.com", gizli_anahtar=GELISTIRME_ANAHTARI)
     with pytest.raises(RuntimeError, match="GIZLI_ANAHTAR"):
         bultenleri_gonder(oturum, SahteGonderici(), ayar)
+
+
+def test_gunluk_bulten_siniri_ve_adil_sira(oturum):
+
+    ilan_ekle(oturum, "https://f.com/1", "Yazılım Stajyeri", "İstanbul")
+    for e in ("a@x.com", "b@x.com", "c@x.com"):
+        abone_ekle(oturum, e, HEPSI)
+    sinirli = dataclasses.replace(AYAR, gunluk_bulten_siniri=2)
+    g = SahteGonderici()
+    rapor = bultenleri_gonder(oturum, g, sinirli)
+    assert rapor["gonderilen"] == 2 and rapor["ertelendi"] == 1
+    ilk_gun = {e.alici for e in g.gidenler}
+    # Ertesi gün: dünkü sınır yüzünden alamayan abone ilk sırada (aynı kişi her gün dışarıda kalmaz)
+    ilan_ekle(oturum, "https://f.com/2", "Backend Stajyeri", "İstanbul")
+    g2 = SahteGonderici()
+    bultenleri_gonder(oturum, g2, sinirli)
+    kalan = {"a@x.com", "b@x.com", "c@x.com"} - ilk_gun
+    assert g2.gidenler[0].alici in kalan
+
+
+def test_art_arda_hatada_gonderim_durur(oturum):
+    ilan_ekle(oturum, "https://f.com/1", "Yazılım Stajyeri", "İstanbul")
+    adresler = [f"k{i}@x.com" for i in range(8)]
+    for e in adresler:
+        abone_ekle(oturum, e, HEPSI)
+    rapor = bultenleri_gonder(oturum, SahteGonderici(hatali=set(adresler)), AYAR)
+    assert rapor["hata"] == 5 and rapor["ertelendi"] == 3  # kota dolmuşsa 8'ini de boşuna denemez

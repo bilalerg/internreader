@@ -30,6 +30,7 @@ from internreader.depo.bulten import (
     gonderilen_kimlikler,
     gonderim_kaydet,
     gonderime_hazir_aboneler,
+    son_gun_onay_sayisi,
 )
 from internreader.depo.durum import (
     durum_al,
@@ -82,6 +83,7 @@ __all__ = [
     "gonderilen_kimlikler",
     "gonderim_kaydet",
     "gonderime_hazir_aboneler",
+    "son_gun_onay_sayisi",
     "imzayla_kararlar",
     "utc",
     "firma_anahtari",

@@ -52,6 +52,10 @@ class Ayarlar:
     eposta_kimden: str  # "InternReader <bulten@alan-adi>"
     eposta_yanit: str  # yanıtların gideceği adres (boş olabilir)
     yz_toplu: bool  # yapay zekâ isteklerini Message Batches API ile yarı fiyatına gönder (sonuç dakikalar sürebilir)
+    # Günlük e-posta bütçesi. Varsayılanlar Brevo'nun ücretsiz planına (günde 300) göre: 250 bülten + 50 onay.
+    # Ücretli plana geçilince ortam değişkenleriyle yükseltilir; 0 = sınırsız.
+    gunluk_bulten_siniri: int = 250
+    gunluk_onay_siniri: int = 50
     arama_saglayici: str = ""  # "serper", "brave" ya da "" (arama keşfi kapalı)
     arama_anahtari: str = field(default="", repr=False)  # seçilen sağlayıcının API anahtarı; asla yazdırılmaz
 
@@ -95,6 +99,8 @@ def ayarlari_oku() -> Ayarlar:
         eposta_kimden=_ortam("EPOSTA_KIMDEN", "InternReader <bulten@localhost>"),
         eposta_yanit=_ortam("EPOSTA_YANIT", ""),
         yz_toplu=_ortam("INTERNREADER_YZ_TOPLU", "0") == "1",
+        gunluk_bulten_siniri=int(_ortam("INTERNREADER_GUNLUK_BULTEN_SINIRI", "250")),
+        gunluk_onay_siniri=int(_ortam("INTERNREADER_GUNLUK_ONAY_SINIRI", "50")),
         arama_saglayici=arama_saglayici,
         arama_anahtari=arama_anahtari,
     )

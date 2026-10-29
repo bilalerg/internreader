@@ -19,7 +19,22 @@ def gonderime_hazir_aboneler(oturum: Session, an: datetime) -> list[Abone]:
         son = utc(abone.son_bulten)
         if abone.siklik == "gunluk" or son is None or son <= an - HAFTALIK_ARALIK:
             hazir.append(abone)
+    # Adil sıra: hiç bülten almamış ya da en uzun süredir bekleyen önce. Günlük e-posta sınırı dolarsa kalanlar
+    # ertesi gün listenin başına geçer; aynı kişiler her gün dışarıda kalmaz.
+    hazir.sort(key=lambda a: (a.son_bulten is not None, utc(a.son_bulten) or an))
     return hazir
+
+
+def son_gun_onay_sayisi(oturum: Session, an: datetime) -> int:
+    """Son 24 saatte onay e-postası gönderilen (bekleyen) kayıt sayısı: e-posta kotasını botlardan korumak için."""
+    return (
+        oturum.scalar(
+            select(func.count())
+            .select_from(Abone)
+            .where(Abone.durum == "bekliyor", Abone.onay_jetonu_tarihi >= an - timedelta(days=1))
+        )
+        or 0
+    )
 
 
 def gonderilen_kimlikler(oturum: Session, abone_id: int) -> set[str]:

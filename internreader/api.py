@@ -29,9 +29,9 @@ from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import sessionmaker
 
-from internreader import abonelik
+from internreader import abonelik, depo
 from internreader.ayar import GELISTIRME_ANAHTARI, Ayarlar, ayarlari_oku
-from internreader.db import oturum_fabrikasi
+from internreader.db import oturum_fabrikasi, simdi
 from internreader.eposta import EpostaGonderici, dogrulama_epostasi, gonderici_olustur
 from internreader.isleme.sehir import SEHIRLER
 
@@ -150,6 +150,13 @@ def uygulama_olustur(
             kayit.info("Bal küpü dolu bir kayıt isteği yok sayıldı")
             return KAYIT_CEVABI
         eposta = str(govde.eposta).lower()
+        if ayar.gunluk_onay_siniri:
+            with oturum() as o:
+                if depo.son_gun_onay_sayisi(o, simdi()) >= ayar.gunluk_onay_siniri:
+                    kayit.warning("Günlük onay e-postası sınırı (%d) doldu", ayar.gunluk_onay_siniri)
+                    return _hata(
+                        503, "gunluk_sinir", "Bugün çok fazla kayıt geldi. Yarın tekrar dener misin? Kusura bakma."
+                    )
         tercihler = {"sehirler": govde.sehirler, "alanlar": govde.alanlar, "seviyeler": govde.seviyeler}
         with oturum.begin() as o:
             jeton = abonelik.kayit_iste(o, eposta, tercihler, govde.siklik, govde.kaynak or "site")
