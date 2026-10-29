@@ -58,6 +58,17 @@ jobs:
           python -m internreader kesif
       - name: Tara, yayınla, bülten, bakım
         run: python -m internreader calistir
+      - name: Özet (abone, ilan, yapay zekâ harcaması)
+        # Çalışma sayfasının "Summary" bölümünde görünür. Yalnızca sayılar; e-posta adresi yazılmaz.
+        if: ${{ success() || failure() }}
+        continue-on-error: true
+        run: |
+          {
+            echo "## InternReader durumu"
+            echo '```json'
+            python -m internreader durum
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
       - name: Site verisini depoya ekle (Vercel yeniden yayınlar)
         run: |
           mkdir -p web/public/veri
