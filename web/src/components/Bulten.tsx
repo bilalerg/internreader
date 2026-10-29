@@ -11,7 +11,10 @@ import {
 import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import type { Ilan } from "../veri/tipler";
 import {
+  ALAN_ADI,
   ALAN_SECENEKLERI,
+  CALISMA_MODELI_ADI,
+  CALISMA_MODELI_SECENEKLERI,
   ROL_ADI,
   SEHIR_SECENEKLERI,
   SEVIYE_ADI,
@@ -37,11 +40,25 @@ type Durum =
 
 const ONIZLEME_SINIRI = 6;
 
-function eslesir(ilan: Ilan, sehirler: Set<string>, alanlar: Set<string>, seviyeler: Set<string>) {
-  if (!alanlar.has(ilan.rol) || !seviyeler.has(ilan.seviye)) return false;
-  if (sehirler.size === 0) return true;
-  if (ilan.sehirler.some((s) => sehirler.has(s)) || (sehirler.has("uzaktan") && ilan.uzaktan)) return true;
-  return ilan.sehirler.length === 0 && !ilan.uzaktan; // konumu yazmayan Türk şirketi: dahil, "konum belirtilmemiş" etiketiyle
+interface Secimler {
+  sehirler: Set<string>;
+  alanlar: Set<string>;
+  seviyeler: Set<string>;
+  modeller: Set<string>; // boş = fark etmez
+  sadeceGirisim: boolean;
+}
+
+// internreader/bulten/secim.py → eslesir ile AYNI kural: önizlemede görülen, e-postada gelen
+function eslesir(ilan: Ilan, s: Secimler) {
+  const model = ilan.calisma_modeli ?? "belirsiz";
+  if (!(ilan.alanlar ?? [ilan.rol]).some((a) => s.alanlar.has(a)) || !s.seviyeler.has(ilan.seviye)) return false;
+  if (s.modeller.size > 0 && !s.modeller.has(model)) return false; // belirtilmemiş model yalnızca "fark etmez"de
+  if (s.sadeceGirisim && !ilan.girisim) return false;
+  if (s.sehirler.size === 0) return true;
+  // Uzaktan ilan her şehirden yapılabilir; konumu yazmayan Türk şirketi de dahil, "konum belirtilmemiş" etiketiyle
+  return (
+    ilan.uzaktan || model === "uzaktan" || ilan.sehirler.length === 0 || ilan.sehirler.some((x) => s.sehirler.has(x))
+  );
 }
 
 function kaynakOku(): string {
@@ -118,6 +135,8 @@ export default function Bulten({ ilanlar: gomulu, guncelleme: gomuluTarih }: Pro
   const [sehirler, setSehirler] = useState<Set<string>>(new Set());
   const [alanlar, setAlanlar] = useState<Set<string>>(new Set(ALAN_SECENEKLERI));
   const [seviyeler, setSeviyeler] = useState<Set<string>>(new Set(SEVIYE_SECENEKLERI));
+  const [modeller, setModeller] = useState<Set<string>>(new Set());
+  const [sadeceGirisim, setSadeceGirisim] = useState(false);
   const [siklik, setSiklik] = useState<"gunluk" | "haftalik">("gunluk");
   const [eposta, setEposta] = useState("");
   const [kvkk, setKvkk] = useState(false);
@@ -139,8 +158,8 @@ export default function Bulten({ ilanlar: gomulu, guncelleme: gomuluTarih }: Pro
   }, [gomuluTarih]);
 
   const uyanlar = useMemo(
-    () => ilanlar.filter((i) => eslesir(i, sehirler, alanlar, seviyeler)),
-    [ilanlar, sehirler, alanlar, seviyeler],
+    () => ilanlar.filter((i) => eslesir(i, { sehirler, alanlar, seviyeler, modeller, sadeceGirisim })),
+    [ilanlar, sehirler, alanlar, seviyeler, modeller, sadeceGirisim],
   );
   const eksikSecim = alanlar.size === 0 || seviyeler.size === 0;
   // Seçim değişince önizleme listesi yeniden kurulur ve öğeler sırayla belirir
@@ -159,6 +178,8 @@ export default function Bulten({ ilanlar: gomulu, guncelleme: gomuluTarih }: Pro
           sehirler: [...sehirler],
           alanlar: [...alanlar],
           seviyeler: [...seviyeler],
+          calisma_modelleri: [...modeller],
+          sadece_girisim: sadeceGirisim,
           siklik,
           kvkk_onay: kvkk,
           kaynak: kaynakOku(),
@@ -201,7 +222,7 @@ export default function Bulten({ ilanlar: gomulu, guncelleme: gomuluTarih }: Pro
             <p className="mt-4 leading-relaxed text-murekkep-2">
               <strong className="text-murekkep">{durum.eposta}</strong> adresine bir onay bağlantısı gönderdik.
               Bağlantıya tıkladığında aboneliğin başlar; ilk bültenin{" "}
-              {siklik === "gunluk" ? "ertesi sabah 07:00'de" : "hafta başında"} gelir.
+              {siklik === "gunluk" ? "ertesi sabah 07:00'de" : "pazartesi sabahı 07:00'de"} gelir.
             </p>
             <p className="mt-3 text-[0.92rem] text-murekkep-3">E-posta birkaç dakikada gelmezse spam klasörüne bak.</p>
             <button type="button" className="dugme dugme-ikincil mt-6" onClick={() => setDurum({ tur: "bos" })}>
@@ -227,14 +248,20 @@ export default function Bulten({ ilanlar: gomulu, guncelleme: gomuluTarih }: Pro
             </fieldset>
 
             <fieldset>
-              <legend className={grupBasligi}>2. Hangi alan?</legend>
+              <legend className={grupBasligi}>
+                <span>2. Hangi alan?</span>
+                <span className="font-mono text-[0.72rem] font-normal text-murekkep-3">biri yeter</span>
+              </legend>
               <div className="flex flex-wrap gap-2">
                 {ALAN_SECENEKLERI.map((a) => (
                   <Secim key={a} secili={alanlar.has(a)} onChange={() => setAlanlar((k) => degistir(k, a))}>
-                    {ROL_ADI[a]}
+                    {ALAN_ADI[a]}
                   </Secim>
                 ))}
               </div>
+              <p className="mt-2 text-[0.8rem] text-murekkep-3">
+                Bir ilan birden çok alana girebilir: savunma şirketindeki yazılım stajı hem Yazılım hem Savunma.
+              </p>
             </fieldset>
 
             <fieldset>
@@ -246,6 +273,29 @@ export default function Bulten({ ilanlar: gomulu, guncelleme: gomuluTarih }: Pro
                   </Secim>
                 ))}
               </div>
+            </fieldset>
+
+            <fieldset>
+              <legend className={grupBasligi}>
+                <span>4. Nasıl çalışmak istersin?</span>
+                <span className="font-mono text-[0.72rem] font-normal text-murekkep-3">
+                  {modeller.size ? `${modeller.size} seçili` : "hiçbiri = fark etmez"}
+                </span>
+              </legend>
+              <div className="flex flex-wrap gap-2">
+                {CALISMA_MODELI_SECENEKLERI.map((m) => (
+                  <Secim key={m} secili={modeller.has(m)} onChange={() => setModeller((k) => degistir(k, m))}>
+                    {CALISMA_MODELI_ADI[m]}
+                  </Secim>
+                ))}
+                <Secim secili={sadeceGirisim} onChange={() => setSadeceGirisim((d) => !d)}>
+                  Yalnızca girişimler
+                </Secim>
+              </div>
+              <p className="mt-2 text-[0.8rem] text-murekkep-3">
+                Çalışma modelini yazmayan ilanlar yalnızca &ldquo;fark etmez&rdquo;de gelir. Girişim: teknopark ve yapay
+                zekâ girişimi listelerindeki firmalar; bankalar ve büyük şirketler hariç.
+              </p>
             </fieldset>
 
             {/* Telefonda önizleme formun altında kalır: seçimin sonucunu burada da göster */}
@@ -261,7 +311,7 @@ export default function Bulten({ ilanlar: gomulu, guncelleme: gomuluTarih }: Pro
             </p>
 
             <fieldset className="border-t border-cizgi pt-8">
-              <legend className={grupBasligi}>4. Nereye, ne sıklıkla?</legend>
+              <legend className={grupBasligi}>5. Nereye, ne sıklıkla?</legend>
               <label htmlFor={`${kimlik}-eposta`} className="sr-only">
                 E-posta adresin
               </label>
@@ -292,7 +342,7 @@ export default function Bulten({ ilanlar: gomulu, guncelleme: gomuluTarih }: Pro
                         siklik === s ? "bg-murekkep text-kagit" : "text-murekkep-2 hover:text-murekkep"
                       }`}
                     >
-                      {s === "gunluk" ? "Her sabah" : "Haftada bir"}
+                      {s === "gunluk" ? "Her sabah" : "Pazartesileri"}
                     </button>
                   ))}
                 </div>
@@ -413,7 +463,13 @@ export default function Bulten({ ilanlar: gomulu, guncelleme: gomuluTarih }: Pro
                                   ? "Uzaktan"
                                   : "Konum belirtilmemiş"}
                             </span>
-                            {i.ayrinti?.calisma_modeli === "hibrit" && <span>Hibrit</span>}
+                            {(i.alanlar ?? [])
+                              .filter((a) => a === "oyun" || a === "savunma")
+                              .map((a) => (
+                                <span key={a}>{ALAN_ADI[a]}</span>
+                              ))}
+                            {(i.calisma_modeli ?? i.ayrinti?.calisma_modeli) === "hibrit" && <span>Hibrit</span>}
+                            {i.girisim && <span>Girişim</span>}
                             {i.ayrinti?.son_basvuru && <span>Son başvuru {gunAy(i.ayrinti.son_basvuru)}</span>}
                             {i.yapay_zeka !== "yok" && <span className="fosfor fosfor-hemen">yapay zekâ</span>}
                           </p>

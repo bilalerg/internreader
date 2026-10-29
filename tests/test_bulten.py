@@ -1,7 +1,7 @@
 """Bülten: seçim kuralı, kime ne gider, tekrar gönderilmeme, haftalık zamanlama, hata yalıtımı, e-posta biçimi."""
 
 import dataclasses
-from datetime import timedelta
+from datetime import UTC, datetime, timedelta
 
 import pytest
 from fastapi.testclient import TestClient
@@ -15,6 +15,7 @@ from internreader.bulten import bultenleri_gonder, eslesir
 from internreader.db import Abone, simdi
 from internreader.eposta import Eposta, SmtpGonderici
 from internreader.model import Ilan
+from internreader.yayin import TURKIYE_SAATI
 
 AYAR = dataclasses.replace(ayarlari_oku(), site_adresi="https://internreader.test", gizli_anahtar="test-anahtari")
 HEPSI = {"alanlar": ["yazilim", "yapay_zeka", "veri"], "seviyeler": ["staj", "uzun_donem_staj", "yeni_mezun", "junior"]}
@@ -56,6 +57,7 @@ def test_secim_kurali_sitedeki_onizlemeyle_ayni():
     assert not eslesir(ilan, {**HEPSI, "sehirler": ["ankara"]})
     assert eslesir({**ilan, "sehirler": []}, {**HEPSI, "sehirler": ["ankara"]})  # konum belirtilmemiş: dahil
     assert eslesir({**ilan, "sehirler": [], "uzaktan": True}, {**HEPSI, "sehirler": ["uzaktan"]})
+    assert eslesir({**ilan, "sehirler": [], "uzaktan": True}, {**HEPSI, "sehirler": ["ankara"]})  # uzaktan: her şehir
     assert not eslesir(ilan, {**HEPSI, "alanlar": ["veri"]})
     assert not eslesir({**ilan, "seviye": "yari_zamanli"}, HEPSI)
 
@@ -86,14 +88,29 @@ def test_yalnizca_onayli_abonelere_uyan_yeni_ilanlar_bir_kez_gider(oturum):
     assert "Junior Backend Developer" in metin and "Software Engineering Intern" not in metin
 
 
-def test_haftalik_abone_haftada_bir_alir(oturum):
+def test_haftalik_abone_pazartesi_sabahi_alir(oturum):
     ilan_ekle(oturum, "https://u/1", "Software Engineering Intern", "Istanbul")
     abone_ekle(oturum, "hafta@x.com", HEPSI, siklik="haftalik")
-    an = simdi()
-    assert bultenleri_gonder(oturum, SahteGonderici(), AYAR, an)["gonderilen"] == 1
+    bugun = simdi().astimezone(TURKIYE_SAATI)
+    # Önümüzdeki pazartesi 07:00 (Türkiye) = 04:00 UTC: sabah işinin saati
+    pazartesi = (bugun + timedelta(days=(7 - bugun.weekday()) % 7)).replace(hour=7, minute=0, second=0, microsecond=0)
+    assert bultenleri_gonder(oturum, SahteGonderici(), AYAR, pazartesi - timedelta(days=5))["hazir_abone"] == 0
+    assert bultenleri_gonder(oturum, SahteGonderici(), AYAR, pazartesi)["gonderilen"] == 1
     ilan_ekle(oturum, "https://u/2", "AI Intern", "Istanbul", rol="yapay_zeka")
-    assert bultenleri_gonder(oturum, SahteGonderici(), AYAR, an + timedelta(days=2))["hazir_abone"] == 0
-    assert bultenleri_gonder(oturum, SahteGonderici(), AYAR, an + timedelta(days=7))["gonderilen"] == 1
+    # Aynı pazartesi elle ikinci çalıştırma ve salı: haftalık aboneye yeni e-posta yok
+    assert bultenleri_gonder(oturum, SahteGonderici(), AYAR, pazartesi + timedelta(hours=8))["hazir_abone"] == 0
+    assert bultenleri_gonder(oturum, SahteGonderici(), AYAR, pazartesi + timedelta(days=1))["hazir_abone"] == 0
+    g = SahteGonderici()
+    assert bultenleri_gonder(oturum, g, AYAR, pazartesi + timedelta(days=7))["gonderilen"] == 1
+    assert "AI Intern" in g.gidenler[0].metin and "Software Engineering Intern" not in g.gidenler[0].metin
+
+
+def test_haftalik_gun_turkiye_saatine_gore(oturum):
+    abone_ekle(oturum, "hafta@x.com", HEPSI, siklik="haftalik")
+    with oturum() as o:
+        # Pazar 22:00 UTC = pazartesi 01:00 Türkiye → hazır; pazartesi 21:30 UTC = salı 00:30 Türkiye → değil
+        assert len(depo.gonderime_hazir_aboneler(o, datetime(2026, 11, 1, 22, 0, tzinfo=UTC))) == 1
+        assert depo.gonderime_hazir_aboneler(o, datetime(2026, 11, 2, 21, 30, tzinfo=UTC)) == []
 
 
 def test_bir_abonenin_hatasi_digerlerini_durdurmaz_ve_gonderilmis_sayilmaz(oturum):

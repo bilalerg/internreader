@@ -37,9 +37,24 @@ export const SEHIRLER: Record<string, { ad: string; konum: [number, number] }> =
   samsun: { ad: "Samsun", konum: [36.33, 41.29] },
 };
 
-// Bülten formundaki şehir seçenekleri (en çok ilan çıkan şehirler + uzaktan)
-export const SEHIR_SECENEKLERI = ["istanbul", "ankara", "izmir", "kocaeli", "bursa", "uzaktan"] as const;
-export const ALAN_SECENEKLERI = ["yazilim", "yapay_zeka", "veri"] as const;
+export const ALAN_ADI: Record<string, string> = {
+  yazilim: "Yazılım",
+  yapay_zeka: "Yapay zekâ",
+  veri: "Veri",
+  oyun: "Oyun",
+  savunma: "Savunma · siber · havacılık",
+};
+
+export const CALISMA_MODELI_ADI: Record<string, string> = {
+  uzaktan: "Uzaktan",
+  hibrit: "Hibrit",
+  yerinde: "Ofiste",
+};
+
+// Bülten formundaki şehir seçenekleri (en çok ilan çıkan şehirler). "Uzaktan" artık çalışma modelinde seçiliyor.
+export const SEHIR_SECENEKLERI = ["istanbul", "ankara", "izmir", "kocaeli", "bursa"] as const;
+export const ALAN_SECENEKLERI = ["yazilim", "yapay_zeka", "veri", "oyun", "savunma"] as const;
+export const CALISMA_MODELI_SECENEKLERI = ["uzaktan", "hibrit", "yerinde"] as const;
 export const SEVIYE_SECENEKLERI = ["staj", "uzun_donem_staj", "yeni_mezun", "junior", "yari_zamanli"] as const;
 
 export function sehirAdi(anahtar: string): string {

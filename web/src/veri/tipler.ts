@@ -3,6 +3,8 @@
 
 export type Seviye = "staj" | "uzun_donem_staj" | "yari_zamanli" | "junior" | "yeni_mezun";
 export type Rol = "yazilim" | "yapay_zeka" | "veri";
+export type Alan = Rol | "oyun" | "savunma"; // bir ilan birden çok alana girebilir (internreader/isleme/kategori.py)
+export type CalismaModeli = "uzaktan" | "hibrit" | "yerinde" | "belirsiz";
 export type YapayZeka = "ozunde" | "arti" | "yok";
 
 /** Yapay zekânın ilan metninden çıkardığı, koddaki denetimden geçmiş bilgiler (yalnızca öğrenciye uygun ilanlarda). */
@@ -31,6 +33,10 @@ export interface Ilan {
   sehirler: string[];
   uzaktan: boolean;
   ayrinti?: IlanAyrintisi | null; // eski JSON'da yok
+  // Bülten kategorileri (29.10'dan önceki JSON'da yok: alanlar = [rol], model belirsiz, girişim değil sayılır)
+  alanlar?: Alan[];
+  calisma_modeli?: CalismaModeli;
+  girisim?: boolean;
 }
 
 export interface IlanListesi {

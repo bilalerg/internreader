@@ -6,8 +6,9 @@ from datetime import datetime
 from sqlalchemy import select, update
 from sqlalchemy.orm import Session
 
-from internreader.db import IlanAyrinti, IlanKaydi, Siniflandirma, simdi
+from internreader.db import Firma, IlanAyrinti, IlanKaydi, Siniflandirma, simdi
 from internreader.depo._ortak import _parcalar, utc
+from internreader.isleme.kategori import alanlari_bul, calisma_modeli, girisim_mi
 from internreader.isleme.maske import kisisel_veriyi_maskele
 from internreader.model import HEDEF_ROLLER, OGRENCI_SEVIYELERI, Ilan
 
@@ -80,7 +81,8 @@ def siniflandirma_kaydet(oturum: Session, sonuclar: dict[str, dict], model: str)
 
 def yayinlanacak_ilanlar(oturum: Session, sonra: datetime | None = None) -> list[dict]:
     """Aktif ve öğrenciye uygun ilanlar (sınıflandırma bilgisiyle). `sonra` verilirse yalnızca o andan sonra ilk
-    kez görülenler — günlük özet için."""
+    kez görülenler — günlük özet için. Bülten kategorileri (alanlar, çalışma modeli, girişim) burada eklenir:
+    kurallar internreader/isleme/kategori.py'de."""
     sorgu = (
         select(IlanKaydi, Siniflandirma, IlanAyrinti)
         .join(Siniflandirma, Siniflandirma.kimlik == IlanKaydi.kimlik)
@@ -90,8 +92,13 @@ def yayinlanacak_ilanlar(oturum: Session, sonra: datetime | None = None) -> list
     )
     if sonra is not None:
         sorgu = sorgu.where(IlanKaydi.ilk_gorulme > sonra)
+    sonuclar = list(oturum.execute(sorgu))
+    firmalar = _firma_profilleri(oturum, {ilan.firma for ilan, _, _ in sonuclar})
     satirlar = []
-    for ilan, sinif, ayrinti in oturum.execute(sorgu):
+    for ilan, sinif, ayrinti in sonuclar:
+        etiket, kaynaklar = firmalar.get(ilan.firma, (set(), set()))
+        etiket = etiket | set(ilan.etiket or [])
+        ayrinti_sozlugu = _ayrinti_sozlugu(ayrinti)
         satirlar.append(
             {
                 "kimlik": ilan.kimlik,
@@ -105,10 +112,26 @@ def yayinlanacak_ilanlar(oturum: Session, sonra: datetime | None = None) -> list
                 "seviye": sinif.seviye,
                 "rol": sinif.rol,
                 "yapay_zeka": sinif.yapay_zeka,
-                "ayrinti": _ayrinti_sozlugu(ayrinti),
+                "ayrinti": ayrinti_sozlugu,
+                "alanlar": alanlari_bul(sinif.rol, sinif.yapay_zeka, ilan.baslik, ilan.firma, etiket),
+                "calisma_modeli": calisma_modeli(ilan.konum, (ayrinti_sozlugu or {}).get("calisma_modeli")),
+                "girisim": girisim_mi(ilan.firma, etiket, kaynaklar, ilan.kaynak),
             }
         )
     return satirlar
+
+
+def _firma_profilleri(oturum: Session, adlar: set[str]) -> dict[str, tuple[set[str], set[str]]]:
+    """Firma adı → (etiketler, geldiği listeler). Aynı adla birden çok kayıt varsa birleştirilir."""
+    profiller: dict[str, tuple[set[str], set[str]]] = {}
+    for parca in _parcalar(sorted(adlar)):
+        for ad, etiket, kaynak in oturum.execute(
+            select(Firma.ad, Firma.etiket, Firma.kaynak).where(Firma.ad.in_(parca))
+        ):
+            etiketler, kaynaklar = profiller.setdefault(ad, (set(), set()))
+            etiketler |= set(etiket or [])
+            kaynaklar |= {k for k in (kaynak or "").split(",") if k}
+    return profiller
 
 
 def _ayrinti_sozlugu(a: IlanAyrinti | None) -> dict | None:

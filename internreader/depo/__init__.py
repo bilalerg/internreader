@@ -23,7 +23,7 @@ from internreader.depo.ayrintilar import (
     ayrinti_sayisi,
 )
 from internreader.depo.bulten import (
-    HAFTALIK_ARALIK,
+    HAFTALIK_GUN,
     bulten_istatistigi,
     bulten_kaydet,
     eski_gonderimleri_sil,
@@ -76,7 +76,7 @@ __all__ = [
     "ayrinti_bekleyenler",
     "ayrinti_kaydet",
     "ayrinti_sayisi",
-    "HAFTALIK_ARALIK",
+    "HAFTALIK_GUN",
     "bulten_istatistigi",
     "bulten_kaydet",
     "eski_gonderimleri_sil",

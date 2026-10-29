@@ -8,16 +8,23 @@ from sqlalchemy.orm import Session
 
 from internreader.db import Abone, Bulten, Gonderim
 from internreader.depo._ortak import utc
+from internreader.yayin import TURKIYE_SAATI
 
-HAFTALIK_ARALIK = timedelta(days=6, hours=12)  # haftalık abone: son bültenden en az ~1 hafta sonra
+HAFTALIK_GUN = 0  # pazartesi (datetime.weekday); haftalık bülten o sabahki çalışmada gider
 
 
 def gonderime_hazir_aboneler(oturum: Session, an: datetime) -> list[Abone]:
-    """Onaylı aboneler: günlükler her çalıştırmada, haftalıklar son bültenlerinden bir hafta sonra."""
+    """Onaylı aboneler: günlükler her çalıştırmada, haftalıklar pazartesi sabahki çalışmada (Türkiye saatiyle).
+
+    Haftalık bülten "son bültenden 7 gün sonra" değil, takvime bağlı: herkes aynı gün alır, gün kaymaz. Aynı pazartesi
+    ikinci bir çalıştırma (elle tetikleme) haftalık aboneye ikinci e-posta göndermez."""
+    yerel = an.astimezone(TURKIYE_SAATI)
+    haftalik_gunu = yerel.weekday() == HAFTALIK_GUN
+    gun_basi = yerel.replace(hour=0, minute=0, second=0, microsecond=0)
     hazir = []
     for abone in oturum.scalars(select(Abone).where(Abone.durum == "onayli").order_by(Abone.id)):
         son = utc(abone.son_bulten)
-        if abone.siklik == "gunluk" or son is None or son <= an - HAFTALIK_ARALIK:
+        if abone.siklik == "gunluk" or (haftalik_gunu and (son is None or son < gun_basi)):
             hazir.append(abone)
     # Adil sıra: hiç bülten almamış ya da en uzun süredir bekleyen önce. Günlük e-posta sınırı dolarsa kalanlar
     # ertesi gün listenin başına geçer; aynı kişiler her gün dışarıda kalmaz.

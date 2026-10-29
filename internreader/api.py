@@ -33,13 +33,18 @@ from internreader import abonelik, depo
 from internreader.ayar import GELISTIRME_ANAHTARI, Ayarlar, ayarlari_oku
 from internreader.db import oturum_fabrikasi, simdi
 from internreader.eposta import EpostaGonderici, dogrulama_epostasi, gonderici_olustur
+from internreader.isleme.kategori import ALANLAR
 from internreader.isleme.sehir import SEHIRLER
 
 kayit = logging.getLogger(__name__)
 
-SEHIR_SECENEKLERI = frozenset(SEHIRLER) | {"uzaktan"}
-ALANLAR = ("yazilim", "yapay_zeka", "veri")
+SEHIR_SECENEKLERI = frozenset(SEHIRLER) | {"uzaktan"}  # "uzaktan" eski formdan; artık çalışma modelinde seçiliyor
 SEVIYELER = ("staj", "uzun_donem_staj", "yari_zamanli", "junior", "yeni_mezun")
+Alan = Literal[
+    "yazilim", "yapay_zeka", "veri", "oyun", "savunma"
+]  # isleme/kategori.py ALANLAR ile aynı (testte denetlenir)
+Seviye = Literal["staj", "uzun_donem_staj", "yari_zamanli", "junior", "yeni_mezun"]
+CalismaModeli = Literal["uzaktan", "hibrit", "yerinde"]
 KAYIT_CEVABI = {"mesaj": "Onay bağlantısını e-posta adresine gönderdik. Gelen kutunu (ve spam klasörünü) kontrol et."}
 
 
@@ -48,10 +53,10 @@ class AboneIstegi(BaseModel):
 
     eposta: EmailStr = Field(max_length=254)
     sehirler: list[str] = Field(default_factory=list, max_length=20)  # boş = şehir fark etmez
-    alanlar: list[Literal["yazilim", "yapay_zeka", "veri"]] = Field(default_factory=lambda: list(ALANLAR), min_length=1)
-    seviyeler: list[Literal["staj", "uzun_donem_staj", "yari_zamanli", "junior", "yeni_mezun"]] = Field(
-        default_factory=lambda: list(SEVIYELER), min_length=1
-    )
+    alanlar: list[Alan] = Field(default_factory=lambda: list(ALANLAR), min_length=1, max_length=len(ALANLAR))
+    seviyeler: list[Seviye] = Field(default_factory=lambda: list(SEVIYELER), min_length=1, max_length=len(SEVIYELER))
+    calisma_modelleri: list[CalismaModeli] = Field(default_factory=list, max_length=3)  # boş = hepsi
+    sadece_girisim: bool = False
     siklik: Literal["gunluk", "haftalik"] = "gunluk"
     kvkk_onay: bool
     kaynak: str = Field("site", max_length=40, pattern=r"^[a-z0-9_-]*$")
@@ -62,6 +67,11 @@ class AboneIstegi(BaseModel):
     def _sehirler_gecerli(cls, deger: list[str]) -> list[str]:
         if bilinmeyen := set(deger) - SEHIR_SECENEKLERI:
             raise ValueError(f"bilinmeyen şehir: {', '.join(sorted(bilinmeyen))}")
+        return sorted(set(deger))
+
+    @field_validator("alanlar", "seviyeler", "calisma_modelleri")
+    @classmethod
+    def _tekrarsiz(cls, deger: list[str]) -> list[str]:
         return sorted(set(deger))
 
     @field_validator("kvkk_onay")
@@ -125,7 +135,10 @@ def uygulama_olustur(
     @app.exception_handler(RequestValidationError)
     def _dogrulama_hatasi(_: Request, hata: RequestValidationError) -> JSONResponse:
         # Hangi alanların hatalı olduğu döner (form o alanları işaretler); iç ayrıntılar dışarı verilmez
-        alanlar = sorted({str(h["loc"][-1]) for h in hata.errors() if h.get("loc")})
+        # Liste öğesindeki hatada konumun sonu sıra numarasıdır ("alanlar", 0): alanın adı alınır
+        alanlar = sorted(
+            {next((p for p in reversed(h["loc"]) if isinstance(p, str)), "") for h in hata.errors()} - {""}
+        )
         return JSONResponse(
             status_code=422,
             content={"hata": "gecersiz_istek", "mesaj": "Formdaki bilgileri kontrol et.", "alanlar": alanlar},
@@ -157,7 +170,13 @@ def uygulama_olustur(
                     return _hata(
                         503, "gunluk_sinir", "Bugün çok fazla kayıt geldi. Yarın tekrar dener misin? Kusura bakma."
                     )
-        tercihler = {"sehirler": govde.sehirler, "alanlar": govde.alanlar, "seviyeler": govde.seviyeler}
+        tercihler = {
+            "sehirler": govde.sehirler,
+            "alanlar": govde.alanlar,
+            "seviyeler": govde.seviyeler,
+            "calisma_modelleri": govde.calisma_modelleri,
+            "sadece_girisim": govde.sadece_girisim,
+        }
         with oturum.begin() as o:
             jeton = abonelik.kayit_iste(o, eposta, tercihler, govde.siklik, govde.kaynak or "site")
         if jeton:

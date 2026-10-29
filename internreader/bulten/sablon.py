@@ -17,7 +17,8 @@ AZAMI_ILAN = 15  # bir e-postada en fazla; kalanlar sonraki bültene kalır
 KAGIT, YUZEY, MUREKKEP, IKINCIL, CIZGI, FOSFOR = "#f3efe5", "#fbf9f3", "#16171a", "#4a4e55", "#d6cebb", "#ecdb3d"
 SERIF = "Georgia, 'Times New Roman', serif"
 SANS = "-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif"
-CALISMA = {"ofis": "Ofiste", "hibrit": "Hibrit", "uzaktan": "Uzaktan"}
+CALISMA = {"yerinde": "Ofiste", "hibrit": "Hibrit", "uzaktan": "Uzaktan"}
+ALAN_ETIKETI = {"oyun": "Oyun", "savunma": "Savunma/siber/havacılık"}
 
 
 def _konum(ilan: dict) -> str:
@@ -36,10 +37,14 @@ def _tarih(iso: str | None) -> str | None:
 
 
 def _etiketler(ilan: dict) -> list[str]:
-    a = ilan.get("ayrinti") or {}
-    parcalar = [SEVIYE_ADI.get(ilan["seviye"], ilan["seviye"]), ROL_ADI.get(ilan["rol"], ilan["rol"]), _konum(ilan)]
-    if a.get("calisma_modeli") in CALISMA:
-        parcalar.append(CALISMA[a["calisma_modeli"]])
+    konum = _konum(ilan)
+    parcalar = [SEVIYE_ADI.get(ilan["seviye"], ilan["seviye"]), ROL_ADI.get(ilan["rol"], ilan["rol"]), konum]
+    parcalar += [ALAN_ETIKETI[x] for x in ilan.get("alanlar", []) if x in ALAN_ETIKETI]
+    model = ilan.get("calisma_modeli")
+    if model in CALISMA and not (model == "uzaktan" and konum == "Uzaktan"):  # "Uzaktan · Uzaktan" yazmasın
+        parcalar.append(CALISMA[model])
+    if ilan.get("girisim"):
+        parcalar.append("Girişim")
     if ilan.get("yapay_zeka") in ("ozunde", "arti"):
         parcalar.append("yapay zekâ")
     return parcalar

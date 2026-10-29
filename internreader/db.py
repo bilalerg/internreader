@@ -142,7 +142,8 @@ class Abone(Taban):
     __tablename__ = "aboneler"
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     eposta: Mapped[str] = mapped_column(String(254), unique=True, index=True)  # küçük harfe çevrilmiş
-    tercihler: Mapped[dict] = mapped_column(JSON, default=dict)  # {"sehirler": [], "alanlar": [], "seviyeler": []}
+    # {"sehirler", "alanlar", "seviyeler", "calisma_modelleri": [], "sadece_girisim": bool}; olmayan anahtar = hepsi
+    tercihler: Mapped[dict] = mapped_column(JSON, default=dict)
     siklik: Mapped[str] = mapped_column(String(10), default="gunluk")  # gunluk | haftalik
     durum: Mapped[str] = mapped_column(String(10), default="bekliyor", index=True)  # bekliyor | onayli | iptal
     onay_jetonu_ozeti: Mapped[str | None] = mapped_column(String(64), index=True)

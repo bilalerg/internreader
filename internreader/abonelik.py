@@ -18,7 +18,7 @@ from sqlalchemy.orm import Session
 from internreader import depo
 from internreader.db import simdi
 
-KVKK_SURUMU = "2026-10-18"  # aydınlatma metni değişirse artırılır; hangi metne onay verildiği kayıtlı kalır
+KVKK_SURUMU = "2026-10-29"  # aydınlatma metni değişirse artırılır; hangi metne onay verildiği kayıtlı kalır
 ONAY_GECERLILIK = timedelta(hours=72)
 
 
