@@ -15,6 +15,7 @@ Güvenlik:
 """
 
 import logging
+import os
 import threading
 import time
 from collections import defaultdict, deque
@@ -112,8 +113,13 @@ def uygulama_olustur(
     kayit_siniri = kayit_siniri or HizSiniri(azami=5, pencere_sn=600)
     jeton_siniri = jeton_siniri or HizSiniri(azami=30, pencere_sn=600)
 
+    # Vercel'de istek platformun vekilinden gelir; gerçek IP'yi Vercel "x-real-ip" başlığına kendisi yazar
+    # (istemcinin gönderdiği değer ezilir, taklit edilemez). Kendi sunucumuzda uvicorn --proxy-headers kullanılır.
+    vercelde = os.getenv("VERCEL") == "1"
+
     def istemci(istek: Request) -> str:
-        # Ters vekil arkasında doğru IP için uvicorn --proxy-headers ile çalıştırılır
+        if vercelde and istek.headers.get("x-real-ip"):
+            return istek.headers["x-real-ip"]
         return istek.client.host if istek.client else "bilinmiyor"
 
     @app.exception_handler(RequestValidationError)

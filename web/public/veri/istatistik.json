@@ -1,0 +1,210 @@
+{
+ "surum": 1,
+ "guncelleme": "2026-10-19T00:28:53.195936+03:00",
+ "takip_edilen_firma": 1304,
+ "taranan_firma": 315,
+ "aktif_ilan": 1306,
+ "ogrenci_ilani": 23,
+ "sehirler": {
+  "uzaktan": 321,
+  "istanbul": 217,
+  "ankara": 38,
+  "kayseri": 17,
+  "izmir": 4,
+  "kocaeli": 1,
+  "gaziantep": 1,
+  "sakarya": 1
+ },
+ "firmalar": [
+  "Analog Devices",
+  "Agave Games",
+  "Anyscale",
+  "Bigger Games",
+  "Binance",
+  "Bitpanda",
+  "Brandefense",
+  "Codeway",
+  "Commencis",
+  "Dataroid",
+  "Delivery Hero",
+  "Dream Games",
+  "Ensemble",
+  "Good Job Games",
+  "HockeyStack",
+  "Huawei",
+  "Hugging Face",
+  "Insider",
+  "Intenseye",
+  "iyzico",
+  "Lyrebird Studio",
+  "Macellan",
+  "Midas",
+  "Miro",
+  "n11",
+  "Obilet",
+  "Peak",
+  "Picus Security",
+  "Remote",
+  "Replit",
+  "Sipay",
+  "SOCRadar",
+  "Supabase",
+  "Trendyol",
+  "Uber",
+  "Udemy",
+  "Vercel",
+  "VNGRS",
+  "Wise",
+  "Yemeksepeti",
+  "3TK",
+  "5U AI",
+  "Acacia Maden",
+  "Advens",
+  "Aerotim",
+  "Agena",
+  "Akdoğan",
+  "AKGÜN",
+  "ALGOFACT",
+  "Alpata Havacılık",
+  "Alyo",
+  "Andasis",
+  "ANKASYS",
+  "ARCANOR",
+  "ARKSOFT",
+  "Armelsan",
+  "Armsto Konnektör",
+  "Armut",
+  "Arçelik",
+  "Aselsan Sivas"
+ ],
+ "kararlar": [
+  {
+   "baslik": "Interns: JD-INTERN",
+   "firma": "Aykan",
+   "seviye": "staj",
+   "rol": "yazilim",
+   "gerekce": "Stajyer, rol açıklaması yok, IT firması",
+   "uygun": true
+  },
+  {
+   "baslik": "Software Engineer - New Grad",
+   "firma": "Good Job Games",
+   "seviye": "yeni_mezun",
+   "rol": "yazilim",
+   "gerekce": "New grad yazılım mühendisi pozisyonu",
+   "uygun": true
+  },
+  {
+   "baslik": "Jr. Data Analyst",
+   "firma": "Obilet",
+   "seviye": "junior",
+   "rol": "veri",
+   "gerekce": "Junior veri analisti ilanı, AI gerekliliği yok",
+   "uygun": true
+  },
+  {
+   "baslik": "Long-Term Test Engineer Intern",
+   "firma": "Skymod",
+   "seviye": "uzun_donem_staj",
+   "rol": "yazilim",
+   "gerekce": "Uzun dönem test mühendisliği stajı, yazılım test odaklı.",
+   "uygun": true
+  },
+  {
+   "baslik": "Software Engineer (Part-time)",
+   "firma": "Dream Games",
+   "seviye": "yari_zamanli",
+   "rol": "yazilim",
+   "gerekce": "Part-time yazılım geliştirici, Unity oyun programlama",
+   "uygun": true
+  },
+  {
+   "baslik": "Digitalent Yetenek Programı",
+   "firma": "Yapı Kredi",
+   "seviye": "yeni_mezun",
+   "rol": "veri",
+   "gerekce": "Yetenek programı, rol ve yapay zekâ detayı açık değil",
+   "uygun": true
+  },
+  {
+   "baslik": "Çağrı Merkezi Müşteri İlişkileri Uzman Yardımcısı",
+   "firma": "Obilet",
+   "seviye": "junior",
+   "rol": "teknik_degil",
+   "gerekce": "Uzman yardımcısı çağrı merkezi pozisyonu, giriş seviyesi",
+   "uygun": false
+  },
+  {
+   "baslik": "HR Operations Specialist",
+   "firma": "Codeway",
+   "seviye": "belirsiz",
+   "rol": "teknik_degil",
+   "gerekce": "İK operasyon uzmanı; seviye belirtilmemiş",
+   "uygun": false
+  },
+  {
+   "baslik": "Mekanik Tekniker / Montaj Ustası",
+   "firma": "Novatek Endüstriyel Sistemler",
+   "seviye": "belirsiz",
+   "rol": "diger_teknik",
+   "gerekce": "Mekanik teknik ve montaj işi",
+   "uygun": false
+  },
+  {
+   "baslik": "UI/UX Designer",
+   "firma": "Maitechs Smart Solutions",
+   "seviye": "belirsiz",
+   "rol": "yazilim",
+   "gerekce": "UI/UX tasarımı, yazılım ürünüyle ilişkili, seviye belirsiz.",
+   "uygun": false
+  },
+  {
+   "baslik": "Senior Specialist, Generative AI & LLM",
+   "firma": "Etiya",
+   "seviye": "deneyimli",
+   "rol": "yapay_zeka",
+   "gerekce": "Senior unvanlı üretken yapay zekâ ve LLM uzmanlığı",
+   "uygun": false
+  },
+  {
+   "baslik": "İdari İşler Uzmanı",
+   "firma": "İNVENTRA",
+   "seviye": "deneyimli",
+   "rol": "teknik_degil",
+   "gerekce": "İdari işler, uzman unvanlı deneyimli ilan",
+   "uygun": false
+  },
+  {
+   "baslik": "Software Engineer II with Accounting Experience ",
+   "firma": "Sezzle",
+   "seviye": "deneyimli",
+   "rol": "yazilim",
+   "gerekce": "Unvanda II geçiyor; muhasebe deneyimi de isteniyor",
+   "uygun": false
+  },
+  {
+   "baslik": "Head of IT",
+   "firma": "Ticimax",
+   "seviye": "deneyimli",
+   "rol": "diger_teknik",
+   "gerekce": "Head of IT, yönetici seviyesi BT pozisyonu",
+   "uygun": false
+  },
+  {
+   "baslik": "Elektronik Donanım Stajyeri",
+   "firma": "GÖRSENTAM TARIM",
+   "seviye": "staj",
+   "rol": "diger_teknik",
+   "gerekce": "Donanım stajı, elektronik mühendisliği alanı",
+   "uygun": false
+  },
+  {
+   "baslik": "ARGE Elektronik Tasarım Mühendisi",
+   "firma": "ASPİLSAN Enerji",
+   "seviye": "yeni_mezun",
+   "rol": "diger_teknik",
+   "gerekce": "Ar-Ge elektronik tasarım mühendisliği",
+   "uygun": false
+  }
+ ]
+}

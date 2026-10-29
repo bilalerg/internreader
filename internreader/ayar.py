@@ -68,27 +68,33 @@ def arama_ayari() -> tuple[str, str]:
 GELISTIRME_ANAHTARI = "yalnizca-gelistirme-icin-degistir"
 
 
+def _ortam(ad: str, varsayilan: str) -> str:
+    """Ortam değişkeni; tanımsız ya da BOŞ ise varsayılan. GitHub Actions'ta tanımlanmamış bir gizli değer boş metin
+    olarak gelir: int("") çöker, boş gizli anahtar ise imzaları anlamsız kılar."""
+    return os.getenv(ad) or varsayilan
+
+
 def ayarlari_oku() -> Ayarlar:
     env_yukle()
     arama_saglayici, arama_anahtari = arama_ayari()
     return Ayarlar(
-        veritabani_url=os.getenv("DATABASE_URL", f"sqlite:///{(VERI / 'internreader.db').as_posix()}"),
-        model=os.getenv("INTERNREADER_MODEL", "claude-haiku-5-5"),
-        calisma_basina_yz_tavani_usd=float(os.getenv("INTERNREADER_YZ_TAVANI_USD", "0.50")),
-        aylik_yz_tavani_usd=float(os.getenv("INTERNREADER_AYLIK_YZ_TAVANI_USD", "2.00")),
-        is_parcacigi=int(os.getenv("INTERNREADER_IS_PARCACIGI", "8")),
-        yz_is_parcacigi=int(os.getenv("INTERNREADER_YZ_IS_PARCACIGI", "4")),
-        http_zaman_asimi=int(os.getenv("INTERNREADER_HTTP_ZAMAN_ASIMI", "25")),
+        veritabani_url=_ortam("DATABASE_URL", f"sqlite:///{(VERI / 'internreader.db').as_posix()}"),
+        model=_ortam("INTERNREADER_MODEL", "claude-haiku-5-5"),
+        calisma_basina_yz_tavani_usd=float(_ortam("INTERNREADER_YZ_TAVANI_USD", "0.50")),
+        aylik_yz_tavani_usd=float(_ortam("INTERNREADER_AYLIK_YZ_TAVANI_USD", "2.00")),
+        is_parcacigi=int(_ortam("INTERNREADER_IS_PARCACIGI", "8")),
+        yz_is_parcacigi=int(_ortam("INTERNREADER_YZ_IS_PARCACIGI", "4")),
+        http_zaman_asimi=int(_ortam("INTERNREADER_HTTP_ZAMAN_ASIMI", "25")),
         kullanici_ajani="InternReader/0.2 (+https://github.com/bilalerg/internreader)",
-        site_adresi=os.getenv("INTERNREADER_SITE_ADRESI", "http://localhost:4321").rstrip("/"),
-        gizli_anahtar=os.getenv("INTERNREADER_GIZLI_ANAHTAR", GELISTIRME_ANAHTARI),
-        smtp_sunucu=os.getenv("SMTP_SUNUCU", ""),
-        smtp_port=int(os.getenv("SMTP_PORT", "587")),
-        smtp_kullanici=os.getenv("SMTP_KULLANICI", ""),
-        smtp_parola=os.getenv("SMTP_PAROLA", ""),
-        eposta_kimden=os.getenv("EPOSTA_KIMDEN", "InternReader <bulten@localhost>"),
-        eposta_yanit=os.getenv("EPOSTA_YANIT", ""),
-        yz_toplu=os.getenv("INTERNREADER_YZ_TOPLU", "0") == "1",
+        site_adresi=_ortam("INTERNREADER_SITE_ADRESI", "http://localhost:4321").rstrip("/"),
+        gizli_anahtar=_ortam("INTERNREADER_GIZLI_ANAHTAR", GELISTIRME_ANAHTARI),
+        smtp_sunucu=_ortam("SMTP_SUNUCU", ""),
+        smtp_port=int(_ortam("SMTP_PORT", "587")),
+        smtp_kullanici=_ortam("SMTP_KULLANICI", ""),
+        smtp_parola=_ortam("SMTP_PAROLA", ""),
+        eposta_kimden=_ortam("EPOSTA_KIMDEN", "InternReader <bulten@localhost>"),
+        eposta_yanit=_ortam("EPOSTA_YANIT", ""),
+        yz_toplu=_ortam("INTERNREADER_YZ_TOPLU", "0") == "1",
         arama_saglayici=arama_saglayici,
         arama_anahtari=arama_anahtari,
     )

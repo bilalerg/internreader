@@ -3,3 +3,4 @@ node_modules/
 .astro/
 package-lock.json
 src/veri/ornek/
+public/veri/

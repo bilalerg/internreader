@@ -1,0 +1,74 @@
+# Her sabah 07:00 (Türkiye): ilanları topla, sınıflandır, yayınla, bülten gönder, bakım yap.
+# Site verisi (ilanlar.json, istatistik.json) web/public/veri/'ye yazılıp depoya eklenir; Vercel siteyi yeniden yayınlar.
+# Günlük veri commit'i depoyu "hareketli" tutar: GitHub 60 gün değişiklik görmeyen depolarda zamanlanmış işleri durdurur.
+# Gizli değerler: Settings → Secrets and variables → Actions (bkz. docs/KURULUM_UCRETSIZ.md).
+name: Günlük çalışma
+
+on:
+  schedule:
+    - cron: "0 4 * * *" # UTC; Türkiye saatiyle 07:00
+  workflow_dispatch:
+    inputs:
+      ilk_kurulum:
+        description: "İlk kurulum: firma listesini içe aktar ve keşfi çalıştır (~15 dk ek, yapay zekâ kullanmaz)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write # site verisini depoya eklemek için
+
+concurrency:
+  group: internreader-veritabani # keşif ile aynı anda veritabanına yazmasın
+  cancel-in-progress: false
+
+jobs:
+  calistir:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      INTERNREADER_GIZLI_ANAHTAR: ${{ secrets.INTERNREADER_GIZLI_ANAHTAR }}
+      INTERNREADER_SITE_ADRESI: https://internreader.me
+      SMTP_SUNUCU: ${{ secrets.SMTP_SUNUCU }}
+      SMTP_PORT: "587"
+      SMTP_KULLANICI: ${{ secrets.SMTP_KULLANICI }}
+      SMTP_PAROLA: ${{ secrets.SMTP_PAROLA }}
+      EPOSTA_KIMDEN: ${{ secrets.EPOSTA_KIMDEN }}
+      PYTHONUTF8: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - name: Bağımlılıklar
+        run: pip install -r requirements.txt
+      - name: Gizli değerleri denetle
+        run: |
+          test -n "$DATABASE_URL" || { echo "::error::DATABASE_URL gizli değeri tanımlı değil"; exit 1; }
+          test -n "$ANTHROPIC_API_KEY" || { echo "::error::ANTHROPIC_API_KEY gizli değeri tanımlı değil"; exit 1; }
+          test -n "$INTERNREADER_GIZLI_ANAHTAR" || echo "::warning::INTERNREADER_GIZLI_ANAHTAR yok: bülten gönderilmez"
+          test -n "$SMTP_SUNUCU" || echo "::warning::SMTP tanımlı değil: e-postalar gönderilmez, yalnızca dosyaya yazılır"
+      - name: İlk kurulum (firma listesi + keşif)
+        if: ${{ inputs.ilk_kurulum }}
+        run: |
+          python -m internreader ice-aktar veri/firmalar.csv
+          python -m internreader kesif
+      - name: Tara, yayınla, bülten, bakım
+        run: python -m internreader calistir
+      - name: Site verisini depoya ekle (Vercel yeniden yayınlar)
+        run: |
+          mkdir -p web/public/veri
+          cp cikti/ilanlar.json cikti/istatistik.json web/public/veri/
+          git config user.name "internreader-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add web/public/veri
+          if git diff --cached --quiet; then
+            echo "Veri değişmedi."
+          else
+            git commit -m "veri: günlük güncelleme $(date -u +%F)"
+            git pull --rebase
+            git push
+          fi

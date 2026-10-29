@@ -1,0 +1,42 @@
+# Firma keşfi (yapay zekâ kullanmaz):
+# - her pazartesi: arama API'siyle listede olmayan firmaları bul (SERPER_API_KEY ya da BRAVE_API_KEY yoksa atlanır)
+# - ayın 1'i: listedeki tüm firmaların ilan sistemi / kariyer sayfası keşfi
+name: Keşif
+
+on:
+  schedule:
+    - cron: "0 3 * * 1" # pazartesi 06:00 (Türkiye)
+    - cron: "0 2 1 * *" # ayın 1'i 05:00 (Türkiye)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: internreader-veritabani
+  cancel-in-progress: false
+
+jobs:
+  kesif:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      SERPER_API_KEY: ${{ secrets.SERPER_API_KEY }}
+      BRAVE_API_KEY: ${{ secrets.BRAVE_API_KEY }}
+      PYTHONUTF8: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - name: Bağımlılıklar
+        run: pip install -r requirements.txt
+      - name: Arama keşfi
+        if: ${{ github.event.schedule != '0 2 1 * *' }}
+        run: python -m internreader arama-kesif --web-bul 40
+      - name: Aylık keşif
+        if: ${{ github.event.schedule == '0 2 1 * *' || github.event_name == 'workflow_dispatch' }}
+        run: python -m internreader kesif

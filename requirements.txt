@@ -7,3 +7,5 @@ fastapi==0.146.0
 uvicorn[standard]==0.54.0
 email-validator==2.3.0
 alembic==1.20.0
+# Postgres sürücüsü: Vercel yalnızca bu dosyayı kurar (abonelik API'si Neon'a bağlanır)
+psycopg[binary]==3.2.3

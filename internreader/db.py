@@ -184,7 +184,17 @@ class Durum(Taban):
     deger: Mapped[str] = mapped_column(Text)
 
 
+def surucu_ekle(url: str) -> str:
+    """Neon/Render gibi sağlayıcılar adresi "postgresql://" ya da "postgres://" diye verir; SQLAlchemy bu durumda
+    kurulu olmayan psycopg2'yi arar. Kullandığımız sürücü psycopg (3) olduğu için adres ona çevrilir."""
+    for onek in ("postgres://", "postgresql://"):
+        if url.startswith(onek):
+            return "postgresql+psycopg://" + url.removeprefix(onek)
+    return url
+
+
 def motor_olustur(url: str) -> Engine:
+    url = surucu_ekle(url)
     if url.startswith("sqlite"):
         motor = create_engine(url, connect_args={"check_same_thread": False})
 

@@ -1,0 +1,575 @@
+{
+ "surum": 1,
+ "guncelleme": "2026-10-19T00:28:53.195936+03:00",
+ "sayi": 23,
+ "ilanlar": [
+  {
+   "kimlik": "d312925a66c7f309",
+   "firma": "Yapı Kredi",
+   "baslik": "Digitalent Yetenek Programı",
+   "url": "https://www.yapikredi.com.tr/yapi-kredi-hakkinda/insan-kaynaklari/#f8f7c583",
+   "konum": "",
+   "kaynak": "kariyer_sayfasi",
+   "yayin_tarihi": "",
+   "ilk_gorulme": "2026-10-18T15:07:58.934074+00:00",
+   "seviye": "yeni_mezun",
+   "rol": "veri",
+   "yapay_zeka": "arti",
+   "ayrinti": null,
+   "firma_gorunen": "Yapı Kredi",
+   "sehirler": [],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "4f3d3e2f746c000f",
+   "firma": "Sestek",
+   "baslik": "Hybrid Web Internship Opportunity for 4th Year Students",
+   "url": "https://www.sestek.com/careers/web-internship-opportunity-for-4th-year-students",
+   "konum": "İstanbul & Ankara, Turkey",
+   "kaynak": "kariyer_sayfasi",
+   "yayin_tarihi": "",
+   "ilk_gorulme": "2026-10-18T14:08:27.300439+00:00",
+   "seviye": "staj",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "SESTEK'te 4. sınıf öğrencileri için Angular ile web uygulaması geliştirme, kod inceleme ve performans optimizasyonu gibi konularda uzun süreli staj fırsatı.",
+    "son_basvuru": null,
+    "hedef": "4. sınıf bilgisayar mühendisliği, yazılım mühendisliği veya ilgili bölüm öğrencileri",
+    "calisma_modeli": "hibrit",
+    "ucretli": "belirsiz",
+    "teknolojiler": [
+     "Angular",
+     "C#"
+    ]
+   },
+   "firma_gorunen": "Sestek",
+   "sehirler": [
+    "istanbul",
+    "ankara"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "43a3d13ba4a4157a",
+   "firma": "ASPİLSAN Enerji A.Ş.",
+   "baslik": "IT Yazılım Mühendisi",
+   "url": "https://www.aspilsan.com/kurumsal/kariyer/#67103929",
+   "konum": "Kayseri",
+   "kaynak": "kariyer_sayfasi",
+   "yayin_tarihi": "",
+   "ilk_gorulme": "2026-10-18T14:04:07.592258+00:00",
+   "seviye": "yeni_mezun",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": null,
+   "firma_gorunen": "ASPİLSAN Enerji",
+   "sehirler": [
+    "kayseri"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "197b9d33e14b9bb1",
+   "firma": "ASPİLSAN Enerji A.Ş.",
+   "baslik": "ARGE Gömülü Yazılım Mühendisi",
+   "url": "https://www.aspilsan.com/kurumsal/kariyer/#23306419",
+   "konum": "Ankara, Kayseri",
+   "kaynak": "kariyer_sayfasi",
+   "yayin_tarihi": "",
+   "ilk_gorulme": "2026-10-18T14:04:07.592258+00:00",
+   "seviye": "yeni_mezun",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": null,
+   "firma_gorunen": "ASPİLSAN Enerji",
+   "sehirler": [
+    "ankara",
+    "kayseri"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "69237775f92b7bd9",
+   "firma": "Analog Devices",
+   "baslik": "Software Development Engineering Intern",
+   "url": "https://analogdevices.wd1.myworkdayjobs.com/External/job/Turkey-Istanbul-Bilisim-Vadisi/Software-Development-Engineering-Intern_R267000-1",
+   "konum": "Turkey, Istanbul, Bilisim Vadisi",
+   "kaynak": "workday",
+   "yayin_tarihi": "2026-10-13",
+   "ilk_gorulme": "2026-10-18T14:04:07.592258+00:00",
+   "seviye": "staj",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": null,
+   "firma_gorunen": "Analog Devices",
+   "sehirler": [
+    "istanbul"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "b3bfe3e4f9ecafaf",
+   "firma": "Aykan Teknoloji",
+   "baslik": "New Graduate: JD-NG",
+   "url": "https://www.aykan.com.tr/career#ad3c9282",
+   "konum": "",
+   "kaynak": "kariyer_sayfasi",
+   "yayin_tarihi": "",
+   "ilk_gorulme": "2026-10-18T14:04:07.592258+00:00",
+   "seviye": "yeni_mezun",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": null,
+   "firma_gorunen": "Aykan",
+   "sehirler": [],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "0ac24c1150c85acf",
+   "firma": "Aykan Teknoloji",
+   "baslik": "Interns: JD-INTERN",
+   "url": "https://www.aykan.com.tr/career#b0d68fb6",
+   "konum": "",
+   "kaynak": "kariyer_sayfasi",
+   "yayin_tarihi": "",
+   "ilk_gorulme": "2026-10-18T14:04:07.592258+00:00",
+   "seviye": "staj",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": null,
+   "firma_gorunen": "Aykan",
+   "sehirler": [],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "c335ba7185cdae09",
+   "firma": "Beakwise Bilişim Teknolojileri ve Danışmanlık A.Ş.",
+   "baslik": "Long-Term Software Engineering Intern (Istanbul R&D Hub)",
+   "url": "https://www.beakwise.com/company/careers/long-term-software-engineering-intern-istanbul-r-d-24ddf09e",
+   "konum": "Istanbul Headquarters Hybrid",
+   "kaynak": "kariyer_sayfasi",
+   "yayin_tarihi": "",
+   "ilk_gorulme": "2026-10-18T14:04:07.592258+00:00",
+   "seviye": "uzun_donem_staj",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Beakwise'ın İstanbul R&D merkezinde, müşteriye yönelik uygulamalar, dashboard'lar ve backend servisleri/API'ler üzerinde çalışılacak uzun dönemli bir yazılım mühendisliği stajı.",
+    "son_basvuru": null,
+    "hedef": "Öğrenciler",
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": []
+   },
+   "firma_gorunen": "Beakwise",
+   "sehirler": [
+    "istanbul"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "ab59c5cbabf96a6b",
+   "firma": "Dream Games",
+   "baslik": "Software Engineer (Part-time)",
+   "url": "https://jobs.lever.co/dreamgames/4c024afb-7daa-45ee-8d26-4d1212e2ad73",
+   "konum": "Istanbul",
+   "kaynak": "lever",
+   "yayin_tarihi": "2022-12-29",
+   "ilk_gorulme": "2026-10-18T14:04:07.592258+00:00",
+   "seviye": "yari_zamanli",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Part-time çalışan bir Software Engineer, Unity ile grafik, oyun mantığı ve kullanıcı arayüzü programlama alanlarında ekip içinde görev alacak. Oyun geliştirme deneyimi zorunlu değil.",
+    "son_basvuru": null,
+    "hedef": "Part-time çalışmak isteyen yazılım mühendisleri",
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": [
+     "Unity"
+    ]
+   },
+   "firma_gorunen": "Dream Games",
+   "sehirler": [
+    "istanbul"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "5e76544331653d01",
+   "firma": "Dream Games",
+   "baslik": "Software Engineer (New Grad)",
+   "url": "https://jobs.lever.co/dreamgames/0714caf0-4077-44f3-a1d4-8985b9baf1bc",
+   "konum": "Istanbul",
+   "kaynak": "lever",
+   "yayin_tarihi": "2022-03-14",
+   "ilk_gorulme": "2026-10-18T14:04:07.592258+00:00",
+   "seviye": "yeni_mezun",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Yeni mezun bir Yazılım Mühendisi olarak Unity kullanarak grafik, oyun mantığı ve kullanıcı arayüzü geliştirmeye katkı sağlanacak. Oyun geliştirme deneyimi zorunlu değil; ekip içinde mühendis, sanatçı ve oyun tasarımcılarıyla çalışılacak.",
+    "son_basvuru": null,
+    "hedef": "Yeni mezunlar (new grad)",
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": [
+     "Unity"
+    ]
+   },
+   "firma_gorunen": "Dream Games",
+   "sehirler": [
+    "istanbul"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "6c368276fe3c8cdf",
+   "firma": "Dream Games",
+   "baslik": "DevOps Engineer (New Grad)",
+   "url": "https://jobs.lever.co/dreamgames/c801dd86-2e4a-4355-910b-969e847ee076",
+   "konum": "Istanbul",
+   "kaynak": "lever",
+   "yayin_tarihi": "2023-07-07",
+   "ilk_gorulme": "2026-10-18T14:04:07.592258+00:00",
+   "seviye": "yeni_mezun",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Yeni mezun bir DevOps Engineer, geliştirme ekipleriyle çalışarak ölçeklenebilir sistemleri tasarlayıp uygulayacak ve farklı lokasyonlardaki altyapıyı yönetip geliştirecek.",
+    "son_basvuru": null,
+    "hedef": "Yeni mezun (new grad) adaylar",
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": []
+   },
+   "firma_gorunen": "Dream Games",
+   "sehirler": [
+    "istanbul"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "11f59bb98a0feedf",
+   "firma": "Good Job Games",
+   "baslik": "Software Engineer - New Grad",
+   "url": "https://job-boards.greenhouse.io/goodjobgames/jobs/7574002003",
+   "konum": "Sarıyer, Istanbul",
+   "kaynak": "greenhouse",
+   "yayin_tarihi": "2026-09-29",
+   "ilk_gorulme": "2026-10-18T14:04:07.592258+00:00",
+   "seviye": "yeni_mezun",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Dağıtık, yüksek performanslı oyun servisleri geliştirme; operasyon, veri analizi ve otomasyon için iç araçlar yazma ve diğer ekiplere destek olma işi. Backend geliştirici pozisyonu.",
+    "son_basvuru": null,
+    "hedef": "Bilgisayar Mühendisliği veya diğer mühendislik bölümlerinde lisans derecesi olanlar (New Grad)",
+    "calisma_modeli": "ofis",
+    "ucretli": "belirsiz",
+    "teknolojiler": [
+     "Go",
+     "AWS"
+    ]
+   },
+   "firma_gorunen": "Good Job Games",
+   "sehirler": [
+    "istanbul"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "ef22582e5c504cb2",
+   "firma": "Good Job Games",
+   "baslik": "Junior Game Developer",
+   "url": "https://job-boards.greenhouse.io/goodjobgames/jobs/5332845003",
+   "konum": "Sarıyer, Istanbul",
+   "kaynak": "greenhouse",
+   "yayin_tarihi": "2026-09-29",
+   "ilk_gorulme": "2026-10-18T14:04:07.592258+00:00",
+   "seviye": "junior",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Mobil oyunlar için yüksek kaliteli oyunlar geliştirmek, yeni özellikler tasarlayıp uygulamak, mevcut oyunları bakımını yapıp optimize etmek ve diğer geliştiricilerle yakın çalışmak.",
+    "son_basvuru": null,
+    "hedef": null,
+    "calisma_modeli": "ofis",
+    "ucretli": "belirsiz",
+    "teknolojiler": [
+     "Unity",
+     "C#",
+     "Git",
+     "Plastic"
+    ]
+   },
+   "firma_gorunen": "Good Job Games",
+   "sehirler": [
+    "istanbul"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "ccdaff1febae8321",
+   "firma": "GÖRSENTAM TARIM TEKNOLOJİLERİ",
+   "baslik": "Mobil Uygulama Geliştirici Stajyeri",
+   "url": "https://www.gorsentam.com/kariyer#6535e529",
+   "konum": "",
+   "kaynak": "kariyer_sayfasi",
+   "yayin_tarihi": "",
+   "ilk_gorulme": "2026-10-18T14:04:07.592258+00:00",
+   "seviye": "staj",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": null,
+   "firma_gorunen": "GÖRSENTAM TARIM",
+   "sehirler": [],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "30f43f7b9ffe843e",
+   "firma": "Hitit (havayolu yazılımı)",
+   "baslik": "New Talent",
+   "url": "https://hitit.com/open-positions/new-talent",
+   "konum": "",
+   "kaynak": "kariyer_sayfasi",
+   "yayin_tarihi": "",
+   "ilk_gorulme": "2026-10-18T14:04:07.592258+00:00",
+   "seviye": "yeni_mezun",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Hitit'in ilan sayfasında genel bir yetenek havuzu başvurusu yer alıyor; açık bir pozisyon tanımı yok. Adaylar CV gönderip ileride uygun pozisyonlar için değerlendirilebiliyor.",
+    "son_basvuru": null,
+    "hedef": "0-3 yıl deneyimli adaylar",
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": []
+   },
+   "firma_gorunen": "Hitit",
+   "sehirler": [],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "6fc70bc305d29c93",
+   "firma": "Nova Spark X Teknoloji Anonim Şirketi",
+   "baslik": "Development Intern",
+   "url": "https://patikaglobal.com/career/#d40c6606",
+   "konum": "Istanbul",
+   "kaynak": "kariyer_sayfasi",
+   "yayin_tarihi": "",
+   "ilk_gorulme": "2026-10-18T14:04:07.592258+00:00",
+   "seviye": "staj",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": null,
+   "firma_gorunen": "Nova Spark X",
+   "sehirler": [
+    "istanbul"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "12abda4e2ede08b9",
+   "firma": "Obilet",
+   "baslik": "Jr. Data Analyst",
+   "url": "https://careers.obilet.com/o/jr-data-analyst-2",
+   "konum": "Istanbul, İstanbul, Türkiye",
+   "kaynak": "recruitee",
+   "yayin_tarihi": "2026-10-16",
+   "ilk_gorulme": "2026-10-18T14:04:07.592258+00:00",
+   "seviye": "junior",
+   "rol": "veri",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Veri analisti olarak şirketin veri ihtiyaçlarını analiz etmek, PowerBI ile dashboard ve raporlar hazırlamak, KPI'ları takip etmek ve bulguları paydaşlara iletmek.",
+    "son_basvuru": null,
+    "hedef": null,
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": [
+     "PowerBI"
+    ]
+   },
+   "firma_gorunen": "Obilet",
+   "sehirler": [
+    "istanbul"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "dbd868a0ecad88e3",
+   "firma": "Sezzle (Türkiye, uzaktan)",
+   "baslik": "Mobile Engineer (Turkey, All Levels)",
+   "url": "https://job-boards.greenhouse.io/sezzle/jobs/7541145003",
+   "konum": "Türkiye, Remote",
+   "kaynak": "greenhouse",
+   "yayin_tarihi": "2026-09-25",
+   "ilk_gorulme": "2026-10-18T14:04:07.592258+00:00",
+   "seviye": "junior",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Sezzle'da uzaktan çalışan bir mobil mühendis; React Native tabanlı mobil uygulamada yeni özellikler geliştirmek, kod incelemelerine katılmak ve projelerin planlanmasına destek olmak.",
+    "son_basvuru": null,
+    "hedef": "Türkiye'de uzaktan çalışabilen, tüm deneyim seviyelerinden adaylar",
+    "calisma_modeli": "uzaktan",
+    "ucretli": "evet",
+    "teknolojiler": [
+     "React Native",
+     "TypeScript",
+     "Swift",
+     "Golang",
+     "Python",
+     "React"
+    ]
+   },
+   "firma_gorunen": "Sezzle",
+   "sehirler": [],
+   "uzaktan": true
+  },
+  {
+   "kimlik": "f7652ebe347e75ee",
+   "firma": "Sezzle (Türkiye, uzaktan)",
+   "baslik": "Junior Software Engineer with Accounting Experience ",
+   "url": "https://job-boards.greenhouse.io/sezzle/jobs/6668069003",
+   "konum": "Türkiye, Remote",
+   "kaynak": "greenhouse",
+   "yayin_tarihi": "2026-09-21",
+   "ilk_gorulme": "2026-10-18T14:04:07.592258+00:00",
+   "seviye": "junior",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Muhasebe geçmişi olan bir Junior Software Engineer, fintech ürünlerinde mutabakat ve raporlama süreçlerini otomatize eden yazılım geliştirecek. Görevler arasında kod yazma, API geliştirme ve dokümantasyon yer alıyor.",
+    "son_basvuru": null,
+    "hedef": "Muhasebe veya finans alanında deneyimi olan, muhasebeden yazılıma geçiş yapmış profesyoneller",
+    "calisma_modeli": "uzaktan",
+    "ucretli": "evet",
+    "teknolojiler": [
+     "Golang",
+     "React",
+     "React Native",
+     "Kubernetes",
+     "AWS",
+     "MySQL"
+    ]
+   },
+   "firma_gorunen": "Sezzle",
+   "sehirler": [],
+   "uzaktan": true
+  },
+  {
+   "kimlik": "4e21d0369bdd61bf",
+   "firma": "Skymod",
+   "baslik": "Long-Term Test Engineer Intern",
+   "url": "https://skymod.ai/careers/long-term-test-engineer-intern",
+   "konum": "",
+   "kaynak": "kariyer_sayfasi",
+   "yayin_tarihi": "",
+   "ilk_gorulme": "2026-10-18T14:04:07.592258+00:00",
+   "seviye": "uzun_donem_staj",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Generatif yapay zekâ ürünlerinin ve uygulamalarının test, kalite güvencesi ve iyileştirme süreçlerini destekleyen uzun dönemli bir staj pozisyonu. Test senaryoları hazırlama, hata raporlama ve AI modellerinin doğruluğunu kontrol etme görevleri içerir.",
+    "son_basvuru": null,
+    "hedef": "Akademik çalışmalarına devam eden öğrenciler",
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": [
+     "Python",
+     "Postman",
+     "Selenium",
+     "PyTest",
+     "Git",
+     "GitHub"
+    ]
+   },
+   "firma_gorunen": "Skymod",
+   "sehirler": [],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "db8972e4451001b5",
+   "firma": "Türk SEM",
+   "baslik": "Hotel WD Staj",
+   "url": "https://www.turksem.com/hotelwd-stajyer-basvurusu",
+   "konum": "",
+   "kaynak": "kariyer_sayfasi",
+   "yayin_tarihi": "",
+   "ilk_gorulme": "2026-10-18T14:04:07.592258+00:00",
+   "seviye": "staj",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Otel sahiplerine Hotel WD panelini tanıtıp kurulumlarını yapacak, birinci basamak teknik destek verecek stratejik teknoloji danışmanı stajı. Uzaktan çalışma, sabit staj maaşı ve komisyon modeli.",
+    "son_basvuru": null,
+    "hedef": null,
+    "calisma_modeli": "uzaktan",
+    "ucretli": "evet",
+    "teknolojiler": [
+     "Next.js",
+     "Google Cloud",
+     "Gemini API",
+     "Stripe",
+     "Google Meet"
+    ]
+   },
+   "firma_gorunen": "Türk SEM",
+   "sehirler": [],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "32c7d5fc05b07965",
+   "firma": "Valven",
+   "baslik": "New Graduate Program",
+   "url": "https://www.valven.com/company/careers/new-graduate-program",
+   "konum": "",
+   "kaynak": "kariyer_sayfasi",
+   "yayin_tarihi": "",
+   "ilk_gorulme": "2026-10-18T14:04:07.592258+00:00",
+   "seviye": "yeni_mezun",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Valven ürün ekibinde görev almak üzere yeni mezunlar aranıyor. İlanda Software Engineer, Linux System Engineer, DevOps Engineer, Test Engineer ve Business Development pozisyonları yer alıyor.",
+    "son_basvuru": null,
+    "hedef": "Bilgisayar Mühendisliği, Yazılım Mühendisliği, Elektrik-Elektronik Mühendisliği veya benzeri teknik alanlarda lisans…",
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": [
+     "Linux"
+    ]
+   },
+   "firma_gorunen": "Valven",
+   "sehirler": [],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "146faf8989e81689",
+   "firma": "Yeditek",
+   "baslik": "Summer Internship Program",
+   "url": "https://yeditek.com/en/summer-internship-program",
+   "konum": "",
+   "kaynak": "kariyer_sayfasi",
+   "yayin_tarihi": "",
+   "ilk_gorulme": "2026-10-18T14:04:07.592258+00:00",
+   "seviye": "staj",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "",
+    "son_basvuru": null,
+    "hedef": null,
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": []
+   },
+   "firma_gorunen": "Yeditek",
+   "sehirler": [],
+   "uzaktan": false
+  }
+ ]
+}

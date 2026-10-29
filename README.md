@@ -169,6 +169,10 @@ cd web && npm run format:check && npm run check && npm run build
 
 CI her push'ta testleri hem SQLite hem gerçek bir Postgres üzerinde çalıştırır (`.github/workflows/ci.yml`).
 
+## Canlıya alma
+
+**Ücretsiz yol (önerilen):** Vercel + Neon + GitHub Actions + Brevo, adım adım: [docs/KURULUM_UCRETSIZ.md](docs/KURULUM_UCRETSIZ.md). Aşağıdaki Docker kurulumu kendi sunucun olursa içindir.
+
 ## Sunucuda çalıştırma
 
 ```
