@@ -23,7 +23,7 @@ from internreader.ayar import CIKTI, Ayarlar
 from internreader.isleme.filtre import konum_uygun, yedek_siniflandirma
 from internreader.isleme.tekillestirme import tekillestir
 from internreader.kaynaklar.ats import TOPLAYICILAR
-from internreader.kaynaklar.kariyer_sayfasi import sayfa_oku
+from internreader.kaynaklar.kariyer_sayfasi import ilan_bolumu, sayfa_oku
 from internreader.model import FirmaBilgisi
 from internreader.yayin import TURKIYE_SAATI, zenginlestir
 from internreader.yayin.istatistik import istatistik_metni
@@ -234,26 +234,44 @@ def tara(
 def ayrintilari_zenginlestir(
     ayar: Ayarlar, oturum: sessionmaker, http: HttpIstemci | None = None, yz: YzIstemci | None = None, sinir: int = 40
 ) -> dict:
-    """Öğrenciye uygun ve ayrıntısı olmayan ilanlar için metni bulur (ATS açıklaması ya da ilanın kendi sayfası) ve
-    yapay zekâyla özet, son başvuru, hedef sınıf, çalışma modeli, ücret, teknolojiler çıkarır."""
+    """Öğrenciye uygun ve ayrıntısı olmayan ilanlar için metni bulur (ATS açıklaması, ilanın kendi sayfası ya da
+    ilanların tek sayfada listelendiği kariyer sayfasındaki bölümü) ve yapay zekâyla özet, son başvuru, ilan tarihi,
+    hedef sınıf, çalışma modeli, ücret, teknolojiler çıkarır. Sayfalar robots.txt'ye uyarak okunur (HttpIstemci);
+    aynı kariyer sayfası bir çalıştırmada bir kez indirilir."""
     http = http or HttpIstemci(ayar.kullanici_ajani, ayar.http_zaman_asimi)
     yz = yz or yz_olustur(ayar, oturum)
     kullanim_basi = len(yz.kullanimlar)
     with oturum() as o:
         bekleyenler = depo.ayrinti_bekleyenler(o, sinir)
+        liste_sayfalari = depo.sayfa_basliklari(
+            o, {i["url"].split("#")[0] for i in bekleyenler if i["kaynak"] == "kariyer_sayfasi" and "#" in i["url"]}
+        )
+    adresler = {
+        i["url"].split("#")[0] for i in bekleyenler if i["kaynak"] == "kariyer_sayfasi" and not i["aciklama"].strip()
+    }
+
+    def indir(adres: str) -> tuple[str, str | None]:
+        try:
+            return adres, sayfa_oku(http, adres).metin
+        except (requests.RequestException, RobotsEngeli, ValueError):
+            return adres, None  # bugün okunamadı: yarın yeniden denenir
+
+    with ThreadPoolExecutor(max_workers=ayar.is_parcacigi) as havuz:
+        sayfalar = dict(havuz.map(indir, adresler))
 
     def metni_bul(ilan: dict) -> tuple[dict, str | None]:
         if ilan["aciklama"].strip():
             return ilan, ilan["aciklama"]
-        if ilan["kaynak"] == "kariyer_sayfasi" and "#" not in ilan["url"]:  # ilanın kendi sayfası var
-            try:
-                return ilan, sayfa_oku(http, ilan["url"]).metin
-            except (requests.RequestException, RobotsEngeli, ValueError):
-                return ilan, None  # bugün okunamadı: yarın yeniden denenir
-        return ilan, ""  # metin yok (kariyer sayfasında yalnızca başlık var)
+        if ilan["kaynak"] != "kariyer_sayfasi":
+            return ilan, ""  # metin yok
+        adres, capa, _ = ilan["url"].partition("#")
+        metin = sayfalar[adres]
+        if metin is None or not capa:  # okunamadı (None) ya da ilanın kendi sayfası var
+            return ilan, metin
+        # Tek sayfada listelenen ilan: sayfadan yalnızca bu ilanın bölümü (bulunamazsa yalnızca başlık vardı)
+        return ilan, ilan_bolumu(metin, ilan["baslik"], liste_sayfalari.get(adres, []))
 
-    with ThreadPoolExecutor(max_workers=ayar.is_parcacigi) as havuz:
-        metinler = list(havuz.map(metni_bul, bekleyenler))
+    metinler = [metni_bul(i) for i in bekleyenler]
     isler = [(i["kimlik"], i["baslik"], i["firma"], m) for i, m in metinler if m]
     bos = [i["kimlik"] for i, m in metinler if m == ""]
     bugun = datetime.now(TURKIYE_SAATI).date()

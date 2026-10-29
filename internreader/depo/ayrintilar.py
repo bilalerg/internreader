@@ -2,21 +2,37 @@
 
 from collections.abc import Iterable
 
-from sqlalchemy import select
+from sqlalchemy import and_, or_, select
 from sqlalchemy.orm import Session
 
 from internreader.db import IlanAyrinti, IlanKaydi, Siniflandirma
 from internreader.depo._ortak import _parcalar
 
+# Ayrıntı çıkarıcının sürümü. 2 (30.10.2026): ilan tarihi ve dönem yılı eklendi; kariyer sayfasında tek sayfada
+# listelenen (#çapalı) ilanların metni o sayfadan bulunuyor.
+AYRINTI_SURUMU = 2
+
 
 def ayrinti_bekleyenler(oturum: Session, sinir: int = 60) -> list[dict]:
-    """Aktif, öğrenciye uygun ve ayrıntısı henüz çıkarılmamış ilanlar (en yeniler önce)."""
+    """Aktif, öğrenciye uygun ve ayrıntısı henüz çıkarılmamış ilanlar (en yeniler önce). Ardından, eski sürümle
+    çıkarılmış ve hiç tarih bilgisi olmayan kariyer sayfası / tarihsiz ilanlar: bunlar bir kez yeniden çıkarılır
+    (güncellik denetimi için; yeniden çıkarılınca sürüm güncellenir, tarih yine bulunmasa da bir daha gönderilmez)."""
+    yeniden = and_(
+        IlanAyrinti.surum < AYRINTI_SURUMU,
+        IlanAyrinti.son_basvuru.is_(None),
+        IlanAyrinti.ilan_tarihi.is_(None),
+        or_(IlanKaydi.kaynak == "kariyer_sayfasi", IlanKaydi.yayin_tarihi == ""),
+    )
     sorgu = (
         select(IlanKaydi)
         .join(Siniflandirma, Siniflandirma.kimlik == IlanKaydi.kimlik)
         .outerjoin(IlanAyrinti, IlanAyrinti.kimlik == IlanKaydi.kimlik)
-        .where(IlanKaydi.aktif.is_(True), Siniflandirma.ogrenciye_uygun.is_(True), IlanAyrinti.kimlik.is_(None))
-        .order_by(IlanKaydi.ilk_gorulme.desc())
+        .where(
+            IlanKaydi.aktif.is_(True),
+            Siniflandirma.ogrenciye_uygun.is_(True),
+            or_(IlanAyrinti.kimlik.is_(None), yeniden),
+        )
+        .order_by(IlanAyrinti.kimlik.is_not(None), IlanKaydi.ilk_gorulme.desc())
         .limit(sinir)
     )
     return [
@@ -40,6 +56,9 @@ def ayrinti_kaydet(oturum: Session, kimlik: str, alanlar: dict, metin_ozeti: str
             ozet=alanlar.get("ozet", "")[:400],
             son_basvuru=alanlar.get("son_basvuru"),
             hedef=alanlar.get("hedef") or None,  # uzunluk çıkarıcıda kelime sınırından kısaltıldı
+            ilan_tarihi=alanlar.get("ilan_tarihi"),
+            donem_yili=alanlar.get("donem_yili"),
+            surum=AYRINTI_SURUMU,
             calisma_modeli=alanlar.get("calisma_modeli", "belirsiz"),
             ucretli=alanlar.get("ucretli", "belirsiz"),
             teknolojiler=list(alanlar.get("teknolojiler", []))[:8],
@@ -47,6 +66,16 @@ def ayrinti_kaydet(oturum: Session, kimlik: str, alanlar: dict, metin_ozeti: str
             model=model,
         )
     )
+
+
+def sayfa_basliklari(oturum: Session, adresler: Iterable[str]) -> dict[str, list[str]]:
+    """Tek sayfada listelenen ilanlar (adres#çapa): sayfa adresi → o sayfadaki aktif ilan başlıkları. Bir ilanın
+    metnini sayfadan keserken bir sonraki ilanın nerede başladığını bulmak için."""
+    basliklar: dict[str, list[str]] = {}
+    for adres in set(adresler):
+        sorgu = select(IlanKaydi.baslik).where(IlanKaydi.url.like(adres + "#%"), IlanKaydi.aktif.is_(True))
+        basliklar[adres] = list(oturum.scalars(sorgu))
+    return basliklar
 
 
 def ayrinti_sayisi(oturum: Session, kimlikler: Iterable[str]) -> int:

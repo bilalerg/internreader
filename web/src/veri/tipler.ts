@@ -11,6 +11,7 @@ export type YapayZeka = "ozunde" | "arti" | "yok";
 export interface IlanAyrintisi {
   ozet: string; // boş olabilir: metinde işin ne olduğu yazmıyorsa
   son_basvuru: string | null; // YYYY-AA-GG
+  ilan_tarihi?: string | null; // metinde yazan yayın tarihi (YYYY-AA-GG), kodla doğrulanmış
   hedef: string | null;
   calisma_modeli: "ofis" | "hibrit" | "uzaktan" | "belirsiz";
   ucretli: "evet" | "hayir" | "belirsiz";
@@ -37,6 +38,9 @@ export interface Ilan {
   alanlar?: Alan[];
   calisma_modeli?: CalismaModeli;
   girisim?: boolean;
+  // Güncellik (internreader/isleme/guncellik.py): kartta gösterilecek yayın tarihi; çok eski ATS ilanında null
+  yayin?: string | null;
+  surekli_acik?: boolean;
 }
 
 export interface IlanListesi {

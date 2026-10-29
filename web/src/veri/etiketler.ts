@@ -1,3 +1,5 @@
+import type { Ilan } from "./tipler";
+
 // Ekranda görünen Türkçe adlar ve şehir koordinatları (anahtarlar Python'daki internreader/isleme/sehir.py ile aynı).
 
 export const SEVIYE_ADI: Record<string, string> = {
@@ -83,10 +85,19 @@ export function tarihSaat(iso: string): string {
   return `${t.getUTCDate()} ${AYLAR[t.getUTCMonth()]}, ${saat}`;
 }
 
-/** "2026-11-12" → "12 Kasım" */
-export function gunAy(tarih: string): string {
-  const [, ay, gun] = tarih.split("-").map(Number);
-  return `${gun} ${AYLAR[ay - 1]}`;
+/** "2026-11-12" → "12.11.2026" */
+export function noktaliTarih(tarih: string): string {
+  const [yil, ay, gun] = tarih.slice(0, 10).split("-");
+  return `${gun}.${ay}.${yil}`;
+}
+
+/** İlan kartının tarih satırı; internreader/yayin/__init__.py → tarih_bilgisi ile aynı (bülten de böyle yazar). */
+export function tarihBilgisi(i: Ilan): string[] {
+  const parcalar: string[] = [];
+  if (i.surekli_acik) parcalar.push("Sürekli açık başvuru");
+  else if (i.yayin) parcalar.push(`Yayın: ${noktaliTarih(i.yayin)}`);
+  if (i.ayrinti?.son_basvuru) parcalar.push(`Son başvuru: ${noktaliTarih(i.ayrinti.son_basvuru)}`);
+  return parcalar.length ? parcalar : ["Tarih belirtilmemiş"];
 }
 
 export const sayi = (n: number) => n.toLocaleString("tr-TR");

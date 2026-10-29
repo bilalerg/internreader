@@ -31,6 +31,25 @@ def tarih_yazisi(an) -> str:
     return f"{an.day} {AYLAR[an.month - 1]} {an.year}"
 
 
+def noktali_tarih(iso: str) -> str:
+    """ "2026-11-15" → "15.11.2026" """
+    yil, ay, gun = iso[:10].split("-")
+    return f"{gun}.{ay}.{yil}"
+
+
+def tarih_bilgisi(ilan: dict) -> list[str]:
+    """İlan kartındaki tarih satırı (site ve bülten aynı): yayın ve son başvuru; çok eski ATS ilanında eski yıl yerine
+    "Sürekli açık başvuru"; hiçbiri yoksa "Tarih belirtilmemiş". Kurallar: internreader/isleme/guncellik.py."""
+    parcalar = []
+    if ilan.get("surekli_acik"):
+        parcalar.append("Sürekli açık başvuru")
+    elif ilan.get("yayin"):
+        parcalar.append(f"Yayın: {noktali_tarih(ilan['yayin'])}")
+    if son := (ilan.get("ayrinti") or {}).get("son_basvuru"):
+        parcalar.append(f"Son başvuru: {noktali_tarih(son)}")
+    return parcalar or ["Tarih belirtilmemiş"]
+
+
 def turkiye_tarihi(iso_utc: str) -> str:
     """Veritabanındaki UTC zamanını Türkiye'deki takvim gününe çevirir (YYYY-AA-GG)."""
     return datetime.fromisoformat(iso_utc).astimezone(TURKIYE_SAATI).date().isoformat()

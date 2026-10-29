@@ -120,6 +120,38 @@ geri al.
 
 Zayıf alanlar: yapay zekâ, veri, savunma. Kaynak genişletme aşamasında öncelik bunlar olmalı.
 
+## 7. Ek: bayat ilan denetimi (ilan güncelliği)
+
+**Kavram.** "Sayfa hâlâ duruyor" ile "ilan açık" aynı şey değil. Yeditek'in 08 Mayıs 2023 tarihli staj ilanı, sayfası
+silinmediği için yayındaydı. Kariyer sayfası ilanlarında ilan sistemi (ATS) gibi tarih alanı yok; tarih yalnızca metinde.
+
+**Sinyaller ve kurallar** — `internreader/isleme/guncellik.py` (dosyanın başındaki açıklamayı oku):
+- `ilan_tarihi`: ayrıntı çıkarıcı metinde yazan yayın tarihini bulur. **Uydurma koruması:** kod metindeki bütün
+  tarihleri kendisi bulur (`metindeki_tarihler`: "08 Mayıs 2023", "08.05.2023", "May 8, 2023"...); modelin tarihi bu
+  kümede yoksa ya da gelecekteyse atılır.
+- Dönem yılları ("2025 Yaz Stajı", "2024-2025 dönemi") yapay zekâsız, düzenli ifadeyle bulunur. "2015'te kurulduk" ve
+  "2026 mezunları" sayılmaz.
+- Kaldırma: son başvuru geçmiş → her kaynakta; kariyer sayfası ilanında ilan tarihi 180 günden eski ya da bütün dönem
+  yılları geçmiş (ileri bir son başvuru yoksa). ATS ilanı bu ikisiyle kalkmaz; 365 günden eskiyse kartta eski yıl yerine
+  "Sürekli açık başvuru" yazar (Dream Games'in 2022'den beri açık ilanları).
+- Kartta (site ve bülten aynı): "Yayın: GG.AA.YYYY", "Son başvuru: GG.AA.YYYY" ya da "Tarih belirtilmemiş"
+  (`yayin/__init__.py` → `tarih_bilgisi`, sitede `etiketler.ts` → `tarihBilgisi`).
+
+**Metin nereden geliyor?** `boru.py` → `ayrintilari_zenginlestir`. İlanın kendi sayfası varsa o okunur (zaten vardı).
+Yeni: adresi `#` ile biten ilanlar (birçok ilan tek sayfada) için o sayfadan yalnızca ilanın bölümü kesilir
+(`kaynaklar/kariyer_sayfasi.py` → `ilan_bolumu`: başlıktan bir sonraki ilan başlığına kadar). Aynı sayfa bir kez
+indirilir, robots.txt'ye uyulur.
+
+**Eski kayıtlar.** Göç `0003` ayrıntılara `ilan_tarihi`, `donem_yili`, `surum` ekler. Eski kayıtlar sürüm 1'dir;
+tarihsiz kariyer sayfası ilanları ve tarihsiz ATS ilanları bir sonraki sabah işinde **bir kez** yeniden çıkarılır
+(`depo/ayrintilar.py` → `ayrinti_bekleyenler`). 29.10 verisinde ~10 çağrı ≈ 0,004 $ (Haiku, ilan başına ~0,0004 $).
+
+**29.10 etkisi (yapay zekâsız tahmin, 21 ilan):** 1 ilan düşer (Yeditek), 2 ilan "Sürekli açık başvuru" olur
+(Dream Games), 18 ilan kalır; tarih alanı olmayan 8 kariyer sayfası ilanından 7'sinde metinde tarih yok.
+
+> Soru 6: Model, tarihi olmayan bir metne "2026-10-01" yazarsa hangi satır onu atar? Testi bul
+> (`tests/test_guncellik.py` → `test_uydurma_ilan_tarihi_reddedilir`) ve bilerek boz.
+
 ## Mülakat cümlesi
 
 > "Bülteni kişiye özel yaptım: alan, çalışma modeli ve yalnızca girişimler. Kategorileri yapay zekâya yeni soru

@@ -19,8 +19,8 @@ import {
   SEHIR_SECENEKLERI,
   SEVIYE_ADI,
   SEVIYE_SECENEKLERI,
-  gunAy,
   sehirAdi,
+  tarihBilgisi,
   tarihSaat,
 } from "../veri/etiketler";
 
@@ -470,7 +470,9 @@ export default function Bulten({ ilanlar: gomulu, guncelleme: gomuluTarih }: Pro
                               ))}
                             {(i.calisma_modeli ?? i.ayrinti?.calisma_modeli) === "hibrit" && <span>Hibrit</span>}
                             {i.girisim && <span>Girişim</span>}
-                            {i.ayrinti?.son_basvuru && <span>Son başvuru {gunAy(i.ayrinti.son_basvuru)}</span>}
+                            {tarihBilgisi(i).map((t) => (
+                              <span key={t}>{t}</span>
+                            ))}
                             {i.yapay_zeka !== "yok" && <span className="fosfor fosfor-hemen">yapay zekâ</span>}
                           </p>
                           {i.ayrinti?.ozet && (

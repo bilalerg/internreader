@@ -103,6 +103,10 @@ class IlanAyrinti(Taban):
     calisma_modeli: Mapped[str] = mapped_column(String(12), default="belirsiz")  # ofis | hibrit | uzaktan | belirsiz
     ucretli: Mapped[str] = mapped_column(String(10), default="belirsiz")  # evet | hayir | belirsiz
     teknolojiler: Mapped[list] = mapped_column(JSON, default=list)
+    ilan_tarihi: Mapped[str | None] = mapped_column(String(10))  # metinde yazan yayın tarihi (YYYY-AA-GG), doğrulanmış
+    donem_yili: Mapped[int | None] = mapped_column(Integer)  # metindeki en büyük dönem yılı ("2025 Yaz Stajı" → 2025)
+    # Çıkarıcı sürümü: istem yeni alan öğrenince artar; tarihsiz eski kayıtlar bir kez yeniden çıkarılır
+    surum: Mapped[int] = mapped_column(Integer, default=1, server_default="1")
     metin_ozeti: Mapped[str] = mapped_column(
         String(64)
     )  # kullanılan metnin özeti: metin değişmedikçe yeniden çıkarılmaz

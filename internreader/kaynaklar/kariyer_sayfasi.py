@@ -39,6 +39,31 @@ def html_ayikla(ham: str, taban_url: str) -> SayfaIcerigi:
     return SayfaIcerigi(url=taban_url, metin=metin, baglantilar=list(dict.fromkeys(baglantilar))[:AZAMI_BAGLANTI])
 
 
+def _kucuk(metin: str) -> str:
+    """Büyük "İ" küçülünce iki karakter olur; önce "I" yapılır ki kesme konumları asıl metinle aynı kalsın."""
+    return " ".join(metin.split()).replace("İ", "I").lower()
+
+
+def ilan_bolumu(metin: str, baslik: str, diger_basliklar: list[str], sinir: int = 2_500) -> str:
+    """Tek sayfada birden çok ilan listelenen kariyer sayfasında (ilan adresi #çapa ile biter) ilanın kendi bölümü:
+    başlığın geçtiği yerden bir sonraki ilan başlığına kadar (en fazla `sinir` karakter). Başlık sayfada birkaç kez
+    geçebilir (üstte liste, aşağıda açıklama); en uzun bölüm alınır. Başlık bulunamazsa boş metin."""
+    metin = " ".join(metin.split())
+    kucuk, aranan = _kucuk(metin), _kucuk(baslik)
+    digerleri = [_kucuk(d) for d in diger_basliklar if _kucuk(d) != aranan]
+    en_uzun, bas = "", kucuk.find(aranan) if aranan else -1
+    while bas >= 0:
+        son = bas + sinir
+        for d in digerleri:
+            i = kucuk.find(d, bas + len(aranan))
+            if 0 <= i < son:
+                son = i
+        if son - bas > len(en_uzun):
+            en_uzun = metin[bas:son].strip()
+        bas = kucuk.find(aranan, bas + len(aranan))
+    return en_uzun
+
+
 def sayfa_oku(http: HttpIstemci, url: str) -> SayfaIcerigi:
     son_url, ham = http.sayfa(url)
     return html_ayikla(ham, son_url)

@@ -18,9 +18,11 @@ from internreader.depo.aboneler import (
     onaylanmamislari_sil,
 )
 from internreader.depo.ayrintilar import (
+    AYRINTI_SURUMU,
     ayrinti_bekleyenler,
     ayrinti_kaydet,
     ayrinti_sayisi,
+    sayfa_basliklari,
 )
 from internreader.depo.bulten import (
     HAFTALIK_GUN,
@@ -73,9 +75,11 @@ from internreader.depo.ozet import (
 
 __all__ = [
     "kapali_ilan_metinlerini_temizle",
+    "AYRINTI_SURUMU",
     "ayrinti_bekleyenler",
     "ayrinti_kaydet",
     "ayrinti_sayisi",
+    "sayfa_basliklari",
     "HAFTALIK_GUN",
     "bulten_istatistigi",
     "bulten_kaydet",

@@ -14,8 +14,9 @@ TAZELIK_GUNU = 45  # kaynağın verdiği yayın tarihi bundan eskiyse "yeni ilan
 
 def taze_mi(ilan: dict, an: datetime) -> bool:
     """Bizim için ilk kez görülen ama kaynakta aylardır açık olan ilan (ör. yeni eklenen firmanın 2 yıllık ilanı)
-    günlük özete girmez; tabloda kalır. Yayın tarihi bilinmiyorsa taze sayılır."""
-    tarih = ilan.get("yayin_tarihi") or ""
+    günlük özete girmez; tabloda kalır. Kaynak tarih vermiyorsa metinde yazan ilan tarihine bakılır; ikisi de yoksa
+    taze sayılır."""
+    tarih = ilan.get("yayin_tarihi") or (ilan.get("ayrinti") or {}).get("ilan_tarihi") or ""
     return not tarih or tarih >= (an - timedelta(days=TAZELIK_GUNU)).date().isoformat()
 
 

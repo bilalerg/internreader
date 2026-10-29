@@ -10,7 +10,7 @@ from datetime import datetime
 
 from internreader.eposta import Eposta
 from internreader.isleme.sehir import SEHIRLER
-from internreader.yayin import ROL_ADI, SEVIYE_ADI, TURKIYE_SAATI, tarih_yazisi
+from internreader.yayin import ROL_ADI, SEVIYE_ADI, TURKIYE_SAATI, tarih_bilgisi, tarih_yazisi
 
 AZAMI_ILAN = 15  # bir e-postada en fazla; kalanlar sonraki bültene kalır
 
@@ -25,15 +25,6 @@ def _konum(ilan: dict) -> str:
     if ilan.get("sehirler"):
         return ", ".join(SEHIRLER[s][0] if s in SEHIRLER else s for s in ilan["sehirler"])
     return "Uzaktan" if ilan.get("uzaktan") else "Konum belirtilmemiş"
-
-
-def _tarih(iso: str | None) -> str | None:
-    if not iso:
-        return None
-    try:
-        return tarih_yazisi(datetime.fromisoformat(iso))
-    except ValueError:
-        return None
 
 
 def _etiketler(ilan: dict) -> list[str]:
@@ -56,18 +47,12 @@ def _html_ilan(ilan: dict) -> str:
     ozet = (
         f'<p style="margin:8px 0 0;font:15px/1.55 {SANS};color:{IKINCIL}">{e(a["ozet"])}</p>' if a.get("ozet") else ""
     )
-    alt = []
-    if son := _tarih(a.get("son_basvuru")):
-        alt.append(f"Son başvuru: <strong style='color:{MUREKKEP}'>{e(son)}</strong>")
+    alt = [f"<strong style='color:{MUREKKEP}'>{e(' · '.join(tarih_bilgisi(ilan)))}</strong>"]
     if a.get("hedef"):
         alt.append(e(a["hedef"]))
     if a.get("teknolojiler"):
         alt.append(e(" · ".join(a["teknolojiler"][:5])))
-    alt_satir = (
-        f'<p style="margin:8px 0 0;font:13px/1.5 {SANS};color:{IKINCIL}">{" &nbsp;|&nbsp; ".join(alt)}</p>'
-        if alt
-        else ""
-    )
+    alt_satir = f'<p style="margin:8px 0 0;font:13px/1.5 {SANS};color:{IKINCIL}">{" &nbsp;|&nbsp; ".join(alt)}</p>'
     return f"""
 <tr><td style="padding:20px 0;border-top:1px solid {CIZGI}">
   <p style="margin:0;font:600 12px/1.4 {SANS};letter-spacing:.02em;color:{IKINCIL}">{e(ilan.get("firma_gorunen") or ilan["firma"])}</p>
@@ -86,8 +71,7 @@ def _metin_ilan(no: int, ilan: dict) -> str:
     ]
     if a.get("ozet"):
         satirlar.append(f"   {a['ozet']}")
-    if son := _tarih(a.get("son_basvuru")):
-        satirlar.append(f"   Son başvuru: {son}")
+    satirlar.append("   " + " · ".join(tarih_bilgisi(ilan)))
     satirlar.append(f"   Başvur: {ilan['url']}")
     return "\n".join(satirlar)
 

@@ -8,9 +8,11 @@ from sqlalchemy.orm import Session
 
 from internreader.db import Firma, IlanAyrinti, IlanKaydi, Siniflandirma, simdi
 from internreader.depo._ortak import _parcalar, utc
+from internreader.isleme.guncellik import baslik_yillari, donem_yillari, guncellik
 from internreader.isleme.kategori import alanlari_bul, calisma_modeli, girisim_mi
 from internreader.isleme.maske import kisisel_veriyi_maskele
 from internreader.model import HEDEF_ROLLER, OGRENCI_SEVIYELERI, Ilan
+from internreader.yayin import TURKIYE_SAATI
 
 
 def ilanlari_kaydet(oturum: Session, ilanlar: list[Ilan], basarili_firmalar: set[str]) -> tuple[list[str], int]:
@@ -79,10 +81,14 @@ def siniflandirma_kaydet(oturum: Session, sonuclar: dict[str, dict], model: str)
         )
 
 
-def yayinlanacak_ilanlar(oturum: Session, sonra: datetime | None = None) -> list[dict]:
-    """Aktif ve öğrenciye uygun ilanlar (sınıflandırma bilgisiyle). `sonra` verilirse yalnızca o andan sonra ilk
-    kez görülenler — günlük özet için. Bülten kategorileri (alanlar, çalışma modeli, girişim) burada eklenir:
-    kurallar internreader/isleme/kategori.py'de."""
+def yayinlanacak_ilanlar(
+    oturum: Session, sonra: datetime | None = None, an: datetime | None = None, bayatlar_dahil: bool = False
+) -> list[dict]:
+    """Aktif, öğrenciye uygun ve bayat olmayan ilanlar (sınıflandırma bilgisiyle). `sonra` verilirse yalnızca o andan
+    sonra ilk kez görülenler — günlük özet için. Bülten kategorileri (alanlar, çalışma modeli, girişim) ve güncellik
+    (yayin, surekli_acik) burada eklenir: kurallar internreader/isleme/kategori.py ve guncellik.py'de.
+    `bayatlar_dahil`: bayat ilanlar da "bayat" nedeniyle döner (rapor için)."""
+    bugun = (an or simdi()).astimezone(TURKIYE_SAATI).date()
     sorgu = (
         select(IlanKaydi, Siniflandirma, IlanAyrinti)
         .join(Siniflandirma, Siniflandirma.kimlik == IlanKaydi.kimlik)
@@ -99,6 +105,19 @@ def yayinlanacak_ilanlar(oturum: Session, sonra: datetime | None = None) -> list
         etiket, kaynaklar = firmalar.get(ilan.firma, (set(), set()))
         etiket = etiket | set(ilan.etiket or [])
         ayrinti_sozlugu = _ayrinti_sozlugu(ayrinti)
+        yillar = baslik_yillari(ilan.baslik) | donem_yillari(ilan.aciklama)
+        if ayrinti is not None and ayrinti.donem_yili:
+            yillar.add(ayrinti.donem_yili)
+        durum = guncellik(
+            ilan.kaynak,
+            ilan.yayin_tarihi,
+            ayrinti.son_basvuru if ayrinti else None,
+            ayrinti.ilan_tarihi if ayrinti else None,
+            yillar,
+            bugun,
+        )
+        if durum["bayat"] and not bayatlar_dahil:
+            continue
         satirlar.append(
             {
                 "kimlik": ilan.kimlik,
@@ -116,6 +135,9 @@ def yayinlanacak_ilanlar(oturum: Session, sonra: datetime | None = None) -> list
                 "alanlar": alanlari_bul(sinif.rol, sinif.yapay_zeka, ilan.baslik, ilan.firma, etiket),
                 "calisma_modeli": calisma_modeli(ilan.konum, (ayrinti_sozlugu or {}).get("calisma_modeli")),
                 "girisim": girisim_mi(ilan.firma, etiket, kaynaklar, ilan.kaynak),
+                "yayin": durum["yayin"],
+                "surekli_acik": durum["surekli_acik"],
+                **({"bayat": durum["bayat"]} if bayatlar_dahil else {}),
             }
         )
     return satirlar
@@ -142,6 +164,7 @@ def _ayrinti_sozlugu(a: IlanAyrinti | None) -> dict | None:
     return {
         "ozet": a.ozet,
         "son_basvuru": a.son_basvuru,
+        "ilan_tarihi": a.ilan_tarihi,
         "hedef": a.hedef,
         "calisma_modeli": a.calisma_modeli,
         "ucretli": a.ucretli,
