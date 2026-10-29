@@ -1,19 +1,20 @@
 {
  "surum": 1,
- "guncelleme": "2026-10-19T00:28:53.195936+03:00",
- "takip_edilen_firma": 1304,
- "taranan_firma": 315,
- "aktif_ilan": 1306,
- "ogrenci_ilani": 23,
+ "guncelleme": "2026-10-29T17:23:08.023653+03:00",
+ "takip_edilen_firma": 1293,
+ "taranan_firma": 293,
+ "aktif_ilan": 1272,
+ "ogrenci_ilani": 21,
  "sehirler": {
-  "uzaktan": 321,
-  "istanbul": 217,
-  "ankara": 38,
-  "kayseri": 17,
+  "uzaktan": 310,
+  "istanbul": 229,
+  "ankara": 26,
   "izmir": 4,
+  "sakarya": 2,
+  "antalya": 1,
   "kocaeli": 1,
   "gaziantep": 1,
-  "sakarya": 1
+  "kayseri": 1
  },
  "firmalar": [
   "Analog Devices",
@@ -53,7 +54,6 @@
   "Uber",
   "Udemy",
   "Vercel",
-  "VNGRS",
   "Wise",
   "Yemeksepeti",
   "3TK",
@@ -74,16 +74,25 @@
   "Armelsan",
   "Armsto Konnektör",
   "Armut",
-  "Arçelik",
-  "Aselsan Sivas"
+  "Aselsan Sivas",
+  "ASİSGUARD",
+  "ASPİLSAN Enerji"
  ],
  "kararlar": [
   {
-   "baslik": "Interns: JD-INTERN",
-   "firma": "Aykan",
+   "baslik": "Proje Stajı Programı (Görüntü İşleme)",
+   "firma": "Yeditek",
+   "seviye": "staj",
+   "rol": "yapay_zeka",
+   "gerekce": "Görüntü işleme proje stajı, yapay zeka bilgisi tercih sebebi",
+   "uygun": true
+  },
+  {
+   "baslik": "Embedded Software Engineering Intern",
+   "firma": "Analog Devices",
    "seviye": "staj",
    "rol": "yazilim",
-   "gerekce": "Stajyer, rol açıklaması yok, IT firması",
+   "gerekce": "Gömülü yazılım mühendisliği stajı",
    "uygun": true
   },
   {
@@ -91,7 +100,7 @@
    "firma": "Good Job Games",
    "seviye": "yeni_mezun",
    "rol": "yazilim",
-   "gerekce": "New grad yazılım mühendisi pozisyonu",
+   "gerekce": "New grad unvanı, yazılım geliştirme rolü",
    "uygun": true
   },
   {
@@ -99,7 +108,7 @@
    "firma": "Obilet",
    "seviye": "junior",
    "rol": "veri",
-   "gerekce": "Junior veri analisti ilanı, AI gerekliliği yok",
+   "gerekce": "Jr. unvanı; veri analisti pozisyonu",
    "uygun": true
   },
   {
@@ -107,39 +116,23 @@
    "firma": "Skymod",
    "seviye": "uzun_donem_staj",
    "rol": "yazilim",
-   "gerekce": "Uzun dönem test mühendisliği stajı, yazılım test odaklı.",
+   "gerekce": "Uzun dönem test mühendisliği stajı",
    "uygun": true
   },
   {
-   "baslik": "Software Engineer (Part-time)",
-   "firma": "Dream Games",
+   "baslik": "Part Time Working Student (Front End Developer)",
+   "firma": "Siemens",
    "seviye": "yari_zamanli",
    "rol": "yazilim",
-   "gerekce": "Part-time yazılım geliştirici, Unity oyun programlama",
+   "gerekce": "Öğrenci için yarı zamanlı ön yüz geliştirme",
    "uygun": true
-  },
-  {
-   "baslik": "Digitalent Yetenek Programı",
-   "firma": "Yapı Kredi",
-   "seviye": "yeni_mezun",
-   "rol": "veri",
-   "gerekce": "Yetenek programı, rol ve yapay zekâ detayı açık değil",
-   "uygun": true
-  },
-  {
-   "baslik": "Çağrı Merkezi Müşteri İlişkileri Uzman Yardımcısı",
-   "firma": "Obilet",
-   "seviye": "junior",
-   "rol": "teknik_degil",
-   "gerekce": "Uzman yardımcısı çağrı merkezi pozisyonu, giriş seviyesi",
-   "uygun": false
   },
   {
    "baslik": "HR Operations Specialist",
    "firma": "Codeway",
    "seviye": "belirsiz",
    "rol": "teknik_degil",
-   "gerekce": "İK operasyon uzmanı; seviye belirtilmemiş",
+   "gerekce": "İK operasyonları, deneyim seviyesi belirtilmemiş",
    "uygun": false
   },
   {
@@ -147,15 +140,15 @@
    "firma": "Novatek Endüstriyel Sistemler",
    "seviye": "belirsiz",
    "rol": "diger_teknik",
-   "gerekce": "Mekanik teknik ve montaj işi",
+   "gerekce": "Mekanik tekniker ve montaj, seviye belirtilmemiş",
    "uygun": false
   },
   {
-   "baslik": "UI/UX Designer",
-   "firma": "Maitechs Smart Solutions",
+   "baslik": "R&D Engineer (Native Arabic Speaker)",
+   "firma": "Sestek",
    "seviye": "belirsiz",
    "rol": "yazilim",
-   "gerekce": "UI/UX tasarımı, yazılım ürünüyle ilişkili, seviye belirsiz.",
+   "gerekce": "Ar-Ge mühendisi, konuşma teknolojisi; AI bilgisi muhtemelen aranıyor.",
    "uygun": false
   },
   {
@@ -163,15 +156,15 @@
    "firma": "Etiya",
    "seviye": "deneyimli",
    "rol": "yapay_zeka",
-   "gerekce": "Senior unvanlı üretken yapay zekâ ve LLM uzmanlığı",
+   "gerekce": "Senior seviye generative AI ve LLM uzmanlığı",
    "uygun": false
   },
   {
-   "baslik": "İdari İşler Uzmanı",
-   "firma": "İNVENTRA",
+   "baslik": "Rider Senior Supervisor",
+   "firma": "Delivery Hero",
    "seviye": "deneyimli",
    "rol": "teknik_degil",
-   "gerekce": "İdari işler, uzman unvanlı deneyimli ilan",
+   "gerekce": "Senior supervisor unvanı, kurye operasyon yönetimi",
    "uygun": false
   },
   {
@@ -179,7 +172,7 @@
    "firma": "Sezzle",
    "seviye": "deneyimli",
    "rol": "yazilim",
-   "gerekce": "Unvanda II geçiyor; muhasebe deneyimi de isteniyor",
+   "gerekce": "II unvanı; muhasebe deneyimli yazılım geliştirme",
    "uygun": false
   },
   {
@@ -187,23 +180,31 @@
    "firma": "Ticimax",
    "seviye": "deneyimli",
    "rol": "diger_teknik",
-   "gerekce": "Head of IT, yönetici seviyesi BT pozisyonu",
+   "gerekce": "IT yönetici pozisyonu, yönetici seviyesi",
    "uygun": false
   },
   {
-   "baslik": "Elektronik Donanım Stajyeri",
-   "firma": "GÖRSENTAM TARIM",
-   "seviye": "staj",
-   "rol": "diger_teknik",
-   "gerekce": "Donanım stajı, elektronik mühendisliği alanı",
-   "uygun": false
-  },
-  {
-   "baslik": "ARGE Elektronik Tasarım Mühendisi",
-   "firma": "ASPİLSAN Enerji",
+   "baslik": "Aday Mühendis Programı",
+   "firma": "Opsin Elektro Optik",
    "seviye": "yeni_mezun",
    "rol": "diger_teknik",
-   "gerekce": "Ar-Ge elektronik tasarım mühendisliği",
+   "gerekce": "Aday mühendis programı, elektro-optik donanım alanı.",
+   "uygun": false
+  },
+  {
+   "baslik": "Staj Programı",
+   "firma": "Opsin Elektro Optik",
+   "seviye": "staj",
+   "rol": "diger_teknik",
+   "gerekce": "Staj programı; alan belirtilmemiş, elektro-optik firma",
+   "uygun": false
+  },
+  {
+   "baslik": "Part-Time Working Student (Strategic Procurement Specialist)",
+   "firma": "Siemens",
+   "seviye": "yari_zamanli",
+   "rol": "teknik_degil",
+   "gerekce": "Öğrenci için yarı zamanlı stratejik satın alma",
    "uygun": false
   }
  ]
