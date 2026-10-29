@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /onay
+Disallow: /iptal
+
+Sitemap: https://internreader.me/sitemap.xml
