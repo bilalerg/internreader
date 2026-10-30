@@ -178,12 +178,20 @@ def test_tam_uyan_yoksa_durust_eposta_ve_yakin_ilanlar(oturum):
     assert "İzmir Stajı" in sabah.gidenler[0].metin
 
 
-def test_hic_ilan_yoksa_liste_olmadan_durust_eposta(oturum):
+def test_hic_ilan_yoksa_bos_hos_geldin_gitmez_kota_harcanmaz(oturum):
     g = SahteGonderici()
     cevap = kaydol_onayla(istemci_kur(oturum, g), g)
-    assert cevap.json()["hos_geldin"] == "bos"
-    (e,) = g.hos_geldinler
-    assert e.konu == "Şu an seçimlerine tam uyan ilan yok" and "Başvur" not in e.metin and "Yakın ilanlar" not in e.html
+    assert cevap.status_code == 200 and cevap.json()["hos_geldin"] == "bos"
+    assert g.hos_geldinler == []  # yalnızca onay e-postası gitti
+    with oturum() as o:
+        assert depo.eposta_sayisi(o, simdi()) == 1  # onay e-postası; hoş geldin yer ayırmadı
+        assert o.query(Bulten).count() == 0 and o.query(Gonderim).count() == 0
+        assert depo.abone_eposta_ile(o, "ogrenci@x.com").son_bulten is None
+    # İlk uyan ilan çıkınca sabah bülteniyle gelir (aynı gün bile)
+    ilan_ekle(oturum, "https://j.test/1", "Yazılım Stajı")
+    sabah = SahteGonderici()
+    assert bultenleri_gonder(oturum, sabah, AYAR)["gonderilen"] == 1
+    assert "Yazılım Stajı" in sabah.gidenler[0].metin
 
 
 def test_yakin_ilanlar_gevsetme_sirasi():

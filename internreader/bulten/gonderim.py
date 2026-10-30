@@ -2,7 +2,7 @@
 Ayrıca hoş geldin e-postası: abonelik onaylanınca hazır veriden (yapay zekâ yok) anında giden ilk e-posta.
 
 Kurallar:
-- Yeni ilan yoksa e-posta gitmez.
+- Yeni ilan yoksa e-posta gitmez. Boş e-posta hiçbir yoldan gitmez: hoş geldinde de hiç ilan yoksa e-posta yok.
 - Aynı ilan bir aboneye iki kez gitmez (gonderimler tablosu).
 - Her abone ayrı bir veritabanı işlemiyle kaydedilir: gönderim yarıda kesilse (sunucu çökse) bile, e-postası
   gitmiş aboneye ertesi çalıştırmada aynı ilanlar tekrar gitmez.
@@ -117,9 +117,10 @@ def hos_geldin_gonder(
     oturum: sessionmaker, gonderici: EpostaGonderici, ayar: Ayarlar, abone_id: int, an: datetime | None = None
 ) -> str:
     """Abonelik onaylanınca giden ilk e-posta. Yapay zekâ çağrısı yok, hazır veriden.
-    Sonuç: "gonderildi", "yakin", "bos" ya da "atlandi" (bütçe doldu) / "hata" (gönderilemedi). Son ikisinde ilanlar
-    "gönderildi" sayılmaz: ertesi sabahki bülten kapatır. Tam uyan ilan gittiyse aynı gün sabah bülteni ikinci kez
-    gitmez (son_bulten); yakın ilanlar bülten sayılmaz, tam uyan ilan çıkarsa ilk sabah gelir."""
+    Sonuç: "gonderildi", "yakin", "bos" (hiç ilan yok: e-posta gitmez, kota harcanmaz; onay sayfası bunu söyler) ya da
+    "atlandi" (bütçe doldu) / "hata" (gönderilemedi). Son ikisinde ilanlar "gönderildi" sayılmaz: ertesi sabahki bülten
+    kapatır. Tam uyan ilan gittiyse aynı gün sabah bülteni ikinci kez gitmez (son_bulten); yakın ilanlar bülten
+    sayılmaz, tam uyan ilan çıkarsa ilk sabah gelir."""
     an = an or simdi()
     if ayar.smtp_sunucu and ayar.gizli_anahtar == GELISTIRME_ANAHTARI:
         kayit.warning("INTERNREADER_GIZLI_ANAHTAR tanımlı değil: hoş geldin e-postası gönderilmedi")
@@ -131,6 +132,9 @@ def hos_geldin_gonder(
         eposta, tercihler, siklik = abone.eposta, dict(abone.tercihler or {}), abone.siklik
         ilanlar = [zenginlestir(x) for x in depo.yayinlanacak_ilanlar(o, an=an)]
     secilen, sonuc = hos_geldin_secimi(ilanlar, tercihler)
+    if sonuc == "bos":  # "şu an ilan yok" diyen boş e-posta güven kaybettirir; ilk uyan ilan sabah bülteniyle gelir
+        kayit.info("Hoş geldin: gösterilecek ilan yok, e-posta gönderilmedi")
+        return sonuc
     with oturum.begin() as o:
         yer_var = depo.eposta_kotasi_ayir(o, an, ayar.hos_geldin_eposta_siniri)
     if not yer_var:
@@ -196,7 +200,11 @@ def deneme_gonder(
     }
     if hos_geldin:
         secilen, sonuc = hos_geldin_secimi(ilanlar, tercihler)
-        ileti = hos_geldin_epostasi(alici=alici, ilanlar=secilen, tam_uyan=sonuc == "gonderildi", an=an, **baglantilar)
+        ileti = (
+            hos_geldin_epostasi(alici=alici, ilanlar=secilen, tam_uyan=sonuc == "gonderildi", an=an, **baglantilar)
+            if secilen
+            else None
+        )
     else:
         secilen = bulten_sec([i for i in ilanlar if taze_mi(i, an)], tercihler, set(), AZAMI_ILAN)
         sonuc = "gonderildi" if secilen else "uyan_ilan_yok"
@@ -209,7 +217,7 @@ def deneme_gonder(
         "gonderildi": False,
         "onizleme": None,
     }
-    if ileti is None:  # sabah bülteni de bu durumda gitmezdi
+    if ileti is None:  # sabah bülteni ve hoş geldin de bu durumda gitmezdi
         return rapor
     ileti = dataclasses.replace(ileti, konu=f"[TEST] {ileti.konu}")
     klasor.mkdir(parents=True, exist_ok=True)

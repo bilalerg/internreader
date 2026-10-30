@@ -101,6 +101,12 @@ def test_hos_geldin_eski_ilanlari_da_alir_gunluk_almaz(oturum, tmp_path):
     assert kayit_sayilari(oturum) == (0, 0)
 
 
+def test_hos_geldin_denemesi_de_bosken_gitmez(oturum, tmp_path):
+    g = SahteGonderici()
+    rapor = deneme_gonder(oturum, g, AYAR, ADRES, hos_geldin=True, klasor=tmp_path)
+    assert rapor["sonuc"] == "bos" and not rapor["gonderildi"] and rapor["onizleme"] is None and g.gidenler == []
+
+
 def test_gonderme_secenegi_yalnizca_onizleme_yazar(oturum, tmp_path):
     ilan_ekle(oturum, "https://j.test/1", "Yazılım Stajı")
     g = SahteGonderici()
