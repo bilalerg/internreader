@@ -177,3 +177,11 @@ E-posta `cikti/test_bulten.html` dosyasına yazılır; tarayıcıda aç.
   zekâsız (yedek kurallarla) çalışmaya devam eder.
 - **GitHub Actions** herkese açık depoda ücretsiz. Zamanlanmış işler bazen 5–15 dk gecikebilir.
 - **Yedek:** Neon ücretsiz planı 7 günlük geri dönüş sağlar (Restore). Ayrıca yedek gerekmez.
+
+## 12. Tıklama ölçümü ve firma araması
+
+**Tıklamalar:** Ek kurulum gerekmez. Actions → Günlük çalışma → son çalışma → Summary → `tiklama_son_7_gun`. Denemek için Test bülteni'ni çalıştır, e-postadaki
+"Başvur"a 30 saniyeden sonra tıkla, ilanın açıldığını gör; Test bülteni'ni bir kez daha çalıştırınca Summary'de `deneme` sayısı artmış olmalı.
+
+**Firma araması (isteğe bağlı, ücretsiz):** serper.dev → kayıt → API anahtarı. GitHub → Settings → Secrets and variables → Actions → `SERPER_API_KEY`. Keşif iş akışı
+her pazartesi listede olmayan firmaları ve web adresi eksik firmaları arar; anahtar yoksa bu adım atlanır.

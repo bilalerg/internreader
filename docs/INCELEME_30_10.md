@@ -88,6 +88,34 @@ Ayrıntı çıkarma da ATS ilanları için çalışır: yeni ilan özetsiz ve ro
 
 > Soru 8: `icerik_degisti` olmasaydı ayda kaç gereksiz dağıtım olurdu?
 
+## 10. Tıklama ölçümü — `bulten/tiklama.py`, `api.py` → `tikla`, `depo/tiklamalar.py`
+İlk soru şu: "kaç kişi gerçekten kullanıyor?" E-postadaki "Başvur" önce `/api/t/<jeton>` adresine gelir, kaydedilir, ilana yönlenir.
+- **Adres jetonda, imzalı:** Neon kapalı olsa da öğrenci ilana gider; yalnızca ölçüm kaybolur. İmza olmasa bu uç herkesin kullanabileceği bir
+  yönlendirici olurdu (open redirect). `INTERNREADER_GIZLI_ANAHTAR` değişirse eski e-postalardaki düğmeler ana sayfaya gider.
+- **Kayıtta adres yok:** e-posta, abone no, IP, tarayıcı tutulmaz. `kisi` her hafta değişen imzalı bir kod: "bu hafta kaç farklı kişi?" sayılır, haftalar
+  arasında kişi izlenemez. 180 gün sonra silinir. Bu bir takma addır, anonim değildir: gizli anahtarı bilen, o haftanın kodunu yeniden üretebilir.
+- **Tarayıcılar elenir:** Outlook gibi güvenlik tarayıcıları bağlantıları kendiliğinden açar. Bot adı, e-postadan 30 sn içinde açılış ve 10 sn içinde 3 farklı
+  ilan "şüpheli" sayılır; HEAD hiç sayılmaz. Eleme kusursuz değil: rakamı kesin değil, en iyi tahmin olarak oku.
+- **Nerede görülür:** Actions → Günlük çalışma → Summary → `tiklama_son_7_gun`. Test e-postası tıklamaları `deneme` satırında ayrı sayılır.
+- **Ölçmediği şey:** e-postanın açılması, sitedeki tıklamalar, düz metin sürümündeki bağlantılar.
+
+> Soru 9: `tiklama_kaydet` neden `supheli` değerini de benzersizlik anahtarına katıyor? Katmasaydık hangi tıklama kaybolurdu?
+> Soru 10: Jetonun içine abone numarasını yazsaydık ne olurdu? (İpucu: adres sunucu kayıtlarında görünür.)
+
+## 11. Kapsam büyütme — `veri/firmalar.csv`
+`firmalar.csv`'de taranacak şirket 280'den 374'e çıktı (canlıda keşifle bulunmuş birkaç firma daha var: 29.10'da 293 taranıyordu). Gerçek ölçüm (yalnızca eklenenler, gerçek yapay zekâ, 0,11 $): 113 firma tarandı, 12 uygun ilan çıktı, bunların **5'i canlıda
+yoktu** (20 → ~25). Ders: listeye şirket eklemek ilan getirmiyor; yalnızca öğrenci alan şirketi eklemek getiriyor.
+- **İşe yarayan:** bilinen işverenleri ilan sistemlerinde adlarıyla yoklamak. İlk ~100 adda 17 pano (çoğu zaten listedeydi), ikinci 138 adda 3, web adresi
+  olmayan 319 firmada 2: doygunluk. Toplamda 9 yeni pano, ~100 yeni kariyer sayfası.
+- **İşe yaramayan:** teknokent ve yatırımcı rehberleri. ODTÜ, ARI, Hacettepe sayfaları açıldı ama firma bağlantısı çıkmadı (büyük olasılıkla JavaScript ile
+  doluyor). Yalnızca Yıldız, Marmara ve Collective Spark okunabildi.
+- **Hâlâ taranamayan:** Hepsiburada, Getir, Papara, Akbank, Aselsan, Ford Otosan gibi 41 işveren. Bir kısmı botları engelliyor; bu engeller aşılmaz.
+- **Maliyet sınır değil:** 244 sayfanın 48'i 12 günde değişti (günde ~4); 255 sayfanın 4'ü yarım saatte bile değişti (her gün yeniden okunur). Sayfa başına
+  0,0007 $ ile ayda ~0,2 $; tavan 2 $. Bu bir tahmin: gerçek rakam canlıda Summary'deki harcamadan okunacak. Tek seferlik ilk okuma ~0,11 $.
+- **Sıradaki en büyük kaldıraç:** `SERPER_API_KEY`. Haftalık arama, ilan açan ama listede olmayan firmaları ve 319 firmanın web adresini bulur. Kuruluş: `.env.example`.
+
+> Soru 11: Bu ölçümü neden boş bir veritabanında ve yalnızca yeni firmalarla yaptık? Tüm listeyle yapsak hangi rakam yanıltıcı olurdu?
+
 ## Elle dene
 
 ```bash
