@@ -176,7 +176,7 @@ def tara(
     )
 
     ats_ilanlari, ats_basarili, rapor.hatalar, kaldirilan = _ats_tara(http, ats_firmalari, ayar.is_parcacigi)
-    if kaldirilan:
+    if kaldirilan and not yalnizca_ats:  # anlık bir 404 ara taramada kaydı silmesin; kararı günlük tarama verir
         with oturum.begin() as o:
             depo.ats_kaydini_sifirla(o, kaldirilan)
         kayit.info("%d firmanın ilan panosu bulunamadı (404); bir sonraki keşifte yeniden aranacak", len(kaldirilan))

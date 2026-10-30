@@ -85,6 +85,17 @@ def test_ayni_adli_firmanin_sayfa_ilani_ara_taramada_kapanmaz_ats_ilani_kapanir(
         assert o.get(IlanKaydi, karisik.kimlik).aktif
 
 
+def test_anlik_404_ara_taramada_ilan_sistemi_kaydini_silmez_gunluk_tarama_siler(oturum):
+    firmalari_kur(oturum)
+    bos = SahteHttp()  # bilinmeyen adres: 404
+    boru.tara(AYAR, oturum, http=bos, yz=SahteYz(yz_cevabi([])), yalnizca_ats=True)
+    with oturum() as o:
+        assert [f.ad for f in depo.aktif_firmalar(o) if f.ats == "lever"] == ["Acme"]
+    boru.tara(AYAR, oturum, http=bos, yz=SahteYz(yz_cevabi([])))
+    with oturum() as o:
+        assert [f.ad for f in depo.aktif_firmalar(o) if f.ats == "lever"] == []
+
+
 def test_ozetsiz_ayrinti_kariyer_sayfasi_okumaz(oturum):
     sayfa = Ilan(firma="Sayfa", baslik="Yazılım Stajı", url="https://sayfa.test/ilan", kaynak="kariyer_sayfasi")
     ats = Ilan(
