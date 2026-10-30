@@ -11,6 +11,7 @@ from internreader.depo._ortak import utc
 from internreader.yayin import TURKIYE_SAATI
 
 HAFTALIK_GUN = 0  # pazartesi (datetime.weekday); haftalık bülten o sabahki çalışmada gider
+HOS_GELDIN_DURUMU = "hos_geldin"  # bultenler.durum: abonelik onaylanınca giden e-posta (e-posta bütçesi için sayılır)
 
 
 def gonderime_hazir_aboneler(oturum: Session, an: datetime) -> list[Abone]:
@@ -45,17 +46,32 @@ def son_gun_onay_sayisi(oturum: Session, an: datetime) -> int:
     )
 
 
+def son_gun_hos_geldin_sayisi(oturum: Session, an: datetime) -> int:
+    """Son 24 saatte giden hoş geldin e-postası: kota dolunca atlanır, ertesi sabahki bülten kapatır."""
+    return (
+        oturum.scalar(
+            select(func.count())
+            .select_from(Bulten)
+            .where(Bulten.durum == HOS_GELDIN_DURUMU, Bulten.tarih >= an - timedelta(days=1))
+        )
+        or 0
+    )
+
+
 def gonderilen_kimlikler(oturum: Session, abone_id: int) -> set[str]:
     return set(oturum.scalars(select(Gonderim.ilan_kimlik).where(Gonderim.abone_id == abone_id)))
 
 
-def gonderim_kaydet(oturum: Session, abone: Abone, kimlikler: Iterable[str], an: datetime) -> None:
+def gonderim_kaydet(
+    oturum: Session, abone: Abone, kimlikler: Iterable[str], an: datetime, son_bulten_yaz: bool = True
+) -> None:
     for kimlik in kimlikler:
         oturum.add(Gonderim(abone_id=abone.id, ilan_kimlik=kimlik, tarih=an))
-    abone.son_bulten = an
+    if son_bulten_yaz:
+        abone.son_bulten = an
 
 
-def bulten_kaydet(oturum: Session, abone_id: int, ilan_sayisi: int, durum: str, an: datetime) -> None:
+def bulten_kaydet(oturum: Session, abone_id: int | None, ilan_sayisi: int, durum: str, an: datetime) -> None:
     oturum.add(Bulten(abone_id=abone_id, ilan_sayisi=ilan_sayisi, durum=durum, tarih=an))
 
 

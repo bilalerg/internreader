@@ -233,8 +233,8 @@ export default function Bulten({ ilanlar: gomulu, guncelleme: gomuluTarih }: Pro
             <h3 className="baslik mt-6 text-[2rem] font-[560]">Neredeyse tamam.</h3>
             <p className="mt-4 leading-relaxed text-murekkep-2">
               <strong className="text-murekkep">{durum.eposta}</strong> adresine bir onay bağlantısı gönderdik.
-              Bağlantıya tıkladığında aboneliğin başlar; ilk bültenin{" "}
-              {siklik === "gunluk" ? "ertesi sabah" : "pazartesi sabahı"} gelir.
+              Bağlantıya tıkladığında aboneliğin başlar ve seçimlerine uyan güncel ilanlar hemen e-postana gelir;
+              sonraki bültenin {siklik === "gunluk" ? "yeni ilan çıktığı ilk sabah" : "pazartesi sabahı"} gelir.
             </p>
             <p className="mt-3 text-[0.92rem] text-murekkep-3">E-posta birkaç dakikada gelmezse spam klasörüne bak.</p>
             <button type="button" className="dugme dugme-ikincil mt-6" onClick={() => setDurum({ tur: "bos" })}>

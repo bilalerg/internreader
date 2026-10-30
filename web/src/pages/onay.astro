@@ -7,10 +7,22 @@ import JetonIslemi from "../components/JetonIslemi.astro";
   <JetonIslemi
     uc="onay"
     baslik="Aboneliğini onayla"
-    aciklama="Son bir adım kaldı. Onayladığında seçtiğin şehir, alan ve seviyedeki yeni staj ilanları e-postana gelmeye başlar."
+    aciklama="Son bir adım kaldı. Onayladığında seçimlerine uyan güncel ilanlar hemen e-postana gelir."
     dugme="Aboneliğimi onayla"
     kutlama
     basariBaslik="Hazırsın."
-    basariMetin="Aboneliğin başladı. İlk bültenin bir sonraki sabah gelir; o gün sana uygun yeni ilan yoksa e-posta gelmez."
+    basariMetin="Aboneliğin başladı. O gün sana uygun yeni ilan yoksa e-posta gelmez."
+    basariMetinleri={{
+      gonderildi:
+        "Aboneliğin başladı. İlk ilanların e-postana geliyor; birkaç dakika içinde gelen kutuna (ve spam klasörüne) bak.",
+      yakin:
+        "Aboneliğin başladı. Şu an seçimlerine tam uyan ilan yok; yakın ilanları e-postana gönderdik. Uyan ilan çıkınca ilk sen öğreneceksin.",
+      bos: "Aboneliğin başladı. Şu an seçimlerine tam uyan ilan yok; çıkınca ilk sen öğreneceksin.",
+      atlandi: "Aboneliğin başladı.",
+      hata: "Aboneliğin başladı.",
+      zaten: "Aboneliğin zaten açık.",
+      gunluk: "Sonraki bültenin yeni ilan çıktığı ilk sabah gelir.",
+      haftalik: "Sonraki bültenin pazartesi sabahı gelir.",
+    }}
   />
 </Taban>

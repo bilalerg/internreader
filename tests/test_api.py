@@ -45,8 +45,10 @@ def test_kayit_onay_ve_cikis(ortam):
         assert abone.durum == "bekliyor" and abone.tercihler["sehirler"] == ["istanbul"]
         assert abone.onay_jetonu_ozeti != gonderici.son_jeton()  # jetonun kendisi değil özeti saklanır
 
-    assert istemci.post("/api/abone/onay", json={"jeton": gonderici.son_jeton()}).json() == {"durum": "onaylandi"}
-    assert istemci.post("/api/abone/onay", json={"jeton": gonderici.son_jeton()}).status_code == 200  # ikinci tık
+    jeton = gonderici.son_jeton()
+    cevap = istemci.post("/api/abone/onay", json={"jeton": jeton}).json()
+    assert cevap["durum"] == "onaylandi" and cevap["hos_geldin"] == "bos"  # ilan yok: dürüst hoş geldin e-postası
+    assert istemci.post("/api/abone/onay", json={"jeton": jeton}).json()["hos_geldin"] == "zaten"  # ikinci tık
     with oturum() as o:
         abone_id = depo.abone_eposta_ile(o, "ogrenci@ornek.com").id
 
@@ -66,7 +68,8 @@ def test_kayitli_adres_disari_sizmaz(ortam):
         ikinci.status_code == 202
         and ikinci.json() == istemci.post("/api/abone", json={**KAYIT, "eposta": "yeni@x.com"}).json()
     )
-    assert len(gonderici.gidenler) == 2  # zaten onaylı adrese yeni onay e-postası gitmez
+    onay_epostalari = [e for e in gonderici.gidenler if "onayla" in e.konu]
+    assert len(onay_epostalari) == 2  # zaten onaylı adrese yeni onay e-postası gitmez
 
 
 def test_gecersiz_istekler(ortam):

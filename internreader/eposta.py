@@ -51,7 +51,7 @@ class DosyayaYazanGonderici:
         )
         if eposta.html:
             (self.klasor / f"{ad}.html").write_text(eposta.html, encoding="utf-8", newline="\n")
-        kayit.info("E-posta gönderilmedi, dosyaya yazıldı: %s", self.klasor / ad)
+        kayit.info("E-posta gönderilmedi, dosyaya yazıldı: %s", self.klasor)  # dosya adında adres var, kayda yazılmaz
 
 
 class SmtpGonderici:
@@ -59,17 +59,19 @@ class SmtpGonderici:
         with SmtpGonderici(...) as g: g.gonder(e1); g.gonder(e2)
     Bağlam dışında çağrılırsa her e-posta için ayrı bağlantı açılır (onay e-postası gibi tekil gönderimler)."""
 
-    def __init__(self, sunucu: str, port: int, kullanici: str, parola: str, kimden: str, yanit: str = ""):
+    def __init__(
+        self, sunucu: str, port: int, kullanici: str, parola: str, kimden: str, yanit: str = "", zaman_asimi: int = 30
+    ):
         self.sunucu, self.port, self.kullanici, self.parola = sunucu, port, kullanici, parola
-        self.kimden, self.yanit = kimden, yanit
+        self.kimden, self.yanit, self.zaman_asimi = kimden, yanit, zaman_asimi
         self._baglanti: smtplib.SMTP | None = None
 
     def _baglan(self) -> smtplib.SMTP:
         baglam = ssl.create_default_context()
         if self.port == 465:  # doğrudan TLS
-            baglanti: smtplib.SMTP = smtplib.SMTP_SSL(self.sunucu, self.port, context=baglam, timeout=30)
+            baglanti: smtplib.SMTP = smtplib.SMTP_SSL(self.sunucu, self.port, context=baglam, timeout=self.zaman_asimi)
         else:  # 587: düz bağlanıp STARTTLS ile şifrele
-            baglanti = smtplib.SMTP(self.sunucu, self.port, timeout=30)
+            baglanti = smtplib.SMTP(self.sunucu, self.port, timeout=self.zaman_asimi)
             baglanti.starttls(context=baglam)
         if self.kullanici:
             baglanti.login(self.kullanici, self.parola)
@@ -110,7 +112,7 @@ class SmtpGonderici:
             tekil._baglanti.send_message(self.ileti(eposta))  # type: ignore[union-attr]
 
 
-def gonderici_olustur(ayar: Ayarlar) -> EpostaGonderici:
+def gonderici_olustur(ayar: Ayarlar, zaman_asimi: int = 30) -> EpostaGonderici:
     if ayar.smtp_sunucu:
         return SmtpGonderici(
             ayar.smtp_sunucu,
@@ -119,6 +121,7 @@ def gonderici_olustur(ayar: Ayarlar) -> EpostaGonderici:
             ayar.smtp_parola,
             ayar.eposta_kimden,
             ayar.eposta_yanit,
+            zaman_asimi,
         )
     kayit.warning("SMTP tanımlı değil: e-postalar gönderilmeyecek, cikti/giden_eposta/ klasörüne yazılacak")
     return DosyayaYazanGonderici(CIKTI / "giden_eposta")
@@ -132,6 +135,7 @@ def dogrulama_epostasi(alici: str, onay_linki: str) -> Eposta:
             "Merhaba,\n\n"
             "InternReader bültenine abone olmak için bu adresi kullandın. Aboneliğini başlatmak için bağlantıya tıkla:\n\n"
             f"{onay_linki}\n\n"
+            "Onayladığın anda seçimlerine uyan güncel ilanlar e-postana gelir.\n\n"
             "Bağlantı 72 saat geçerli. Bu isteği sen yapmadıysan bu e-postayı yok sayabilirsin; "
             "onaylanmayan adresler 72 saat sonra kendiliğinden silinir.\n\n"
             "InternReader — Türkiye'deki yazılım ve yapay zekâ stajları, her sabah tek e-postada."

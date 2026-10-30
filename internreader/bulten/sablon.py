@@ -76,16 +76,28 @@ def _metin_ilan(no: int, ilan: dict) -> str:
     return "\n".join(satirlar)
 
 
-def bulten_epostasi(
-    alici: str, ilanlar: list[dict], an: datetime, site_adresi: str, iptal_adresi: str, tek_tik_adresi: str, siklik: str
+def _eposta(
+    alici: str,
+    konu: str,
+    baslik_html: str,
+    giris: str,
+    ilanlar: list[dict],
+    an: datetime,
+    site_adresi: str,
+    iptal_adresi: str,
+    tek_tik_adresi: str,
+    bolum: str = "",
 ) -> Eposta:
-    """`ilanlar` en fazla AZAMI_ILAN olmalı (çağıran keser). iptal_adresi: sayfa; tek_tik_adresi: RFC 8058 POST adresi."""
+    """Bültenin ve hoş geldin e-postasının ortak gövdesi. `baslik_html` kaçışlanmış olmalı; `bolum`: ilanların üst başlığı."""
     e = html.escape
     gun = tarih_yazisi(an.astimezone(TURKIYE_SAATI))
-    n = len(ilanlar)
-    konu = f"{'Bugün' if siklik == 'gunluk' else 'Bu hafta'} sana uygun {n} yeni staj ilanı"
-    on_metin = " · ".join(f"{i.get('firma_gorunen') or i['firma']}: {i['baslik']}" for i in ilanlar[:3])
-
+    on_metin = " · ".join(f"{i.get('firma_gorunen') or i['firma']}: {i['baslik']}" for i in ilanlar[:3]) or konu
+    bolum_html = (
+        f'<tr><td style="padding:16px 32px 0"><p style="margin:0;font:600 13px {SANS};letter-spacing:.04em;'
+        f'text-transform:uppercase;color:{IKINCIL}">{e(bolum)}</p></td></tr>'
+        if bolum
+        else ""
+    )
     govde = "".join(_html_ilan(i) for i in ilanlar)
     html_metin = f"""<!doctype html>
 <html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>{e(konu)}</title></head>
@@ -95,9 +107,9 @@ def bulten_epostasi(
 <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:{YUZEY};border:1px solid {CIZGI};border-radius:14px">
 <tr><td style="padding:28px 32px 8px">
   <p style="margin:0;font:600 12px {SANS};letter-spacing:.08em;text-transform:uppercase;color:{IKINCIL}">InternReader · {e(gun)}</p>
-  <h1 style="margin:14px 0 0;font:600 28px/1.15 {SERIF};color:{MUREKKEP}">{"Bugün" if siklik == "gunluk" else "Bu hafta"} sana uygun <span style="background:{FOSFOR};color:{MUREKKEP};padding:0 4px">{n} yeni ilan</span></h1>
-  <p style="margin:12px 0 0;font:15px/1.55 {SANS};color:{IKINCIL}">Şirketlerin kendi sayfalarından, seçtiğin şehir, alan ve seviyeye göre ayıklandı. Başvuru şirketin kendi sayfasında.</p>
-</td></tr>
+  <h1 style="margin:14px 0 0;font:600 28px/1.15 {SERIF};color:{MUREKKEP}">{baslik_html}</h1>
+  <p style="margin:12px 0 0;font:15px/1.55 {SANS};color:{IKINCIL}">{e(giris)}</p>
+</td></tr>{bolum_html}
 <tr><td style="padding:8px 32px 12px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0">{govde}</table></td></tr>
 <tr><td style="padding:20px 32px 28px;border-top:1px solid {CIZGI}">
   <p style="margin:0;font:13px/1.6 {SANS};color:{IKINCIL}">Bu e-postayı InternReader bültenine abone olduğun için aldın. Yapay zekâ hata yapabilir; başvurmadan önce ilanı şirketin sayfasında oku.</p>
@@ -109,6 +121,8 @@ def bulten_epostasi(
         [
             f"InternReader · {gun}",
             konu,
+            giris,
+            *([bolum] if bolum else []),
             *(_metin_ilan(no, i) for no, i in enumerate(ilanlar, start=1)),
             "—",
             f"Tercihlerini değiştir: {site_adresi}/#bulten\nAbonelikten çık: {iptal_adresi}",
@@ -124,4 +138,68 @@ def bulten_epostasi(
             "List-Unsubscribe": f"<{tek_tik_adresi}>",
             "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
         },
+    )
+
+
+def bulten_epostasi(
+    alici: str, ilanlar: list[dict], an: datetime, site_adresi: str, iptal_adresi: str, tek_tik_adresi: str, siklik: str
+) -> Eposta:
+    """`ilanlar` en fazla AZAMI_ILAN olmalı (çağıran keser). iptal_adresi: sayfa; tek_tik_adresi: RFC 8058 POST adresi."""
+    n = len(ilanlar)
+    donem = "Bugün" if siklik == "gunluk" else "Bu hafta"
+    return _eposta(
+        alici,
+        f"{donem} sana uygun {n} yeni staj ilanı",
+        f'{donem} sana uygun <span style="background:{FOSFOR};color:{MUREKKEP};padding:0 4px">{n} yeni ilan</span>',
+        "Şirketlerin kendi sayfalarından, seçtiğin şehir, alan ve seviyeye göre ayıklandı. Başvuru şirketin kendi sayfasında.",
+        ilanlar,
+        an,
+        site_adresi,
+        iptal_adresi,
+        tek_tik_adresi,
+    )
+
+
+def hos_geldin_epostasi(
+    alici: str,
+    ilanlar: list[dict],
+    tam_uyan: bool,
+    an: datetime,
+    site_adresi: str,
+    iptal_adresi: str,
+    tek_tik_adresi: str,
+    siklik: str,
+) -> Eposta:
+    """Abonelik onaylanınca giden e-posta. `tam_uyan` değilse ilanlar yakın ilanlardır ya da liste boştur."""
+    sonraki = (
+        "Bundan sonra yeni ilan çıktığı sabahlar e-postanda."
+        if siklik == "gunluk"
+        else "Bundan sonra yeni ilanlar her pazartesi sabahı e-postanda."
+    )
+    if tam_uyan:
+        n = len(ilanlar)
+        return _eposta(
+            alici,
+            f"Şu an sana uygun {n} ilan",
+            f'Şu an sana uygun <span style="background:{FOSFOR};color:{MUREKKEP};padding:0 4px">{n} ilan</span>',
+            f"Aboneliğin başladı. Bunlar şu an açık olan, seçimlerine uyan ilanlar. {sonraki}",
+            ilanlar,
+            an,
+            site_adresi,
+            iptal_adresi,
+            tek_tik_adresi,
+        )
+    konu = "Şu an seçimlerine tam uyan ilan yok"
+    giris = f"Aboneliğin başladı. Şu an seçimlerine tam uyan ilan yok; çıkınca ilk sen öğreneceksin. {sonraki}"
+    return _eposta(
+        alici,
+        konu,
+        konu,
+        giris,
+        ilanlar,
+        an,
+        site_adresi,
+        iptal_adresi,
+        tek_tik_adresi,
+        bolum="Yakın ilanlar: tercihlerine tam uymuyor" if ilanlar else "",
     )

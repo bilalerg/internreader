@@ -8,7 +8,7 @@ Gizli değerleri (anahtar, parola, bağlantı adresi) **hiçbir yere yapıştır
 | Site + abonelik API'si | Vercel (Hobby, ücretsiz) | `internreader.me`; `/api/*` sunucusuz Python fonksiyonu, uyumaz (~1 sn soğuk başlangıç) |
 | Veritabanı | Neon (ücretsiz Postgres) | aboneler, ilanlar, firmalar (~5 MB; sınır 500 MB) |
 | Her sabahki iş | GitHub Actions | tara → yayınla → bülten → bakım; site verisini depoya ekler, Vercel yeniden yayınlar |
-| E-posta | Brevo (ücretsiz, günde 300) | onay e-postası ve bülten |
+| E-posta | Brevo (ücretsiz, günde 300) | onay e-postası, hoş geldin e-postası ve bülten |
 
 Kendi sunucunda çalıştırmak istersen eski yol (Docker + Caddy) README'de duruyor; ikisi aynı kodu kullanır.
 
@@ -138,9 +138,10 @@ günlük e-posta sınırına takılıp alamayanlara gönderir.
 
 ## Sınırlar ve bilinmesi gerekenler
 - **Ani kalabalık:** site (Vercel CDN) ve API (sunucusuz) kendiliğinden ölçeklenir; veritabanı küçük kalır.
-  **Darboğaz e-posta kotasıdır** (Brevo ücretsiz: günde 300). Kod bunu korur: günde en fazla 250 bülten
-  (`INTERNREADER_GUNLUK_BULTEN_SINIRI`) ve 50 onay e-postası (`INTERNREADER_GUNLUK_ONAY_SINIRI`). Sınır dolunca
-  bülten alamayanlar ertesi gün ilk sırada; onay sınırı dolarsa form "yarın tekrar dene" der. Art arda 5
+  **Darboğaz e-posta kotasıdır** (Brevo ücretsiz: günde 300). Kod bunu korur: günde en fazla 200 bülten
+  (`INTERNREADER_GUNLUK_BULTEN_SINIRI`), 50 onay e-postası (`INTERNREADER_GUNLUK_ONAY_SINIRI`) ve 50 hoş geldin
+  e-postası (`INTERNREADER_GUNLUK_HOS_GELDIN_SINIRI`). Sınır dolunca bülten alamayanlar ertesi gün ilk sırada; onay
+  sınırı dolarsa form "yarın tekrar dene" der; hoş geldin sınırı dolarsa e-posta atlanır, ertesi sabah bülten kapatır. Art arda 5
   gönderim hatasında bülten durur (kota ya da SMTP sorunu). Aboneler ~200'ü geçince: Brevo ücretli plan ya da
   haftalık bülteni varsayılan yapmak; değerleri GitHub ve Vercel'de yükselt.
 - **Vercel Hobby ticari olmayan kullanım içindir.** Reklam/sponsor gelirse Pro plan (ayda 20 $) gerekir.

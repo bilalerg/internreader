@@ -12,6 +12,7 @@ import hashlib
 import hmac
 import secrets
 from datetime import timedelta
+from typing import NamedTuple
 
 from sqlalchemy.orm import Session
 
@@ -42,17 +43,23 @@ def kayit_iste(oturum: Session, eposta: str, tercihler: dict, siklik: str, kayna
     return jeton
 
 
-def onayla(oturum: Session, jeton: str) -> bool:
-    """Jeton geçerliyse aboneliği başlatır. Aynı bağlantıya ikinci kez tıklamak da başarılı sayılır."""
+class OnaySonucu(NamedTuple):
+    abone_id: int
+    siklik: str
+    yeni: bool  # bu tıklama aboneliği başlattı; hoş geldin e-postası yalnızca bu durumda gider
+
+
+def onayla(oturum: Session, jeton: str) -> OnaySonucu | None:
+    """Jeton geçerliyse aboneliği başlatır; geçersizse None. Aynı bağlantıya ikinci kez tıklamak da başarılı sayılır
+    ama "yeni" değildir (ikinci hoş geldin e-postası gitmesin)."""
     abone = depo.abone_onay_ozeti_ile(oturum, _ozet(jeton))
     if abone is None:
-        return False
+        return None
     if abone.durum == "onayli":
-        return True
+        return OnaySonucu(abone.id, abone.siklik, False)
     if depo.utc(abone.onay_jetonu_tarihi) < simdi() - ONAY_GECERLILIK:
-        return False
-    abone.durum, abone.onay_tarihi = "onayli", simdi()
-    return True
+        return None
+    return OnaySonucu(abone.id, abone.siklik, depo.aboneyi_onayla(oturum, abone.id, simdi()))
 
 
 def iptal_jetonu(abone_id: int, gizli_anahtar: str) -> str:

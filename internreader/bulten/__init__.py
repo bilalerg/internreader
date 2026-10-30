@@ -5,7 +5,7 @@ sablon.py    HTML + düz metin e-posta
 gonderim.py  kime, hangi ilanlar; gönderim kayıtları
 """
 
-from internreader.bulten.gonderim import bultenleri_gonder
+from internreader.bulten.gonderim import bultenleri_gonder, hos_geldin_gonder
 from internreader.bulten.secim import eslesir
 
-__all__ = ["bultenleri_gonder", "eslesir"]
+__all__ = ["bultenleri_gonder", "eslesir", "hos_geldin_gonder"]

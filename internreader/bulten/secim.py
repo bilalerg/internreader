@@ -11,6 +11,9 @@ eklenir (internreader/isleme/kategori.py).
 from collections import Counter
 
 FIRMA_BASINA_AZAMI = 2  # bir e-postada aynı firmadan en fazla; kalanlar sonraki bültene kalır
+YAKIN_ILAN_SAYISI = 5  # tam uyan ilan yokken gösterilen "yakın ilan" sayısı
+# Tam uyan ilan yoksa önce en az önemli tercih gevşetilir; alan en son: yapay zekâ isteyene önce yapay zekâ gösterilir
+GEVSETME_SIRASI = ("sadece_girisim", "calisma_modelleri", "sehirler", "seviyeler", "alanlar")
 
 
 def eslesir(ilan: dict, tercihler: dict) -> bool:
@@ -49,3 +52,12 @@ def bulten_sec(ilanlar: list[dict], tercihler: dict, gonderilmis: set[str], azam
             if len(secilen) >= azami:
                 break
     return secilen
+
+
+def yakin_ilanlar(ilanlar: list[dict], tercihler: dict, azami: int = YAKIN_ILAN_SAYISI) -> list[dict]:
+    """Tam uyan ilan yokken: tercihler teker teker gevşetilir, ilk sonuç veren adımın ilanları döner."""
+    gevsek = dict(tercihler)
+    for anahtar in GEVSETME_SIRASI:
+        if gevsek.pop(anahtar, None) and (secilen := bulten_sec(ilanlar, gevsek, set(), azami)):
+            return secilen
+    return []

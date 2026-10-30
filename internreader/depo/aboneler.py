@@ -2,7 +2,7 @@
 
 from datetime import datetime
 
-from sqlalchemy import delete, func, select
+from sqlalchemy import delete, func, select, update
 from sqlalchemy.orm import Session
 
 from internreader.db import Abone
@@ -24,6 +24,14 @@ def abone_ekle(oturum: Session, eposta: str) -> Abone:
     abone = Abone(eposta=eposta, tercihler={}, kvkk_surumu="")
     oturum.add(abone)
     return abone
+
+
+def aboneyi_onayla(oturum: Session, abone_id: int, an: datetime) -> bool:
+    """Bekleyen aboneyi onaylar. Atomik: aynı bağlantıya iki sekmeden aynı anda tıklansa bile yalnızca biri True alır."""
+    sonuc = oturum.execute(
+        update(Abone).where(Abone.id == abone_id, Abone.durum == "bekliyor").values(durum="onayli", onay_tarihi=an)
+    )
+    return sonuc.rowcount == 1
 
 
 def abone_sil(oturum: Session, abone: Abone) -> None:

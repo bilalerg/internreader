@@ -3,7 +3,7 @@
 Uç noktalar (site ile aynı alan adında, /api altında; ters vekil (Caddy) yönlendirir, bu yüzden CORS gerekmez):
   GET  /api/saglik        izleme için {"durum": "ok"}; veritabanı yoksa 503
   POST /api/abone         kayıt isteği → onay e-postası (202)
-  POST /api/abone/onay    {"jeton": ...} e-postadaki bağlantının açtığı sayfa çağırır
+  POST /api/abone/onay    {"jeton": ...} e-postadaki bağlantının açtığı sayfa çağırır; ilk onayda hoş geldin e-postası
   POST /api/abone/iptal   {"jeton": ...} tek tıkla çıkış; kayıt silinir
   GET  /api/cron/gunluk   Vercel Cron çağırır (Authorization: Bearer CRON_SECRET): GitHub'da sabah işini başlatır
 
@@ -35,6 +35,7 @@ from sqlalchemy.orm import sessionmaker
 
 from internreader import abonelik, depo
 from internreader.ayar import GELISTIRME_ANAHTARI, Ayarlar, ayarlari_oku
+from internreader.bulten import hos_geldin_gonder
 from internreader.db import oturum_fabrikasi, simdi
 from internreader.eposta import EpostaGonderici, dogrulama_epostasi, gonderici_olustur
 from internreader.isleme.kategori import ALANLAR
@@ -240,12 +241,19 @@ def uygulama_olustur(
         if not jeton_siniri.izin_ver(istemci(istek)):
             return _hata(429, "cok_fazla_istek", "Kısa sürede çok fazla deneme oldu.")
         with oturum.begin() as o:
-            tamam = abonelik.onayla(o, govde.jeton)
-        if not tamam:
+            sonuc = abonelik.onayla(o, govde.jeton)
+        if sonuc is None:
             return _hata(
                 400, "gecersiz_jeton", "Bağlantı geçersiz ya da süresi dolmuş. Formdan yeniden kaydolabilirsin."
             )
-        return {"durum": "onaylandi"}
+        hos_geldin = "zaten"
+        if sonuc.yeni:  # onay kaydedildi; bundan sonra ne olursa olsun abonelik başladı, istek başarısız sayılmaz
+            try:
+                hos_geldin = hos_geldin_gonder(oturum, gonderici, ayar, sonuc.abone_id)
+            except Exception:
+                kayit.exception("Hoş geldin e-postası hazırlanamadı (abone %d)", sonuc.abone_id)
+                hos_geldin = "hata"
+        return {"durum": "onaylandi", "hos_geldin": hos_geldin, "siklik": sonuc.siklik}
 
     @app.post("/api/abone/iptal")
     def iptal(govde: JetonIstegi, istek: Request):
@@ -277,4 +285,5 @@ def uygulama() -> FastAPI:
     ayar = ayarlari_oku()
     if ayar.gizli_anahtar == GELISTIRME_ANAHTARI:
         kayit.warning("INTERNREADER_GIZLI_ANAHTAR tanımlı değil: geliştirme anahtarı kullanılıyor (sunucuda kullanma!)")
-    return uygulama_olustur(ayar, oturum_fabrikasi(ayar.veritabani_url), gonderici_olustur(ayar))
+    # Vercel fonksiyonu 30 sn'de kesilir: takılan SMTP bağlantısı isteği öldürmesin
+    return uygulama_olustur(ayar, oturum_fabrikasi(ayar.veritabani_url), gonderici_olustur(ayar, zaman_asimi=10))
