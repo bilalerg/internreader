@@ -272,9 +272,7 @@ function Saat({ dakika }: { dakika: number }) {
         />
         <circle cx="26" cy="26" r="2.8" fill="var(--fosfor)" stroke="var(--murekkep)" strokeWidth="1" />
       </svg>
-      <span className="font-mono text-[0.8rem] tabular-nums text-murekkep-2">
-        her sabah
-      </span>
+      <span className="font-mono text-[0.8rem] tabular-nums text-murekkep-2">her sabah</span>
     </div>
   );
 }
