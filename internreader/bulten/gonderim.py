@@ -10,12 +10,14 @@ Kurallar:
 - Bir abone aynı Türkiye gününde tek bülten alır: sabah işi iki kez çalışsa da (bkz. depo/bulten.py).
 - Bütün e-postalar tek günlük sayaçtan düşer (depo/bulten.py → eposta_kotasi_ayir); dolunca kalanlar ertesi güne kalır.
 - Bir abonenin e-postası gönderilemezse (adres reddi vb.) diğerleri etkilenmez; hata kaydedilir.
+- Pazartesi bülteninden sonra sessizlik e-postası: 7 gündür abone olup 7 gündür hiç e-posta almamış kişiye "bu hafta
+  sana uyan yeni ilan çıkmadı" + en çok 5 yakın ilan. Yakın ilan yoksa gitmez; haftada en fazla bir tane.
 """
 
 import dataclasses
 import logging
 from contextlib import nullcontext
-from datetime import datetime
+from datetime import UTC, datetime
 from pathlib import Path
 
 from sqlalchemy.orm import sessionmaker
@@ -23,12 +25,12 @@ from sqlalchemy.orm import sessionmaker
 from internreader import depo
 from internreader.abonelik import iptal_jetonu
 from internreader.ayar import CIKTI, GELISTIRME_ANAHTARI, Ayarlar
-from internreader.bulten.sablon import AZAMI_ILAN, bulten_epostasi, hos_geldin_epostasi
+from internreader.bulten.sablon import AZAMI_ILAN, bulten_epostasi, hos_geldin_epostasi, sessizlik_epostasi
 from internreader.bulten.secim import bulten_sec, yakin_ilanlar
 from internreader.bulten.tiklama import baglanti_yapici
 from internreader.db import simdi
 from internreader.eposta import EpostaGonderici
-from internreader.yayin import zenginlestir
+from internreader.yayin import TURKIYE_SAATI, zenginlestir
 from internreader.yayin.whatsapp import taze_mi
 
 kayit = logging.getLogger(__name__)
@@ -43,13 +45,25 @@ def bultenleri_gonder(
     if ayar.smtp_sunucu and ayar.gizli_anahtar == GELISTIRME_ANAHTARI:
         # Çıkış bağlantıları API'nin doğrulayamayacağı anahtarla imzalanırdı: kimse abonelikten çıkamazdı
         raise RuntimeError("Gerçek e-posta gönderimi için INTERNREADER_GIZLI_ANAHTAR tanımlı olmalı (API ile aynı)")
-    an = an or simdi()
+    an = (an or simdi()).astimezone(UTC)  # kayıtlar UTC: SQLite saat dilimi saklamaz
     with oturum() as o:
-        ilanlar = [i for i in (zenginlestir(x) for x in depo.yayinlanacak_ilanlar(o)) if taze_mi(i, an)]
+        guncel = [zenginlestir(x) for x in depo.yayinlanacak_ilanlar(o)]
         aboneler = [(a.id, a.eposta, dict(a.tercihler or {}), a.siklik) for a in depo.gonderime_hazir_aboneler(o, an)]
+        firma_sayisi = depo.taranan_firma_sayisi(o)
+    ilanlar = [i for i in guncel if taze_mi(i, an)]
 
-    rapor = {"hazir_abone": len(aboneler), "gonderilen": 0, "bos": 0, "hata": 0, "ilan": 0, "ertelendi": 0}
+    rapor = {
+        "hazir_abone": len(aboneler),
+        "gonderilen": 0,
+        "bos": 0,
+        "hata": 0,
+        "ilan": 0,
+        "ertelendi": 0,
+        "sessizlik": 0,
+        "sessizlik_bos": 0,
+    }
     ardisik_hata = 0
+    durdu = False
     # SMTP göndericisi bağlam yöneticisiyse bütün e-postalar tek bağlantıdan gider
     baglam = gonderici if hasattr(gonderici, "__enter__") else nullcontext(gonderici)
     with baglam as g:
@@ -59,6 +73,7 @@ def bultenleri_gonder(
                 kayit.error(
                     "Art arda %d gönderim hatası: e-posta kotası ya da SMTP ayarı; gönderim durduruldu", ardisik_hata
                 )
+                durdu = True
                 break
             with oturum() as o:
                 gonderilmis = depo.gonderilen_kimlikler(o, abone_id)
@@ -72,6 +87,7 @@ def bultenleri_gonder(
                 # Günlük e-posta bütçesi doldu: kalanlar ertesi gün listenin başında (adil sıra, depo/bulten.py)
                 rapor["ertelendi"] = len(aboneler) - sira
                 kayit.warning("Günlük e-posta sınırı doldu; %d abone yarına kaldı", rapor["ertelendi"])
+                durdu = True
                 break
             jeton = iptal_jetonu(abone_id, ayar.gizli_anahtar)
             ileti = bulten_epostasi(
@@ -100,8 +116,69 @@ def bultenleri_gonder(
                 depo.bulten_kaydet(o, abone_id, len(secilen), durum, an)
             rapor["gonderilen" if durum == "gonderildi" else "hata"] += 1
             rapor["ilan"] += len(secilen) if durum == "gonderildi" else 0
+        if not durdu and an.astimezone(TURKIYE_SAATI).weekday() == depo.HAFTALIK_GUN:
+            _sessizlik_gonder(oturum, g, ayar, guncel, firma_sayisi, an, rapor)
     kayit.info("Bülten: %s", rapor)
     return rapor
+
+
+def _sessizlik_gonder(
+    oturum: sessionmaker,
+    g: EpostaGonderici,
+    ayar: Ayarlar,
+    ilanlar: list[dict],
+    firma_sayisi: int,
+    an: datetime,
+    rapor: dict,
+) -> None:
+    """Bülten bittikten sonra, pazartesi: bir haftadır sesimizi duymayan aboneye kısa bir e-posta. Yakın ilanlar bütün
+    güncel ilanlardan seçilir (yalnızca yeniler değil) ve daha önce gönderilmemiş olmalı. Yakın ilan yoksa e-posta gitmez.
+    Kota bültenden sonra kullanılır: bülten önce gider, sessizlik kalan yerle."""
+    with oturum() as o:
+        adaylar = [(a.id, a.eposta, dict(a.tercihler or {})) for a in depo.sessiz_aboneler(o, an)]
+    ardisik_hata = 0
+    for abone_id, eposta, tercihler in adaylar:
+        if ardisik_hata >= ARDISIK_HATA_SINIRI:
+            kayit.error("Art arda %d sessizlik e-postası hatası; durduruldu", ardisik_hata)
+            return
+        with oturum() as o:
+            gonderilmis = depo.gonderilen_kimlikler(o, abone_id)
+        yakin = yakin_ilanlar(ilanlar, tercihler, gonderilmis=gonderilmis)
+        if not yakin:  # boş e-posta asla gitmez
+            rapor["sessizlik_bos"] += 1
+            continue
+        with oturum.begin() as o:
+            yer_var = depo.eposta_kotasi_ayir(o, an, ayar.toplu_eposta_siniri)
+        if not yer_var:  # gelecek pazartesi yine aday olur
+            kayit.warning("Günlük e-posta sınırı doldu; sessizlik e-postası durduruldu")
+            return
+        jeton = iptal_jetonu(abone_id, ayar.gizli_anahtar)
+        ileti = sessizlik_epostasi(
+            alici=eposta,
+            ilanlar=yakin,
+            firma_sayisi=firma_sayisi,
+            an=an,
+            site_adresi=ayar.site_adresi,
+            iptal_adresi=f"{ayar.site_adresi}/iptal?jeton={jeton}",
+            tek_tik_adresi=f"{ayar.site_adresi}/api/abone/iptal-tek?jeton={jeton}",
+            baglanti=baglanti_yapici(ayar, abone_id, depo.SESSIZLIK_DURUMU, an),
+        )
+        try:
+            g.gonder(ileti)
+            durum = depo.SESSIZLIK_DURUMU
+            ardisik_hata = 0
+        except Exception:  # tek abonenin hatası diğerlerini durdurmaz
+            kayit.exception("Sessizlik e-postası gönderilemedi (abone %d)", abone_id)
+            durum = "hata"
+            ardisik_hata += 1
+        with oturum.begin() as o:
+            abone = depo.abone_id_ile(o, abone_id)
+            if durum != depo.SESSIZLIK_DURUMU:
+                depo.eposta_kotasi_iade(o, an)
+            elif abone is not None:  # yakın ilanlar gönderildi sayılır, bülten sayılmaz (son_bulten değişmez)
+                depo.gonderim_kaydet(o, abone, [i["kimlik"] for i in yakin], an, son_bulten_yaz=False)
+            depo.bulten_kaydet(o, abone_id if abone is not None else None, len(yakin), durum, an)
+        rapor["sessizlik" if durum == depo.SESSIZLIK_DURUMU else "hata"] += 1
 
 
 def hos_geldin_secimi(ilanlar: list[dict], tercihler: dict) -> tuple[list[dict], str]:

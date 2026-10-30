@@ -1,7 +1,7 @@
 """Bülten gönderimi: kime ne zaman gönderilecek, kime hangi ilan gitti, gönderim kayıtları."""
 
 from collections.abc import Iterable
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 
 from sqlalchemy import delete, func, select, update
 from sqlalchemy.exc import IntegrityError
@@ -14,6 +14,9 @@ from internreader.yayin import TURKIYE_SAATI
 
 HAFTALIK_GUN = 0  # pazartesi (datetime.weekday); haftalık bülten o sabahki çalışmada gider
 HOS_GELDIN_DURUMU = "hos_geldin"  # bultenler.durum: abonelik onaylanınca giden e-posta (e-posta bütçesi için sayılır)
+SESSIZLIK_DURUMU = "sessizlik"  # bultenler.durum: pazartesi "bu hafta sana uyan yeni ilan çıkmadı" e-postası
+ALINAN_DURUMLAR = ("gonderildi", HOS_GELDIN_DURUMU, SESSIZLIK_DURUMU)  # aboneye gerçekten giden e-postalar
+SESSIZLIK_GUNU = 7  # bu kadar gündür abone olup bu kadar gündür e-posta almayana pazartesi sessizlik e-postası
 
 
 def gonderime_hazir_aboneler(oturum: Session, an: datetime) -> list[Abone]:
@@ -34,6 +37,28 @@ def gonderime_hazir_aboneler(oturum: Session, an: datetime) -> list[Abone]:
     # ertesi gün listenin başına geçer; aynı kişiler her gün dışarıda kalmaz.
     hazir.sort(key=lambda a: (a.son_bulten is not None, utc(a.son_bulten) or an))
     return hazir
+
+
+def sessiz_aboneler(oturum: Session, an: datetime) -> list[Abone]:
+    """Sessizlik e-postasının adayları: onaylı, en az 7 gündür abone ve son 7 günde hiç e-posta almamış.
+    Günler Türkiye takvimiyle sayılır (bugün + önceki 6 gün): iş bir pazartesi 09:37'de, ertesi pazartesi 07:05'te
+    çalışsa da geçen haftanın e-postası bu haftayı engellemez. Sessizlik e-postası da "alınan e-posta" sayılır: iş aynı
+    gün iki kez çalışsa da kimse ikincisini almaz, haftada en fazla bir tane gider."""
+    gun_basi = an.astimezone(TURKIYE_SAATI).replace(hour=0, minute=0, second=0, microsecond=0)
+    esik = (gun_basi - timedelta(days=SESSIZLIK_GUNU - 1)).astimezone(UTC)  # SQLite saat dilimi saklamaz: UTC
+    alanlar = select(Bulten.abone_id).where(
+        Bulten.tarih >= esik, Bulten.durum.in_(ALINAN_DURUMLAR), Bulten.abone_id.is_not(None)
+    )
+    sorgu = (
+        select(Abone)
+        .where(
+            Abone.durum == "onayli",
+            func.coalesce(Abone.onay_tarihi, Abone.olusturma) < esik,
+            Abone.id.not_in(alanlar),
+        )
+        .order_by(Abone.id)
+    )
+    return list(oturum.scalars(sorgu))
 
 
 def gonderilen_kimlikler(oturum: Session, abone_id: int) -> set[str]:

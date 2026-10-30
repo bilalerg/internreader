@@ -28,6 +28,7 @@ from internreader.depo.ayrintilar import (
 from internreader.depo.bulten import (
     HAFTALIK_GUN,
     HOS_GELDIN_DURUMU,
+    SESSIZLIK_DURUMU,
     bulten_istatistigi,
     bulten_kaydet,
     eposta_kotasi_ayir,
@@ -37,6 +38,7 @@ from internreader.depo.bulten import (
     gonderilen_kimlikler,
     gonderim_kaydet,
     gonderime_hazir_aboneler,
+    sessiz_aboneler,
 )
 from internreader.depo.durum import (
     durum_al,
@@ -89,6 +91,8 @@ __all__ = [
     "tiklama_kaydet",
     "tiklama_raporu",
     "HOS_GELDIN_DURUMU",
+    "SESSIZLIK_DURUMU",
+    "sessiz_aboneler",
     "girisim_listesi_csv",
     "kapali_ilan_metinlerini_temizle",
     "rol_guncelle",

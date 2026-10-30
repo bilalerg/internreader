@@ -186,7 +186,7 @@ class Bulten(Taban):
     abone_id: Mapped[int | None] = mapped_column(Integer, ForeignKey("aboneler.id", ondelete="SET NULL"), index=True)
     tarih: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=simdi, index=True)
     ilan_sayisi: Mapped[int] = mapped_column(Integer)
-    durum: Mapped[str] = mapped_column(String(12))  # gonderildi | hata
+    durum: Mapped[str] = mapped_column(String(12))  # gonderildi | hos_geldin | sessizlik | hata
 
 
 class Tiklama(Taban):
@@ -201,7 +201,7 @@ class Tiklama(Taban):
     eposta_no: Mapped[str] = mapped_column(String(16))  # e-posta başına rastgele; aboneye geri götürmez
     kisi: Mapped[str] = mapped_column(String(16))
     hafta: Mapped[str] = mapped_column(String(8))  # e-postanın gittiği hafta ("2026-W44"); kisi kodu bu haftaya aittir
-    tur: Mapped[str] = mapped_column(String(12))  # bulten | hos_geldin | deneme
+    tur: Mapped[str] = mapped_column(String(12))  # bulten | hos_geldin | sessizlik | deneme
     supheli: Mapped[bool] = mapped_column(
         Boolean, default=False, server_default=false()
     )  # güvenlik tarayıcısı olabilir

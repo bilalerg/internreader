@@ -218,3 +218,36 @@ def hos_geldin_epostasi(
         bolum="Yakın ilanlar: tercihlerine tam uymuyor" if ilanlar else "",
         baglanti=baglanti,
     )
+
+
+def sessizlik_epostasi(
+    alici: str,
+    ilanlar: list[dict],
+    firma_sayisi: int,
+    an: datetime,
+    site_adresi: str,
+    iptal_adresi: str,
+    tek_tik_adresi: str,
+    baglanti: Baglanti | None = None,
+) -> Eposta:
+    """Pazartesi, bir haftadır e-posta almamış aboneye: "bu hafta sana uyan yeni ilan çıkmadı" + yakın ilanlar.
+    `ilanlar` boş olamaz: yakın ilan yoksa çağıran e-posta göndermez."""
+    konu = "Bu hafta sana uyan yeni ilan çıkmadı"
+    taranan = f"{firma_sayisi:,}".replace(",", ".") + " şirketin" if firma_sayisi else "Şirketlerin"
+    giris = (
+        f"{taranan} ilan sayfasını her gün taradık; bu hafta seçimlerine uyan yeni ilan çıkmadı. Çıkınca ilk sen "
+        "öğreneceksin. Bu arada tercihlerine yakın, şu an açık birkaç ilan:"
+    )
+    return _eposta(
+        alici,
+        konu,
+        konu,
+        giris,
+        ilanlar,
+        an,
+        site_adresi,
+        iptal_adresi,
+        tek_tik_adresi,
+        bolum="Yakın ilanlar: tercihlerine tam uymuyor",
+        baglanti=baglanti,
+    )

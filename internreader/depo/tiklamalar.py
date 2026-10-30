@@ -7,7 +7,7 @@ from sqlalchemy import delete, func, select
 from sqlalchemy.orm import Session
 
 from internreader.db import Bulten, IlanKaydi, Tiklama
-from internreader.depo.bulten import HOS_GELDIN_DURUMU
+from internreader.depo.bulten import HOS_GELDIN_DURUMU, SESSIZLIK_DURUMU
 
 TOPLU_ACILIS_ILAN = 3  # aynı e-postada bu kadar farklı ilan...
 TOPLU_ACILIS_SN = 10  # ...bu süre içinde açıldıysa insan değil, güvenlik tarayıcısıdır
@@ -61,7 +61,11 @@ def tiklama_raporu(oturum: Session, an: datetime, gun: int = 7) -> dict:
         oturum.scalar(
             select(func.count())
             .select_from(Bulten)
-            .where(Bulten.tarih >= esik, Bulten.durum.in_(("gonderildi", HOS_GELDIN_DURUMU)), Bulten.ilan_sayisi > 0)
+            .where(
+                Bulten.tarih >= esik,
+                Bulten.durum.in_(("gonderildi", HOS_GELDIN_DURUMU, SESSIZLIK_DURUMU)),
+                Bulten.ilan_sayisi > 0,
+            )
         )
         or 0
     )

@@ -60,7 +60,7 @@ def jeton_coz(jeton: str, gizli_anahtar: str) -> dict | None:
 
 
 def baglanti_yapici(ayar: Ayarlar, abone_id: int, tur: str, an: datetime) -> Callable[[dict], str]:
-    """Bir e-postanın bağlantı üreticisi. `tur`: bulten | hos_geldin | deneme (deneme rapora girmez)."""
+    """Bir e-postanın bağlantı üreticisi. `tur`: bulten | hos_geldin | sessizlik | deneme (deneme rapora girmez)."""
     hafta = hafta_etiketi(an)
     ortak = {
         "e": secrets.token_hex(8),  # bu e-postanın rastgele numarası; aboneye geri götürmez
