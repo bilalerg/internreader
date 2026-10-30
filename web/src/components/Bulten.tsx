@@ -41,13 +41,28 @@ type Durum =
 const ONIZLEME_SINIRI = 6;
 const FIRMA_BASINA_AZAMI = 2; // internreader/bulten/secim.py ile aynı: bir e-postada aynı firmadan en fazla 2 ilan
 
-// Sıra JSON'dan gelir (yeni, girişim, ücretli önde). Firma kotasını aşan ilan sonraki bültene kalır.
+// internreader/isleme/tekillestirme.py → ilan_anahtari ile aynı: aynı firma + başlık farklı adreste de olsa tek ilan
+const sade = (metin: string) =>
+  metin
+    .replace(/[İIı]/g, "i")
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/\p{M}/gu, "")
+    .replace(/[^\p{L}\p{N}]+/gu, "");
+const ilanAnahtari = (i: Ilan) => `${sade(i.firma)}|${sade(i.baslik)}`;
+
+// Sıra JSON'dan gelir (yeni, girişim, ücretli önde). Firma kotasını aşan ilan sonraki bültene kalır; aynı ilanın
+// ikinci adresi gösterilmez (bulten/secim.py → bulten_sec).
 function bultenListesi(uyanlar: Ilan[]) {
   const sayac = new Map<string, number>();
+  const secilen = new Set<string>();
   return uyanlar.filter((i) => {
     const n = sayac.get(i.firma) ?? 0;
+    const anahtar = ilanAnahtari(i);
+    if (n >= FIRMA_BASINA_AZAMI || secilen.has(anahtar)) return false;
     sayac.set(i.firma, n + 1);
-    return n < FIRMA_BASINA_AZAMI;
+    secilen.add(anahtar);
+    return true;
   });
 }
 
