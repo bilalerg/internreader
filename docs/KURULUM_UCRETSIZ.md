@@ -8,6 +8,7 @@ Gizli değerleri (anahtar, parola, bağlantı adresi) **hiçbir yere yapıştır
 | Site + abonelik API'si | Vercel (Hobby, ücretsiz) | `internreader.me`; `/api/*` sunucusuz Python fonksiyonu, uyumaz (~1 sn soğuk başlangıç) |
 | Veritabanı | Neon (ücretsiz Postgres) | aboneler, ilanlar, firmalar (~5 MB; sınır 500 MB) |
 | Her sabahki iş | GitHub Actions | tara → yayınla → bülten → bakım; site verisini depoya ekler, Vercel yeniden yayınlar |
+| Gün içi ara tarama | GitHub Actions | 6 saatte bir yalnızca ilan sistemleri; yalnızca veri değiştiyse site yeniden yayınlanır; bülten yok |
 | E-posta | Brevo (ücretsiz, günde 300) | onay e-postası, hoş geldin e-postası ve bülten |
 
 Kendi sunucunda çalıştırmak istersen eski yol (Docker + Caddy) README'de duruyor; ikisi aynı kodu kullanır.
@@ -168,6 +169,9 @@ E-posta `cikti/test_bulten.html` dosyasına yazılır; tarayıcıda aç.
   sınırı dolarsa form "yarın tekrar dene" der; hoş geldin sınırı dolarsa e-posta atlanır, ertesi sabah bülten kapatır. Art arda 5
   gönderim hatasında bülten durur (kota ya da SMTP sorunu). Aboneler ~200'ü geçince: Brevo ücretli plan ya da
   haftalık bülteni varsayılan yapmak; değerleri GitHub ve Vercel'de yükselt.
+- **Ara tarama kotaları (30.10 ölçümü):** tek tarama ~36 sn + Actions kurulumu, ~2 dk. Neon: ayda ~3 CU-saat ek (kota 100 CU-saat;
+  compute 0,25 CU'da kalırsa). Vercel: günde en fazla 4 ek dağıtım (sınır 100). Yapay zekâ tavanı çalıştırma başına 0,05 $;
+  aylık 2 $ tavanı ortaktır, dolarsa sistem yapay zekâsız devam eder. Kariyer sayfaları günde bir taranır, artırılmadı.
 - **Vercel Hobby ticari olmayan kullanım içindir.** Reklam/sponsor gelirse Pro plan (ayda 20 $) gerekir.
 - **Yapay zekâ harcaması:** çalıştırma başına en fazla 0,50 $, ayda en fazla 2 $ (kod frenler). Kredi bitince sistem yapay
   zekâsız (yedek kurallarla) çalışmaya devam eder.

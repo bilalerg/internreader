@@ -61,10 +61,38 @@ GitHub zamanlaması 6,5 saat gecikti. Vercel Cron korumalı ucu çağırır, uç
 > Soru 4: Saldırgan `/api/cron/gunluk`'u bulsa ne olur? Hangi satır korur, neden `==` değil `compare_digest`?
 > Soru 5: Vercel ve GitHub aynı gün iki kez çalışırsa tarama, yapay zekâ harcaması ve bülten için ayrı ayrı ne olur?
 
+## 7. Hoş geldin e-postası — `bulten/gonderim.py` → `hos_geldin_gonder`, `api.py` → `onayla`
+Kişi kaydolunca motive olsun diye: e-postasını onayladığı anda hazır veriden (yapay zekâ yok) uyan ilanlar gider.
+- **Atomik onay** (`depo.aboneyi_onayla`): `UPDATE ... WHERE durum='bekliyor'`. İki sekmeden aynı anda tıklansa bile veritabanı
+  yalnızca birine "1 satır değişti" der; ikinci e-posta böyle önlenir. Önce oku-sonra yaz yapsaydık ikisi de "bekliyor" görürdü.
+- **Sıra önemli:** önce onay kaydedilir, sonra e-posta denenir. E-posta patlasa da abonelik başlamıştır; kullanıcıya hata gösterilmez.
+- **Yakın ilanlar** (`secim.py` → `yakin_ilanlar`): tam uyan yoksa tercihler teker teker gevşetilir, alan en son. "Yakın" olduğu
+  e-postada açıkça yazar. Yakın ilan bülten sayılmaz: tam uyan ilan çıkarsa ilk sabah gider.
+- **Bütçe:** Brevo günde 300 → 200 bülten + 50 onay + 50 hoş geldin. Dolarsa hoş geldin atlanır, sabah bülteni kapatır.
+
+> Soru 6: Onay ve e-postayı tek veritabanı işleminde yapsaydık SMTP takıldığında ne olurdu?
+
+## 8. Hızlı test — `bulten/gonderim.py` → `deneme_gonder`, `.github/workflows/test_bulten.yml`
+Her deneme için sabahı beklemek yerine: Actions → Test bülteni → Run. Kayıt yazmaz, korumalara takılmaz, konu `[TEST]` ile başlar.
+Depo herkese açık: adres girdi olarak alınmaz, gizli değerden gelir ve kayıtlara yazılmaz. Hata metni bile yazdırılmaz (SMTP
+hatası adresi içerebilir). Çıkış bağlantısı olmayan abone (0) için imzalanır, tıklasan da aboneliğin silinmez.
+
+> Soru 7: Workflow girdisine e-posta alanı koysaydık kim görürdü?
+
+## 9. Ara tarama — `boru.py` → `tara(yalnizca_ats=True)`, `.github/workflows/ara_tarama.yml`
+Staj ilanları saatlik değişmez ve kariyer sayfaları yapay zekâyla okunur; tam taramayı sıklaştırmak krediyi eritir. Bu yüzden 6 saatte
+bir yalnızca ilan sistemleri taranır (API, ucuz). İki tuzak:
+- Kariyer sayfası ilanı "görülmedi" diye kapanmamalı: `sayfa_ilanlari_korunsun`.
+- Her commit bir Vercel dağıtımı: `guncelleme` damgası her turda değişir, tek başına commit doğurmamalı (`icerik_degisti`).
+Ayrıntı çıkarma da ATS ilanları için çalışır: yeni ilan özetsiz ve rolü doğrulanmamış yayına girmesin. Maliyet artmaz, sabaha göre öne alınır.
+
+> Soru 8: `icerik_degisti` olmasaydı ayda kaç gereksiz dağıtım olurdu?
+
 ## Elle dene
 
 ```bash
-.venv/Scripts/python -m pytest -q tests/test_kalite.py tests/test_guncellik.py tests/test_ats.py
+.venv/Scripts/python -m pytest -q tests/test_kalite.py tests/test_hos_geldin.py tests/test_bulten_dene.py tests/test_ara_tarama.py
+.venv/Scripts/python -m internreader bulten-dene ben@ornek.com --hos-geldin --gonderme
 ```
 
 `secim.py`'de `FIRMA_BASINA_AZAMI`'yı 1 yap, testi çalıştır, hangi testin neden kırıldığını oku, geri al.
