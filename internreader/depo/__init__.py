@@ -44,6 +44,7 @@ from internreader.depo.firmalar import (
     firma_anahtari,
     firma_ekle_veya_guncelle,
     firmayi_kapat,
+    girisim_listesi_csv,
     kesif_bekleyenler,
     kesif_sonucu_yaz,
 )
@@ -51,6 +52,7 @@ from internreader.depo.ilanlar import (
     ilanlari_kaydet,
     imzayla_kararlar,
     kapali_ilan_metinlerini_temizle,
+    rol_guncelle,
     siniflandirilmamislar,
     siniflandirma_kaydet,
     yayinlanacak_ilanlar,
@@ -74,7 +76,9 @@ from internreader.depo.ozet import (
 )
 
 __all__ = [
+    "girisim_listesi_csv",
     "kapali_ilan_metinlerini_temizle",
+    "rol_guncelle",
     "AYRINTI_SURUMU",
     "ayrinti_bekleyenler",
     "ayrinti_kaydet",

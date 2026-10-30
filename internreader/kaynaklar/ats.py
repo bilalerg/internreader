@@ -7,6 +7,7 @@ Her toplayıcı: (http istemcisi, firma adı, sistemdeki kısa ad) → list[Ilan
 Ayrıştırma (JSON → Ilan) fonksiyonları ağdan ayrıdır; böylece testlerde örnek JSON ile denenebilir.
 """
 
+import dataclasses
 import datetime
 import email.utils
 import html
@@ -14,7 +15,11 @@ import re
 import urllib.parse
 import xml.etree.ElementTree as ET
 
+import requests
+
 from internreader.ag import HttpIstemci
+from internreader.isleme.filtre import JUNIOR, STAJ, TURKIYE, YARI_ZAMANLI, YENI_MEZUN
+from internreader.isleme.guncellik import metindeki_tarihler
 from internreader.model import Ilan
 
 
@@ -214,21 +219,46 @@ def personio_ayristir(firma: str, slug: str, xml_metin: str) -> list[Ilan]:
     return [i for i in ilanlar if i.baslik and not i.url.endswith("/job/")]
 
 
-def avature_ayristir(firma: str, xml_metin: str, konum: str) -> list[Ilan]:
-    """Avature arama sonucu RSS'i. Akış konum vermediği için arama yapılan yer (ör. "Istanbul") konum yazılır.
-    Akıştaki pubDate güvenilmez (27.10.2026'da açılan Siemens ilanında 2023 yazıyordu); tarih boş bırakılır."""
+def avature_ayristir(firma: str, xml_metin: str) -> list[Ilan]:
+    """Avature arama sonucu RSS'i. Akış konum vermez; konum, tarih ve metin ilan detay sayfasından alınır.
+    Akıştaki pubDate güvenilmez (27.10.2026'da açılan Siemens ilanında 2023 yazıyordu); kullanılmaz."""
     return [
         Ilan(
             firma=firma,
             baslik=(item.findtext("title") or "").strip(),
             url=(item.findtext("link") or "").strip(),
             kaynak="avature",
-            konum=konum,
-            aciklama=duz_metin(item.findtext("description")),
         )
         for item in ET.fromstring(xml_metin).iter("item")
         if (item.findtext("title") or "").strip() and (item.findtext("link") or "").strip()
     ]
+
+
+_AVATURE_ALAN = re.compile(r'(?is)field__label"[^>]*>(.*?)</div>\s*<div[^>]*field__value"[^>]*>(.*?)</div>')
+
+
+def avature_detay_ayristir(ham: str) -> dict:
+    """Avature ilan detay sayfası: etiket-değer alanları (Posted since, Job type, Work mode, Location(s)...) ve en uzun
+    <article> olarak açıklama. {"konum", "tarih", "calisma_tipi", "aciklama"}; konum yazmıyorsa boş metin."""
+    alanlar = {duz_metin(a): b for a, b in _AVATURE_ALAN.findall(ham)}
+    yerler = [
+        duz_metin(y).replace(" - ", ", ")
+        for y in re.findall(r"(?is)<li[^>]*>(.*?)</li>", alanlar.get("Location(s)", ""))
+    ]
+    konum = "; ".join(dict.fromkeys(y for y in yerler if y))
+    mod = duz_metin(alanlar.get("Work mode", "")).lower()
+    # "Hybrid (Remote/Office)" içinde "Remote" de geçer: önce hibrit bakılır, konuma tek kelime yazılır
+    modu = "Hibrit" if "hybrid" in mod else "Uzaktan" if "remote" in mod else "Ofiste" if mod else ""
+    tarihler = metindeki_tarihler(duz_metin(alanlar.get("Posted since", "")))
+    tur = [duz_metin(alanlar.get(a, "")) for a in ("Job type", "Experience level")]
+    makaleler = [duz_metin(m) for m in re.findall(r"(?is)<article[\s>].*?</article>", ham)]
+    makaleler = [m for m in makaleler if "Posted since" not in m]  # alan listesi açıklama değil
+    return {
+        "konum": f"{konum} ({modu})" if konum and modu else konum,
+        "tarih": min(tarihler).isoformat() if tarihler else "",
+        "calisma_tipi": ", ".join(t for t in tur if t),
+        "aciklama": max(makaleler, key=len, default=""),
+    }
 
 
 # ---------- toplayıcılar (ağ + ayrıştırma) ----------
@@ -324,27 +354,35 @@ def personio(http: HttpIstemci, firma: str, slug: str) -> list[Ilan]:
 
 # Avature akışı arama başına en fazla 20 ilan döndürüyor ve sayfalama parametresini yok sayıyor (ölçüldü, 29.10.2026).
 # Bu yüzden birkaç yer + seviye araması yapılıp birleştirilir.
-AVATURE_ARAMALARI = (
-    ("Istanbul", "Istanbul"),
-    ("Turkey", "Turkey"),
-    ("Türkiye", "Türkiye"),
-    ("Istanbul student", "Istanbul"),
-    ("Istanbul intern", "Istanbul"),
-)
+# Arama yalnızca adayları bulur (sonuçlarda Slovakya ilanı da çıkıyor); gerçek konum detay sayfasından okunur.
+AVATURE_ARAMALARI = ("Istanbul", "Turkey", "Türkiye", "Istanbul student", "Istanbul intern")
+_OGRENCI_BASLIGI = re.compile(r"(?i)öğrenci")
 
 
 def avature(http: HttpIstemci, firma: str, slug: str) -> list[Ilan]:
     """slug biçimi "alan-adı|portal" (ör. "jobs.siemens.com|en_US/externaljobs"). Avature şirkete özel alan adlarında
-    çalıştığı için kısa ad yerine sitenin kendisi tutulur. İstekler robots.txt denetiminden geçer."""
+    çalıştığı için kısa ad yerine sitenin kendisi tutulur. İstekler robots.txt denetiminden geçer.
+    Detay sayfaları ağırdır (~1 MB): yalnızca öğrenci başlıklı adaylar açılır. Türkiye dışındaki ilan elenir; kalkmış
+    ilan (404) atlanır. Başka bir ağ hatası firmanın taramasını başarısız sayar: var olan ilanlar kapanmaz."""
     alan, portal = slug.split("|")
-    gorulen, ilanlar = set(), []
-    for arama, konum in AVATURE_ARAMALARI:
+    adaylar: dict[str, Ilan] = {}
+    for arama in AVATURE_ARAMALARI:
         adres = f"https://{alan}/{portal}/SearchJobs/feed/?search={urllib.parse.quote(arama)}"
-        for i in avature_ayristir(firma, http.sayfa(adres)[1], konum):
-            kimlik = i.url.rstrip("/").rsplit("/", 1)[-1]  # aynı ilan yerelleştirilmiş farklı yollarla gelebilir
-            if kimlik not in gorulen:
-                gorulen.add(kimlik)
-                ilanlar.append(i)
+        for i in avature_ayristir(firma, http.sayfa(adres)[1]):
+            # aynı ilan yerelleştirilmiş farklı yollarla gelebilir
+            adaylar.setdefault(i.url.rstrip("/").rsplit("/", 1)[-1], i)
+    ilanlar = []
+    for i in adaylar.values():
+        if not any(d.search(i.baslik) for d in (STAJ, JUNIOR, YENI_MEZUN, YARI_ZAMANLI, _OGRENCI_BASLIGI)):
+            continue
+        try:
+            detay = avature_detay_ayristir(http.sayfa(i.url)[1])
+        except requests.HTTPError as hata:
+            if getattr(hata.response, "status_code", None) == 404:
+                continue
+            raise
+        if TURKIYE.search(detay["konum"]):
+            ilanlar.append(dataclasses.replace(i, **detay))
     return ilanlar
 
 

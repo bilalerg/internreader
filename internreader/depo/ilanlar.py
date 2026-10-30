@@ -8,8 +8,14 @@ from sqlalchemy.orm import Session
 
 from internreader.db import Firma, IlanAyrinti, IlanKaydi, Siniflandirma, simdi
 from internreader.depo._ortak import _parcalar, utc
-from internreader.isleme.guncellik import baslik_yillari, donem_yillari, guncellik
-from internreader.isleme.kategori import alanlari_bul, calisma_modeli, girisim_mi
+from internreader.isleme.guncellik import baslik_yillari, donem_yillari, guncellik, siralama_anahtari
+from internreader.isleme.kategori import (
+    alanlari_bul,
+    calisma_modeli,
+    girisim_mi,
+    savunma_metinde,
+    seviye_etiketi,
+)
 from internreader.isleme.maske import kisisel_veriyi_maskele
 from internreader.model import HEDEF_ROLLER, OGRENCI_SEVIYELERI, Ilan
 from internreader.yayin import TURKIYE_SAATI
@@ -81,6 +87,19 @@ def siniflandirma_kaydet(oturum: Session, sonuclar: dict[str, dict], model: str)
         )
 
 
+def rol_guncelle(oturum: Session, kimlik: str, rol: str | None) -> bool:
+    """Ayrıntı çıkarıcı metnin tamamını görerek rolü doğruladı: karar buna göre düzeltilir. Rol hedef dışına çıkarsa
+    ilan yayından düşer. Düzeltilen karar imzayla da geçerli: aynı ilan yeniden yayınlanırsa eskisi dönmez."""
+    karar = oturum.get(Siniflandirma, kimlik)
+    if rol is None or karar is None or karar.rol == rol:
+        return False
+    karar.rol = rol
+    karar.ogrenciye_uygun = karar.seviye in OGRENCI_SEVIYELERI and rol in HEDEF_ROLLER
+    if rol == "yapay_zeka" and karar.yapay_zeka == "yok":
+        karar.yapay_zeka = "ozunde"
+    return True
+
+
 def yayinlanacak_ilanlar(
     oturum: Session, sonra: datetime | None = None, an: datetime | None = None, bayatlar_dahil: bool = False
 ) -> list[dict]:
@@ -115,6 +134,7 @@ def yayinlanacak_ilanlar(
             ayrinti.ilan_tarihi if ayrinti else None,
             yillar,
             bugun,
+            ayrinti.ilan_turu if ayrinti else "is",
         )
         if durum["bayat"] and not bayatlar_dahil:
             continue
@@ -132,14 +152,24 @@ def yayinlanacak_ilanlar(
                 "rol": sinif.rol,
                 "yapay_zeka": sinif.yapay_zeka,
                 "ayrinti": ayrinti_sozlugu,
-                "alanlar": alanlari_bul(sinif.rol, sinif.yapay_zeka, ilan.baslik, ilan.firma, etiket),
+                "alanlar": alanlari_bul(
+                    sinif.rol,
+                    sinif.yapay_zeka,
+                    ilan.baslik,
+                    ilan.firma,
+                    etiket,
+                    bool(ayrinti and ayrinti.savunma_kaniti) or savunma_metinde(ilan.aciklama),
+                ),
                 "calisma_modeli": calisma_modeli(ilan.konum, (ayrinti_sozlugu or {}).get("calisma_modeli")),
                 "girisim": girisim_mi(ilan.firma, etiket, kaynaklar, ilan.kaynak),
                 "yayin": durum["yayin"],
                 "surekli_acik": durum["surekli_acik"],
+                "ilan_turu": ayrinti.ilan_turu if ayrinti else "is",
+                "seviye_etiketi": seviye_etiketi(sinif.seviye, ilan.baslik, ayrinti.ilan_turu if ayrinti else "is"),
                 **({"bayat": durum["bayat"]} if bayatlar_dahil else {}),
             }
         )
+    satirlar.sort(key=lambda i: siralama_anahtari(i, bugun))
     return satirlar
 
 

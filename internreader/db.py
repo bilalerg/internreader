@@ -105,7 +105,10 @@ class IlanAyrinti(Taban):
     teknolojiler: Mapped[list] = mapped_column(JSON, default=list)
     ilan_tarihi: Mapped[str | None] = mapped_column(String(10))  # metinde yazan yayın tarihi (YYYY-AA-GG), doğrulanmış
     donem_yili: Mapped[int | None] = mapped_column(Integer)  # metindeki en büyük dönem yılı ("2025 Yaz Stajı" → 2025)
-    # Çıkarıcı sürümü: istem yeni alan öğrenince artar; tarihsiz eski kayıtlar bir kez yeniden çıkarılır
+    ilan_turu: Mapped[str] = mapped_column(String(14), default="is", server_default="is")
+    # is | egitim | yarisma | genel_basvuru (genel CV sayfası yayınlanmaz)
+    savunma_kaniti: Mapped[bool] = mapped_column(Boolean, default=False, server_default=false())
+    # Çıkarıcı sürümü: istem ya da metin kaynağı değişince artar; aktif ilanlar bir kez yeniden çıkarılır
     surum: Mapped[int] = mapped_column(Integer, default=1, server_default="1")
     metin_ozeti: Mapped[str] = mapped_column(
         String(64)

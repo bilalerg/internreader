@@ -5,6 +5,7 @@ Uç noktalar (site ile aynı alan adında, /api altında; ters vekil (Caddy) yö
   POST /api/abone         kayıt isteği → onay e-postası (202)
   POST /api/abone/onay    {"jeton": ...} e-postadaki bağlantının açtığı sayfa çağırır
   POST /api/abone/iptal   {"jeton": ...} tek tıkla çıkış; kayıt silinir
+  GET  /api/cron/gunluk   Vercel Cron çağırır (Authorization: Bearer CRON_SECRET): GitHub'da sabah işini başlatır
 
 Güvenlik:
 - IP başına hız sınırı (bellekte; tek sunucu için yeterli).
@@ -14,13 +15,16 @@ Güvenlik:
 Çalıştırma: python -m internreader api   (sunucuda: uvicorn internreader.api:uygulama --factory)
 """
 
+import hmac
 import logging
 import os
 import threading
 import time
 from collections import defaultdict, deque
+from collections.abc import Callable
 from typing import Literal
 
+import requests
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
@@ -111,12 +115,28 @@ def _hata(kod: int, hata: str, mesaj: str) -> JSONResponse:
     return JSONResponse(status_code=kod, content={"hata": hata, "mesaj": mesaj})
 
 
+def is_akisini_tetikle(ayar: Ayarlar) -> int:
+    """GitHub'da gunluk.yml için workflow_dispatch; GitHub'ın durum kodunu döndürür (başarı: 204). Token yazdırılmaz."""
+    cevap = requests.post(
+        f"https://api.github.com/repos/{ayar.github_depo}/actions/workflows/gunluk.yml/dispatches",
+        headers={
+            "Authorization": f"Bearer {ayar.github_tetik_tokeni}",
+            "Accept": "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28",
+        },
+        json={"ref": "main"},
+        timeout=15,
+    )
+    return cevap.status_code
+
+
 def uygulama_olustur(
     ayar: Ayarlar,
     oturum: sessionmaker,
     gonderici: EpostaGonderici,
     kayit_siniri: HizSiniri | None = None,
     jeton_siniri: HizSiniri | None = None,
+    tetikleyici: Callable[[Ayarlar], int] = is_akisini_tetikle,
 ) -> FastAPI:
     # Herkese açık API belgesi kapalı: yalnızca kendi sitemiz kullanıyor
     app = FastAPI(title="InternReader", docs_url=None, redoc_url=None, openapi_url=None)
@@ -154,6 +174,32 @@ def uygulama_olustur(
             kayit.exception("Sağlık kontrolü: veritabanına ulaşılamadı")
             return _hata(503, "veritabani", "Veritabanına ulaşılamıyor.")
         return {"durum": "ok"}
+
+    @app.get("/api/cron/gunluk")
+    def cron_gunluk(istek: Request):
+        """GitHub'ın zamanlaması saatlerce gecikebiliyor (30.10: 07:00 yerine 13:35). Vercel Cron bu ucu her sabah çağırır,
+        uç da sabah işini GitHub'da başlatır. Bir sorun olursa GitHub'daki yedek zamanlama işi yine çalıştırır."""
+        beklenen = f"Bearer {ayar.cron_gizli}".encode()
+        if not ayar.cron_gizli or not hmac.compare_digest(istek.headers.get("authorization", "").encode(), beklenen):
+            return _hata(401, "yetkisiz", "Yetkisiz istek.")
+        if not ayar.github_tetik_tokeni:
+            kayit.warning("GITHUB_TETIK_TOKENI tanımlı değil: sabah işi yedek zamanlamayla çalışacak")
+            return _hata(
+                503,
+                "tetik_tokeni_yok",
+                "GITHUB_TETIK_TOKENI tanımlı değil; sabah işi GitHub yedek zamanlamasıyla çalışacak.",
+            )
+        try:
+            durum_kodu = tetikleyici(ayar)
+        except requests.RequestException as hata:
+            kayit.warning("GitHub'a ulaşılamadı: %s", type(hata).__name__)
+            return _hata(502, "github_ulasilamadi", "GitHub'a ulaşılamadı; sabah işi yedek zamanlamayla çalışacak.")
+        if durum_kodu != 204:
+            kayit.warning("GitHub iş akışını başlatmadı: %d", durum_kodu)
+            return _hata(
+                502, "github_reddetti", f"GitHub {durum_kodu} döndü; token yetkisini ve depo adını kontrol et."
+            )
+        return {"durum": "tetiklendi"}
 
     @app.post("/api/abone", status_code=202)
     def abone_ol(govde: AboneIstegi, istek: Request):

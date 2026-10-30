@@ -1,6 +1,11 @@
 import datetime
+import urllib.parse
+
+import pytest
+import requests
 
 from internreader.kaynaklar.ats import greenhouse_ayristir, lever_ayristir, workday_tarihi
+from tests.conftest import SahteHttp
 
 
 def test_lever_ayristirma():
@@ -124,31 +129,67 @@ def _avature_rss(*ogeler):
     return f'<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel>{govde}</channel></rss>'
 
 
-def test_avature_aramalari_birlestirir_ve_tekrari_atar():
-    import urllib.parse
+def _avature_detay(konumlar, tarih="16-Sep-2026", mod="Hybrid (Remote/Office)"):
+    def alan(ad, deger):
+        return (
+            f'<div class="article__content__view__field"><div class="article__content__view__field__label"> {ad} </div>'
+            f'<div class="article__content__view__field__value"> {deger} </div></div>'
+        )
 
+    yerler = "".join(f'<li class="list__item"> {k} </li>' for k in konumlar)
+    return (
+        f"<main><article>{alan('Posted since', tarih)}{alan('Job type', 'Part-time')}{alan('Work mode', mod)}"
+        f"{alan('Location(s)', f'<ul>{yerler}</ul>')}</article>"
+        "<article>Develop modern web applications for the Gebze factory. Angular and TypeScript required.</article></main>"
+    )
+
+
+def test_avature_konum_tarih_ve_metin_detay_sayfasindan():
+    from internreader.isleme.kategori import calisma_modeli
+    from internreader.isleme.sehir import sehirleri_bul
     from internreader.kaynaklar.ats import AVATURE_ARAMALARI, avature
-    from tests.conftest import SahteHttp
 
     kok = "https://jobs.siemens.com/en_US/externaljobs/SearchJobs/feed/?search="
-    sayfalar = {kok + urllib.parse.quote(a): _avature_rss() for a, _ in AVATURE_ARAMALARI}
-    sayfalar[kok + "Istanbul"] = _avature_rss(
-        ("Part-Time Working Student (Software Developer)", "https://jobs.siemens.com/externaljobs/JobDetail/PT/527260"),
-        ("Data Engineer", "https://jobs.siemens.com/externaljobs/JobDetail/DE/1"),
-    )
-    # Aynı ilan yerelleştirilmiş yolla tekrar gelir (aynı kimlik) + Türkiye aramasında yeni bir ilan
+    site = "https://jobs.siemens.com/externaljobs/JobDetail"
+    sayfalar = {kok + urllib.parse.quote(a): _avature_rss() for a in AVATURE_ARAMALARI}
     sayfalar[kok + "Turkey"] = _avature_rss(
-        (
-            "Part-Time Working Student (Software Developer)",
-            "https://jobs.siemens.com/en_US/externaljobs/JobDetail/527260",
-        ),
-        ("Intern Ankara", "https://jobs.siemens.com/externaljobs/JobDetail/IA/9"),
+        ("Part Time Working Student (Front End Developer)", f"{site}/Front-End/522625"),
+        ("Tester Intern", f"{site}/Tester/508759"),  # arama "Turkey" dese de ilan Slovakya'da
+        ("Senior Robotics Engineer", f"{site}/Senior/517494"),  # öğrenci ilanı değil: detay sayfası açılmaz
     )
-    ilanlar = avature(SahteHttp(sayfalar=sayfalar), "Siemens", "jobs.siemens.com|en_US/externaljobs")
-    assert [i.baslik for i in ilanlar] == [
-        "Part-Time Working Student (Software Developer)",
-        "Data Engineer",
-        "Intern Ankara",
-    ]
-    assert ilanlar[0].konum == "Istanbul" and ilanlar[2].konum == "Turkey"
-    assert all(i.tarih == "" for i in ilanlar)  # akıştaki 2023 tarihi güvenilmez, yazılmaz
+    sayfalar[kok + "Istanbul"] = _avature_rss(
+        ("Part Time Working Student (Front End Developer)", f"{site}/Front-End/522625"),  # tekrar
+    )
+    sayfalar[f"{site}/Front-End/522625"] = _avature_detay(["Gebze - Kocaeli - Türkiye", "Kocaeli - Kocaeli - Türkiye"])
+    sayfalar[f"{site}/Tester/508759"] = _avature_detay(["Zilina - Zilina - Slovakia"])
+
+    (ilan,) = avature(SahteHttp(sayfalar=sayfalar), "Siemens", "jobs.siemens.com|en_US/externaljobs")
+    assert ilan.baslik == "Part Time Working Student (Front End Developer)"
+    assert ilan.konum == "Gebze, Kocaeli, Türkiye; Kocaeli, Kocaeli, Türkiye (Hibrit)"
+    assert sehirleri_bul(ilan.konum) == ["kocaeli"] and calisma_modeli(ilan.konum, None) == "hibrit"
+    assert ilan.tarih == "2026-09-16" and ilan.calisma_tipi == "Part-time"
+    assert "Angular" in ilan.aciklama
+
+
+def test_avature_kalkmis_ilan_atlanir_baska_hata_firmayi_basarisiz_sayar():
+    from internreader.kaynaklar.ats import AVATURE_ARAMALARI, avature
+
+    kok = "https://jobs.siemens.com/en_US/externaljobs/SearchJobs/feed/?search="
+    sayfalar = {kok + urllib.parse.quote(a): _avature_rss() for a in AVATURE_ARAMALARI}
+    sayfalar[kok + "Turkey"] = _avature_rss(("Tester Intern", "https://jobs.siemens.com/d/1"))
+
+    class Hatali(SahteHttp):
+        def __init__(self, kod):
+            super().__init__(sayfalar=sayfalar)
+            self.kod = kod
+
+        def sayfa(self, url, robots_kontrolu=True):
+            if url.endswith("/d/1"):
+                yanit = requests.Response()
+                yanit.status_code = self.kod
+                raise requests.HTTPError(str(self.kod), response=yanit)
+            return super().sayfa(url)
+
+    assert avature(Hatali(404), "Siemens", "jobs.siemens.com|en_US/externaljobs") == []
+    with pytest.raises(requests.HTTPError):
+        avature(Hatali(500), "Siemens", "jobs.siemens.com|en_US/externaljobs")

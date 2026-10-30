@@ -147,23 +147,7 @@ function yakinlikYazisi() {
   sahne.addEventListener("pointerleave", () => kelimeler.forEach((k, i) => ayarla(k, temel[i])));
 }
 
-/** "Sonraki baskı" geri sayımı: bülten her sabah 07:00'de (Türkiye saati, UTC+3 = 04:00 UTC) çıkar. */
-function sonrakiBaski() {
-  const yer = document.querySelector<HTMLElement>("[data-sonraki-baski]");
-  if (!yer) return;
-  const yaz = () => {
-    const simdi = new Date();
-    const hedef = new Date(Date.UTC(simdi.getUTCFullYear(), simdi.getUTCMonth(), simdi.getUTCDate(), 4));
-    if (hedef <= simdi) hedef.setUTCDate(hedef.getUTCDate() + 1);
-    const dakika = Math.ceil((hedef.getTime() - simdi.getTime()) / 60_000);
-    yer.textContent = `Sonraki baskı ${Math.floor(dakika / 60)} sa ${dakika % 60} dk sonra · her sabah 07:00`;
-  };
-  yaz();
-  setInterval(yaz, 30_000);
-}
-
 belirmeler();
-sonrakiBaski();
 if (fare && !azalt) {
   imlec();
   yakinlikYazisi();

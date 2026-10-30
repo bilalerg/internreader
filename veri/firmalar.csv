@@ -1,18 +1,18 @@
 ad,web,ats,slug,kariyer,etiket,kaynak
 Analog Devices,https://www.analog.com,workday,analogdevices|wd1|External,,teknoloji,elle
-Agave Games,,ashby,agavegames,,,ats_genis
+Agave Games,,ashby,agavegames,,girisim,ats_genis
 Anyscale,,lever,anyscale,,,ats_genis
-Bigger Games,,ashby,biggergames,,,ats_genis
+Bigger Games,,ashby,biggergames,,girisim,ats_genis
 Binance,,lever,binance,,,ats_genis
 Bitpanda,,greenhouse,bitpanda,,,ats_genis
 Brandefense,https://brandefense.io,smartrecruiters,brandefense,,ai,"ai_ats_0410,ai_listesi,ats_genis"
-Codeway,https://codeway.co,ashby,codeway,,ai,"ai_ats_0410,ai_listesi,ats_genis"
-Commencis,https://www.commencis.com,lever,commencis,,ai,"ai_1110,ats_genis"
+Codeway,https://codeway.co,ashby,codeway,,"ai,girisim","ai_ats_0410,ai_listesi,ats_genis"
+Commencis,https://www.commencis.com,lever,commencis,,"ai,kurumsal","ai_1110,ats_genis"
 Dataroid,https://www.dataroid.com,lever,dataroid,,ai,"ai_1110,ats_genis"
 Delivery Hero,,smartrecruiters,deliveryhero,,,ats_genis
-Dream Games,https://dreamgames.com,lever,dreamgames,,ai,"ai_1110,ats_genis"
+Dream Games,https://dreamgames.com,lever,dreamgames,,"ai,girisim","ai_1110,ats_genis"
 Ensemble,,greenhouse,ensemble,,,ats_genis
-Good Job Games,https://goodjobgames.com,greenhouse,goodjobgames,,ai,"ai_1110,ats_genis"
+Good Job Games,https://goodjobgames.com,greenhouse,goodjobgames,,"ai,girisim","ai_1110,ats_genis"
 HockeyStack,https://www.hockeystack.com,ashby,hockeystack,,ai,ai_1110
 Huawei,,teamtailor,huawei,,,ats_genis
 Hugging Face,,workable,huggingface,,,ats_genis
@@ -21,10 +21,10 @@ Intenseye,https://www.intenseye.com,lever,intenseye,,ai,"ai_ats_0410,ai_listesi"
 iyzico,,lever,iyzico,,,ats_genis
 Lyrebird Studio,https://lyrebirdstudio.net,lever,lyrebirdstudio,,ai,"ai_1110,ats_genis"
 Macellan,,recruitee,macellan,,,ats_genis
-Midas,https://www.getmidas.com,lever,getmidas,,ai,"ai_1110,ats_genis"
+Midas,https://www.getmidas.com,lever,getmidas,,"ai,girisim","ai_1110,ats_genis"
 Miro,,ashby,miro,,,ats_genis
 n11,,smartrecruiters,n11,,,ats_genis
-Obilet,,recruitee,obilet,,,ats_genis
+Obilet,,recruitee,obilet,,kurumsal,ats_genis
 Peak,https://peak.com,lever,peakgames,,ai,"ai_1110,ats_genis"
 Picus Security,https://www.picussecurity.com,lever,picus,,ai,"ai_1110,ats_genis"
 Remote,,greenhouse,remote,,,ats_genis
@@ -51,7 +51,7 @@ Abdulkadir Özcan Otomotiv,https://akogrup.com.tr/tr,,,https://kariyer.akogrup.c
 Abramak Bilgi Teknolojileri,https://www.abramakbilisim.com,,,,teknopark,teknopark_istanbul
 Acacia Maden,https://www.acacia.com.tr/,,,https://www.acacia.com.tr/insan-kaynaklari/,savunma,savunmakariyer
 Accenture,,,,,teknopark,teknopark_istanbul
-Ace Games,,,,,,ats_genis
+Ace Games,,,,,girisim,ats_genis
 Acrome Robotics,https://acrome.net,,,,savunma,savunmakariyer
 Acronis,,,,,teknopark,teknopark_istanbul
 Active Bioworks,,,,,teknopark,teknopark_istanbul
@@ -153,11 +153,11 @@ ArVis Teknoloji,,,,,teknopark,teknopark_istanbul
 Arçelik,,,,,,ats_genis
 AS Siber Güvenlik Sistemleri San. ve Tic. A.Ş,https://prodarc.io,,,,teknopark,budotek
 ASARTECH ARGE TASARIM MÜHENDİSLİK A.Ş.,https://www.asartech.com.tr/,,,,"savunma,teknopark","savunmakariyer,teknopark_istanbul"
-Aselsan,http://www.aselsan.com.tr,,,,"savunma,teknopark","ats_genis,savunmakariyer,teknopark_istanbul"
-Aselsan Global A.Ş.,https://www.aselsan.com/tr/yatirimci-iliskileri/borsa-aciklamalari/detay/194/aselsan-global-dis-ticaret-sirketi-kurulmasi,,,,savunma,savunmakariyer
-Aselsan Konya,https://www.aselsankonya.com.tr/,,,,savunma,savunmakariyer
-Aselsan Sivas,https://www.aselsansivas.com/,,,https://kariyer.aselsansivas.com,savunma,savunmakariyer
-Aselsannet Elektronik ve Hab. Sis. San. Tic. İnş. Ve Taahhüt Ltd. Şti.,https://www.aselsannet.com.tr/tr-tr,,,,savunma,savunmakariyer
+Aselsan,http://www.aselsan.com.tr,,,,"savunma,teknopark,savunma_dogrulandi","ats_genis,savunmakariyer,teknopark_istanbul"
+Aselsan Global A.Ş.,https://www.aselsan.com/tr/yatirimci-iliskileri/borsa-aciklamalari/detay/194/aselsan-global-dis-ticaret-sirketi-kurulmasi,,,,"savunma,savunma_dogrulandi",savunmakariyer
+Aselsan Konya,https://www.aselsankonya.com.tr/,,,,"savunma,savunma_dogrulandi",savunmakariyer
+Aselsan Sivas,https://www.aselsansivas.com/,,,https://kariyer.aselsansivas.com,"savunma,savunma_dogrulandi",savunmakariyer
+Aselsannet Elektronik ve Hab. Sis. San. Tic. İnş. Ve Taahhüt Ltd. Şti.,https://www.aselsannet.com.tr/tr-tr,,,,"savunma,savunma_dogrulandi",savunmakariyer
 Asis Otomasyon Ve Akaryakıt Sistemleri A.Ş.,http://www.asis.com.tr/,,,https://www.asis.com.tr/insan-kaynaklari.html,teknopark,budotek
 Asist Bilgi Teknolojileri,,,,,teknopark,teknopark_istanbul
 ASİSGUARD,https://www.asisguard.com/,,,https://www.asisguard.com.tr/tr/kariyer,savunma,savunmakariyer
@@ -200,7 +200,7 @@ Base64.ai,https://base64.ai,,,https://base64.ai/careers,ai,"ai_ats_0410,ai_liste
 BASF,,,,,teknopark,teknopark_istanbul
 Baycan Elektrik Müteahhitlik San.Tic.A.Ş.,https://baycan.com.tr/,,,https://baycan.com.tr/insan-kaynaklari-sureclerimiz/,savunma,savunmakariyer
 Baykar,,,,,,ats_genis
-BAYKAR Makina,http://www.baykarmakina.com,,,https://kariyer.baykartech.com/tr/,savunma,savunmakariyer
+BAYKAR Makina,http://www.baykarmakina.com,,,https://kariyer.baykartech.com/tr/,"savunma,savunma_dogrulandi",savunmakariyer
 Beakwise Bilişim Teknolojileri ve Danışmanlık A.Ş.,https://beakwise.com/,,,https://www.beakwise.com/company/careers,teknopark,budotek
 Bee2 AI,https://bee2.ai/,,,,ai,turkiye.ai
 Bega Savunma ve Havacılık,https://www.begasavunma.com,,,https://www.begasavunma.com/kariyer/,savunma,savunmakariyer
@@ -238,9 +238,9 @@ Blueanalytica,https://www.blueanalytica.co/,,,,teknopark,teknopark_istanbul
 BLUEIT,https://www.blueitfuture.com,,,,ai,turkiye.ai
 BLUEPATH ROBOTICS TEKNOLOJI TICARET VE SANAYI A.Ş,,,,,teknopark,teknopark_istanbul
 Bluesense,https://www.bluesense.ai/,,,,ai,turkiye.ai
-BMC Otomotiv Sanayi,https://www.bmc.com.tr/,,,https://www.bmc.com.tr/kurumsal/insan-kaynaklari,savunma,savunmakariyer
+BMC Otomotiv Sanayi,https://www.bmc.com.tr/,,,https://www.bmc.com.tr/kurumsal/insan-kaynaklari,"savunma,savunma_dogrulandi",savunmakariyer
 BMC Power,,,,,teknopark,teknopark_istanbul
-BMC Power Motor ve Kontrol Teknolojileri,http://www.bmcpower.com.tr,,,,savunma,savunmakariyer
+BMC Power Motor ve Kontrol Teknolojileri,http://www.bmcpower.com.tr,,,,"savunma,savunma_dogrulandi",savunmakariyer
 BoardMeAI,https://www.boardmeai.com,,,,ai,turkiye.ai
 Boby AI,https://boby.ai,,,,ai,"ai_listesi,turkiye.ai"
 Boeing Turkey,,,,,teknopark,teknopark_istanbul
@@ -475,10 +475,10 @@ FINTECH YAZILIM HİZMETLERİ SAN. VE TİC. LTD.ŞTİ,http://fintechyazilim.com/,
 Fintela AI,,,,,ai,turkiye.ai
 Fleksup Teknoloji Anonim Şirketi,https://fleksup.com/,,,https://fleksup.com/kariyer/,,dijitalpark
 Flutherm,https://www.flutherm.com/,,,,teknopark,teknopark_istanbul
-FNSS Savunma Sistemleri A.Ş.,http://www.fnss.com.tr/,,,,savunma,savunmakariyer
+FNSS Savunma Sistemleri A.Ş.,http://www.fnss.com.tr/,,,,"savunma,savunma_dogrulandi",savunmakariyer
 FOAMSAN Tasarım Ambalaj LTD. ŞTİ.,http://www.foamsan.com,,,,savunma,savunmakariyer
 Fokus İleri Teknoloji,,,,,teknopark,teknopark_istanbul
-Fomo Games,,,,,,ats_genis
+Fomo Games,,,,,girisim,ats_genis
 Fonify,,,,,ai,turkiye.ai
 Forcerta Bilgi Teknolojileri Anonim Şirketi,https://www.forcerta.com/,,,,ai,dijitalpark
 Ford Otosan,,,,,,ats_genis
@@ -523,8 +523,8 @@ Günili Yazılım ve Mühendislik,https://www.gunili.com/,,,,teknopark,teknopark
 Gürbağ Savunma,https://gurbagsavunma.com/,,,,savunma,savunmakariyer
 Hakan Elektrik Otomasyon,https://hakanelektrik.com/language/tr/anasayfa/,,,,savunma,savunmakariyer
 Harmona AI,https://harmona.ai/,,,,ai,turkiye.ai
-Havelsan,http://www.havelsan.com.tr,,,https://www.havelsan.com/en/career-fairs,"savunma,teknopark","ats_genis,savunmakariyer,teknopark_istanbul"
-Havelsan Teknoloji Radar,https://www.htr.com.tr/,,,https://www.htr.com.tr/tr/kariyer/htrde-yasam,savunma,savunmakariyer
+Havelsan,http://www.havelsan.com.tr,,,https://www.havelsan.com/en/career-fairs,"savunma,teknopark,savunma_dogrulandi","ats_genis,savunmakariyer,teknopark_istanbul"
+Havelsan Teknoloji Radar,https://www.htr.com.tr/,,,https://www.htr.com.tr/tr/kariyer/htrde-yasam,"savunma,savunma_dogrulandi",savunmakariyer
 Hayriya Bilişim ve Sağlık Teknolojileri,,,,,teknopark,teknopark_istanbul
 HAZAR SAVUNMA HAVACILIK UZAY SANAYİ,https://www.hazarsavunma.com.tr,,,,savunma,savunmakariyer
 Healysense AS,https://www.healysense.ai/,,,,ai,turkiye.ai
@@ -688,7 +688,7 @@ Lobitek Yazılım Anonim Şirketi,http://www.lobitek.com/,,,,,dijitalpark
 Logica Blue,,,,,ai,turkiye.ai
 Logo Yazılım,,,,,,ats_genis
 Logsign,,,,,,ats_genis
-Loom Games,,,,,,ats_genis
+Loom Games,,,,,girisim,ats_genis
 Loops AI,,,,,ai,"ai_listesi,turkiye.ai"
 Lostar,https://lostar.com.tr/,smartrecruiters,Lostar,https://lostar.com.tr/hizmetler/surekli-siber-guvenlik/,teknopark,"teknopark_istanbul,tpi"
 LOTEC ArGe Yazılım Donanım İthalat İhracat Danışmanlık Teknoloji Savunma ve Tic. A.Ş,https://www.lotec.com.tr,,,https://lotec.com.tr/kariyer/,savunma,savunmakariyer
@@ -745,7 +745,7 @@ MESAN Elektronik Sanayi Ticaret A.Ş.,http://www.mesanas.com.tr/tr,,,https://mes
 Mesh,https://www.mesh.com.tr/,,,,teknopark,teknopark_istanbul
 Metatıp Sağlık Teknolojileri Anonim Şirketi,http://metatip.tr/,,,,,dijitalpark
 Metechs Yazılım Bilişim A.Ş.,https://metechs.com.tr/,,,,teknopark,budotek
-Meteksan Savunma,http://www.meteksan.com/,,,,savunma,savunmakariyer
+Meteksan Savunma,http://www.meteksan.com/,,,,"savunma,savunma_dogrulandi",savunmakariyer
 Meva Aviyonik,https://www.mevaavionics.com,,,,savunma,savunmakariyer
 MEZ BİLİŞİM ANONİM ŞİRKETİ,http://www.mezbilisim.com/,,,,ai,dijitalpark
 Miboso Sağlık Teknolojileri Anonim Şirketi,http://mibosowellbeing.com/,,,,,dijitalpark
@@ -765,7 +765,7 @@ Mitra Ajans,https://mitraajans.com/,,,,savunma,savunmakariyer
 Mitrona,https://www.mitrona.com.tr,,,https://www.mitrona.com.tr/kariyer/,teknopark,teknopark_istanbul
 Miuul,https://www.miuul.com,,,,ai,turkiye.ai
 MİLMAST Yükseltme Sistemleri A.Ş.,https://www.milmast.com.tr,,,https://www.milmast.com/tr/kariyer/,savunma,savunmakariyer
-MKE,https://www.mke.gov.tr,,,https://kariyer.mke.gov.tr/ilanlar,savunma,savunmakariyer
+MKE,https://www.mke.gov.tr,,,https://kariyer.mke.gov.tr/ilanlar,"savunma,savunma_dogrulandi",savunmakariyer
 Mmrt Mühendislik Sanayi Ticaret Anonim Şirketi,https://mmrtengineering.com/,,,,,dijitalpark
 Mobil Arge Bilgi Teknolojileri İletişim Hizmetleri Limited Şirketi,https://mobilarge.wordpress.com/,,,https://mobilarge.wordpress.com/kurumsal/insan-kaynaklari/,,dijitalpark
 Mod Hotel Software,https://www.modhotel.com,,,,savunma,savunmakariyer
@@ -840,7 +840,7 @@ Novu Technology Group,https://www.novutechnologies.com,,,,savunma,savunmakariyer
 Novus,https://www.novus.ai,,,,ai,"ai_listesi,ats_genis"
 Numesys İleri Mühendislik Hizmetleri A.Ş.,https://www.numesys.com.tr/,,,https://kariyer.numesys.com.tr,savunma,savunmakariyer
 Numondial Dijital Ltd,http://www.numondial.com,,,,savunma,savunmakariyer
-Nurol Teknoloji,https://www.nurolteknoloji.com/,,,https://www.nurolteknoloji.com/career/life-at-nt,savunma,savunmakariyer
+Nurol Teknoloji,https://www.nurolteknoloji.com/,,,https://www.nurolteknoloji.com/career/life-at-nt,"savunma,savunma_dogrulandi",savunmakariyer
 Nuvo Teknoloji Hizmetleri Sanayi ve Ticaret Limited Şirketi,https://www.nuvotek.com.tr/,,,,ai,dijitalpark
 Obamınd Teknoloji Hizmetleri Yazılım ve Danışmanlık Limited Şirketi,https://www.obamind.com/,,,,ai,dijitalpark
 Obrosoft,https://obrosoft.com/,,,,savunma,savunmakariyer
@@ -992,7 +992,7 @@ Robbot,https://robbot.com.tr/,,,,ai,turkiye.ai
 robfly,https://robfly.com/,,,,ai,turkiye.ai
 Robos Mühendislik,http://robos.com.tr/,,,,savunma,savunmakariyer
 Robust Elektronik Yazılım Danışmanlık San ve Tic Ltd Şti,https://www.robust.com.tr,,,https://www.robust.com.tr/kariyer/,savunma,savunmakariyer
-Roketsan,http://www.roketsan.com.tr/,,,https://www.roketsan.com.tr/tr/insan-kaynaklari,"savunma,teknopark","ats_genis,savunmakariyer,teknopark_istanbul"
+Roketsan,http://www.roketsan.com.tr/,,,https://www.roketsan.com.tr/tr/insan-kaynaklari,"savunma,teknopark,savunma_dogrulandi","ats_genis,savunmakariyer,teknopark_istanbul"
 Rollic,,,,,,ats_genis
 Rotor Teknoloji Sanayi ve Ticaret Anonim Şirketi,https://www.rotorteknoloji.com/,,,,,dijitalpark
 Rotorbit,https://www.rotorbit.com,,,,teknopark,teknopark_istanbul
@@ -1029,7 +1029,7 @@ Scotty,,,,,,ats_genis
 SCP- Smart City & Partner (Eye On Blue),https://www.smartcityandpartners.com,,,,ai,turkiye.ai
 SDA EĞİTİM TEKNOLOJİLERİ A.Ş.,http://www.sda.istanbul,,,,savunma,savunmakariyer
 SDM,,,,,teknopark,teknopark_istanbul
-SDT,https://www.sdt.com.tr/,,,https://www.sdt.com.tr/en//career,savunma,savunmakariyer
+SDT,https://www.sdt.com.tr/,,,https://www.sdt.com.tr/en//career,"savunma,savunma_dogrulandi",savunmakariyer
 SecroMix,https://secromix.com/,,,,teknopark,teknopark_istanbul
 Sefatech Bilişim Yazılım Ticaret Limited Şirketi,http://sefatech.com.tr/,,,,,dijitalpark
 Sefine Denizcilik Tersanecilik A.Ş.,https://sefine.com.tr/,,,,savunma,savunmakariyer
@@ -1103,7 +1103,7 @@ Spyke,,,,,,ats_genis
 SSTEK,https://www.sstek.com.tr,,,,savunma,savunmakariyer
 Stamplast,https://www.stamplast.com.tr,,,,savunma,savunmakariyer
 Stemxr Yazılım ve Bilişim Ar-Ge Hiz. Dan. Yayıncılık Ticaret Anonim Şirketi,http://www.stemxr.com.tr/,,,,,dijitalpark
-STM,http://www.stm.com.tr,,,,"savunma,teknopark","ats_genis,savunmakariyer,teknopark_istanbul"
+STM,http://www.stm.com.tr,,,,"savunma,teknopark,savunma_dogrulandi","ats_genis,savunmakariyer,teknopark_istanbul"
 Stockimg AI,https://stockimg.ai/,,,,ai,turkiye.ai
 Succefy,https://www.succefy.com/,,,https://succefy.com/en/career-tests,ai,turkiye.ai
 SwordSec Siber Güvenlik Teknolojileri,http://www.swordsec.com,,,https://swordsec.com/tr/hakkimizda/kariyer/,savunma,savunmakariyer
@@ -1131,7 +1131,7 @@ TECHBROS,https://www.techbros.com.tr/,,,,teknopark,teknopark_istanbul
 Technomind Dijital Sistemler Sanayi Ticaret A.Ş.,http://www.technomind.com.tr/,,,https://www.technomind.com.tr/kariyer,teknopark,budotek
 Technosoft,,,,,teknopark,teknopark_istanbul
 Techsign,https://www.techsign.com.tr,,,https://www.techsign.com.tr/en/career,teknopark,teknopark_istanbul
-TEI,http://www.tei.com.tr,,,,"savunma,teknopark","savunmakariyer,teknopark_istanbul"
+TEI,http://www.tei.com.tr,,,,"savunma,teknopark,savunma_dogrulandi","savunmakariyer,teknopark_istanbul"
 TEITECH,https://teitech.com.tr/tr/,,,,savunma,savunmakariyer
 Teklifbox Teknoloji Anonim Şirketi,http://www.teklifbox.com/,,,,,dijitalpark
 Tekno Sürüm,https://www.teknosurum.com,,,,ai,turkiye.ai
@@ -1181,7 +1181,7 @@ Turkcell,,,,,,ats_genis
 Turkcell Global Bilgi,,,,,,ats_genis
 TURKISH TECHNIC,https://turkishtechnic.com/Home/TR,,,,savunma,savunmakariyer
 Turnkey Aviation,https://turnkeyaviation.com/,,,,teknopark,teknopark_istanbul
-Tusaş,https://kariyer.tusas.com/,,,https://kariyer.tusas.com/,"savunma,teknopark","ats_genis,savunmakariyer,teknopark_istanbul"
+Tusaş,https://kariyer.tusas.com/,,,https://kariyer.tusas.com/,"savunma,teknopark,savunma_dogrulandi","ats_genis,savunmakariyer,teknopark_istanbul"
 Tusmec,,,,,ai,turkiye.ai
 Tusy Tech,https://www.tusy.com/,,,,teknopark,teknopark_istanbul
 TUURAN,https://www.tuuran.com.tr,,,,savunma,savunmakariyer
@@ -1190,7 +1190,7 @@ TÜBİTAK BİLGEM,https://bilgem.tubitak.gov.tr/,,,https://bilgem.tubitak.gov.tr
 TÜBİTAK SAGE,http://www.sage.tubitak.gov.tr,,,,savunma,savunmakariyer
 TÜBİTAK UZAY,http://uzay.tubitak.gov.tr,,,https://kariyer.tubitak.gov.tr/,savunma,savunmakariyer
 Türbin,,,,,teknopark,teknopark_istanbul
-TÜRK HAVACILIK UZAY SANAYİİ,https://www.tusas.com.tr/,,,https://kariyer.tusas.com/,savunma,savunmakariyer
+TÜRK HAVACILIK UZAY SANAYİİ,https://www.tusas.com.tr/,,,https://kariyer.tusas.com/,"savunma,savunma_dogrulandi",savunmakariyer
 Türk SEM,https://www.turksem.com,,,https://www.turksem.com/insan-kaynaklari,savunma,savunmakariyer
 Türk Telekom,,,,,,ats_genis
 Türk-Japon Bilim ve Teknoloji Üniversitesi,,,,,teknopark,teknopark_istanbul

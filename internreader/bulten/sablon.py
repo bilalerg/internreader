@@ -10,7 +10,7 @@ from datetime import datetime
 
 from internreader.eposta import Eposta
 from internreader.isleme.sehir import SEHIRLER
-from internreader.yayin import ROL_ADI, SEVIYE_ADI, TURKIYE_SAATI, tarih_bilgisi, tarih_yazisi
+from internreader.yayin import ROL_ADI, TURKIYE_SAATI, seviye_yazisi, tarih_bilgisi, tarih_yazisi
 
 AZAMI_ILAN = 15  # bir e-postada en fazla; kalanlar sonraki bültene kalır
 
@@ -29,7 +29,7 @@ def _konum(ilan: dict) -> str:
 
 def _etiketler(ilan: dict) -> list[str]:
     konum = _konum(ilan)
-    parcalar = [SEVIYE_ADI.get(ilan["seviye"], ilan["seviye"]), ROL_ADI.get(ilan["rol"], ilan["rol"]), konum]
+    parcalar = [seviye_yazisi(ilan), ROL_ADI.get(ilan["rol"], ilan["rol"]), konum]
     parcalar += [ALAN_ETIKETI[x] for x in ilan.get("alanlar", []) if x in ALAN_ETIKETI]
     model = ilan.get("calisma_modeli")
     if model in CALISMA and not (model == "uzaktan" and konum == "Uzaktan"):  # "Uzaktan · Uzaktan" yazmasın

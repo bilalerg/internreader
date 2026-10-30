@@ -5,7 +5,8 @@ Kurallar:
 - Aynı ilan bir aboneye iki kez gitmez (gonderimler tablosu).
 - Her abone ayrı bir veritabanı işlemiyle kaydedilir: gönderim yarıda kesilse (sunucu çökse) bile, e-postası
   gitmiş aboneye ertesi çalıştırmada aynı ilanlar tekrar gitmez.
-- Bir e-postada en fazla AZAMI_ILAN ilan; fazlası bir sonraki bültene kalır.
+- Bir e-postada en fazla AZAMI_ILAN ilan ve firma başına en fazla 2 ilan; fazlası bir sonraki bültene kalır.
+- Bir abone aynı Türkiye gününde tek bülten alır: sabah işi iki kez çalışsa da (bkz. depo/bulten.py).
 - Bir abonenin e-postası gönderilemezse (adres reddi vb.) diğerleri etkilenmez; hata kaydedilir.
 """
 
@@ -19,7 +20,7 @@ from internreader import depo
 from internreader.abonelik import iptal_jetonu
 from internreader.ayar import GELISTIRME_ANAHTARI, Ayarlar
 from internreader.bulten.sablon import AZAMI_ILAN, bulten_epostasi
-from internreader.bulten.secim import eslesir
+from internreader.bulten.secim import bulten_sec
 from internreader.db import simdi
 from internreader.eposta import EpostaGonderici
 from internreader.yayin import zenginlestir
@@ -65,7 +66,7 @@ def bultenleri_gonder(
                 break
             with oturum() as o:
                 gonderilmis = depo.gonderilen_kimlikler(o, abone_id)
-            secilen = [i for i in ilanlar if i["kimlik"] not in gonderilmis and eslesir(i, tercihler)][:AZAMI_ILAN]
+            secilen = bulten_sec(ilanlar, tercihler, gonderilmis, AZAMI_ILAN)
             if not secilen:
                 rapor["bos"] += 1
                 continue

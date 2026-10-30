@@ -31,6 +31,11 @@ def tarih_yazisi(an) -> str:
     return f"{an.day} {AYLAR[an.month - 1]} {an.year}"
 
 
+def seviye_yazisi(ilan: dict) -> str:
+    """Kartta yazacak seviye: eğitim programı, yarışma ve "All Levels" ilanında dürüst etiket (isleme/kategori.py)."""
+    return ilan.get("seviye_etiketi") or SEVIYE_ADI.get(ilan["seviye"], ilan["seviye"])
+
+
 def noktali_tarih(iso: str) -> str:
     """ "2026-11-15" → "15.11.2026" """
     yil, ay, gun = iso[:10].split("-")
@@ -70,9 +75,15 @@ _SEKTOR_KELIMESI = re.compile(
 )
 
 
+# Resmî unvanı sitedeki markasından tamamen farklı firmalar. Adayları bulmak için: firma adı ↔ web adresi uyuşmazlığı.
+MARKA_ADI = {"Nova Spark X Teknoloji Anonim Şirketi": "Patika Global"}
+
+
 def gorunen_ad(ad: str) -> str:
     """Resmî unvanı okunur ada çevirir: "Beakwise Bilişim Teknolojileri ve Danışmanlık A.Ş." → "Beakwise",
     "Hitit (havayolu yazılımı)" → "Hitit". Listelerdeki açıklama notları ve hukuki ekler kullanıcıya gösterilmez."""
+    if ad.strip() in MARKA_ADI:
+        return MARKA_ADI[ad.strip()]
     sade = _HUKUKI_EK.sub("", _PARANTEZ.sub(" ", ad)).strip(" ,.")
     kisa = _SEKTOR_KELIMESI.sub("", sade).strip(" ,.")
     return kisa or sade or ad.strip()

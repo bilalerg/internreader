@@ -76,14 +76,15 @@ def test_yalnizca_onayli_abonelere_uyan_yeni_ilanlar_bir_kez_gider(oturum):
     assert "Software Engineering Intern" in alicilar["ist@x.com"].metin
     assert "Data Intern" not in alicilar["ist@x.com"].metin and "Data Intern" in alicilar["hepsi@x.com"].metin
 
-    # İkinci çalıştırma: yeni ilan yok → kimseye e-posta gitmez
+    # Ertesi gün yeni ilan yok → kimseye e-posta gitmez
     g2 = SahteGonderici()
-    assert bultenleri_gonder(oturum, g2, AYAR)["gonderilen"] == 0 and g2.gidenler == []
+    yarin = simdi() + timedelta(days=1)
+    assert bultenleri_gonder(oturum, g2, AYAR, yarin)["gonderilen"] == 0 and g2.gidenler == []
 
     # Yeni ilan → yalnızca yeni ilan gider
     ilan_ekle(oturum, "https://u/3", "Junior Backend Developer", "Istanbul", seviye="junior")
     g3 = SahteGonderici()
-    bultenleri_gonder(oturum, g3, AYAR)
+    bultenleri_gonder(oturum, g3, AYAR, yarin)
     metin = next(e.metin for e in g3.gidenler if e.alici == "ist@x.com")
     assert "Junior Backend Developer" in metin and "Software Engineering Intern" not in metin
 
@@ -111,6 +112,36 @@ def test_haftalik_gun_turkiye_saatine_gore(oturum):
         # Pazar 22:00 UTC = pazartesi 01:00 Türkiye → hazır; pazartesi 21:30 UTC = salı 00:30 Türkiye → değil
         assert len(depo.gonderime_hazir_aboneler(o, datetime(2026, 11, 1, 22, 0, tzinfo=UTC))) == 1
         assert depo.gonderime_hazir_aboneler(o, datetime(2026, 11, 2, 21, 30, tzinfo=UTC)) == []
+
+
+def test_ayni_gun_ikinci_calismada_ikinci_bulten_gitmez(oturum):
+    # Vercel tetiklemesi + GitHub yedek zamanlaması aynı gün iki kez çalışabilir
+    ilan_ekle(oturum, "https://u/1", "Software Engineering Intern", "Istanbul")
+    abone_ekle(oturum, "gun@x.com", HEPSI)
+    sabah = datetime(2026, 11, 3, 4, 30, tzinfo=UTC)  # salı 07:30 Türkiye
+    assert bultenleri_gonder(oturum, SahteGonderici(), AYAR, sabah)["gonderilen"] == 1
+    ilan_ekle(oturum, "https://u/2", "AI Intern", "Istanbul", rol="yapay_zeka")
+    # Aynı gün öğlen: yeni ilan olsa da e-posta yok; ertesi sabah gider
+    assert bultenleri_gonder(oturum, SahteGonderici(), AYAR, sabah + timedelta(hours=6))["hazir_abone"] == 0
+    g = SahteGonderici()
+    assert bultenleri_gonder(oturum, g, AYAR, sabah + timedelta(days=1))["gonderilen"] == 1
+    assert "AI Intern" in g.gidenler[0].metin
+    # Türkiye günü sınırı: 22:00 UTC, Türkiye'de ertesi gün 01:00'dir
+    gece = datetime(2026, 11, 4, 22, 0, tzinfo=UTC)
+    with oturum() as o:
+        assert len(depo.gonderime_hazir_aboneler(o, gece)) == 1
+
+
+def test_gunluk_sinira_takilan_abone_ayni_gun_ikinci_calismada_alir(oturum):
+    ilan_ekle(oturum, "https://u/1", "Software Engineering Intern", "Istanbul")
+    for e in ("a@x.com", "b@x.com"):
+        abone_ekle(oturum, e, HEPSI)
+    sinirli = dataclasses.replace(AYAR, gunluk_bulten_siniri=1)
+    sabah = datetime(2026, 11, 3, 4, 30, tzinfo=UTC)
+    bir, iki = SahteGonderici(), SahteGonderici()
+    assert bultenleri_gonder(oturum, bir, sinirli, sabah)["ertelendi"] == 1
+    bultenleri_gonder(oturum, iki, sinirli, sabah + timedelta(hours=2))
+    assert {e.alici for e in bir.gidenler} | {e.alici for e in iki.gidenler} == {"a@x.com", "b@x.com"}
 
 
 def test_bir_abonenin_hatasi_digerlerini_durdurmaz_ve_gonderilmis_sayilmaz(oturum):

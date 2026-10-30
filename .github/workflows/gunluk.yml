@@ -1,4 +1,7 @@
-# Her sabah 07:00 (Türkiye): ilanları topla, sınıflandır, yayınla, bülten gönder, bakım yap.
+# Her sabah: ilanları topla, sınıflandır, yayınla, bülten gönder, bakım yap.
+# Asıl tetikleyici Vercel Cron: 04:00–04:59 UTC arasında /api/cron/gunluk bu iş akışını başlatır (workflow_dispatch).
+# Aşağıdaki schedule yedek: GitHub zamanlaması saatlerce gecikebildiği için (30.10: 6,5 saat) asıl saat olarak
+# kullanılmıyor. İş bugün zaten tamamlandıysa yedek çalışma tarama yapmadan biter; bülten de günde bir kez gider.
 # Site verisi (ilanlar.json, istatistik.json) web/public/veri/'ye yazılıp depoya eklenir; Vercel siteyi yeniden yayınlar.
 # Günlük veri commit'i depoyu "hareketli" tutar: GitHub 60 gün değişiklik görmeyen depolarda zamanlanmış işleri durdurur.
 # Gizli değerler: Settings → Secrets and variables → Actions (bkz. docs/KURULUM_UCRETSIZ.md).
@@ -6,7 +9,7 @@ name: Günlük çalışma
 
 on:
   schedule:
-    - cron: "0 4 * * *" # UTC; Türkiye saatiyle 07:00
+    - cron: "37 6 * * *" # yedek; UTC 06:37 = Türkiye 09:37 (dakika başı olmayan saatte gecikme daha az)
   workflow_dispatch:
     inputs:
       ilk_kurulum:
@@ -51,12 +54,17 @@ jobs:
           test -n "$ANTHROPIC_API_KEY" || { echo "::error::ANTHROPIC_API_KEY gizli değeri tanımlı değil"; exit 1; }
           test -n "$INTERNREADER_GIZLI_ANAHTAR" || echo "::warning::INTERNREADER_GIZLI_ANAHTAR yok: bülten gönderilmez"
           test -n "$SMTP_SUNUCU" || echo "::warning::SMTP tanımlı değil: e-postalar gönderilmez, yalnızca dosyaya yazılır"
+      - name: Bugün zaten çalıştı mı? (yalnızca yedek zamanlamada)
+        id: kontrol
+        if: ${{ github.event_name == 'schedule' }}
+        run: echo "atla=$(python -m internreader bugun-calisti-mi)" >> "$GITHUB_OUTPUT"
       - name: İlk kurulum (firma listesi + keşif)
         if: ${{ inputs.ilk_kurulum }}
         run: |
           python -m internreader ice-aktar veri/firmalar.csv
           python -m internreader kesif
       - name: Tara, yayınla, bülten, bakım
+        if: ${{ steps.kontrol.outputs.atla != 'true' }}
         run: python -m internreader calistir
       - name: Özet (abone, ilan, yapay zekâ harcaması)
         # Çalışma sayfasının "Summary" bölümünde görünür. Yalnızca sayılar; e-posta adresi yazılmaz.
@@ -70,6 +78,7 @@ jobs:
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
       - name: Site verisini depoya ekle (Vercel yeniden yayınlar)
+        if: ${{ steps.kontrol.outputs.atla != 'true' }}
         run: |
           mkdir -p web/public/veri
           cp cikti/ilanlar.json cikti/istatistik.json web/public/veri/

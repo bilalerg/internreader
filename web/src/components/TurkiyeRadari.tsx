@@ -300,7 +300,7 @@ export default function TurkiyeRadari({ harita, ornekler, toplam, gun }: Props) 
           <span className={`inline-block h-1.5 w-1.5 rounded-full bg-kirmizi ${hareketsiz ? "" : "animate-pulse"}`} />
           Sabah taraması
         </span>
-        <span>{gun} · 07:00</span>
+        <span>{gun} · sabah</span>
       </div>
 
       <div className="px-3 pb-2 pt-6 md:px-6 md:pt-8">

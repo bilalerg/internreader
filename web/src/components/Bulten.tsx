@@ -39,6 +39,17 @@ type Durum =
   | { tur: "hata"; mesaj: string; alanlar: string[] };
 
 const ONIZLEME_SINIRI = 6;
+const FIRMA_BASINA_AZAMI = 2; // internreader/bulten/secim.py ile aynı: bir e-postada aynı firmadan en fazla 2 ilan
+
+// Sıra JSON'dan gelir (yeni, girişim, ücretli önde). Firma kotasını aşan ilan sonraki bültene kalır.
+function bultenListesi(uyanlar: Ilan[]) {
+  const sayac = new Map<string, number>();
+  return uyanlar.filter((i) => {
+    const n = sayac.get(i.firma) ?? 0;
+    sayac.set(i.firma, n + 1);
+    return n < FIRMA_BASINA_AZAMI;
+  });
+}
 
 interface Secimler {
   sehirler: Set<string>;
@@ -161,6 +172,7 @@ export default function Bulten({ ilanlar: gomulu, guncelleme: gomuluTarih }: Pro
     () => ilanlar.filter((i) => eslesir(i, { sehirler, alanlar, seviyeler, modeller, sadeceGirisim })),
     [ilanlar, sehirler, alanlar, seviyeler, modeller, sadeceGirisim],
   );
+  const bultendekiler = useMemo(() => bultenListesi(uyanlar), [uyanlar]);
   const eksikSecim = alanlar.size === 0 || seviyeler.size === 0;
   // Seçim değişince önizleme listesi yeniden kurulur ve öğeler sırayla belirir
   const hataliMi = (alan: string) => durum.tur === "hata" && durum.alanlar.includes(alan);
@@ -222,7 +234,7 @@ export default function Bulten({ ilanlar: gomulu, guncelleme: gomuluTarih }: Pro
             <p className="mt-4 leading-relaxed text-murekkep-2">
               <strong className="text-murekkep">{durum.eposta}</strong> adresine bir onay bağlantısı gönderdik.
               Bağlantıya tıkladığında aboneliğin başlar; ilk bültenin{" "}
-              {siklik === "gunluk" ? "ertesi sabah 07:00'de" : "pazartesi sabahı 07:00'de"} gelir.
+              {siklik === "gunluk" ? "ertesi sabah" : "pazartesi sabahı"} gelir.
             </p>
             <p className="mt-3 text-[0.92rem] text-murekkep-3">E-posta birkaç dakikada gelmezse spam klasörüne bak.</p>
             <button type="button" className="dugme dugme-ikincil mt-6" onClick={() => setDurum({ tur: "bos" })}>
@@ -293,8 +305,9 @@ export default function Bulten({ ilanlar: gomulu, guncelleme: gomuluTarih }: Pro
                 </Secim>
               </div>
               <p className="mt-2 text-[0.8rem] text-murekkep-3">
-                Çalışma modelini yazmayan ilanlar yalnızca &ldquo;fark etmez&rdquo;de gelir. Girişim: teknopark ve yapay
-                zekâ girişimi listelerindeki firmalar; bankalar ve büyük şirketler hariç.
+                Çalışma modelini yazmayan ilanlar yalnızca &ldquo;fark etmez&rdquo;de gelir. Girişim: elle doğrulanmış
+                ya da yapay zekâ girişim haritasındaki firmalar; büyük ve köklü şirketler hariç. zekâ girişimi
+                listelerindeki firmalar; bankalar ve büyük şirketler hariç.
               </p>
             </fieldset>
 
@@ -411,9 +424,9 @@ export default function Bulten({ ilanlar: gomulu, guncelleme: gomuluTarih }: Pro
             <p>
               <span className="text-murekkep-3">Konu </span>
               <span className="text-murekkep">
-                {uyanlar.length ? (
+                {bultendekiler.length ? (
                   <>
-                    Bugün sana uygun <AkanSayi deger={uyanlar.length} /> ilan
+                    Bugün sana uygun <AkanSayi deger={bultendekiler.length} /> ilan
                   </>
                 ) : (
                   "Bugün sana uygun ilan yok"
@@ -427,7 +440,7 @@ export default function Bulten({ ilanlar: gomulu, guncelleme: gomuluTarih }: Pro
           </div>
 
           <div className="px-5 py-5" aria-live="polite">
-            {uyanlar.length === 0 ? (
+            {bultendekiler.length === 0 ? (
               <div className="py-10 text-center">
                 <p className="baslik text-[1.5rem] font-[520]">Bu sabah sessiz.</p>
                 <p className="mx-auto mt-3 max-w-xs text-[0.92rem] leading-relaxed text-murekkep-2">
@@ -438,7 +451,7 @@ export default function Bulten({ ilanlar: gomulu, guncelleme: gomuluTarih }: Pro
               <MotionConfig reducedMotion="user">
                 <ul className="divide-y divide-cizgi">
                   <AnimatePresence mode="popLayout" initial={false}>
-                    {uyanlar.slice(0, ONIZLEME_SINIRI).map((i, sira) => (
+                    {bultendekiler.slice(0, ONIZLEME_SINIRI).map((i, sira) => (
                       <motion.li
                         key={i.kimlik}
                         layout
@@ -454,7 +467,7 @@ export default function Bulten({ ilanlar: gomulu, guncelleme: gomuluTarih }: Pro
                             {i.baslik}
                           </p>
                           <p className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1 text-[0.8rem] text-murekkep-2">
-                            <span>{SEVIYE_ADI[i.seviye]}</span>
+                            <span>{i.seviye_etiketi ?? SEVIYE_ADI[i.seviye]}</span>
                             <span>{ROL_ADI[i.rol]}</span>
                             <span>
                               {i.sehirler.length
@@ -499,15 +512,15 @@ export default function Bulten({ ilanlar: gomulu, guncelleme: gomuluTarih }: Pro
                 </ul>
               </MotionConfig>
             )}
-            {uyanlar.length > ONIZLEME_SINIRI && (
+            {bultendekiler.length > ONIZLEME_SINIRI && (
               <p className="mt-2 border-t border-cizgi pt-3 font-mono text-[0.75rem] text-murekkep-3">
-                + {uyanlar.length - ONIZLEME_SINIRI} ilan daha
+                + {bultendekiler.length - ONIZLEME_SINIRI} ilan daha
               </p>
             )}
           </div>
           <p className="border-t border-cizgi px-5 py-3 text-[0.75rem] text-murekkep-3">
-            Bu bir önizleme: ilanlar bu sabahki gerçek tarama sonuçları. Her e-postanın altında tek tıkla çıkış
-            bağlantısı olur.
+            Bu bir önizleme: ilanlar bu sabahki gerçek tarama sonuçları. Bir e-postada aynı firmadan en fazla 2 ilan
+            olur, kalanı sonraki bültene kalır. Her e-postanın altında tek tıkla çıkış bağlantısı olur.
           </p>
         </div>
       </div>

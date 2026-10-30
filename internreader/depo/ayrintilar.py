@@ -2,27 +2,22 @@
 
 from collections.abc import Iterable
 
-from sqlalchemy import and_, or_, select
+from sqlalchemy import or_, select
 from sqlalchemy.orm import Session
 
 from internreader.db import IlanAyrinti, IlanKaydi, Siniflandirma
 from internreader.depo._ortak import _parcalar
 
-# Ayrıntı çıkarıcının sürümü. 2 (30.10.2026): ilan tarihi ve dönem yılı eklendi; kariyer sayfasında tek sayfada
-# listelenen (#çapalı) ilanların metni o sayfadan bulunuyor.
-AYRINTI_SURUMU = 2
+# Ayrıntı çıkarıcının sürümü; artınca aktif öğrenci ilanları bir kez yeniden çıkarılır.
+# 2 (29.10.2026): ilan tarihi ve dönem yılı; #çapalı ilanların metni listelendikleri sayfadan bulunuyor.
+# 3 (30.10.2026): sayfa metninden menü ayıklanıyor (eskiden model yalnızca menüyü görebiliyordu); ilan türü,
+# metne göre rol doğrulama, savunma kanıtı.
+AYRINTI_SURUMU = 3
 
 
 def ayrinti_bekleyenler(oturum: Session, sinir: int = 60) -> list[dict]:
-    """Aktif, öğrenciye uygun ve ayrıntısı henüz çıkarılmamış ilanlar (en yeniler önce). Ardından, eski sürümle
-    çıkarılmış ve hiç tarih bilgisi olmayan kariyer sayfası / tarihsiz ilanlar: bunlar bir kez yeniden çıkarılır
-    (güncellik denetimi için; yeniden çıkarılınca sürüm güncellenir, tarih yine bulunmasa da bir daha gönderilmez)."""
-    yeniden = and_(
-        IlanAyrinti.surum < AYRINTI_SURUMU,
-        IlanAyrinti.son_basvuru.is_(None),
-        IlanAyrinti.ilan_tarihi.is_(None),
-        or_(IlanKaydi.kaynak == "kariyer_sayfasi", IlanKaydi.yayin_tarihi == ""),
-    )
+    """Aktif, öğrenciye uygun ve ayrıntısı henüz çıkarılmamış ilanlar (en yeniler önce). Ardından eski sürümle
+    çıkarılmış olanlar: bunlar bir kez yeniden çıkarılır (çıkarılınca sürüm güncellenir, bir daha gönderilmez)."""
     sorgu = (
         select(IlanKaydi)
         .join(Siniflandirma, Siniflandirma.kimlik == IlanKaydi.kimlik)
@@ -30,7 +25,7 @@ def ayrinti_bekleyenler(oturum: Session, sinir: int = 60) -> list[dict]:
         .where(
             IlanKaydi.aktif.is_(True),
             Siniflandirma.ogrenciye_uygun.is_(True),
-            or_(IlanAyrinti.kimlik.is_(None), yeniden),
+            or_(IlanAyrinti.kimlik.is_(None), IlanAyrinti.surum < AYRINTI_SURUMU),
         )
         .order_by(IlanAyrinti.kimlik.is_not(None), IlanKaydi.ilk_gorulme.desc())
         .limit(sinir)
@@ -58,6 +53,8 @@ def ayrinti_kaydet(oturum: Session, kimlik: str, alanlar: dict, metin_ozeti: str
             hedef=alanlar.get("hedef") or None,  # uzunluk çıkarıcıda kelime sınırından kısaltıldı
             ilan_tarihi=alanlar.get("ilan_tarihi"),
             donem_yili=alanlar.get("donem_yili"),
+            ilan_turu=alanlar.get("ilan_turu", "is"),
+            savunma_kaniti=bool(alanlar.get("savunma_kaniti")),
             surum=AYRINTI_SURUMU,
             calisma_modeli=alanlar.get("calisma_modeli", "belirsiz"),
             ucretli=alanlar.get("ucretli", "belirsiz"),

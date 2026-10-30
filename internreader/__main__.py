@@ -20,7 +20,7 @@ import argparse
 import dataclasses
 import json
 import logging
-from datetime import date
+from datetime import date, datetime
 from pathlib import Path
 
 from internreader import boru, depo
@@ -31,8 +31,9 @@ from internreader.bulten import bultenleri_gonder
 from internreader.db import oturum_fabrikasi
 from internreader.eposta import gonderici_olustur
 from internreader.gunluk import kayit_kur
-from internreader.ice_aktar import eski_onbellegi_ice_aktar, firmalari_ice_aktar
+from internreader.ice_aktar import eski_onbellegi_ice_aktar, firma_listesini_esitle, firmalari_ice_aktar
 from internreader.kesif import kesfet
+from internreader.yayin import TURKIYE_SAATI
 from internreader.yz.degerlendirme import degerlendir, seti_oku
 
 kayit = logging.getLogger("internreader")
@@ -72,6 +73,8 @@ def main(argv: list[str] | None = None) -> int:
     alt.add_parser("bakim", help="süresi dolan kayıtları temizle")
     p = alt.add_parser("degerlendir", help="sınıflandırıcının doğruluğunu etiketli sette ölç (~0,002 $)")
     p.add_argument("--set", type=Path, default=VERI / "degerlendirme" / "siniflandirma.jsonl")
+    alt.add_parser("girisim-listesi", help="girişim sayılan ve aday firmaları gerekçesiyle CSV olarak yaz")
+    alt.add_parser("bugun-calisti-mi", help="sabah işi bugün tamamlandıysa true, değilse false yaz")
     p = alt.add_parser("goc-uret", help="model değişikliğinden veritabanı göçü üret")
     p.add_argument("aciklama")
     p = alt.add_parser("api", help="abonelik API'sini başlat (geliştirme)")
@@ -105,7 +108,15 @@ def main(argv: list[str] | None = None) -> int:
         if sayi:
             boru.yayinla(oturum)  # README/JSON hemen güncellensin; site sabah derlemesinde güncellenir
         return 0 if sayi else 1
+    elif arg.komut == "girisim-listesi":
+        with oturum() as o:
+            print(depo.girisim_listesi_csv(o), end="")
+    elif arg.komut == "bugun-calisti-mi":  # GitHub yedek zamanlaması: Vercel tetiklemesi bugün çalıştırdıysa iş atlanır
+        with oturum() as o:
+            print("true" if depo.durum_al(o, "son_calisma_gunu") == _turkiye_gunu() else "false")
     elif arg.komut in ("tara", "calistir"):
+        if arg.komut == "calistir":
+            firma_listesini_esitle(oturum, VERI / "firmalar.csv")
         yz = boru.yz_olustur(ayar, oturum)  # tarama ve ayrıntılar aynı bütçeyi paylaşır
         rapor = boru.tara(ayar, oturum, yz=yz)
         if rapor.hatalar:
@@ -115,6 +126,8 @@ def main(argv: list[str] | None = None) -> int:
             boru.yayinla(oturum)
             bultenleri_gonder(oturum, gonderici_olustur(ayar), ayar)
             bakim_yap(oturum)
+            with oturum.begin() as o:
+                depo.durum_yaz(o, "son_calisma_gunu", _turkiye_gunu())
     elif arg.komut == "bulten-gonder":
         print(json.dumps(bultenleri_gonder(oturum, gonderici_olustur(ayar), ayar), ensure_ascii=False, indent=1))
     elif arg.komut == "degerlendir":
@@ -138,6 +151,10 @@ def main(argv: list[str] | None = None) -> int:
         with oturum() as o:
             print(json.dumps(depo.istatistik(o), ensure_ascii=False, indent=1))
     return 0
+
+
+def _turkiye_gunu() -> str:
+    return datetime.now(TURKIYE_SAATI).date().isoformat()
 
 
 def _goc_uret(veritabani_url: str, aciklama: str) -> int:

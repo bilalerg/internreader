@@ -39,6 +39,34 @@ def html_ayikla(ham: str, taban_url: str) -> SayfaIcerigi:
     return SayfaIcerigi(url=taban_url, metin=metin, baglantilar=list(dict.fromkeys(baglantilar))[:AZAMI_BAGLANTI])
 
 
+def _duz_metin(ham: str) -> str:
+    return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", ham))).strip()
+
+
+_GORUNMEZ = re.compile(r"(?is)<(script|style|noscript|svg|template|head)[\s>].*?</\1>")
+_DOLASIM = re.compile(r"(?is)<(nav|footer)[\s>].*?</\1>")
+_SITE_ISKELETI = re.compile(r"(?is)<(nav|header|footer|aside)[\s>].*?</\1>")
+EN_AZ_ICERIK = 200  # bundan kısa <main>/<article> gerçek içerik değildir (ör. yalnızca başlık)
+
+
+def ilan_metni(ham: str, baslik: str = "") -> str:
+    """İlanın kendi sayfasından yalnızca ilan metni. Sayfanın başındaki menü modele gitmesin diye (Yeditek'te 10.536
+    karakter menü, 6.000 karakterlik sınırda ilan hiç görünmüyordu; özet menüden üretiliyordu).
+    Sıra: <main>, en uzun <article>; ikisi de yoksa nav/header/footer/aside atılır ve başlığın son geçtiği yerden
+    başlanır. <main> içinde aside kalır: "Son başvuru" gibi ilan bilgileri orada olabilir (Beakwise).
+    Kariyer sayfası okuyucusu bu fonksiyonu kullanmaz; onun için sayfanın tamamı gerekir (html_ayikla)."""
+    temiz = _GORUNMEZ.sub(" ", ham)
+    makaleler = sorted(re.findall(r"(?is)<article[\s>].*?</article>", temiz), key=len, reverse=True)
+    for blok in re.findall(r"(?is)<main[\s>].*?</main>", temiz) + makaleler[:1]:
+        metin = _duz_metin(_DOLASIM.sub(" ", blok))
+        if len(metin) >= EN_AZ_ICERIK:
+            return metin
+    metin = _duz_metin(_SITE_ISKELETI.sub(" ", temiz))
+    kucuk, aranan = _kucuk(metin), _kucuk(baslik)
+    bas = kucuk.rfind(aranan, 0, max(0, len(kucuk) - EN_AZ_ICERIK)) if aranan else -1
+    return metin[max(0, bas - 120) :] if bas >= 0 else metin  # başlıktan hemen önce tarih olabilir
+
+
 def _kucuk(metin: str) -> str:
     """Büyük "İ" küçülünce iki karakter olur; önce "I" yapılır ki kesme konumları asıl metinle aynı kalsın."""
     return " ".join(metin.split()).replace("İ", "I").lower()

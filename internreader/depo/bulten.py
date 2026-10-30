@@ -14,17 +14,18 @@ HAFTALIK_GUN = 0  # pazartesi (datetime.weekday); haftalık bülten o sabahki ç
 
 
 def gonderime_hazir_aboneler(oturum: Session, an: datetime) -> list[Abone]:
-    """Onaylı aboneler: günlükler her çalıştırmada, haftalıklar pazartesi sabahki çalışmada (Türkiye saatiyle).
+    """Onaylı aboneler: günlükler her gün, haftalıklar pazartesi (Türkiye saatiyle).
 
-    Haftalık bülten "son bültenden 7 gün sonra" değil, takvime bağlı: herkes aynı gün alır, gün kaymaz. Aynı pazartesi
-    ikinci bir çalıştırma (elle tetikleme) haftalık aboneye ikinci e-posta göndermez."""
+    Haftalık bülten "son bültenden 7 gün sonra" değil, takvime bağlı: herkes aynı gün alır, gün kaymaz. Sabah işi aynı
+    gün iki kez çalışsa (Vercel tetiklemesi + GitHub yedek zamanlaması, elle tetikleme) kimse ikinci e-posta almaz;
+    günlük sınır yüzünden alamayan abone o ikinci çalışmada alır."""
     yerel = an.astimezone(TURKIYE_SAATI)
     haftalik_gunu = yerel.weekday() == HAFTALIK_GUN
     gun_basi = yerel.replace(hour=0, minute=0, second=0, microsecond=0)
     hazir = []
     for abone in oturum.scalars(select(Abone).where(Abone.durum == "onayli").order_by(Abone.id)):
         son = utc(abone.son_bulten)
-        if abone.siklik == "gunluk" or (haftalik_gunu and (son is None or son < gun_basi)):
+        if (abone.siklik == "gunluk" or haftalik_gunu) and (son is None or son < gun_basi):
             hazir.append(abone)
     # Adil sıra: hiç bülten almamış ya da en uzun süredir bekleyen önce. Günlük e-posta sınırı dolarsa kalanlar
     # ertesi gün listenin başına geçer; aynı kişiler her gün dışarıda kalmaz.

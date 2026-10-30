@@ -8,6 +8,9 @@
   **Bilal gözden geçirecek ve seti 50 örneğe tamamlayacak** (özellikle zor örnekler: "Engineer II", "All Levels",
   "Associate", Türkçe "Uzman Yardımcısı", teknik olmayan stajlar).
 
+30.10.2026'da ilk gerçek bültenin elle denetiminden 7 örnek eklendi (37 örnek): rolü başlıktan anlaşılmayan ERP/satış
+stajları, gerçek yazılım stajları, Siemens öğrenci ilanları. Eski istem rol 0,973, "uygun" isabeti 0,929; yeni istem 1,0 ve 1,0.
+
 Çalıştırma (yaklaşık 0,002 $):
 
     python -m internreader degerlendir

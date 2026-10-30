@@ -18,7 +18,7 @@ const haritaOrnekleri = liste.ilanlar
   .map((i) => ({
     baslik: i.baslik,
     firma: i.firma_gorunen,
-    seviye: SEVIYE_ADI[i.seviye] ?? i.seviye,
+    seviye: i.seviye_etiketi ?? SEVIYE_ADI[i.seviye] ?? i.seviye,
     sehir: i.sehirler[0],
   }));
 
@@ -70,7 +70,7 @@ const sorular = [
   {
     soru: "Ne sıklıkla e-posta gelir?",
     cevap:
-      "Seçimine göre her sabah 07:00'de ya da her pazartesi 07:00'de. O gün sana uygun yeni ilan yoksa e-posta gelmez; aynı ilan iki kez gelmez.",
+      "Seçimine göre her sabah ya da her pazartesi sabahı. O gün sana uygun yeni ilan yoksa e-posta gelmez; aynı ilan iki kez gelmez.",
   },
   {
     soru: "E-posta adresim ne olacak?",
@@ -93,7 +93,7 @@ const sorular = [
         <p class="etiket flex flex-wrap items-center gap-x-3 gap-y-1">
           <span>Yazılım · Yapay zekâ · Veri stajları</span>
           <span aria-hidden="true">/</span>
-          <span>Her sabah 07:00</span>
+          <span>Her sabah</span>
         </p>
         <h1
           class="baslik mt-6 text-[clamp(2.7rem,6.4vw,5.2rem)] font-[560]"
@@ -150,7 +150,7 @@ const sorular = [
         </p>
         <p class="mt-2 flex items-center gap-2.5 font-mono text-[0.78rem] text-murekkep-2">
           <span class="nabiz" aria-hidden="true"></span>
-          <span data-sonraki-baski>Yeni baskı her sabah 07:00'de</span>
+          <span>Yeni baskı her sabah</span>
         </p>
       </div>
 
@@ -273,7 +273,7 @@ const sorular = [
   <!-- ================= KAPANIŞ ================= -->
   <section class="mx-auto max-w-[1200px] px-5 pt-10 md:px-8">
     <div class="kart isik egim relative overflow-hidden px-6 py-14 text-center md:px-12 md:py-20" data-egim="4">
-      <p class="etiket">Yarın 07:00</p>
+      <p class="etiket">Yarın sabah</p>
       <p class="baslik mx-auto mt-5 max-w-[18ch] text-[clamp(2.2rem,5vw,4rem)] font-[540]">
         İlk bültenin yarın sabah <span class="fosfor italic">gelsin.</span>
       </p>

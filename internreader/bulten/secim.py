@@ -8,6 +8,10 @@ kaydolan aboneler eskisi gibi her şeyi alır. İlanın kategorileri (alanlar, c
 eklenir (internreader/isleme/kategori.py).
 """
 
+from collections import Counter
+
+FIRMA_BASINA_AZAMI = 2  # bir e-postada aynı firmadan en fazla; kalanlar sonraki bültene kalır
+
 
 def eslesir(ilan: dict, tercihler: dict) -> bool:
     alanlar = set(tercihler.get("alanlar") or [])
@@ -29,3 +33,19 @@ def eslesir(ilan: dict, tercihler: dict) -> bool:
     # "konum belirtilmemiş" etiketiyle. Eski aboneliklerdeki "uzaktan" şehri bu yüzden ayrıca bir şey eklemez.
     uzak = ilan.get("uzaktan") or ilan.get("calisma_modeli") == "uzaktan"
     return bool(ilan_sehirleri & sehirler) or uzak or not ilan_sehirleri
+
+
+def bulten_sec(ilanlar: list[dict], tercihler: dict, gonderilmis: set[str], azami: int) -> list[dict]:
+    """Abonenin bu bültende alacağı ilanlar. Sıra depodan gelir (isleme/guncellik.py → siralama_anahtari). Seçilmeyen
+    ilan "gönderildi" sayılmaz: sınır ya da firma kotası yüzünden kalan ilan sonraki bültende gider."""
+    secilen: list[dict] = []
+    firmalar: Counter[str] = Counter()
+    for ilan in ilanlar:
+        if ilan["kimlik"] in gonderilmis or firmalar[ilan["firma"]] >= FIRMA_BASINA_AZAMI:
+            continue
+        if eslesir(ilan, tercihler):
+            secilen.append(ilan)
+            firmalar[ilan["firma"]] += 1
+            if len(secilen) >= azami:
+                break
+    return secilen

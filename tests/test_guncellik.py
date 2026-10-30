@@ -162,7 +162,7 @@ def test_tek_sayfadaki_ilanin_metni_sayfadan_kesilir_ve_tarih_cikarilir(oturum):
 
 def test_tarihsiz_eski_ayrinti_bir_kez_yeniden_cikarilir_ve_bayatsa_duser(oturum):
     ilan_kur(oturum, "https://yeditek.test/proje-stajyeri", "Proje Stajyeri", ayrinti_alanlari={})
-    # Tarih veren ATS ilanı yeniden çıkarılmaz (kaynak tarihi zaten var)
+    # Metni olmayan ATS ilanı da bir kez denenir; metin yoksa yapay zekâya gitmez
     ilan_kur(oturum, "https://jobs.lever.co/acme/2", "Data Intern", "lever", "2026-10-20", {}, rol="veri")
     with oturum.begin() as o:  # göçten önceki kayıtlar gibi: sürüm 1, tarih yok
         o.query(IlanAyrinti).update({"surum": 1})
@@ -171,7 +171,7 @@ def test_tarihsiz_eski_ayrinti_bir_kez_yeniden_cikarilir_ve_bayatsa_duser(oturum
     http = SahteHttp(sayfalar={"https://yeditek.test/proje-stajyeri": f"<p>{YEDITEK}</p>"})
     ayar = ayarlari_oku()
     rapor = boru.ayrintilari_zenginlestir(ayar, oturum, http=http, yz=yz)
-    assert rapor["bekleyen"] == 1 and rapor["cikarilan"] == 1 and len(yz.cagrilar) == 1
+    assert rapor["bekleyen"] == 2 and rapor["cikarilan"] == 1 and len(yz.cagrilar) == 1
     assert boru.ayrintilari_zenginlestir(ayar, oturum, http=http, yz=yz)["bekleyen"] == 0  # bir kez
     with oturum() as o:
         assert [i["baslik"] for i in depo.yayinlanacak_ilanlar(o)] == ["Data Intern"]  # Yeditek benzeri düştü

@@ -3,7 +3,7 @@ import type { Karar } from "../veri/tipler";
 import { ROL_ADI, SEVIYE_ADI, sayi } from "../veri/etiketler";
 
 // "Nasıl çalışır": bir sabahın dört adımı, her biri gerçek veriyle küçük bir simülasyon.
-// Masaüstünde kaydırmayla anlatılır (bölüm ekrana yapışır, saat 07:00 → 07:10 döner); telefonda sekmeler
+// Masaüstünde kaydırmayla anlatılır (bölüm ekrana yapışır, saat döner); telefonda sekmeler
 // kendiliğinden ilerler. Hareketler CSS animasyonu: adım değişince sahne yeniden kurulur (key), animasyonlar baştan oynar.
 
 interface Props {
@@ -204,7 +204,7 @@ function GonderimSahnesi({ kararlar }: { kararlar: Karar[] }) {
       >
         <div className="flex items-center justify-between font-mono text-[0.7rem] text-murekkep-3">
           <span>Gelen kutusu</span>
-          <span>07:10</span>
+          <span>sabah</span>
         </div>
         <p className="mt-3 text-[0.82rem] text-murekkep-2">InternReader</p>
         <p className="font-semibold">Bugün sana uygun {ilanlar.length} yeni ilan</p>
@@ -273,7 +273,7 @@ function Saat({ dakika }: { dakika: number }) {
         <circle cx="26" cy="26" r="2.8" fill="var(--fosfor)" stroke="var(--murekkep)" strokeWidth="1" />
       </svg>
       <span className="font-mono text-[0.8rem] tabular-nums text-murekkep-2">
-        07:{String(Math.min(10, Math.floor(dakika))).padStart(2, "0")}
+        her sabah
       </span>
     </div>
   );
@@ -285,7 +285,7 @@ const sinirla = (v: number) => Math.min(1, Math.max(0, v));
 export default function BoruHatti({ firmalar, kararlar, taranan }: Props) {
   const [etkin, setEtkin] = useState(0);
   const [tur, setTur] = useState(0); // her adım değişiminde sahneyi baştan kurmak için
-  // Masaüstünde "sabit" mod: bölüm ekrana yapışır, kaydırdıkça adımlar ilerler, saat 07:00 → 07:10 döner.
+  // Masaüstünde "sabit" mod: bölüm ekrana yapışır, kaydırdıkça adımlar ilerler, saat döner.
   // Telefonda ve "hareketi azalt" tercihinde sekme modu: ekrandayken adımlar kendiliğinden ilerler.
   const [sabit, setSabit] = useState(false);
   const [ilerleme, setIlerleme] = useState(0);
@@ -403,7 +403,7 @@ export default function BoruHatti({ firmalar, kararlar, taranan }: Props) {
                   </>
                 )}
               </span>
-              <span className="mt-3 block font-mono text-[0.7rem]">{a.saat}</span>
+              <span className="mt-3 block font-mono text-[0.7rem]">her sabah</span>
               <span className="baslik mt-0.5 block text-[1.15rem] font-[560] md:text-[1.45rem]">
                 {i + 1}. {a.ad}
               </span>

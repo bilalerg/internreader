@@ -11,6 +11,7 @@
     }
   },
   "rewrites": [{ "source": "/api/(.*)", "destination": "/api/index" }],
+  "crons": [{ "path": "/api/cron/gunluk", "schedule": "0 4 * * *" }],
   "headers": [
     {
       "source": "/(.*)",

@@ -41,6 +41,8 @@ export interface Ilan {
   // Güncellik (internreader/isleme/guncellik.py): kartta gösterilecek yayın tarihi; çok eski ATS ilanında null
   yayin?: string | null;
   surekli_acik?: boolean;
+  ilan_turu?: "is" | "egitim" | "yarisma"; // genel CV sayfaları yayınlanmaz
+  seviye_etiketi?: string; // kartta yazacak ad: "Eğitim programı", "Yarışma", "Tüm seviyeler"...
 }
 
 export interface IlanListesi {

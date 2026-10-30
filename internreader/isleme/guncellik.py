@@ -17,8 +17,13 @@ Kurallar:
 2. Kariyer sayfası ilanı: ilan_tarihi 180 günden eski ve ileri bir son başvuru yok → kalkar.
 3. Kariyer sayfası ilanı: dönem yılları var ve hepsi geçmiş yıllar; bu yıl ya da sonrası bir tarih (son başvuru,
    ilan tarihi) yok → kalkar.
+4. Genel CV toplama sayfası (ilan_turu == "genel_basvuru", Hitit "New Talent") → kalkar (her kaynak).
 ATS ilanları 2 ve 3'le kalkmaz: pano kapanınca zaten düşerler. Yayın tarihi 365 günden eskiyse "sürekli açık başvuru"
 sayılır (Dream Games'in 2022'den beri açık ilanı gibi); kartta eski yıl yazılmaz.
+
+Sıralama (siralama_anahtari; bülten, site ve özet aynı sırayı kullanır): önce yeni tarihli ilanlar, aynı tazelikte
+işler eğitim ve yarışmadan, girişimler diğerlerinden, ücretliler ücreti yazmayanlardan önce; tarihsizler ve sürekli
+açık ilanlar geride.
 """
 
 import re
@@ -44,7 +49,7 @@ _AYLAR = {
 _AY = "|".join(sorted(_AYLAR, key=len, reverse=True))
 _SAYISAL = re.compile(r"\b(\d{1,2})[./-](\d{1,2})[./-](20\d\d)\b")
 _ISO = re.compile(r"\b(20\d\d)-(\d{1,2})-(\d{1,2})\b")
-_GUN_AY_YIL = re.compile(rf"\b(\d{{1,2}})\.?\s+({_AY})\.?,?\s+(20\d\d)\b")
+_GUN_AY_YIL = re.compile(rf"\b(\d{{1,2}})\.?[\s-]+({_AY})\.?,?[\s-]+(20\d\d)\b")  # "27-Oct-2026" de olur
 _AY_GUN_YIL = re.compile(rf"\b({_AY})\.?\s+(\d{{1,2}})(?:st|nd|rd|th)?,?\s+(20\d\d)\b")
 
 _DONEM_KELIMESI = (
@@ -112,6 +117,7 @@ def guncellik(
     ilan_tarihi: str | None,
     yillar: set[int],
     bugun: date,
+    ilan_turu: str = "is",
 ) -> dict:
     """{"bayat": neden ya da None, "yayin": kartta gösterilecek yayın tarihi ya da None, "surekli_acik": bool}"""
     son, ilan_gunu, yayin = _gun(son_basvuru), _gun(ilan_tarihi), _gun(yayin_tarihi)
@@ -120,7 +126,9 @@ def guncellik(
     gosterilen = None if surekli_acik else (yayin or ilan_gunu)
     sonuc = {"bayat": None, "yayin": gosterilen.isoformat() if gosterilen else None, "surekli_acik": surekli_acik}
     ileri_son_basvuru = son is not None and son >= bugun
-    if son is not None and not ileri_son_basvuru:
+    if ilan_turu == "genel_basvuru":
+        sonuc["bayat"] = "genel_basvuru"
+    elif son is not None and not ileri_son_basvuru:
         sonuc["bayat"] = "son_basvuru_gecti"
     elif not ats and not ileri_son_basvuru and ilan_gunu and ilan_gunu < bugun - ILAN_TARIHI_OMRU:
         sonuc["bayat"] = "eski_ilan_tarihi"
@@ -129,3 +137,28 @@ def guncellik(
         if not bu_yil_tarihi:
             sonuc["bayat"] = "gecmis_donem"
     return sonuc
+
+
+YENI_GUN, TAZE_GUN = 14, 45  # yayın tarihi bu kadar gün içindeyse "yeni", "taze" sayılır
+
+
+def siralama_anahtari(ilan: dict, bugun: date) -> tuple:
+    yayin = _gun(ilan.get("yayin"))
+    if ilan.get("surekli_acik"):
+        kova = 4
+    elif yayin is None:
+        kova = 3
+    else:
+        yas = (bugun - yayin).days
+        kova = 0 if yas <= YENI_GUN else 1 if yas <= TAZE_GUN else 2
+    ucretli = (ilan.get("ayrinti") or {}).get("ucretli") == "evet"
+    return (
+        kova,
+        ilan.get("ilan_turu", "is") != "is",
+        not ilan.get("girisim"),
+        not ucretli,
+        -(yayin.toordinal() if yayin else 0),
+        -date.fromisoformat(ilan["ilk_gorulme"][:10]).toordinal(),
+        ilan["firma"],
+        ilan["baslik"],
+    )

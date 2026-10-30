@@ -37,7 +37,14 @@ def test_alanlar_rol_yapay_zeka_firma_ve_basliktan():
     assert alanlari_bul("yazilim", "arti", "Backend Intern", "Acme", set()) == ["yazilim"]  # AI artı: alan değil
     assert alanlari_bul("yazilim", "yok", "Software Engineer", "Dream Games", set()) == ["yazilim", "oyun"]
     assert alanlari_bul("yazilim", "yok", "Unity Developer Intern", "Acme", set()) == ["yazilim", "oyun"]
-    assert alanlari_bul("yazilim", "yok", "Software Intern", "Aselsan", {"savunma"}) == ["yazilim", "savunma"]
+    # savunmakariyer listesinden gelmek ("savunma" etiketi) tek başına yetmez: elle doğrulama ya da metinde kanıt
+    assert alanlari_bul("yazilim", "yok", "Software Intern", "Mavvo", {"savunma"}) == ["yazilim"]
+    assert alanlari_bul("yazilim", "yok", "Software Intern", "Roketsan", {"savunma"}, True) == ["yazilim", "savunma"]
+    assert alanlari_bul("yazilim", "yok", "Software Intern", "Acme", set(), True) == [
+        "yazilim"
+    ]  # etiketsiz firma: yetmez
+    dogrulanmis = {"savunma", "savunma_dogrulandi"}
+    assert alanlari_bul("yazilim", "yok", "Software Intern", "Aselsan", dogrulanmis) == ["yazilim", "savunma"]
     assert alanlari_bul("yazilim", "yok", "Cyber Security Intern", "Banka", set()) == ["yazilim", "savunma"]
     assert alanlari_bul("veri", "yok", "Veri Stajyeri", "Koyun Yazılım", set()) == ["veri"]  # "koyun" oyun değil
 
@@ -54,10 +61,12 @@ def test_calisma_modeli_once_konum_sonra_ayrinti():
     "firma, etiket, kaynaklar, ilan_kaynagi, beklenen",
     [
         ("Valven", {"ai"}, {"turkiye.ai"}, "kariyer_sayfasi", True),  # yapay zekâ girişim haritası
-        ("Aykan Teknoloji", {"teknopark"}, {"teknopark_istanbul"}, "kariyer_sayfasi", True),
-        ("Nova Spark", set(), {"dijitalpark"}, "kariyer_sayfasi", True),
-        ("Dream Games", {"ai"}, {"ats_genis"}, "lever", True),  # girişim ilan sistemi + ats_genis
-        ("Uber", set(), {"ats_genis"}, "smartrecruiters", False),  # ats_genis tek başına yetmez
+        ("Aykan Teknoloji", {"teknopark"}, {"teknopark_istanbul"}, "kariyer_sayfasi", False),  # teknopark: aday
+        ("Nova Spark", set(), {"dijitalpark"}, "kariyer_sayfasi", False),
+        ("Commencis", {"ai"}, {"ats_genis"}, "lever", False),  # Lever kullanmak girişim kanıtı değil
+        ("Dream Games", {"ai", "girisim"}, {"ats_genis"}, "lever", True),
+        ("Obilet", {"kurumsal"}, {"ats_genis"}, "recruitee", False),
+        ("Uber", set(), {"ats_genis"}, "smartrecruiters", False),
         ("Yapı Kredi", {"banka"}, {"ats_genis"}, "greenhouse", False),  # banka etiketi
         ("Aselsan", {"savunma", "teknopark"}, {"teknopark_istanbul"}, "kariyer_sayfasi", False),  # büyük kurum
         ("Sabancı Üniversitesi", {"teknopark"}, {"teknopark_istanbul"}, "kariyer_sayfasi", False),
@@ -110,15 +119,15 @@ ILANLAR = {
            "staj", "ozunde", "hibrit"),
     "A2": ("Veri Analisti Stajyeri", "Yapı Kredi", ["banka", "fintech"], "ats_genis,tohum_1810", "kariyer_sayfasi",
            "Istanbul", "veri", "staj", "yok", "ofis"),
-    "A3": ("Oyun Geliştirici Stajyeri", "Agave Games", [], "ats_genis", "ashby", "Istanbul", "yazilim", "staj", "yok",
+    "A3": ("Oyun Geliştirici Stajyeri", "Agave Games", ["girisim"], "ats_genis", "ashby", "Istanbul", "yazilim", "staj", "yok",
            None),
-    "A4": ("Gömülü Yazılım Stajyeri", "Aselsan", ["savunma"], "savunmakariyer,teknopark_istanbul", "kariyer_sayfasi",
+    "A4": ("Gömülü Yazılım Stajyeri", "Aselsan", ["savunma", "savunma_dogrulandi"], "savunmakariyer,teknopark_istanbul", "kariyer_sayfasi",
            "Ankara", "yazilim", "staj", "yok", "ofis"),
     "A5": ("Junior Backend Developer", "Sezzle", ["ai"], "ai_listesi", "greenhouse", "Türkiye, Remote", "yazilim",
            "junior", "yok", None),
     "A6": ("Siber Güvenlik Stajyeri", "Aykan Teknoloji", ["teknopark"], "teknopark_istanbul", "kariyer_sayfasi", "",
            "yazilim", "staj", "yok", None),
-    "A7": ("LLM Backend Stajyeri", "Nova Spark", [], "dijitalpark", "kariyer_sayfasi", "Izmir", "yazilim", "staj",
+    "A7": ("LLM Backend Stajyeri", "Nova Spark", ["girisim"], "dijitalpark", "kariyer_sayfasi", "Izmir", "yazilim", "staj",
            "ozunde", "uzaktan"),
 }  # fmt: skip
 HEPSI = set(ILANLAR)
@@ -133,7 +142,7 @@ MATRIS = {
     "uzaktan": ({"calisma_modelleri": ["uzaktan"]}, {"A5", "A7"}),
     "hibrit": ({"calisma_modelleri": ["hibrit"]}, {"A1"}),
     "yerinde": ({"calisma_modelleri": ["yerinde"]}, {"A2", "A4"}),
-    "girisim": ({"sadece_girisim": True}, {"A1", "A3", "A6", "A7"}),
+    "girisim": ({"sadece_girisim": True}, {"A1", "A3", "A7"}),
     "junior": ({"seviyeler": ["junior"]}, {"A5"}),
     "ankara": ({"sehirler": ["ankara"]}, {"A4", "A5", "A6", "A7"}),  # + uzaktan + konum belirtilmemiş
     "izmir": ({"sehirler": ["izmir"]}, {"A5", "A6", "A7"}),

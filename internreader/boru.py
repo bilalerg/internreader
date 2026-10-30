@@ -23,7 +23,7 @@ from internreader.ayar import CIKTI, Ayarlar
 from internreader.isleme.filtre import konum_uygun, yedek_siniflandirma
 from internreader.isleme.tekillestirme import tekillestir
 from internreader.kaynaklar.ats import TOPLAYICILAR
-from internreader.kaynaklar.kariyer_sayfasi import ilan_bolumu, sayfa_oku
+from internreader.kaynaklar.kariyer_sayfasi import html_ayikla, ilan_bolumu, ilan_metni, sayfa_oku
 from internreader.model import FirmaBilgisi
 from internreader.yayin import TURKIYE_SAATI, zenginlestir
 from internreader.yayin.istatistik import istatistik_metni
@@ -252,7 +252,7 @@ def ayrintilari_zenginlestir(
 
     def indir(adres: str) -> tuple[str, str | None]:
         try:
-            return adres, sayfa_oku(http, adres).metin
+            return adres, http.sayfa(adres)[1]
         except (requests.RequestException, RobotsEngeli, ValueError):
             return adres, None  # bugün okunamadı: yarın yeniden denenir
 
@@ -265,11 +265,13 @@ def ayrintilari_zenginlestir(
         if ilan["kaynak"] != "kariyer_sayfasi":
             return ilan, ""  # metin yok
         adres, capa, _ = ilan["url"].partition("#")
-        metin = sayfalar[adres]
-        if metin is None or not capa:  # okunamadı (None) ya da ilanın kendi sayfası var
-            return ilan, metin
+        ham = sayfalar[adres]
+        if ham is None:
+            return ilan, None
+        if not capa:  # ilanın kendi sayfası var: menü ve alt bilgi modele gitmez
+            return ilan, ilan_metni(ham, ilan["baslik"])
         # Tek sayfada listelenen ilan: sayfadan yalnızca bu ilanın bölümü (bulunamazsa yalnızca başlık vardı)
-        return ilan, ilan_bolumu(metin, ilan["baslik"], liste_sayfalari.get(adres, []))
+        return ilan, ilan_bolumu(html_ayikla(ham, adres).metin, ilan["baslik"], liste_sayfalari.get(adres, []))
 
     metinler = [metni_bul(i) for i in bekleyenler]
     isler = [(i["kimlik"], i["baslik"], i["firma"], m) for i, m in metinler if m]
@@ -277,7 +279,7 @@ def ayrintilari_zenginlestir(
     bugun = datetime.now(TURKIYE_SAATI).date()
     sonuclar = ayrintilari_cikar(yz, isler, bugun, ayar.yz_is_parcacigi) if isler else {}
     metin_haritasi = {k: m for k, _, _, m in isler}
-    rapor = {"bekleyen": len(bekleyenler), "cikarilan": 0, "metinsiz": len(bos), "hata": 0}
+    rapor = {"bekleyen": len(bekleyenler), "cikarilan": 0, "metinsiz": len(bos), "hata": 0, "rol_degisen": 0}
     with oturum.begin() as o:
         for kimlik, sonuc in sonuclar.items():
             if isinstance(sonuc, Exception):
@@ -285,6 +287,10 @@ def ayrintilari_zenginlestir(
                 continue
             depo.ayrinti_kaydet(o, kimlik, sonuc, metin_ozeti(metin_haritasi[kimlik]), yz.model)
             rapor["cikarilan"] += 1
+            # Sınıflandırıcı çoğu zaman yalnızca başlığı görür; rol kararını metnin tamamını gören çıkarıcı düzeltir.
+            # Eğitim ve yarışmada görev yoktur, rol düzeltilmez ("Cloud Camp" kendi etiketiyle yayında kalır).
+            if sonuc.get("ilan_turu", "is") == "is":
+                rapor["rol_degisen"] += depo.rol_guncelle(o, kimlik, sonuc.get("rol"))
         for kimlik in bos:  # tekrar denenmesin diye boş kayıt
             depo.ayrinti_kaydet(o, kimlik, {}, "metin-yok", "metin-yok")
         depo.kullanim_yaz(o, yz.kullanimlar[kullanim_basi:])

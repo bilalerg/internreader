@@ -179,7 +179,7 @@ CI her push'ta testleri hem SQLite hem gerçek bir Postgres üzerinde çalışt�
 internet ──► Caddy (HTTPS, 80/443) ──► /          statik site (her sabah yeniden derlenir)
                                    ├─► /api/*     FastAPI (abonelik)  ──► Postgres
                                    └─► /veri/*    yalnızca ilanlar.json ve istatistik.json
-cron 07:00 ──► internreader calistir (tara + yayınla) ──► site-derle
+her sabah ──► internreader calistir (tara + yayınla) ──► site-derle
 ```
 
 ```bash

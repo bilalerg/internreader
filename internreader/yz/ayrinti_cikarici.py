@@ -7,6 +7,9 @@ tekrar gönderilmez. Uydurmaya karşı kodla denetim (denetle):
   başvuru ancak metinde yılıyla açıkça yazıyorsa kalır: ilanın kapandığını gösterir (isleme/guncellik.py).
 - İlan tarihi metinde gün, ay ve yılıyla gerçekten geçmiyorsa ya da gelecekteyse atılır (uydurma tarih).
 Dönem yılları ("2025 Yaz Stajı") yapay zekâya sorulmaz, metinden kodla bulunur.
+
+Rol ve ilan türü de burada doğrulanır: sınıflandırıcı kariyer sayfası ilanlarında yalnızca başlığı görür, bu adım
+metnin tamamını görür. "Hotel WD Staj" başlıktan yazılım gibi durur, görevleri satış ve müşteri kurulumudur.
 """
 
 import hashlib
@@ -17,6 +20,7 @@ from typing import Literal
 from pydantic import BaseModel, Field
 
 from internreader.isleme.guncellik import donem_yillari, metindeki_tarihler
+from internreader.isleme.kategori import ilan_turu_bul, savunma_metinde
 from internreader.yz.istemci import Sonuc, YzIstemci
 
 kayit = logging.getLogger(__name__)
@@ -34,6 +38,12 @@ class IlanAyrintisi(BaseModel):
     calisma_modeli: Literal["ofis", "hibrit", "uzaktan", "belirsiz"]
     ucretli: Literal["evet", "hayir", "belirsiz"]
     teknolojiler: list[str] = Field(description="Metinde adı geçen somut teknoloji/dil/araç, en fazla 6")
+    ilan_turu: Literal["is", "egitim", "yarisma", "genel_basvuru"] = Field(
+        "is", description="Belirli bir iş/staj mı, eğitim programı mı, yarışma mı, genel CV toplama sayfası mı"
+    )
+    rol: Literal["yazilim", "yapay_zeka", "veri", "diger_teknik", "teknik_degil"] | None = Field(
+        None, description="Görevlerin ağırlığına göre işin rolü; metin görevleri anlatmıyorsa null"
+    )
 
 
 SISTEM = """Bir staj ya da giriş seviyesi iş ilanının metnini alacaksın. Öğrencinin işine yarayan bilgileri çıkar.
@@ -50,7 +60,16 @@ Yalnızca metinde yazanı kullan; tahmin etme, genel bilgi ekleme.
 - calisma_modeli: ofis, hibrit ya da uzaktan; metinde yazmıyorsa belirsiz.
 - ucretli: Ücretli olduğu açıkça yazıyorsa evet; ücretsiz/gönüllü olduğu yazıyorsa hayir; yazmıyorsa belirsiz.
 - teknolojiler: Metinde adı geçen somut teknoloji, programlama dili ya da araç (ör. Python, React, SQL, Docker,
-  PyTorch). En fazla 6. "Yazılım", "yapay zekâ" gibi genel kavramlar değil."""
+  PyTorch). En fazla 6. "Yazılım", "yapay zekâ" gibi genel kavramlar değil.
+- ilan_turu: is: belirli bir staj ya da iş pozisyonu. egitim: eğitim programı, kamp, bootcamp (sonunda işe alım
+  olsa da önce eğitim veriliyorsa). yarisma: yarışma, hackathon, etkinlik. genel_basvuru: belirli bir pozisyon
+  olmayan, genel CV toplayan sayfa ("uygun ilan bulamadınız mı? CV'nizi gönderin").
+- rol: Görevlerin AĞIRLIĞINA bak; şirketin yazılım firması olması ya da metinde teknoloji adı geçmesi yetmez.
+  yazilim: aday ağırlıklı olarak kod yazıyor, test otomasyonu, DevOps, gömülü yazılım yapıyor.
+  yapay_zeka: makine öğrenmesi, LLM, bilgisayarlı görü, NLP geliştiriyor. veri: veri analizi, veri mühendisliği, BI.
+  diger_teknik: ERP danışmanlığı/uyarlama, raporlama, Excel-Office işleri, BT destek, donanım, elektronik.
+  teknik_degil: satış, pazarlama, müşteri kurulumu ve eğitimi, müşteri ilişkileri, danışmanlık, İK, finans.
+  Metin görevleri anlatmıyorsa null."""
 
 
 def kisalt(metin: str, sinir: int) -> str:
@@ -76,7 +95,7 @@ def _tarih(metin: str | None) -> date | None:
         return None
 
 
-def denetle(ayrinti: IlanAyrintisi, metin: str, bugun: date) -> dict:
+def denetle(ayrinti: IlanAyrintisi, metin: str, bugun: date, baslik: str = "") -> dict:
     """Modelin çıkardığını metne karşı denetler; tutarsız alanları atar."""
     kucuk = metin.lower()
     teknolojiler = [t.strip() for t in ayrinti.teknolojiler if t.strip() and t.strip().lower() in kucuk][:6]
@@ -98,6 +117,9 @@ def denetle(ayrinti: IlanAyrintisi, metin: str, bugun: date) -> dict:
         "calisma_modeli": ayrinti.calisma_modeli,
         "ucretli": ayrinti.ucretli,
         "teknolojiler": teknolojiler,
+        "ilan_turu": ilan_turu_bul(baslik, metin, ayrinti.ilan_turu),
+        "rol": ayrinti.rol,
+        "savunma_kaniti": savunma_metinde(metin),
     }
 
 
@@ -113,8 +135,9 @@ def ayrintilari_cikar(
         max_tokens=1_200,
         is_parcacigi=is_parcacigi,
     )
-    metinler = {kimlik: metin for kimlik, _, _, metin in isler}
+    girdiler = {kimlik: (baslik, metin) for kimlik, baslik, _, metin in isler}
     sonuc: dict[str, dict | Exception] = {}
     for kimlik, cevap in cevaplar.items():
-        sonuc[kimlik] = denetle(cevap, metinler[kimlik], bugun) if isinstance(cevap, IlanAyrintisi) else cevap
+        baslik, metin = girdiler[kimlik]
+        sonuc[kimlik] = denetle(cevap, metin, bugun, baslik) if isinstance(cevap, IlanAyrintisi) else cevap
     return sonuc

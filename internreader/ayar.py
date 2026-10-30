@@ -58,6 +58,10 @@ class Ayarlar:
     gunluk_onay_siniri: int = 50
     arama_saglayici: str = ""  # "serper", "brave" ya da "" (arama keşfi kapalı)
     arama_anahtari: str = field(default="", repr=False)  # seçilen sağlayıcının API anahtarı; asla yazdırılmaz
+    # Sabah işini tetikleyen Vercel Cron (docs/KURULUM_UCRETSIZ.md). Boşsa uç çalışmaz, GitHub yedek zamanlaması kalır.
+    cron_gizli: str = field(default="", repr=False)  # Vercel'in CRON_SECRET değeri
+    github_tetik_tokeni: str = field(default="", repr=False)  # ince taneli token: yalnız bu depo, Actions: write
+    github_depo: str = "bilalerg/internreader"
 
 
 def arama_ayari() -> tuple[str, str]:
@@ -103,4 +107,7 @@ def ayarlari_oku() -> Ayarlar:
         gunluk_onay_siniri=int(_ortam("INTERNREADER_GUNLUK_ONAY_SINIRI", "50")),
         arama_saglayici=arama_saglayici,
         arama_anahtari=arama_anahtari,
+        cron_gizli=_ortam("CRON_SECRET", ""),
+        github_tetik_tokeni=_ortam("GITHUB_TETIK_TOKENI", ""),
+        github_depo=_ortam("GITHUB_DEPO", "bilalerg/internreader"),
     )

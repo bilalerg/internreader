@@ -120,7 +120,7 @@ export default function DaginikKaynaklar({ taranan, aktifIlan, ogrenciIlani }: P
           </svg>
         </span>
         <div>
-          <p className="font-semibold">1 e-posta · 07:00</p>
+          <p className="font-semibold">1 e-posta · her sabah</p>
           <p className="text-[0.88rem] text-murekkep-2">
             {sayi(taranan)} şirket, {sayi(aktifIlan)} ilan okundu → sana uyanlar ({sayi(ogrenciIlani)} öğrenci ilanı
             açık)

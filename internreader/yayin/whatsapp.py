@@ -6,7 +6,7 @@ Bu yüzden sistem metni hazırlar, paylaşımı bir insan yapar (günde ~1 dakik
 
 from datetime import datetime, timedelta
 
-from internreader.yayin import ROL_ADI, SEVIYE_ADI, tarih_yazisi
+from internreader.yayin import ROL_ADI, seviye_yazisi, tarih_yazisi
 
 AZAMI_ILAN = 15  # tek mesaj okunabilir kalsın; fazlası için tam listeye yönlendir
 TAZELIK_GUNU = 45  # kaynağın verdiği yayın tarihi bundan eskiyse "yeni ilan" diye duyurulmaz
@@ -26,7 +26,7 @@ def ozet_metni(ilanlar: list[dict], an: datetime, tam_liste_linki: str = "") -> 
         return None
     satirlar = [f"🎯 InternReader · {tarih_yazisi(an)}", f"{len(ilanlar)} yeni staj / junior ilanı", ""]
     for no, i in enumerate(ilanlar[:AZAMI_ILAN], start=1):
-        etiketler = [SEVIYE_ADI.get(i["seviye"], i["seviye"]), ROL_ADI.get(i["rol"], i["rol"])]
+        etiketler = [seviye_yazisi(i), ROL_ADI.get(i["rol"], i["rol"])]
         if i["yapay_zeka"] == "ozunde":
             etiketler.append("🤖 yapay zekâ işi")
         elif i["yapay_zeka"] == "arti":

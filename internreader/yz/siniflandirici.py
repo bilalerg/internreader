@@ -50,8 +50,12 @@ rol:
 - yazilim: yazılım geliştirme, backend/frontend/full-stack, mobil, oyun programlama, test/QA otomasyon, DevOps/SRE, gömülü yazılım.
 - yapay_zeka: makine öğrenmesi, LLM, yapay zekâ mühendisliği, bilgisayarlı görü, NLP.
 - veri: veri analisti, veri mühendisi, veri bilimci, BI.
-- diger_teknik: elektronik, mekanik, donanım, RF, endüstri, kalite, üretim, sistem mühendisliği (yazılım değil).
-- teknik_degil: satış, pazarlama, sosyal medya, İK, finans, satın alma, hukuk, idari, müşteri hizmetleri.
+- diger_teknik: elektronik, mekanik, donanım, RF, endüstri, kalite, üretim, sistem mühendisliği (yazılım değil);
+  ERP danışmanlığı/uyarlama, raporlama, Excel-Office ağırlıklı işler, BT destek.
+- teknik_degil: satış, pazarlama, sosyal medya, İK, finans, satın alma, hukuk, idari, müşteri hizmetleri;
+  müşteri kurulumu ve eğitimi, teknoloji danışmanlığı (satış ağırlıklı).
+Yazılım firmasında olmak ya da metinde teknoloji adı geçmesi yazılım saymaya yetmez: aday ağırlıklı olarak kod yazmıyorsa
+yazilim değildir.
 
 yapay_zeka: ozunde (iş doğrudan AI/ML/LLM), arti (AI araçları/bilgisi tercih sebebi), yok.
 
@@ -63,9 +67,11 @@ Başlıktaki "AI" ya da "Mühendis" kelimesine değil, işin kendisine bak. Her 
 # (18.10.2026 çalıştırmasında 104 yazılım ilanı bu yüzden "belirsiz" çıktı).
 SEVIYE_IPUCU = re.compile(
     r"(?i)(\d+\s*\+?\s*(years?|yrs?|yıl)|experience|deneyim|tecrübe|senior|junior|intern|stajyer|\bstaj|"
-    r"graduat|mezun|student|öğrenci|entry[- ]level|all levels|seviye)"
+    r"graduat|mezun|student|öğrenci|entry[- ]level|all levels|seviye|"
+    # rolü ele veren cümleler: işin kod yazmak mı, ERP/raporlama/satış mı olduğu
+    r"görev|sorumlu|responsib|erp\b|excel|rapor|danışman|satış|sales|müşteri|kurulum|geliştir|develop)"
 )
-ACIKLAMA_SINIRI = 400
+ACIKLAMA_SINIRI = 600
 
 
 def aciklama_ozeti(aciklama: str, sinir: int = ACIKLAMA_SINIRI) -> str:

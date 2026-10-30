@@ -2,7 +2,7 @@
 
 from datetime import datetime
 
-from internreader.yayin import ROL_ADI, SEVIYE_ADI, guvenli_url, tarih_yazisi, turkiye_tarihi
+from internreader.yayin import ROL_ADI, guvenli_url, seviye_yazisi, tarih_yazisi, turkiye_tarihi
 
 
 def _hucre(metin: str) -> str:
@@ -24,7 +24,7 @@ def tablo_metni(ilanlar: list[dict], an: datetime) -> str:
     for i in ilanlar:
         alan = ROL_ADI.get(i["rol"], i["rol"]) + (" 🤖" if i["yapay_zeka"] in ("ozunde", "arti") else "")
         satirlar.append(
-            f"| {_hucre(i.get('firma_gorunen') or i['firma'])} | {_hucre(i['baslik'])} | {SEVIYE_ADI.get(i['seviye'], i['seviye'])} | {alan} | "
+            f"| {_hucre(i.get('firma_gorunen') or i['firma'])} | {_hucre(i['baslik'])} | {seviye_yazisi(i)} | {alan} | "
             f"{_hucre(i['konum']) or 'Türkiye'} | {turkiye_tarihi(i['ilk_gorulme'])} | [Başvur]({guvenli_url(i['url'])}) |"
         )
     satirlar += [

@@ -1,5 +1,7 @@
 """Firmalar: ekleme/güncelleme, keşif sırası, ilan sistemi bilgisi."""
 
+import csv
+import io
 import re
 import urllib.parse
 from collections.abc import Iterable
@@ -9,6 +11,7 @@ from sqlalchemy import select, update
 from sqlalchemy.orm import Session
 
 from internreader.db import Firma, IlanKaydi, simdi
+from internreader.isleme.kategori import girisim_gerekcesi
 from internreader.model import FirmaBilgisi
 
 
@@ -128,3 +131,20 @@ def firmayi_kapat(oturum: Session, ad_ya_da_alan: str) -> int:
         f.aktif = False
         oturum.execute(update(IlanKaydi).where(IlanKaydi.firma == f.ad).values(aktif=False))
     return len(firmalar)
+
+
+def girisim_listesi_csv(oturum: Session) -> str:
+    """Bilal'in gözden geçirmesi için: girişim sayılan ve aday firmalar, gerekçesiyle (önce evet, sonra aday)."""
+    satirlar = []
+    for f in oturum.scalars(select(Firma).where(Firma.aktif.is_(True))):
+        kaynaklar = {k for k in (f.kaynak or "").split(",") if k}
+        gerekce = girisim_gerekcesi(f.ad, set(f.etiket or []), kaynaklar, f.ats or "")
+        if not gerekce.startswith("hayır"):
+            satirlar.append(
+                (gerekce.split(":")[0], f.ad, gerekce, f.web or "", ",".join(f.etiket or []), f.kaynak or "")
+            )
+    cikti = io.StringIO()
+    yazici = csv.writer(cikti, lineterminator="\n")
+    yazici.writerow(["karar", "firma", "gerekce", "web", "etiket", "listeler"])
+    yazici.writerows(sorted(satirlar, key=lambda s: (s[0] != "evet", s[1].casefold())))
+    return cikti.getvalue()

@@ -82,12 +82,59 @@ Vercel'de değişken ekledikten sonra **Deployments → son dağıtım → Redep
 
 ## 8. Dene
 Siteden kendi e-postanla abone ol → onay e-postası gelmeli (spam klasörüne de bak) → onayla.
-Ertesi sabah 07:00'deki çalışmadan sonra bülten gelir; hemen denemek için Actions → Günlük çalışma → Run workflow.
+Ertesi sabahki çalışmadan sonra bülten gelir; hemen denemek için Actions → Günlük çalışma → Run workflow.
 
 ## 9. Herkese duyurmadan önce
 - İŞKUR'dan yazılı görüş (Alo 170 ya da CİMER): "Yalnızca şirketlerin kendi ilan sayfalarına bağlantı veren, başvuru ve
   CV almayan, ücret almayan bir liste için özel istihdam bürosu izni gerekir mi?"
 - İlan kaldırma talebi gelirse: yerelde `DATABASE_URL`'i Neon adresine ayarlayıp `python -m internreader firma-kapat "Firma"`.
+
+## 10. Sabah saatini sağlama al: Vercel Cron (15 dk)
+GitHub'ın zamanlaması gecikebiliyor: 30.10.2026'da 07:00 yerine 13:35'te çalıştı. Bu yüzden işi Vercel Cron başlatır;
+GitHub'daki zamanlama yedek olarak kalır (Türkiye 09:37, iş o gün zaten bittiyse tarama yapmadan biter). Hobby planında
+Vercel Cron 07:00–07:59 arasında herhangi bir anda çalışır; tarama da sürdüğü için site ve bülten sabah gelir, kesin saat
+sözü vermiyoruz. Bu adımları yapmazsan sistem yine çalışır, yalnızca yedek saatte.
+
+**a) GitHub'da token üret**
+1. GitHub → sağ üstte profil resmi → **Settings → Developer settings → Personal access tokens → Fine-grained tokens →
+   Generate new token**.
+2. **Token name:** `internreader-sabah-isi`. **Expiration:** 1 yıl (takvime yenileme notu koy).
+3. **Repository access:** Only select repositories → `bilalerg/internreader`.
+4. **Permissions → Repository permissions → Actions: Read and write**. Başka izin verme.
+5. **Generate token**, değeri kopyala (bir daha gösterilmez, başka yere yazma).
+
+**b) Rastgele bir gizli değer üret**
+```bash
+python -c "import secrets; print(secrets.token_urlsafe(32))"
+```
+
+**c) Vercel'e iki değişken ekle**
+Vercel → proje → **Settings → Environment Variables** → Production için:
+| Ad | Değer |
+|---|---|
+| `CRON_SECRET` | (b)'de ürettiğin değer. Vercel bunu Cron isteğine `Authorization: Bearer ...` olarak kendisi ekler |
+| `GITHUB_TETIK_TOKENI` | (a)'da kopyaladığın token |
+
+Depo adı farklıysa `GITHUB_DEPO` de ekle (varsayılan `bilalerg/internreader`).
+
+**d) Yeniden yayınla ve dene**
+1. Vercel → **Deployments → son dağıtım → Redeploy** (kod da push edilmiş olmalı; `vercel.json`'daki cron ancak böyle görünür).
+2. **Settings → Cron Jobs** sayfasında `/api/cron/gunluk` görünmeli; yanındaki **Run** ile elle çalıştır.
+3. GitHub → **Actions → Günlük çalışma**: birkaç saniye içinde `workflow_dispatch` ile yeni bir çalışma başlamalı.
+
+Sorun çıkarsa ucu kendin dene (değeri kendi terminalinde yaz, kimseyle paylaşma):
+```bash
+curl -i -H "Authorization: Bearer CRON_SECRET_DEGERI" https://internreader.me/api/cron/gunluk
+```
+| Cevap | Anlamı | Ne yapmalı |
+|---|---|---|
+| 200 `tetiklendi` | Çalışıyor | Bir şey yapma |
+| 401 | `CRON_SECRET` eksik ya da farklı | Vercel'deki değeri kontrol et, Redeploy |
+| 503 `tetik_tokeni_yok` | `GITHUB_TETIK_TOKENI` tanımlı değil | Değişkeni ekle, Redeploy. Bu arada iş yedek saatte çalışır |
+| 502 `github_reddetti` | Token geçersiz, süresi dolmuş ya da yetkisi yetmiyor | Token'ı yenile: Actions: Read and write, doğru depo |
+
+Bir abone aynı gün iki bülten almaz: iş iki kez çalışsa da (tetikleme + yedek, elle çalıştırma) ikinci çalışma yalnızca
+günlük e-posta sınırına takılıp alamayanlara gönderir.
 
 ## Sınırlar ve bilinmesi gerekenler
 - **Ani kalabalık:** site (Vercel CDN) ve API (sunucusuz) kendiliğinden ölçeklenir; veritabanı küçük kalır.

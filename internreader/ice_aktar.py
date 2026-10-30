@@ -1,6 +1,7 @@
 """Dışarıdan veri alma: firma listeleri (CSV) ve eski sayfa önbelleği (JSON) veritabanına aktarılır."""
 
 import csv
+import hashlib
 import json
 import logging
 from pathlib import Path
@@ -36,6 +37,21 @@ def firmalari_ice_aktar(oturum: sessionmaker, yol: Path, kaynak: str = "") -> di
             o.flush()  # aynı dosyada tekrar eden firma bir sonraki satırda bulunabilsin
     kayit.info("%s: %d yeni firma, %d mevcut firma güncellendi", yol.name, yeni, guncellenen)
     return {"yeni": yeni, "guncellenen": guncellenen}
+
+
+def firma_listesini_esitle(oturum: sessionmaker, yol: Path) -> bool:
+    """firmalar.csv değiştiyse (elle eklenen "girisim", "kurumsal", "savunma_dogrulandi" etiketleri) veritabanına aktarır.
+    Sabah işinin başında çalışır; dosya aynıysa hiçbir şey yapmaz. Etiket eklenir, silinmez."""
+    if not yol.exists():
+        return False
+    ozet = hashlib.sha256(yol.read_bytes()).hexdigest()
+    with oturum() as o:
+        if depo.durum_al(o, "firmalar_csv_ozeti") == ozet:
+            return False
+    firmalari_ice_aktar(oturum, yol)
+    with oturum.begin() as o:
+        depo.durum_yaz(o, "firmalar_csv_ozeti", ozet)
+    return True
 
 
 def eski_onbellegi_ice_aktar(oturum: sessionmaker, yol: Path) -> int:
