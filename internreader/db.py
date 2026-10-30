@@ -12,6 +12,7 @@ Tablolar:
   aboneler          bülten aboneleri (e-posta + tercihler; çift onaylı kayıt)
   gonderimler       hangi aboneye hangi ilan gönderildi (aynı ilan iki kez gitmez)
   bultenler         gönderilen bültenler (aktif kullanıcı ölçümü)
+  tiklamalar        e-postadaki ilan bağlantısına tıklamalar (aboneyle bağı yok)
   durum             küçük anahtar-değer kayıtları (ör. son yayın zamanı)
 """
 
@@ -27,6 +28,7 @@ from sqlalchemy import (
     Integer,
     String,
     Text,
+    UniqueConstraint,
     create_engine,
     event,
     false,
@@ -184,6 +186,24 @@ class Bulten(Taban):
     tarih: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=simdi, index=True)
     ilan_sayisi: Mapped[int] = mapped_column(Integer)
     durum: Mapped[str] = mapped_column(String(12))  # gonderildi | hata
+
+
+class Tiklama(Taban):
+    """E-postadaki "Başvur" bağlantısına tıklama. Aboneyle bağ kurulmaz: e-posta adresi, abone no, IP ve tarayıcı bilgisi
+    tutulmaz; `kisi` her hafta değişen imzalı bir koddur (bkz. bulten/tiklama.py). İlan silinse de kayıt kalır."""
+
+    __tablename__ = "tiklamalar"
+    __table_args__ = (UniqueConstraint("eposta_no", "ilan_kimlik", "supheli", name="uq_tiklama_eposta_ilan"),)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    tarih: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=simdi, index=True)
+    ilan_kimlik: Mapped[str] = mapped_column(String(16))
+    eposta_no: Mapped[str] = mapped_column(String(16))  # e-posta başına rastgele; aboneye geri götürmez
+    kisi: Mapped[str] = mapped_column(String(16))
+    hafta: Mapped[str] = mapped_column(String(8))  # e-postanın gittiği hafta ("2026-W44"); kisi kodu bu haftaya aittir
+    tur: Mapped[str] = mapped_column(String(12))  # bulten | hos_geldin | deneme
+    supheli: Mapped[bool] = mapped_column(
+        Boolean, default=False, server_default=false()
+    )  # güvenlik tarayıcısı olabilir
 
 
 class Durum(Taban):

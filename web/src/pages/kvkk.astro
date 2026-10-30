@@ -21,8 +21,9 @@ const iletisim = SITE.iletisimEpostasi
     <p class="mt-6 text-[1.08rem] leading-[1.75] text-murekkep-2">
       Bu metin, 6698 sayılı Kişisel Verilerin Korunması Kanunu'nun (KVKK) 10. maddesi uyarınca, InternReader staj ilanı
       bültenine abone olduğunda kişisel verilerinin nasıl işlendiğini açıklar. Kısaca:{" "}
-      <strong class="text-murekkep">yalnızca e-posta adresini ve bülten tercihlerini</strong> saklarız, bunları yalnızca
-      bülteni göndermek için kullanırız ve abonelikten çıktığın an sileriz.
+      <strong class="text-murekkep">e-posta adresini ve bülten tercihlerini</strong> saklarız, bunları bülteni göndermek
+      için kullanırız ve abonelikten çıktığın an sileriz. Bültendeki ilanlara yapılan tıklamaları, adresini yazmadan
+      sayarız.
     </p>
 
     <div class="kvkk mt-12 space-y-10 leading-[1.75] text-murekkep-2">
@@ -39,7 +40,11 @@ const iletisim = SITE.iletisimEpostasi
           <li>E-posta adresin,</li>
           <li>bülten tercihlerin (şehir, alan, seviye, çalışma modeli, yalnızca girişimler, gönderim sıklığı),</li>
           <li>aydınlatma metnini onayladığın tarih ve metnin sürümü, aboneliği onayladığın tarih,</li>
-          <li>kayıt kaynağı (ör. siteden ya da WhatsApp kanalındaki bağlantıdan gelindiği).</li>
+          <li>kayıt kaynağı (ör. siteden ya da WhatsApp kanalındaki bağlantıdan gelindiği),</li>
+          <li>
+            e-postadaki bir ilana tıkladığında hangi ilana, ne zaman tıklandığı. Bu kayda e-posta adresin yazılmaz; her
+            hafta değişen bir takma kod kullanılır, tarayıcı bilgin saklanmaz.
+          </li>
         </ul>
         <p>
           Adın, telefonun ya da IP adresin kaydedilmez. Kötüye kullanımı önlemek için aynı ağdan gelen istek sayısı
@@ -51,10 +56,10 @@ const iletisim = SITE.iletisimEpostasi
       <section>
         <h2>3. Hangi amaçla ve hangi hukuki sebeple?</h2>
         <p>
-          Verilerin, seçtiğin tercihlere uygun staj ve iş ilanlarını e-postayla göndermek, aboneliği doğrulamak ve tek
-          tıkla çıkışı sağlamak amacıyla işlenir. Hukuki sebep, kayıt formunda verdiğin{" "}
-          <strong class="text-murekkep">açık rızadır</strong> (KVKK m.5/1). Rızanı, her e-postanın altındaki bağlantıyla
-          istediğin an geri alabilirsin.
+          Verilerin, seçtiğin tercihlere uygun staj ve iş ilanlarını e-postayla göndermek, aboneliği doğrulamak, tek
+          tıkla çıkışı sağlamak ve bültenin işe yarayıp yaramadığını toplu sayılarla ölçmek amacıyla işlenir. Hukuki
+          sebep, kayıt formunda verdiğin <strong class="text-murekkep">açık rızadır</strong> (KVKK m.5/1). Rızanı, her
+          e-postanın altındaki bağlantıyla istediğin an geri alabilirsin.
         </p>
       </section>
 
@@ -64,8 +69,8 @@ const iletisim = SITE.iletisimEpostasi
           Verilerin satılmaz, reklam amacıyla kimseyle paylaşılmaz. Hizmeti vermek için şu sağlayıcılar kullanılır ve
           verine yalnızca bu iş için erişirler: site ve abonelik formu Vercel (ABD), veritabanı Neon (ABD), e-posta
           gönderimi Brevo (Fransa, AB), günlük ilan taraması GitHub (ABD). Bu sağlayıcılar yurt dışında olduğu için
-          aktarım KVKK'nın 9. maddesindeki usullere uygun yapılır. Yalnızca e-posta adresin ve bülten tercihlerin
-          aktarılır; başka bir kişisel veri toplamayız.
+          aktarım KVKK'nın 9. maddesindeki usullere uygun yapılır. Yalnızca yukarıda sayılan veriler aktarılır; başka
+          bir kişisel veri toplamayız.
         </p>
       </section>
 
@@ -76,6 +81,7 @@ const iletisim = SITE.iletisimEpostasi
             Abone olduğun sürece saklanır; abonelikten çıktığında e-posta adresin ve tercihlerin veritabanından silinir.
           </li>
           <li>Kaydolup 72 saat içinde onaylamadığın kayıtlar kendiliğinden silinir.</li>
+          <li>Tıkladığın ilanların kayıtları 180 gün sonra silinir; bu kayıtlarda e-posta adresin bulunmaz.</li>
           <li>Teknik yedeklerde en fazla 14 gün kalabilir, sonra yedeklerle birlikte silinir.</li>
         </ul>
       </section>

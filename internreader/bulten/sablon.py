@@ -6,6 +6,7 @@ fosfor vurgusu. Dinamik her metin html.escape'ten geçer (ilan başlığında "<
 """
 
 import html
+from collections.abc import Callable
 from datetime import datetime
 
 from internreader.eposta import Eposta
@@ -19,6 +20,7 @@ SERIF = "Georgia, 'Times New Roman', serif"
 SANS = "-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif"
 CALISMA = {"yerinde": "Ofiste", "hibrit": "Hibrit", "uzaktan": "Uzaktan"}
 ALAN_ETIKETI = {"oyun": "Oyun", "savunma": "Savunma/siber/havacılık"}
+Baglanti = Callable[[dict], str]  # ilan → "Başvur" adresi
 
 
 def _konum(ilan: dict) -> str:
@@ -41,7 +43,7 @@ def _etiketler(ilan: dict) -> list[str]:
     return parcalar
 
 
-def _html_ilan(ilan: dict) -> str:
+def _html_ilan(ilan: dict, adres: str) -> str:
     e = html.escape
     a = ilan.get("ayrinti") or {}
     ozet = (
@@ -59,7 +61,7 @@ def _html_ilan(ilan: dict) -> str:
   <p style="margin:6px 0 0;font:600 19px/1.3 {SERIF};color:{MUREKKEP}">{e(ilan["baslik"])}</p>
   <p style="margin:6px 0 0;font:13px/1.5 {SANS};color:{IKINCIL}">{e(" · ".join(_etiketler(ilan)))}</p>
   {ozet}{alt_satir}
-  <p style="margin:12px 0 0"><a href="{e(ilan["url"])}" style="display:inline-block;padding:9px 16px;border-radius:999px;background:{MUREKKEP};color:{KAGIT};font:600 14px {SANS};text-decoration:none">Başvur &rarr;</a></p>
+  <p style="margin:12px 0 0"><a href="{e(adres)}" style="display:inline-block;padding:9px 16px;border-radius:999px;background:{MUREKKEP};color:{KAGIT};font:600 14px {SANS};text-decoration:none">Başvur &rarr;</a></p>
 </td></tr>"""
 
 
@@ -87,8 +89,10 @@ def _eposta(
     iptal_adresi: str,
     tek_tik_adresi: str,
     bolum: str = "",
+    baglanti: Baglanti | None = None,
 ) -> Eposta:
-    """Bültenin ve hoş geldin e-postasının ortak gövdesi. `baslik_html` kaçışlanmış olmalı; `bolum`: ilanların üst başlığı."""
+    """Bültenin ve hoş geldin e-postasının ortak gövdesi. `baslik_html` kaçışlanmış olmalı; `bolum`: ilanların üst başlığı.
+    `baglanti`: "Başvur" düğmesinin adresini üretir (tıklama ölçümü); düz metin sürümü doğrudan ilana gider."""
     e = html.escape
     gun = tarih_yazisi(an.astimezone(TURKIYE_SAATI))
     on_metin = " · ".join(f"{i.get('firma_gorunen') or i['firma']}: {i['baslik']}" for i in ilanlar[:3]) or konu
@@ -98,7 +102,7 @@ def _eposta(
         if bolum
         else ""
     )
-    govde = "".join(_html_ilan(i) for i in ilanlar)
+    govde = "".join(_html_ilan(i, baglanti(i) if baglanti else i["url"]) for i in ilanlar)
     html_metin = f"""<!doctype html>
 <html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>{e(konu)}</title></head>
 <body style="margin:0;padding:0;background:{KAGIT}">
@@ -142,7 +146,14 @@ def _eposta(
 
 
 def bulten_epostasi(
-    alici: str, ilanlar: list[dict], an: datetime, site_adresi: str, iptal_adresi: str, tek_tik_adresi: str, siklik: str
+    alici: str,
+    ilanlar: list[dict],
+    an: datetime,
+    site_adresi: str,
+    iptal_adresi: str,
+    tek_tik_adresi: str,
+    siklik: str,
+    baglanti: Baglanti | None = None,
 ) -> Eposta:
     """`ilanlar` en fazla AZAMI_ILAN olmalı (çağıran keser). iptal_adresi: sayfa; tek_tik_adresi: RFC 8058 POST adresi."""
     n = len(ilanlar)
@@ -157,6 +168,7 @@ def bulten_epostasi(
         site_adresi,
         iptal_adresi,
         tek_tik_adresi,
+        baglanti=baglanti,
     )
 
 
@@ -169,6 +181,7 @@ def hos_geldin_epostasi(
     iptal_adresi: str,
     tek_tik_adresi: str,
     siklik: str,
+    baglanti: Baglanti | None = None,
 ) -> Eposta:
     """Abonelik onaylanınca giden e-posta. `tam_uyan` değilse ilanlar yakın ilanlardır ya da liste boştur."""
     sonraki = (
@@ -188,6 +201,7 @@ def hos_geldin_epostasi(
             site_adresi,
             iptal_adresi,
             tek_tik_adresi,
+            baglanti=baglanti,
         )
     konu = "Şu an seçimlerine tam uyan ilan yok"
     giris = f"Aboneliğin başladı. Şu an seçimlerine tam uyan ilan yok; çıkınca ilk sen öğreneceksin. {sonraki}"
@@ -202,4 +216,5 @@ def hos_geldin_epostasi(
         iptal_adresi,
         tek_tik_adresi,
         bolum="Yakın ilanlar: tercihlerine tam uymuyor" if ilanlar else "",
+        baglanti=baglanti,
     )

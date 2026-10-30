@@ -5,6 +5,7 @@ Uç noktalar (site ile aynı alan adında, /api altında; ters vekil (Caddy) yö
   POST /api/abone         kayıt isteği → onay e-postası (202)
   POST /api/abone/onay    {"jeton": ...} e-postadaki bağlantının açtığı sayfa çağırır; ilk onayda hoş geldin e-postası
   POST /api/abone/iptal   {"jeton": ...} tek tıkla çıkış; kayıt silinir
+  GET  /api/t/{jeton}     e-postadaki "Başvur" bağlantısı: tıklamayı kaydeder, ilana yönlendirir (bkz. bulten/tiklama.py)
   GET  /api/cron/gunluk   Vercel Cron çağırır (Authorization: Bearer CRON_SECRET): GitHub'da sabah işini başlatır
 
 Güvenlik:
@@ -27,7 +28,7 @@ from typing import Literal
 import requests
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, RedirectResponse
 from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
@@ -36,6 +37,7 @@ from sqlalchemy.orm import sessionmaker
 from internreader import abonelik, depo
 from internreader.ayar import GELISTIRME_ANAHTARI, Ayarlar, ayarlari_oku
 from internreader.bulten import hos_geldin_gonder
+from internreader.bulten.tiklama import jeton_coz, supheli_mi
 from internreader.db import oturum_fabrikasi, simdi
 from internreader.eposta import EpostaGonderici, dogrulama_epostasi, gonderici_olustur
 from internreader.isleme.kategori import ALANLAR
@@ -138,11 +140,13 @@ def uygulama_olustur(
     kayit_siniri: HizSiniri | None = None,
     jeton_siniri: HizSiniri | None = None,
     tetikleyici: Callable[[Ayarlar], int] = is_akisini_tetikle,
+    tik_siniri: HizSiniri | None = None,
 ) -> FastAPI:
     # Herkese açık API belgesi kapalı: yalnızca kendi sitemiz kullanıyor
     app = FastAPI(title="InternReader", docs_url=None, redoc_url=None, openapi_url=None)
     kayit_siniri = kayit_siniri or HizSiniri(azami=5, pencere_sn=600)
     jeton_siniri = jeton_siniri or HizSiniri(azami=30, pencere_sn=600)
+    tik_siniri = tik_siniri or HizSiniri(azami=120, pencere_sn=600)
 
     # Vercel'de istek platformun vekilinden gelir; gerçek IP'yi Vercel "x-real-ip" başlığına kendisi yazar
     # (istemcinin gönderdiği değer ezilir, taklit edilemez). Kendi sunucumuzda uvicorn --proxy-headers kullanılır.
@@ -201,6 +205,33 @@ def uygulama_olustur(
                 502, "github_reddetti", f"GitHub {durum_kodu} döndü; token yetkisini ve depo adını kontrol et."
             )
         return {"durum": "tetiklendi"}
+
+    @app.api_route("/api/t/{jeton}", methods=["GET", "HEAD"])
+    def tikla(jeton: str, istek: Request):
+        """Her durumda yönlendirir: ölçüm kaybolabilir, başvuru kaybolmaz. HEAD (güvenlik tarayıcıları) sayılmaz.
+        Geçersiz jeton siteye gider; adres jetonda imzalı olduğu için bu uç başka adreslere yönlendirmek için kullanılamaz."""
+        veri = jeton_coz(jeton, ayar.gizli_anahtar)
+        if veri is None:
+            return RedirectResponse(ayar.site_adresi, status_code=302)
+        if istek.method == "GET" and tik_siniri.izin_ver(istemci(istek)):
+            an = simdi()
+            try:
+                with oturum.begin() as o:
+                    depo.tiklama_kaydet(
+                        o,
+                        ilan_kimlik=str(veri["i"]),
+                        eposta_no=str(veri["e"]),
+                        kisi=str(veri["k"]),
+                        hafta=str(veri["h"]),
+                        tur=str(veri["t"]),
+                        supheli=supheli_mi(istek.headers.get("user-agent", ""), int(veri["z"]), an),
+                        an=an,
+                    )
+            except (SQLAlchemyError, KeyError, ValueError):
+                kayit.warning("Tıklama kaydedilemedi", exc_info=True)
+        return RedirectResponse(
+            veri["u"], status_code=302, headers={"Cache-Control": "no-store", "X-Robots-Tag": "noindex"}
+        )
 
     @app.post("/api/abone", status_code=202)
     def abone_ol(govde: AboneIstegi, istek: Request):

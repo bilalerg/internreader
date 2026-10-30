@@ -30,7 +30,7 @@ from internreader.ayar import CIKTI, VERI, ayarlari_oku
 from internreader.bakim import bakim_yap
 from internreader.bulten import bultenleri_gonder
 from internreader.bulten.gonderim import deneme_gonder
-from internreader.db import oturum_fabrikasi
+from internreader.db import oturum_fabrikasi, simdi
 from internreader.eposta import gonderici_olustur
 from internreader.gunluk import kayit_kur
 from internreader.ice_aktar import eski_onbellegi_ice_aktar, firma_listesini_esitle, firmalari_ice_aktar
@@ -192,7 +192,8 @@ def main(argv: list[str] | None = None) -> int:
         uvicorn.run("internreader.api:uygulama", factory=True, host=arg.host, port=arg.port, proxy_headers=True)
     elif arg.komut == "durum":
         with oturum() as o:
-            print(json.dumps(depo.istatistik(o), ensure_ascii=False, indent=1))
+            rapor = {**depo.istatistik(o), "tiklama_son_7_gun": depo.tiklama_raporu(o, simdi())}
+            print(json.dumps(rapor, ensure_ascii=False, indent=1))
     return 0
 
 

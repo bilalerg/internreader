@@ -56,3 +56,13 @@ jobs:
           else
             python -m internreader bulten-dene "$TEST_EPOSTA"
           fi
+      - name: Özet (tıklamalar dahil)
+        # Çalışma sayfasının "Summary" bölümünde görünür. Yalnızca sayılar; e-posta adresi yazılmaz.
+        continue-on-error: true
+        run: |
+          {
+            echo "## InternReader durumu"
+            echo '```json'
+            python -m internreader durum
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

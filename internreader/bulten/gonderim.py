@@ -24,6 +24,7 @@ from internreader.abonelik import iptal_jetonu
 from internreader.ayar import CIKTI, GELISTIRME_ANAHTARI, Ayarlar
 from internreader.bulten.sablon import AZAMI_ILAN, bulten_epostasi, hos_geldin_epostasi
 from internreader.bulten.secim import bulten_sec, yakin_ilanlar
+from internreader.bulten.tiklama import baglanti_yapici
 from internreader.db import simdi
 from internreader.eposta import EpostaGonderici
 from internreader.yayin import zenginlestir
@@ -82,6 +83,7 @@ def bultenleri_gonder(
                 iptal_adresi=f"{ayar.site_adresi}/iptal?jeton={jeton}",
                 tek_tik_adresi=f"{ayar.site_adresi}/api/abone/iptal-tek?jeton={jeton}",
                 siklik=siklik,
+                baglanti=baglanti_yapici(ayar, abone_id, "bulten", an),
             )
             try:
                 g.gonder(ileti)
@@ -143,6 +145,7 @@ def hos_geldin_gonder(
         iptal_adresi=f"{ayar.site_adresi}/iptal?jeton={jeton}",
         tek_tik_adresi=f"{ayar.site_adresi}/api/abone/iptal-tek?jeton={jeton}",
         siklik=siklik,
+        baglanti=baglanti_yapici(ayar, abone_id, "hos_geldin", an),
     )
     try:
         gonderici.gonder(ileti)
@@ -187,6 +190,7 @@ def deneme_gonder(
         "iptal_adresi": f"{ayar.site_adresi}/iptal?jeton={jeton}",
         "tek_tik_adresi": f"{ayar.site_adresi}/api/abone/iptal-tek?jeton={jeton}",
         "siklik": siklik,
+        "baglanti": baglanti_yapici(ayar, 0, "deneme", an),
     }
     if hos_geldin:
         secilen, sonuc = hos_geldin_secimi(ilanlar, tercihler)

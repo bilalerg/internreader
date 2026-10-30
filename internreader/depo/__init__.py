@@ -77,8 +77,16 @@ from internreader.depo.ozet import (
     takip_edilen_firma_sayisi,
     taranan_firma_sayisi,
 )
+from internreader.depo.tiklamalar import (
+    eski_tiklamalari_sil,
+    tiklama_kaydet,
+    tiklama_raporu,
+)
 
 __all__ = [
+    "eski_tiklamalari_sil",
+    "tiklama_kaydet",
+    "tiklama_raporu",
     "HOS_GELDIN_DURUMU",
     "girisim_listesi_csv",
     "kapali_ilan_metinlerini_temizle",
