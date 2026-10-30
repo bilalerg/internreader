@@ -56,6 +56,9 @@ class Ayarlar:
     # onay e-postasına ayrılır: bülten ve hoş geldin bunu kullanamaz, kaydolmak isteyen kapıda kalmaz. 0 = sınırsız.
     gunluk_eposta_siniri: int = 300
     onay_payi: int = 50
+    # Elle onay (pilot): sabah işi ilanları hazırlar, abonelere bülten göndermez; önizleme TEST_EPOSTA'ya gider, bülten
+    # "Bülteni gönder" iş akışıyla elle çıkar (bulten-gonder). Hoş geldin e-postası otomatik kalır.
+    bulten_elle: bool = False
     arama_saglayici: str = ""  # "serper", "brave" ya da "" (arama keşfi kapalı)
     arama_anahtari: str = field(default="", repr=False)  # seçilen sağlayıcının API anahtarı; asla yazdırılmaz
     # Sabah işini tetikleyen Vercel Cron (docs/KURULUM_UCRETSIZ.md). Boşsa uç çalışmaz, GitHub yedek zamanlaması kalır.
@@ -115,6 +118,7 @@ def ayarlari_oku() -> Ayarlar:
         yz_toplu=_ortam("INTERNREADER_YZ_TOPLU", "0") == "1",
         gunluk_eposta_siniri=int(_ortam("INTERNREADER_GUNLUK_EPOSTA_SINIRI", "300")),
         onay_payi=int(_ortam("INTERNREADER_ONAY_PAYI", "50")),
+        bulten_elle=_ortam("INTERNREADER_BULTEN_ELLE", "0") == "1",
         arama_saglayici=arama_saglayici,
         arama_anahtari=arama_anahtari,
         cron_gizli=_ortam("CRON_SECRET", ""),

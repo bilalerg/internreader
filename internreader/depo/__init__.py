@@ -39,6 +39,7 @@ from internreader.depo.bulten import (
     gonderim_kaydet,
     gonderime_hazir_aboneler,
     sessiz_aboneler,
+    son_bulten_tarihi,
 )
 from internreader.depo.durum import (
     durum_al,
@@ -55,6 +56,7 @@ from internreader.depo.firmalar import (
     kesif_sonucu_yaz,
 )
 from internreader.depo.ilanlar import (
+    ilan_gizle,
     ilanlari_kaydet,
     imzayla_kararlar,
     kapali_ilan_metinlerini_temizle,
@@ -93,6 +95,7 @@ __all__ = [
     "HOS_GELDIN_DURUMU",
     "SESSIZLIK_DURUMU",
     "sessiz_aboneler",
+    "son_bulten_tarihi",
     "girisim_listesi_csv",
     "kapali_ilan_metinlerini_temizle",
     "rol_guncelle",
@@ -120,6 +123,7 @@ __all__ = [
     "kesif_bekleyenler",
     "kesif_sonucu_yaz",
     "ats_kaydini_sifirla",
+    "ilan_gizle",
     "ilanlari_kaydet",
     "siniflandirilmamislar",
     "siniflandirma_kaydet",

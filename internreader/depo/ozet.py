@@ -50,6 +50,7 @@ def ornek_kararlar(oturum: Session, uygun: bool, sinir: int = 8) -> list[dict]:
         .join(Siniflandirma, Siniflandirma.kimlik == IlanKaydi.kimlik)
         .where(
             IlanKaydi.aktif.is_(True),
+            IlanKaydi.gizli.is_(False),  # elle gizlenen ilan sitede örnek karar olarak da görünmez
             Siniflandirma.ogrenciye_uygun.is_(uygun),
             Siniflandirma.model != "kural",
             func.length(IlanKaydi.baslik) <= 60,

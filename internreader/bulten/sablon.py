@@ -43,7 +43,7 @@ def _etiketler(ilan: dict) -> list[str]:
     return parcalar
 
 
-def _html_ilan(ilan: dict, adres: str) -> str:
+def _html_ilan(ilan: dict, adres: str, adres_goster: bool = False) -> str:
     e = html.escape
     a = ilan.get("ayrinti") or {}
     ozet = (
@@ -55,6 +55,12 @@ def _html_ilan(ilan: dict, adres: str) -> str:
     if a.get("teknolojiler"):
         alt.append(e(" · ".join(a["teknolojiler"][:5])))
     alt_satir = f'<p style="margin:8px 0 0;font:13px/1.5 {SANS};color:{IKINCIL}">{" &nbsp;|&nbsp; ".join(alt)}</p>'
+    if adres_goster:  # önizleme: ilanın gerçek adresi yazıyla (gizlemek için kopyalanır)
+        not_ = f"<strong>{e(ilan['onizleme_notu'])}</strong><br>" if ilan.get("onizleme_notu") else ""
+        alt_satir += (
+            f'<p style="margin:8px 0 0;font:13px/1.5 {SANS};color:{IKINCIL};word-break:break-all">{not_}'
+            f'{e(ilan.get("kaynak", ""))} · <a href="{e(ilan["url"])}" style="color:{MUREKKEP}">{e(ilan["url"])}</a></p>'
+        )
     return f"""
 <tr><td style="padding:20px 0;border-top:1px solid {CIZGI}">
   <p style="margin:0;font:600 12px/1.4 {SANS};letter-spacing:.02em;color:{IKINCIL}">{e(ilan.get("firma_gorunen") or ilan["firma"])}</p>
@@ -74,6 +80,8 @@ def _metin_ilan(no: int, ilan: dict) -> str:
     if a.get("ozet"):
         satirlar.append(f"   {a['ozet']}")
     satirlar.append("   " + " · ".join(tarih_bilgisi(ilan)))
+    if ilan.get("onizleme_notu"):
+        satirlar.append(f"   {ilan['onizleme_notu']}")
     satirlar.append(f"   Başvur: {ilan['url']}")
     return "\n".join(satirlar)
 
@@ -90,9 +98,11 @@ def _eposta(
     tek_tik_adresi: str,
     bolum: str = "",
     baglanti: Baglanti | None = None,
+    adres_goster: bool = False,
 ) -> Eposta:
     """Bültenin ve hoş geldin e-postasının ortak gövdesi. `baslik_html` kaçışlanmış olmalı; `bolum`: ilanların üst başlığı.
-    `baglanti`: "Başvur" düğmesinin adresini üretir (tıklama ölçümü); düz metin sürümü doğrudan ilana gider."""
+    `baglanti`: "Başvur" düğmesinin adresini üretir (tıklama ölçümü); düz metin sürümü doğrudan ilana gider.
+    `adres_goster`: her ilanın adresi yazıyla da görünür (elle onay önizlemesi)."""
     e = html.escape
     gun = tarih_yazisi(an.astimezone(TURKIYE_SAATI))
     on_metin = " · ".join(f"{i.get('firma_gorunen') or i['firma']}: {i['baslik']}" for i in ilanlar[:3]) or konu
@@ -102,7 +112,7 @@ def _eposta(
         if bolum
         else ""
     )
-    govde = "".join(_html_ilan(i, baglanti(i) if baglanti else i["url"]) for i in ilanlar)
+    govde = "".join(_html_ilan(i, baglanti(i) if baglanti else i["url"], adres_goster) for i in ilanlar)
     html_metin = f"""<!doctype html>
 <html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>{e(konu)}</title></head>
 <body style="margin:0;padding:0;background:{KAGIT}">
@@ -250,4 +260,26 @@ def sessizlik_epostasi(
         tek_tik_adresi,
         bolum="Yakın ilanlar: tercihlerine tam uymuyor",
         baglanti=baglanti,
+    )
+
+
+def onizleme_epostasi(
+    alici: str, ilanlar: list[dict], an: datetime, site_adresi: str, iptal_adresi: str, tek_tik_adresi: str
+) -> Eposta:
+    """Elle onay modunda sabah önizlemesi (yalnızca proje sahibine): bültene girebilecek yeni ilanların hepsi,
+    adresleriyle. Bağlantılar doğrudan ilana gider; tıklama ölçümüne girmez."""
+    n = len(ilanlar)
+    return _eposta(
+        alici,
+        f"[ÖNİZLEME] Onay bekleyen {n} yeni ilan",
+        f'Onay bekleyen <span style="background:{FOSFOR};color:{MUREKKEP};padding:0 4px">{n} yeni ilan</span>',
+        "Son bültenden sonra ilk kez görülen ilanların hepsi (tercih, 15 ilan ve firma sınırı yok). Yanlış olanın "
+        "adresini kopyala: GitHub → Actions → İlan gizle. Hepsi doğruysa: Actions → Bülteni gönder. Göndermezsen bu "
+        "ilanlar yarınki önizlemede de görünür.",
+        ilanlar,
+        an,
+        site_adresi,
+        iptal_adresi,
+        tek_tik_adresi,
+        adres_goster=True,
     )

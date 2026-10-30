@@ -1,0 +1,68 @@
+# Elle onay modunda bülteni abonelere gönderir (yalnızca elle: Actions → Bülteni gönder → Run workflow).
+# Sabah önizlemesine bak, yanlış ilanı "İlan gizle" ile gizle, sonra bunu çalıştır. Bülten yalnızca sabah işinin hazırladığı
+# ilanları içerir: önizlemeden sonra ara taramada gelen ilan ertesi sabahın önizlemesine kalır.
+# Korumalar aynen geçerli: aynı gün ikinci bülten gitmez, aynı ilan iki kez gitmez, günlük e-posta sayacı aşılmaz.
+# Pazartesi ayrıca sessizlik e-postası gider (bir haftadır e-posta almamış aboneye yakın ilanlar).
+name: Bülteni gönder
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: internreader-veritabani # sabah işi, ara tarama ve keşifle aynı anda veritabanına yazmasın
+  cancel-in-progress: false
+
+jobs:
+  gonder:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      INTERNREADER_GIZLI_ANAHTAR: ${{ secrets.INTERNREADER_GIZLI_ANAHTAR }}
+      INTERNREADER_SITE_ADRESI: https://internreader.me
+      SMTP_SUNUCU: ${{ secrets.SMTP_SUNUCU }}
+      SMTP_PORT: "587"
+      SMTP_KULLANICI: ${{ secrets.SMTP_KULLANICI }}
+      SMTP_PAROLA: ${{ secrets.SMTP_PAROLA }}
+      EPOSTA_KIMDEN: ${{ secrets.EPOSTA_KIMDEN }}
+      INTERNREADER_BULTEN_ELLE: ${{ vars.INTERNREADER_BULTEN_ELLE || '1' }}
+      PYTHONUTF8: "1"
+    steps:
+      - name: Gizli değerleri denetle
+        run: |
+          test -n "$DATABASE_URL" || { echo "::error::DATABASE_URL gizli değeri tanımlı değil"; exit 1; }
+          test -n "$INTERNREADER_GIZLI_ANAHTAR" || { echo "::error::INTERNREADER_GIZLI_ANAHTAR yok: bülten gönderilmez"; exit 1; }
+          test -n "$SMTP_SUNUCU" || { echo "::error::SMTP_SUNUCU tanımlı değil: e-posta gönderilemez"; exit 1; }
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - name: Bağımlılıklar
+        run: pip install -r requirements.txt
+      - name: Bülteni gönder
+        # Rapor yalnızca sayılar (kaç kişiye gitti, kaç sessizlik e-postası); e-posta adresi yazılmaz
+        run: |
+          python -m internreader bulten-gonder > bulten_raporu.json
+          cat bulten_raporu.json
+          {
+            echo "## Bülten raporu"
+            echo '```json'
+            cat bulten_raporu.json
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Özet (abone, bülten, e-posta sayısı)
+        # Çalışma sayfasının "Summary" bölümünde görünür. Yalnızca sayılar; e-posta adresi yazılmaz.
+        if: ${{ success() || failure() }}
+        continue-on-error: true
+        run: |
+          {
+            echo "## InternReader durumu"
+            echo '```json'
+            python -m internreader durum
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

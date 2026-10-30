@@ -12,6 +12,9 @@ Kurallar:
 - Bir abonenin e-postası gönderilemezse (adres reddi vb.) diğerleri etkilenmez; hata kaydedilir.
 - Pazartesi bülteninden sonra sessizlik e-postası: 7 gündür abone olup 7 gündür hiç e-posta almamış kişiye "bu hafta
   sana uyan yeni ilan çıkmadı" + en çok 5 yakın ilan. Yakın ilan yoksa gitmez; haftada en fazla bir tane.
+- Elle onay modu (INTERNREADER_BULTEN_ELLE=1): sabah işi bülten göndermez, hazırlık anını yazar; önizleme
+  (onizleme_gonder) o ana kadarki yeni ilanları gösterir; bülten elle gönderilir ve yalnızca o ana kadar görülen
+  ilanları içerir. Önizlemeden sonra ara taramada gelen ilan, önizlemesi gitmeden bültene girmez.
 """
 
 import dataclasses
@@ -25,7 +28,13 @@ from sqlalchemy.orm import sessionmaker
 from internreader import depo
 from internreader.abonelik import iptal_jetonu
 from internreader.ayar import CIKTI, GELISTIRME_ANAHTARI, Ayarlar
-from internreader.bulten.sablon import AZAMI_ILAN, bulten_epostasi, hos_geldin_epostasi, sessizlik_epostasi
+from internreader.bulten.sablon import (
+    AZAMI_ILAN,
+    bulten_epostasi,
+    hos_geldin_epostasi,
+    onizleme_epostasi,
+    sessizlik_epostasi,
+)
 from internreader.bulten.secim import bulten_sec, yakin_ilanlar
 from internreader.bulten.tiklama import baglanti_yapici
 from internreader.db import simdi
@@ -37,17 +46,37 @@ kayit = logging.getLogger(__name__)
 
 
 ARDISIK_HATA_SINIRI = 5  # art arda bu kadar hata: sorun tek abonede değil, gönderimin kendisinde
+SON_GONDERIM = "son_bulten_gonderimi"  # durum: son bülten gönderiminin kapsadığı an (önizleme buradan başlar)
+HAZIRLIK = "bulten_hazirligi"  # durum: elle onay modunda sabah işinin ilanları hazırladığı an (önizleme ve bülten sonu)
+
+
+def hazirligi_yaz(oturum: sessionmaker, an: datetime | None = None) -> None:
+    """Elle onay modu: sabah işi ilanları hazırladı. Önizleme ve elle gönderilen bülten bu ana kadar görülen ilanlarla
+    sınırlı kalır."""
+    with oturum.begin() as o:
+        depo.durum_yaz(o, HAZIRLIK, (an or simdi()).astimezone(UTC).isoformat())
+
+
+def onay_siniri(oturum: sessionmaker) -> datetime | None:
+    with oturum() as o:
+        deger = depo.durum_al(o, HAZIRLIK)
+    return datetime.fromisoformat(deger) if deger else None
 
 
 def bultenleri_gonder(
-    oturum: sessionmaker, gonderici: EpostaGonderici, ayar: Ayarlar, an: datetime | None = None
+    oturum: sessionmaker,
+    gonderici: EpostaGonderici,
+    ayar: Ayarlar,
+    an: datetime | None = None,
+    sinir: datetime | None = None,
 ) -> dict:
+    """`sinir`: elle onay modu. Yalnızca o ana kadar ilk kez görülen ilanlar gider (önizlemesi Bilal'e gitmiş olanlar)."""
     if ayar.smtp_sunucu and ayar.gizli_anahtar == GELISTIRME_ANAHTARI:
         # Çıkış bağlantıları API'nin doğrulayamayacağı anahtarla imzalanırdı: kimse abonelikten çıkamazdı
         raise RuntimeError("Gerçek e-posta gönderimi için INTERNREADER_GIZLI_ANAHTAR tanımlı olmalı (API ile aynı)")
     an = (an or simdi()).astimezone(UTC)  # kayıtlar UTC: SQLite saat dilimi saklamaz
     with oturum() as o:
-        guncel = [zenginlestir(x) for x in depo.yayinlanacak_ilanlar(o)]
+        guncel = [zenginlestir(x) for x in depo.yayinlanacak_ilanlar(o, once=sinir)]
         aboneler = [(a.id, a.eposta, dict(a.tercihler or {}), a.siklik) for a in depo.gonderime_hazir_aboneler(o, an)]
         firma_sayisi = depo.taranan_firma_sayisi(o)
     ilanlar = [i for i in guncel if taze_mi(i, an)]
@@ -118,6 +147,10 @@ def bultenleri_gonder(
             rapor["ilan"] += len(secilen) if durum == "gonderildi" else 0
         if not durdu and an.astimezone(TURKIYE_SAATI).weekday() == depo.HAFTALIK_GUN:
             _sessizlik_gonder(oturum, g, ayar, guncel, firma_sayisi, an, rapor)
+    with oturum.begin() as o:  # sonraki önizleme bu andan sonra görülen ilanları gösterir; işaret geri gitmez
+        onceki, kapsanan = depo.durum_al(o, SON_GONDERIM), (sinir or an).astimezone(UTC)
+        if onceki is None or datetime.fromisoformat(onceki) < kapsanan:
+            depo.durum_yaz(o, SON_GONDERIM, kapsanan.isoformat())
     kayit.info("Bülten: %s", rapor)
     return rapor
 
@@ -244,6 +277,60 @@ def hos_geldin_gonder(
         depo.bulten_kaydet(o, abone_id if abone is not None else None, len(secilen), depo.HOS_GELDIN_DURUMU, an)
     kayit.info("Hoş geldin e-postası: %s, %d ilan", sonuc, len(secilen))
     return sonuc
+
+
+def onizleme_gonder(
+    oturum: sessionmaker,
+    gonderici: EpostaGonderici,
+    ayar: Ayarlar,
+    alici: str,
+    gonder: bool = True,
+    klasor: Path = CIKTI,
+    an: datetime | None = None,
+) -> dict:
+    """Elle onay modunun sabah önizlemesi: son bülten gönderiminden sonra ilk kez görülen BÜTÜN güncel ilanlar (tercih,
+    15 ilan ve firma sınırı yok), her birinin adresiyle. Eski tarihli ilan bültene girmez ama sessizlik e-postasında
+    yakın ilan olabilir: listede kalır, işaretlenir. Elle onay modunda sabah işinin hazırlık anıyla sınırlıdır:
+    "Bülteni gönder" tam olarak bu ilanları kullanır. Yeni ilan yoksa e-posta gitmez. Veritabanına yazmaz, adres
+    yazdırmaz (deneme_gonder gibi)."""
+    an = an or simdi()
+    with oturum() as o:
+        son = depo.durum_al(o, SON_GONDERIM)
+        baslangic = datetime.fromisoformat(son) if son else depo.son_bulten_tarihi(o)
+    bitis = onay_siniri(oturum) if ayar.bulten_elle else None
+    with oturum() as o:
+        ilanlar = [
+            i if taze_mi(i, an) else {**i, "onizleme_notu": "Eski tarihli: bültene girmez, yakın ilan olarak gidebilir"}
+            for i in (zenginlestir(x) for x in depo.yayinlanacak_ilanlar(o, sonra=baslangic, an=an, once=bitis))
+        ]
+    rapor = {
+        "tur": "onizleme",
+        "sonuc": "gonderildi" if ilanlar else "yeni_ilan_yok",
+        "ilan": len(ilanlar),
+        "baslangic": baslangic.isoformat() if baslangic else None,
+        "bitis": bitis.isoformat() if bitis else None,
+        "gonderildi": False,
+        "onizleme": None,
+    }
+    if not ilanlar:  # bülten de boş giderdi: önizleme de gitmez
+        return rapor
+    jeton = iptal_jetonu(0, ayar.gizli_anahtar)
+    ileti = onizleme_epostasi(
+        alici=alici,
+        ilanlar=ilanlar,
+        an=an,
+        site_adresi=ayar.site_adresi,
+        iptal_adresi=f"{ayar.site_adresi}/iptal?jeton={jeton}",
+        tek_tik_adresi=f"{ayar.site_adresi}/api/abone/iptal-tek?jeton={jeton}",
+    )
+    klasor.mkdir(parents=True, exist_ok=True)
+    onizleme = klasor / "onizleme.html"
+    onizleme.write_text(ileti.html or "", encoding="utf-8", newline="\n")
+    rapor["onizleme"] = str(onizleme)
+    if gonder:
+        gonderici.gonder(ileti)
+        rapor["gonderildi"] = True
+    return rapor
 
 
 def deneme_gonder(

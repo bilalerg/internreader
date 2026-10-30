@@ -1,7 +1,7 @@
 """İlanlar ve sınıflandırmalar: kaydetme, kapanan ilanlar, yayınlanacak öğrenci ilanları."""
 
 from collections.abc import Iterable
-from datetime import datetime
+from datetime import UTC, datetime
 
 from sqlalchemy import select, update
 from sqlalchemy.orm import Session
@@ -17,6 +17,7 @@ from internreader.isleme.kategori import (
     seviye_etiketi,
 )
 from internreader.isleme.maske import kisisel_veriyi_maskele
+from internreader.isleme.tekillestirme import ilan_anahtari
 from internreader.model import HEDEF_ROLLER, OGRENCI_SEVIYELERI, Ilan
 from internreader.yayin import TURKIYE_SAATI
 
@@ -106,22 +107,29 @@ def rol_guncelle(oturum: Session, kimlik: str, rol: str | None) -> bool:
 
 
 def yayinlanacak_ilanlar(
-    oturum: Session, sonra: datetime | None = None, an: datetime | None = None, bayatlar_dahil: bool = False
+    oturum: Session,
+    sonra: datetime | None = None,
+    an: datetime | None = None,
+    bayatlar_dahil: bool = False,
+    once: datetime | None = None,
 ) -> list[dict]:
-    """Aktif, öğrenciye uygun ve bayat olmayan ilanlar (sınıflandırma bilgisiyle). `sonra` verilirse yalnızca o andan
-    sonra ilk kez görülenler — günlük özet için. Bülten kategorileri (alanlar, çalışma modeli, girişim) ve güncellik
-    (yayin, surekli_acik) burada eklenir: kurallar internreader/isleme/kategori.py ve guncellik.py'de.
+    """Aktif, öğrenciye uygun, elle gizlenmemiş ve bayat olmayan ilanlar (sınıflandırma bilgisiyle). `sonra` verilirse
+    yalnızca o andan sonra ilk kez görülenler — günlük özet için; `once` verilirse yalnızca o ana kadar görülenler — elle
+    onay modunda önizlemesi gitmemiş ilan bültene girmesin diye. Bülten kategorileri (alanlar, çalışma modeli, girişim)
+    ve güncellik (yayin, surekli_acik) burada eklenir: kurallar internreader/isleme/kategori.py ve guncellik.py'de.
     `bayatlar_dahil`: bayat ilanlar da "bayat" nedeniyle döner (rapor için)."""
     bugun = (an or simdi()).astimezone(TURKIYE_SAATI).date()
     sorgu = (
         select(IlanKaydi, Siniflandirma, IlanAyrinti)
         .join(Siniflandirma, Siniflandirma.kimlik == IlanKaydi.kimlik)
         .outerjoin(IlanAyrinti, IlanAyrinti.kimlik == IlanKaydi.kimlik)
-        .where(IlanKaydi.aktif.is_(True), Siniflandirma.ogrenciye_uygun.is_(True))
+        .where(IlanKaydi.aktif.is_(True), IlanKaydi.gizli.is_(False), Siniflandirma.ogrenciye_uygun.is_(True))
         .order_by(IlanKaydi.ilk_gorulme.desc(), IlanKaydi.firma)
     )
-    if sonra is not None:
-        sorgu = sorgu.where(IlanKaydi.ilk_gorulme > sonra)
+    if sonra is not None:  # SQLite saat dilimi saklamaz: karşılaştırma UTC
+        sorgu = sorgu.where(IlanKaydi.ilk_gorulme > sonra.astimezone(UTC))
+    if once is not None:
+        sorgu = sorgu.where(IlanKaydi.ilk_gorulme <= once.astimezone(UTC))
     sonuclar = list(oturum.execute(sorgu))
     firmalar = _firma_profilleri(oturum, {ilan.firma for ilan, _, _ in sonuclar})
     satirlar = []
@@ -225,3 +233,24 @@ def kapali_ilan_metinlerini_temizle(oturum: Session, once: datetime) -> int:
         .values(aciklama="")
     )
     return sonuc.rowcount or 0
+
+
+def ilan_gizle(oturum: Session, url: str, gizli: bool = True) -> list[IlanKaydi]:
+    """Elle onay: yanlış ilanı sitede ve e-postada gösterme (`gizli=False` geri alır). Etkilenen ilanlar döner; adres
+    bulunamazsa boş liste. Aynı firma + başlıklı kopyalar da birlikte gizlenir: bülten onları aynı ilan sayar
+    (isleme/tekillestirme.py → ilan_anahtari), biri gizlenip öteki kalsaydı yanlış ilan öteki adresle giderdi.
+    Tarama `gizli` alanına dokunmaz: ilan yeniden görülse de açılmaz. Başka adresle yeniden yayınlanan kopya yeni ilandır,
+    yeniden gizlenmesi gerekir."""
+    adres = url.strip()
+    hedef = oturum.scalars(select(IlanKaydi).where(IlanKaydi.url.in_({adres, adres.rstrip("/"), adres + "/"}))).first()
+    if hedef is None:
+        return []
+    anahtar = ilan_anahtari(hedef.firma, hedef.baslik)
+    kopyalar = [
+        i
+        for i in oturum.scalars(select(IlanKaydi).where(IlanKaydi.firma == hedef.firma))
+        if ilan_anahtari(i.firma, i.baslik) == anahtar
+    ]
+    for i in kopyalar:
+        i.gizli = gizli
+    return kopyalar

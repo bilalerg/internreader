@@ -90,6 +90,11 @@ def bulten_kaydet(oturum: Session, abone_id: int | None, ilan_sayisi: int, durum
     oturum.add(Bulten(abone_id=abone_id, ilan_sayisi=ilan_sayisi, durum=durum, tarih=an))
 
 
+def son_bulten_tarihi(oturum: Session) -> datetime | None:
+    """En son giden bültenin zamanı (elle onay önizlemesinin başlangıcı için yedek)."""
+    return utc(oturum.scalar(select(func.max(Bulten.tarih)).where(Bulten.durum == "gonderildi")))
+
+
 def bulten_istatistigi(oturum: Session, an: datetime, gun: int = 7) -> dict:
     """Son `gun` günde gönderilen bülten ve bülten alan farklı abone sayısı (aktif kullanıcı ölçümünün bir parçası)."""
     esik = an - timedelta(days=gun)

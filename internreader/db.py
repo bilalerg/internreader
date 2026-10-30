@@ -4,7 +4,7 @@ Aynı tanımlar hem SQLite'ta (yerel) hem Postgres'te (sunucu) çalışır; uzun
 Şema değişikliği: modeli değiştir → python -m internreader goc-uret "açıklama" → göç dosyasını gözden geçir.
 Tablolar:
   firmalar          takip edilen şirketler
-  ilanlar           görülen her ilan; ilk/son görülme tarihiyle (yeni ve kapanan ilanları buradan anlarız)
+  ilanlar           görülen her ilan; ilk/son görülme tarihiyle (yeni ve kapanan ilanları buradan anlarız), elle gizleme
   siniflandirmalar  yapay zekânın ilan başına kararı (seviye, rol, yapay zekâ ağırlığı) — her ilan bir kez sınıflanır
   sayfa_onbellek    kariyer sayfası özeti + okuyucu sonucu — sayfa değişmediyse yapay zekâya tekrar gidilmez
   yz_kullanim       her yapay zekâ çağrısının token ve maliyet kaydı
@@ -77,6 +77,8 @@ class IlanKaydi(Taban):
     ilk_gorulme: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=simdi, index=True)
     son_gorulme: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=simdi)
     aktif: Mapped[bool] = mapped_column(Boolean, default=True, index=True)
+    # Elle gizlenen ilan (ilan-gizle): sitede ve e-postada görünmez. Tarama bu alana dokunmaz, ilan yeniden açılmaz.
+    gizli: Mapped[bool] = mapped_column(Boolean, default=False, server_default=false())
 
     __table_args__ = (Index("ix_ilanlar_aktif_ilk_gorulme", "aktif", "ilk_gorulme"),)
 

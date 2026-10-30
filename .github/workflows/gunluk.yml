@@ -4,6 +4,8 @@
 # kullanılmıyor. İş bugün zaten tamamlandıysa yedek çalışma tarama yapmadan biter; bülten de günde bir kez gider.
 # Site verisi (ilanlar.json, istatistik.json) web/public/veri/'ye yazılıp depoya eklenir; Vercel siteyi yeniden yayınlar.
 # Günlük veri commit'i depoyu "hareketli" tutar: GitHub 60 gün değişiklik görmeyen depolarda zamanlanmış işleri durdurur.
+# Elle onay modu (pilot, varsayılan açık): iş bülten göndermez, sonunda TEST_EPOSTA'ya önizleme gider; bülten
+# "Bülteni gönder" iş akışıyla elle çıkar. Kapatmak için Actions değişkeni INTERNREADER_BULTEN_ELLE=0.
 # Gizli değerler: Settings → Secrets and variables → Actions (bkz. docs/KURULUM_UCRETSIZ.md).
 name: Günlük çalışma
 
@@ -38,6 +40,7 @@ jobs:
       SMTP_KULLANICI: ${{ secrets.SMTP_KULLANICI }}
       SMTP_PAROLA: ${{ secrets.SMTP_PAROLA }}
       EPOSTA_KIMDEN: ${{ secrets.EPOSTA_KIMDEN }}
+      INTERNREADER_BULTEN_ELLE: ${{ vars.INTERNREADER_BULTEN_ELLE || '1' }}
       PYTHONUTF8: "1"
     steps:
       - uses: actions/checkout@v4
@@ -92,3 +95,16 @@ jobs:
             git pull --rebase
             git push
           fi
+      - name: Önizleme (elle onay modu)
+        # Son bültenden beri görülen yeni ilanlar adresleriyle TEST_EPOSTA'ya; yeni ilan yoksa e-posta gitmez.
+        # Gizli değer yoksa iş başarısız olmaz, uyarı yazılır. Adres kayıtlarda görünmez (test_bulten.yml ile aynı).
+        if: ${{ steps.kontrol.outputs.atla != 'true' && env.INTERNREADER_BULTEN_ELLE == '1' }}
+        env:
+          TEST_EPOSTA: ${{ secrets.TEST_EPOSTA }}
+        run: |
+          if [ -z "$TEST_EPOSTA" ]; then
+            echo "::warning::TEST_EPOSTA gizli değeri yok: önizleme gönderilmedi (docs/KURULUM_UCRETSIZ.md, bölüm 13)"
+            exit 0
+          fi
+          echo "::add-mask::$(printf '%s' "$TEST_EPOSTA" | tr '[:upper:]' '[:lower:]')"
+          python -m internreader bulten-dene "$TEST_EPOSTA" --yeni

@@ -6,11 +6,13 @@ Kullanım (proje klasöründe):
   python -m internreader arama-kesif [--kuru] [--web-bul N]  arama API'siyle yeni firma bul (haftada bir; anahtar ister)
   python -m internreader firma-kapat "Acme"               "ilanımı kaldır" talebi: firmayı taramadan ve yayından çıkar
   python -m internreader tara [--yz-tavani 0.50] [--yalnizca-ats]  ilanları topla + sınıflandır (ara tarama: kariyer sayfaları hariç)
-  python -m internreader bulten-dene <eposta> [--hos-geldin] [--gonderme]  tek adrese test e-postası (kayıt yazmaz)
+  python -m internreader bulten-dene <eposta> [--hos-geldin | --yeni] [--gonderme]  tek adrese test e-postası (kayıt yazmaz)
   python -m internreader yayinla                         README tablosu, JSON ve WhatsApp özeti üret
   python -m internreader bulten-gonder                  abonelere kişiye özel bülten (SMTP yoksa dosyaya yazar)
+  python -m internreader ilan-gizle <url> [--geri-al]    elle onay: yanlış ilanı sitede ve e-postada gösterme
   python -m internreader bakim                           süresi dolan kayıtları temizle
   python -m internreader calistir                        tara + yayinla + bülten + bakım (sunucunun her sabahki işi)
+                                                         INTERNREADER_BULTEN_ELLE=1: bülten yerine elle onay
   python -m internreader durum                           veritabanı özeti, yapay zekâ harcaması, bülten sayıları
   python -m internreader api [--port 8000]               sitenin abonelik API'si (geliştirme sunucusu)
   python -m internreader degerlendir                     sınıflandırıcı doğruluğu (etiketli set; ~0,002 $)
@@ -29,7 +31,7 @@ from internreader.arama import arama_kesfi, web_adresi_bul
 from internreader.ayar import CIKTI, VERI, ayarlari_oku
 from internreader.bakim import bakim_yap
 from internreader.bulten import bultenleri_gonder
-from internreader.bulten.gonderim import deneme_gonder
+from internreader.bulten.gonderim import deneme_gonder, hazirligi_yaz, onay_siniri, onizleme_gonder
 from internreader.db import oturum_fabrikasi, simdi
 from internreader.eposta import gonderici_olustur
 from internreader.gunluk import kayit_kur
@@ -85,8 +87,15 @@ def main(argv: list[str] | None = None) -> int:
     alt.add_parser("bulten-gonder", help="abonelere kişiye özel bülten")
     p = alt.add_parser("bulten-dene", help="o anki veriyle tek adrese test e-postası; veritabanına hiçbir şey yazmaz")
     p.add_argument("eposta")
-    p.add_argument("--hos-geldin", action="store_true", help="bülten yerine yeni aboneye giden hoş geldin e-postası")
-    p.add_argument("--gonderme", action="store_true", help="göndermeden yalnızca cikti/test_bulten.html yaz")
+    tur = p.add_mutually_exclusive_group()
+    tur.add_argument("--hos-geldin", action="store_true", help="bülten yerine yeni aboneye giden hoş geldin e-postası")
+    tur.add_argument(
+        "--yeni", action="store_true", help="elle onay önizlemesi: son bültenden beri görülen bütün yeni ilanlar"
+    )
+    p.add_argument("--gonderme", action="store_true", help="göndermeden yalnızca cikti/ altına HTML yaz")
+    p = alt.add_parser("ilan-gizle", help="elle onay: yanlış ilanı sitede ve e-postada gösterme")
+    p.add_argument("url", help="ilanın adresi (önizleme e-postasında yazan)")
+    p.add_argument("--geri-al", action="store_true", help="gizlenmiş ilanı yeniden göster")
     alt.add_parser("bakim", help="süresi dolan kayıtları temizle")
     p = alt.add_parser("degerlendir", help="sınıflandırıcının doğruluğunu etiketli sette ölç (~0,002 $)")
     p.add_argument("--set", type=Path, default=VERI / "degerlendirme" / "siniflandirma.jsonl")
@@ -150,17 +159,40 @@ def main(argv: list[str] | None = None) -> int:
         if arg.komut == "calistir":
             boru.ayrintilari_zenginlestir(ayar, oturum, yz=yz)
             boru.yayinla(oturum)
-            bultenleri_gonder(oturum, gonderici_olustur(ayar), ayar)
+            if ayar.bulten_elle:  # pilot: önizleme Bilal'e gider, bülten "Bülteni gönder" ile elle çıkar
+                hazirligi_yaz(oturum)
+                kayit.info("Elle onay modu (INTERNREADER_BULTEN_ELLE=1): bülten gönderilmedi, önizlemeyi bekliyor")
+            else:
+                bultenleri_gonder(oturum, gonderici_olustur(ayar), ayar)
             bakim_yap(oturum)
             with oturum.begin() as o:
                 depo.durum_yaz(o, "son_calisma_gunu", _turkiye_gunu())
     elif arg.komut == "bulten-gonder":
-        print(json.dumps(bultenleri_gonder(oturum, gonderici_olustur(ayar), ayar), ensure_ascii=False, indent=1))
+        sinir = None
+        if ayar.bulten_elle:  # yalnızca önizlemesi gitmiş ilanlar: sabah işinin hazırlık anına kadar görülenler
+            sinir = onay_siniri(oturum)
+            if sinir is None:
+                kayit.error("Elle onay modu: önce sabah işi (calistir) ilanları hazırlamalı; bülten gönderilmedi")
+                return 1
+        rapor = bultenleri_gonder(oturum, gonderici_olustur(ayar), ayar, sinir=sinir)
+        print(json.dumps(rapor, ensure_ascii=False, indent=1))
+    elif arg.komut == "ilan-gizle":
+        with oturum.begin() as o:
+            ilanlar = depo.ilan_gizle(o, arg.url, gizli=not arg.geri_al)
+            ozet = [f"{i.firma} — {i.baslik} ({i.url})" for i in ilanlar]
+        if not ilanlar:
+            print("İlan bulunamadı: adresi önizleme e-postasından olduğu gibi kopyala.")
+            return 1
+        print(f"{len(ilanlar)} ilan {'yeniden gösteriliyor' if arg.geri_al else 'gizlendi'}:")
+        print("\n".join(f"  {satir}" for satir in ozet))
     elif arg.komut == "bulten-dene":
         try:
-            sonuc = deneme_gonder(
-                oturum, gonderici_olustur(ayar), ayar, arg.eposta, arg.hos_geldin, not arg.gonderme, klasor=CIKTI
-            )
+            if arg.yeni:
+                sonuc = onizleme_gonder(oturum, gonderici_olustur(ayar), ayar, arg.eposta, not arg.gonderme, CIKTI)
+            else:
+                sonuc = deneme_gonder(
+                    oturum, gonderici_olustur(ayar), ayar, arg.eposta, arg.hos_geldin, not arg.gonderme, klasor=CIKTI
+                )
         except (
             Exception
         ) as hata:  # ayrıntı yazdırılmaz: SMTP hata metni adresi içerebilir, Actions kayıtları herkese açık

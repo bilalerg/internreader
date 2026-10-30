@@ -24,6 +24,7 @@ def ayrinti_bekleyenler(oturum: Session, sinir: int = 60, yalnizca_ats: bool = F
         .outerjoin(IlanAyrinti, IlanAyrinti.kimlik == IlanKaydi.kimlik)
         .where(
             IlanKaydi.aktif.is_(True),
+            IlanKaydi.gizli.is_(False),  # yayınlanmayacak ilana yapay zekâ harcanmaz
             Siniflandirma.ogrenciye_uygun.is_(True),
             or_(IlanAyrinti.kimlik.is_(None), IlanAyrinti.surum < AYRINTI_SURUMU),
         )
