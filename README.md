@@ -102,6 +102,8 @@ python -m internreader tara [--yz-tavani 0.50]          # ilanları topla + sın
 python -m internreader yayinla                          # cikti/: README tablosu, ilanlar.json, WhatsApp özeti
 python -m internreader calistir                         # tara + ayrıntılar + yayınla + bülten + bakım (her sabah)
 python -m internreader bulten-gonder                    # yalnızca bülten (SMTP yoksa cikti/giden_eposta/'ya yazar)
+python -m internreader bulten-dene <eposta> --yeni      # elle onay önizlemesi: son bültenden beri görülen ilanlar
+python -m internreader ilan-gizle <url> [--geri-al]     # elle onay: yanlış ilanı sitede ve e-postada gösterme
 python -m internreader bakim                            # eski/geçersiz kayıtları temizle
 python -m internreader durum                            # veritabanı özeti ve bu ayki yapay zekâ harcaması
 python -m internreader degerlendir                      # sınıflandırıcı doğruluğu (etiketli set, ~0,002 $)
