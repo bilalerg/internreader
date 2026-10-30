@@ -1,20 +1,21 @@
 {
  "surum": 1,
- "guncelleme": "2026-10-30T13:35:10.125384+03:00",
- "takip_edilen_firma": 1293,
- "taranan_firma": 293,
- "aktif_ilan": 1358,
+ "guncelleme": "2026-10-30T21:53:02.455362+03:00",
+ "takip_edilen_firma": 1355,
+ "taranan_firma": 379,
+ "aktif_ilan": 1459,
  "ogrenci_ilani": 20,
  "sehirler": {
-  "uzaktan": 312,
-  "istanbul": 237,
-  "ankara": 37,
+  "uzaktan": 311,
+  "istanbul": 267,
+  "ankara": 58,
+  "kocaeli": 5,
   "izmir": 4,
   "sakarya": 2,
   "kayseri": 1,
-  "kocaeli": 1,
   "antalya": 1,
-  "gaziantep": 1
+  "gaziantep": 1,
+  "adana": 1
  },
  "firmalar": [
   "Analog Devices",
@@ -64,6 +65,7 @@
   "Agena",
   "Akdoğan",
   "AKGÜN",
+  "Algocor",
   "ALGOFACT",
   "Alpata Havacılık",
   "Alyo",
@@ -74,11 +76,26 @@
   "Armelsan",
   "Armsto Konnektör",
   "Armut",
-  "Aselsan Sivas",
-  "ASİSGUARD",
-  "ASPİLSAN Enerji"
+  "Arçelik",
+  "Aselsan Sivas"
  ],
  "kararlar": [
+  {
+   "baslik": "Junior Java Developer",
+   "firma": "Checkbox",
+   "seviye": "junior",
+   "rol": "yazilim",
+   "gerekce": "Junior unvan; Java yazılım geliştirme.",
+   "uygun": true
+  },
+  {
+   "baslik": "Game Developer - New Grad",
+   "firma": "Vertigo Games",
+   "seviye": "yeni_mezun",
+   "rol": "yazilim",
+   "gerekce": "Yeni mezun oyun geliştirici pozisyonu",
+   "uygun": true
+  },
   {
    "baslik": "Proje Stajı Programı (Görüntü İşleme)",
    "firma": "Yeditek",
@@ -96,14 +113,6 @@
    "uygun": true
   },
   {
-   "baslik": "Software Engineer - New Grad",
-   "firma": "Good Job Games",
-   "seviye": "yeni_mezun",
-   "rol": "yazilim",
-   "gerekce": "New grad unvanı, yazılım geliştirme rolü",
-   "uygun": true
-  },
-  {
    "baslik": "Jr. Data Analyst",
    "firma": "Obilet",
    "seviye": "junior",
@@ -117,14 +126,6 @@
    "seviye": "uzun_donem_staj",
    "rol": "yazilim",
    "gerekce": "Uzun dönem test mühendisliği stajı",
-   "uygun": true
-  },
-  {
-   "baslik": "Part Time Working Student (Front End Developer)",
-   "firma": "Siemens",
-   "seviye": "yari_zamanli",
-   "rol": "yazilim",
-   "gerekce": "Öğrenci için yarı zamanlı ön yüz geliştirme",
    "uygun": true
   },
   {
@@ -168,11 +169,19 @@
    "uygun": false
   },
   {
-   "baslik": "Software Engineer II with Accounting Experience ",
-   "firma": "Sezzle",
+   "baslik": "Senior ABAP Developer",
+   "firma": "SNI",
    "seviye": "deneyimli",
    "rol": "yazilim",
-   "gerekce": "II unvanı; muhasebe deneyimli yazılım geliştirme",
+   "gerekce": "Kıdemli ABAP geliştirici, kod yazma ağırlıklı",
+   "uygun": false
+  },
+  {
+   "baslik": "Growth Specialist (New Grad)",
+   "firma": "Cypher Games",
+   "seviye": "yeni_mezun",
+   "rol": "teknik_degil",
+   "gerekce": "Başlıkta New Grad; pazarlama büyüme rolü.",
    "uygun": false
   },
   {
@@ -197,14 +206,6 @@
    "seviye": "staj",
    "rol": "diger_teknik",
    "gerekce": "Staj programı; alan belirtilmemiş, elektro-optik firma",
-   "uygun": false
-  },
-  {
-   "baslik": "Part-Time Working Student (Strategic Procurement Specialist)",
-   "firma": "Siemens",
-   "seviye": "yari_zamanli",
-   "rol": "teknik_degil",
-   "gerekce": "Öğrenci için yarı zamanlı stratejik satın alma",
    "uygun": false
   }
  ]
