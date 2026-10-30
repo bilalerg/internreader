@@ -82,7 +82,7 @@ Vercel'de değişken ekledikten sonra **Deployments → son dağıtım → Redep
 
 ## 8. Dene
 Siteden kendi e-postanla abone ol → onay e-postası gelmeli (spam klasörüne de bak) → onayla.
-Ertesi sabahki çalışmadan sonra bülten gelir; hemen denemek için Actions → Günlük çalışma → Run workflow.
+Onayladığın anda hoş geldin e-postası gelir; bülten için Actions → Test bülteni → Run workflow (bölüm 11).
 
 ## 9. Herkese duyurmadan önce
 - İŞKUR'dan yazılı görüş (Alo 170 ya da CİMER): "Yalnızca şirketlerin kendi ilan sayfalarına bağlantı veren, başvuru ve
@@ -135,6 +135,30 @@ curl -i -H "Authorization: Bearer CRON_SECRET_DEGERI" https://internreader.me/ap
 
 Bir abone aynı gün iki bülten almaz: iş iki kez çalışsa da (tetikleme + yedek, elle çalıştırma) ikinci çalışma yalnızca
 günlük e-posta sınırına takılıp alamayanlara gönderir.
+
+## 11. Değişikliği nasıl hızlı denerim?
+Sabahı beklemek zorunda değilsin.
+
+**Bir kez yap:** GitHub → **Settings → Secrets and variables → Actions → New repository secret** → ad `TEST_EPOSTA`,
+değer kendi e-posta adresin. Adres yalnızca burada durur; Actions kayıtlarında görünmez.
+
+**Her denemede:**
+1. `git push` (site ve API için Vercel ~2 dk içinde yeniden yayınlar).
+2. GitHub → **Actions → Test bülteni → Run workflow** → `gunluk` (sabah bülteni) ya da `hos-geldin` (yeni aboneye giden e-posta).
+3. ~1 dk sonra konu satırı `[TEST]` ile başlayan e-posta gelir.
+
+Test e-postası Neon'daki hazır veriyi kullanır ve hiçbir kayıt yazmaz: istediğin kadar tekrarla, gerçek abonelerin bülteni
+etkilenmez. Kayıtlı abone adresiysen senin tercihlerinle, değilsen tüm ilanlarla hazırlanır. İçindeki çıkış bağlantısına
+tıklasan da aboneliğin silinmez.
+
+**Site verisini tazelemek için:** Actions → **Günlük çalışma → Run workflow** (tarama ~30 dk sürebilir). Koruma yüzünden o gün
+bülten almış aboneye ikinci bülten gitmez; yeni veriyi e-postada görmek için ardından Test bülteni'ni çalıştır.
+
+**Yerelde, göndermeden:**
+```bash
+.venv/Scripts/python -m internreader bulten-dene ben@ornek.com --hos-geldin --gonderme
+```
+E-posta `cikti/test_bulten.html` dosyasına yazılır; tarayıcıda aç.
 
 ## Sınırlar ve bilinmesi gerekenler
 - **Ani kalabalık:** site (Vercel CDN) ve API (sunucusuz) kendiliğinden ölçeklenir; veritabanı küçük kalır.

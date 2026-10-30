@@ -1,0 +1,58 @@
+# Elle başlatılan test e-postası: o anki veriyle tek adrese bülten ya da hoş geldin e-postası (konu "[TEST]" ile başlar).
+# Veritabanına yazmaz; günde tek bülten korumasına takılmaz. Alıcı yalnızca TEST_EPOSTA gizli değerinden gelir: depo
+# herkese açık, adres girdi olarak alınmaz ve Actions kayıtlarında görünmez.
+name: Test bülteni
+
+on:
+  workflow_dispatch:
+    inputs:
+      tur:
+        description: "Hangi e-posta?"
+        type: choice
+        options:
+          - gunluk
+          - hos-geldin
+        default: gunluk
+
+permissions:
+  contents: read
+
+jobs:
+  gonder:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      INTERNREADER_GIZLI_ANAHTAR: ${{ secrets.INTERNREADER_GIZLI_ANAHTAR }}
+      INTERNREADER_SITE_ADRESI: https://internreader.me
+      SMTP_SUNUCU: ${{ secrets.SMTP_SUNUCU }}
+      SMTP_PORT: "587"
+      SMTP_KULLANICI: ${{ secrets.SMTP_KULLANICI }}
+      SMTP_PAROLA: ${{ secrets.SMTP_PAROLA }}
+      EPOSTA_KIMDEN: ${{ secrets.EPOSTA_KIMDEN }}
+      TEST_EPOSTA: ${{ secrets.TEST_EPOSTA }}
+      PYTHONUTF8: "1"
+    steps:
+      - name: Gizli değerleri denetle
+        run: |
+          test -n "$TEST_EPOSTA" || { echo "::error::TEST_EPOSTA gizli değeri tanımlı değil (docs/KURULUM_UCRETSIZ.md, bölüm 11)"; exit 1; }
+          test -n "$SMTP_SUNUCU" || { echo "::error::SMTP_SUNUCU tanımlı değil: e-posta gönderilemez"; exit 1; }
+          # GitHub gizli değeri kayıtlarda zaten gizler; kod adresi küçültebileceği için o biçim de gizlensin
+          echo "::add-mask::$(printf '%s' "$TEST_EPOSTA" | tr '[:upper:]' '[:lower:]')"
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - name: Bağımlılıklar
+        run: pip install -r requirements.txt
+      - name: Test e-postasını gönder
+        env:
+          TUR: ${{ inputs.tur }}
+        run: |
+          if [ "$TUR" = "hos-geldin" ]; then
+            python -m internreader bulten-dene "$TEST_EPOSTA" --hos-geldin
+          else
+            python -m internreader bulten-dene "$TEST_EPOSTA"
+          fi

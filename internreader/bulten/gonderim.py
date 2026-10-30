@@ -11,15 +11,17 @@ Kurallar:
 - Bir abonenin e-postası gönderilemezse (adres reddi vb.) diğerleri etkilenmez; hata kaydedilir.
 """
 
+import dataclasses
 import logging
 from contextlib import nullcontext
 from datetime import datetime
+from pathlib import Path
 
 from sqlalchemy.orm import sessionmaker
 
 from internreader import depo
 from internreader.abonelik import iptal_jetonu
-from internreader.ayar import GELISTIRME_ANAHTARI, Ayarlar
+from internreader.ayar import CIKTI, GELISTIRME_ANAHTARI, Ayarlar
 from internreader.bulten.sablon import AZAMI_ILAN, bulten_epostasi, hos_geldin_epostasi
 from internreader.bulten.secim import bulten_sec, yakin_ilanlar
 from internreader.db import simdi
@@ -156,3 +158,59 @@ def hos_geldin_gonder(
         depo.bulten_kaydet(o, abone_id if abone is not None else None, len(secilen), depo.HOS_GELDIN_DURUMU, an)
     kayit.info("Hoş geldin e-postası: %s, %d ilan", sonuc, len(secilen))
     return sonuc
+
+
+def deneme_gonder(
+    oturum: sessionmaker,
+    gonderici: EpostaGonderici,
+    ayar: Ayarlar,
+    alici: str,
+    hos_geldin: bool = False,
+    gonder: bool = True,
+    klasor: Path = CIKTI,
+    an: datetime | None = None,
+) -> dict:
+    """Hızlı test: o anki veriyle tek adrese bülten ya da hoş geldin e-postası (konu "[TEST]" ile başlar).
+    Veritabanına hiçbir şey yazmaz: gönderim, son_bulten ve bülten kaydı yok; günde tek bülten korumasına ve günlük sınıra
+    takılmaz, önceki gönderimlere bakmaz. Kayıtlı aboneyse onun tercihleri, değilse tüm ilanlar. Çıkış bağlantısı olmayan
+    abone (0) için imzalanır: test e-postasındaki bağlantıya tıklamak gerçek aboneliği silmez.
+    Çıktıda ve kayıtlarda adres yazmaz: depo herkese açık, Actions kayıtları görünür."""
+    an = an or simdi()
+    with oturum() as o:
+        abone = depo.abone_eposta_ile(o, alici.strip().lower())
+        kayitli = abone is not None
+        tercihler, siklik = (dict(abone.tercihler or {}), abone.siklik) if abone else ({}, "gunluk")
+        ilanlar = [zenginlestir(x) for x in depo.yayinlanacak_ilanlar(o, an=an)]
+    jeton = iptal_jetonu(0, ayar.gizli_anahtar)
+    baglantilar = {
+        "site_adresi": ayar.site_adresi,
+        "iptal_adresi": f"{ayar.site_adresi}/iptal?jeton={jeton}",
+        "tek_tik_adresi": f"{ayar.site_adresi}/api/abone/iptal-tek?jeton={jeton}",
+        "siklik": siklik,
+    }
+    if hos_geldin:
+        secilen, sonuc = hos_geldin_secimi(ilanlar, tercihler)
+        ileti = hos_geldin_epostasi(alici=alici, ilanlar=secilen, tam_uyan=sonuc == "gonderildi", an=an, **baglantilar)
+    else:
+        secilen = bulten_sec([i for i in ilanlar if taze_mi(i, an)], tercihler, set(), AZAMI_ILAN)
+        sonuc = "gonderildi" if secilen else "uyan_ilan_yok"
+        ileti = bulten_epostasi(alici=alici, ilanlar=secilen, an=an, **baglantilar) if secilen else None
+    rapor = {
+        "tur": "hos_geldin" if hos_geldin else "bulten",
+        "sonuc": sonuc,
+        "ilan": len(secilen),
+        "kayitli_abone": kayitli,
+        "gonderildi": False,
+        "onizleme": None,
+    }
+    if ileti is None:  # sabah bülteni de bu durumda gitmezdi
+        return rapor
+    ileti = dataclasses.replace(ileti, konu=f"[TEST] {ileti.konu}")
+    klasor.mkdir(parents=True, exist_ok=True)
+    onizleme = klasor / "test_bulten.html"
+    onizleme.write_text(ileti.html or "", encoding="utf-8", newline="\n")
+    rapor["onizleme"] = str(onizleme)
+    if gonder:
+        gonderici.gonder(ileti)
+        rapor["gonderildi"] = True
+    return rapor

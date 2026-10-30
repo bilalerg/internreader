@@ -6,6 +6,7 @@ Kullanım (proje klasöründe):
   python -m internreader arama-kesif [--kuru] [--web-bul N]  arama API'siyle yeni firma bul (haftada bir; anahtar ister)
   python -m internreader firma-kapat "Acme"               "ilanımı kaldır" talebi: firmayı taramadan ve yayından çıkar
   python -m internreader tara [--yz-tavani 0.50]         ilanları topla + sınıflandır
+  python -m internreader bulten-dene <eposta> [--hos-geldin] [--gonderme]  tek adrese test e-postası (kayıt yazmaz)
   python -m internreader yayinla                         README tablosu, JSON ve WhatsApp özeti üret
   python -m internreader bulten-gonder                  abonelere kişiye özel bülten (SMTP yoksa dosyaya yazar)
   python -m internreader bakim                           süresi dolan kayıtları temizle
@@ -28,6 +29,7 @@ from internreader.arama import arama_kesfi, web_adresi_bul
 from internreader.ayar import CIKTI, VERI, ayarlari_oku
 from internreader.bakim import bakim_yap
 from internreader.bulten import bultenleri_gonder
+from internreader.bulten.gonderim import deneme_gonder
 from internreader.db import oturum_fabrikasi
 from internreader.eposta import gonderici_olustur
 from internreader.gunluk import kayit_kur
@@ -70,6 +72,10 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--liste-linki", default="", help="WhatsApp özetinin sonuna eklenecek tam liste adresi")
     alt.add_parser("durum")
     alt.add_parser("bulten-gonder", help="abonelere kişiye özel bülten")
+    p = alt.add_parser("bulten-dene", help="o anki veriyle tek adrese test e-postası; veritabanına hiçbir şey yazmaz")
+    p.add_argument("eposta")
+    p.add_argument("--hos-geldin", action="store_true", help="bülten yerine yeni aboneye giden hoş geldin e-postası")
+    p.add_argument("--gonderme", action="store_true", help="göndermeden yalnızca cikti/test_bulten.html yaz")
     alt.add_parser("bakim", help="süresi dolan kayıtları temizle")
     p = alt.add_parser("degerlendir", help="sınıflandırıcının doğruluğunu etiketli sette ölç (~0,002 $)")
     p.add_argument("--set", type=Path, default=VERI / "degerlendirme" / "siniflandirma.jsonl")
@@ -130,6 +136,17 @@ def main(argv: list[str] | None = None) -> int:
                 depo.durum_yaz(o, "son_calisma_gunu", _turkiye_gunu())
     elif arg.komut == "bulten-gonder":
         print(json.dumps(bultenleri_gonder(oturum, gonderici_olustur(ayar), ayar), ensure_ascii=False, indent=1))
+    elif arg.komut == "bulten-dene":
+        try:
+            sonuc = deneme_gonder(
+                oturum, gonderici_olustur(ayar), ayar, arg.eposta, arg.hos_geldin, not arg.gonderme, klasor=CIKTI
+            )
+        except (
+            Exception
+        ) as hata:  # ayrıntı yazdırılmaz: SMTP hata metni adresi içerebilir, Actions kayıtları herkese açık
+            kayit.error("Test e-postası gönderilemedi: %s", type(hata).__name__)
+            return 1
+        print(json.dumps(sonuc, ensure_ascii=False, indent=1))
     elif arg.komut == "degerlendir":
         yz = boru.yz_olustur(ayar, oturum)
         sonuc = degerlendir(yz, seti_oku(arg.set))
