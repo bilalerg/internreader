@@ -8,7 +8,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from internreader.db import Abone, Bulten, EpostaSayaci, Gonderim, IlanKaydi
-from internreader.depo._ortak import utc
+from internreader.depo._ortak import _parcalar, utc
 from internreader.isleme.tekillestirme import ilan_anahtari
 from internreader.yayin import TURKIYE_SAATI
 
@@ -77,8 +77,26 @@ def bulten_istatistigi(oturum: Session, an: datetime, gun: int = 7) -> dict:
 
 
 def eski_gonderimleri_sil(oturum: Session, once: datetime) -> int:
-    """Kapanmış ilanlar tekrar gönderilmeyeceği için eski gönderim kayıtları tutulmaz."""
-    return oturum.execute(delete(Gonderim).where(Gonderim.tarih < once)).rowcount or 0
+    """`once`'den eski gönderim kayıtlarından yalnızca kapanmış ilanlarınkiler silinir. Açık ilanın kaydı ne kadar eski
+    olursa olsun kalır: silinseydi aylardır açık duran ilan aynı aboneye yeniden giderdi. Aynı firma + başlıkla hâlâ
+    açık bir kopyası olan kapalı ilanın kaydı da kalır; kopyayı o kayıt durduruyor (bkz. gonderilen_kimlikler)."""
+    acik = {
+        ilan_anahtari(firma, baslik)
+        for firma, baslik in oturum.execute(select(IlanKaydi.firma, IlanKaydi.baslik).where(IlanKaydi.aktif.is_(True)))
+    }
+    eskiler = oturum.execute(
+        select(IlanKaydi.kimlik, IlanKaydi.firma, IlanKaydi.baslik)
+        .join(Gonderim, Gonderim.ilan_kimlik == IlanKaydi.kimlik)
+        .where(Gonderim.tarih < once, IlanKaydi.aktif.is_(False))
+        .distinct()
+    )
+    kapali = [kimlik for kimlik, firma, baslik in eskiler if ilan_anahtari(firma, baslik) not in acik]
+    silinen = 0
+    for parca in _parcalar(kapali):
+        silinen += (
+            oturum.execute(delete(Gonderim).where(Gonderim.tarih < once, Gonderim.ilan_kimlik.in_(parca))).rowcount or 0
+        )
+    return silinen
 
 
 def _turkiye_gunu(an: datetime) -> str:

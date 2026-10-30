@@ -1,7 +1,8 @@
 """Günlük bakım: veritabanında gereğinden fazla veri tutulmaz (KVKK'nın "en az veri" ilkesi + disk).
 
 - Onaylanmayan abonelik istekleri: 72 saat sonra silinir.
-- Gönderim kayıtları: 180 günden eskiler silinir (o ilanlar çoktan kapanmıştır).
+- Gönderim kayıtları: kapanmış ilanların 180 günden eski kayıtları silinir. Açık ilanın kaydı (ve aynı firma +
+  başlıkla hâlâ açık kopyası olanınki) kalır: silinseydi aylardır açık duran ilan aynı aboneye yeniden giderdi.
 - Kapalı ilanların açıklama metni: 60 gün sonra boşaltılır (başlık, firma ve yapay zekâ kararı kalır).
 - Tıklama kayıtları: 180 günden eskiler silinir.
 """

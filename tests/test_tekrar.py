@@ -2,9 +2,14 @@
 
 from datetime import UTC, datetime, timedelta
 
+from sqlalchemy import select, update
+
+from internreader import depo
+from internreader.bakim import bakim_yap
 from internreader.bulten import bultenleri_gonder
 from internreader.bulten.gonderim import hos_geldin_gonder
 from internreader.bulten.secim import bulten_sec, yakin_ilanlar
+from internreader.db import Gonderim, IlanKaydi, simdi
 from internreader.isleme.tekillestirme import ilan_anahtari
 from tests.test_bulten import AYAR, HEPSI, SahteGonderici, abone_ekle, ilan_ekle
 
@@ -93,3 +98,21 @@ def test_yakin_ilanlar_tekrari_atlar_ve_gonderilenleri_onermez():
     gonderilmis = {"a1", ilan_anahtari("A", "Staj")}
     assert [i["kimlik"] for i in yakin_ilanlar(ilanlar, tercih, gonderilmis=gonderilmis)] == ["b1"]
     assert [i["kimlik"] for i in bulten_sec(ilanlar, {}, gonderilmis, 15)] == ["b1"]
+
+
+def test_bakim_acik_ilanin_eski_gonderim_kaydini_silmez(oturum):
+    acik = ilan_ekle(oturum, "https://a.test/acik", "Sürekli Açık Staj", "Istanbul", firma="Acme")
+    kapali = ilan_ekle(oturum, "https://b.test/kapali", "Kapanan Staj", "Istanbul", firma="Beta")
+    kopyasi_acik = ilan_ekle(oturum, "https://c.test/eski", "Program", "Istanbul", firma="Gama")
+    ilan_ekle(oturum, "https://c.test/yeni", "Program", "Ankara", firma="Gama")  # aynı ilan, hâlâ açık
+    abone_id = abone_ekle(oturum, "a@x.com", HEPSI)
+    with oturum.begin() as o:
+        o.execute(update(IlanKaydi).where(IlanKaydi.kimlik.in_([kapali, kopyasi_acik])).values(aktif=False))
+        depo.gonderim_kaydet(
+            o, depo.abone_id_ile(o, abone_id), [acik, kapali, kopyasi_acik], simdi() - timedelta(days=200), False
+        )
+    assert bakim_yap(oturum)["eski_gonderim"] == 1
+    with oturum() as o:
+        assert set(o.scalars(select(Gonderim.ilan_kimlik))) == {acik, kopyasi_acik}
+    # 200 gündür açık ilan ve kopyası aynı aboneye yeniden gitmez
+    assert bultenleri_gonder(oturum, SahteGonderici(), AYAR)["gonderilen"] == 0
