@@ -13,6 +13,7 @@ Tablolar:
   gonderimler       hangi aboneye hangi ilan gönderildi (aynı ilan iki kez gitmez)
   bultenler         gönderilen bültenler (aktif kullanıcı ölçümü)
   tiklamalar        e-postadaki ilan bağlantısına tıklamalar (aboneyle bağı yok)
+  eposta_sayaci     Türkiye günü başına gönderilen e-posta (Brevo kotası tek yerden sayılır)
   durum             küçük anahtar-değer kayıtları (ör. son yayın zamanı)
 """
 
@@ -204,6 +205,14 @@ class Tiklama(Taban):
     supheli: Mapped[bool] = mapped_column(
         Boolean, default=False, server_default=false()
     )  # güvenlik tarayıcısı olabilir
+
+
+class EpostaSayaci(Taban):
+    """Türkiye günü başına e-posta sayısı. API ve sabah işi aynı anda yazabilir: artırma atomiktir (depo/bulten.py)."""
+
+    __tablename__ = "eposta_sayaci"
+    gun: Mapped[str] = mapped_column(String(10), primary_key=True)  # "2026-10-30"
+    adet: Mapped[int] = mapped_column(Integer, default=0, server_default="0")
 
 
 class Durum(Taban):

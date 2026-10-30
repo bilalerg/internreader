@@ -21,6 +21,7 @@ from internreader.db import simdi
 
 KVKK_SURUMU = "2026-10-30"  # aydınlatma metni değişirse artırılır; hangi metne onay verildiği kayıtlı kalır
 ONAY_GECERLILIK = timedelta(hours=72)
+ONAY_TEKRAR_SURESI = timedelta(minutes=10)  # aynı adrese bu süre içinde ikinci onay e-postası gitmez
 
 
 def _ozet(jeton: str) -> str:
@@ -29,7 +30,9 @@ def _ozet(jeton: str) -> str:
 
 def kayit_iste(oturum: Session, eposta: str, tercihler: dict, siklik: str, kaynak: str) -> str | None:
     """Onay e-postası gönderilmesi gerekiyorsa ham onay jetonunu döndürür; adres zaten onaylıysa None.
-    Çağıran taraf iki durumda da kullanıcıya AYNI cevabı verir (adresin kayıtlı olup olmadığı dışarı sızmaz)."""
+    Çağıran taraf iki durumda da kullanıcıya AYNI cevabı verir (adresin kayıtlı olup olmadığı dışarı sızmaz).
+    Son 10 dakikada onay e-postası gönderildiyse de None: başkasının adresine art arda e-posta attırılamaz, kota harcanmaz;
+    yeni tercihler yine kaydedilir, ilk e-postadaki bağlantı geçerli kalır."""
     abone = depo.abone_eposta_ile(oturum, eposta)
     if abone is not None and abone.durum == "onayli":
         return None
@@ -38,6 +41,9 @@ def kayit_iste(oturum: Session, eposta: str, tercihler: dict, siklik: str, kayna
     jeton = secrets.token_urlsafe(32)
     an = simdi()
     abone.tercihler, abone.siklik, abone.kaynak = tercihler, siklik, kaynak
+    son_jeton = depo.utc(abone.onay_jetonu_tarihi)
+    if abone.onay_jetonu_ozeti and son_jeton and an - son_jeton < ONAY_TEKRAR_SURESI:
+        return None
     abone.durum, abone.onay_jetonu_ozeti, abone.onay_jetonu_tarihi = "bekliyor", _ozet(jeton), an
     abone.kvkk_surumu, abone.kvkk_onay_tarihi = KVKK_SURUMU, an
     return jeton
@@ -47,6 +53,13 @@ class OnaySonucu(NamedTuple):
     abone_id: int
     siklik: str
     yeni: bool  # bu tıklama aboneliği başlattı; hoş geldin e-postası yalnızca bu durumda gider
+
+
+def onay_gonderilemedi(oturum: Session, eposta: str) -> None:
+    """Onay e-postası gitmedi: kişi hemen yeniden deneyebilsin (bkz. ONAY_TEKRAR_SURESI)."""
+    abone = depo.abone_eposta_ile(oturum, eposta)
+    if abone is not None and abone.durum == "bekliyor":
+        abone.onay_jetonu_ozeti = None
 
 
 def onayla(oturum: Session, jeton: str) -> OnaySonucu | None:

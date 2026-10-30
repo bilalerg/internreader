@@ -41,7 +41,7 @@ def test_vercel_girisi_calisir_ve_istemci_ipsi_basliktan_okunur(tmp_path, monkey
     assert istemci.get("/api/saglik").status_code == 200
     # Hız sınırı gerçek IP'ye göre işler: farklı x-real-ip'ler birbirinin sınırını tüketmez
     govde = {"eposta": "deneme@ornek.com", "kvkk_onay": True}
-    for _ in range(5):
+    for _ in range(30):
         istemci.post("/api/abone", json=govde, headers={"x-real-ip": "1.1.1.1"})
     assert istemci.post("/api/abone", json=govde, headers={"x-real-ip": "1.1.1.1"}).status_code == 429
     assert istemci.post("/api/abone", json=govde, headers={"x-real-ip": "2.2.2.2"}).status_code != 429

@@ -136,11 +136,12 @@ def test_gunluk_sinira_takilan_abone_ayni_gun_ikinci_calismada_alir(oturum):
     ilan_ekle(oturum, "https://u/1", "Software Engineering Intern", "Istanbul")
     for e in ("a@x.com", "b@x.com"):
         abone_ekle(oturum, e, HEPSI)
-    sinirli = dataclasses.replace(AYAR, gunluk_bulten_siniri=1)
+    sinirli = dataclasses.replace(AYAR, gunluk_eposta_siniri=1, onay_payi=0)
     sabah = datetime(2026, 11, 3, 4, 30, tzinfo=UTC)
     bir, iki = SahteGonderici(), SahteGonderici()
     assert bultenleri_gonder(oturum, bir, sinirli, sabah)["ertelendi"] == 1
-    bultenleri_gonder(oturum, iki, sinirli, sabah + timedelta(hours=2))
+    assert bultenleri_gonder(oturum, SahteGonderici(), sinirli, sabah + timedelta(hours=2))["gonderilen"] == 0
+    bultenleri_gonder(oturum, iki, sinirli, sabah + timedelta(days=1))
     assert {e.alici for e in bir.gidenler} | {e.alici for e in iki.gidenler} == {"a@x.com", "b@x.com"}
 
 
@@ -204,7 +205,7 @@ def test_gunluk_bulten_siniri_ve_adil_sira(oturum):
     ilan_ekle(oturum, "https://f.com/1", "Yazılım Stajyeri", "İstanbul")
     for e in ("a@x.com", "b@x.com", "c@x.com"):
         abone_ekle(oturum, e, HEPSI)
-    sinirli = dataclasses.replace(AYAR, gunluk_bulten_siniri=2)
+    sinirli = dataclasses.replace(AYAR, gunluk_eposta_siniri=2, onay_payi=0)
     g = SahteGonderici()
     rapor = bultenleri_gonder(oturum, g, sinirli)
     assert rapor["gonderilen"] == 2 and rapor["ertelendi"] == 1
@@ -212,7 +213,7 @@ def test_gunluk_bulten_siniri_ve_adil_sira(oturum):
     # Ertesi gün: dünkü sınır yüzünden alamayan abone ilk sırada (aynı kişi her gün dışarıda kalmaz)
     ilan_ekle(oturum, "https://f.com/2", "Backend Stajyeri", "İstanbul")
     g2 = SahteGonderici()
-    bultenleri_gonder(oturum, g2, sinirli)
+    bultenleri_gonder(oturum, g2, sinirli, simdi() + timedelta(days=1))
     kalan = {"a@x.com", "b@x.com", "c@x.com"} - ilk_gun
     assert g2.gidenler[0].alici in kalan
 

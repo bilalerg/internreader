@@ -192,7 +192,12 @@ def main(argv: list[str] | None = None) -> int:
         uvicorn.run("internreader.api:uygulama", factory=True, host=arg.host, port=arg.port, proxy_headers=True)
     elif arg.komut == "durum":
         with oturum() as o:
-            rapor = {**depo.istatistik(o), "tiklama_son_7_gun": depo.tiklama_raporu(o, simdi())}
+            an = simdi()
+            rapor = {
+                **depo.istatistik(o),
+                "eposta_bugun": depo.eposta_sayisi(o, an),
+                "tiklama_son_7_gun": depo.tiklama_raporu(o, an),
+            }
             print(json.dumps(rapor, ensure_ascii=False, indent=1))
     return 0
 

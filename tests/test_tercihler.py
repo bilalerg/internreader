@@ -6,6 +6,7 @@ olmayan aboneye e-posta gitmemeli. Beklenen kümeler elle yazıldı (kuralı ken
 """
 
 import dataclasses
+from datetime import timedelta
 from typing import get_args
 
 import pytest
@@ -16,6 +17,7 @@ from internreader.abonelik import kayit_iste, onayla
 from internreader.api import SEVIYELER, Alan, uygulama_olustur
 from internreader.ayar import ayarlari_oku
 from internreader.bulten import bultenleri_gonder
+from internreader.db import simdi
 from internreader.isleme.kategori import ALANLAR, alanlari_bul, calisma_modeli, girisim_mi
 from internreader.model import OGRENCI_SEVIYELERI, Ilan
 
@@ -215,12 +217,12 @@ def test_matriste_gunluk_sinir_ve_adil_sira_bozulmaz(oturum):
     basliklar = _veriyi_kur(oturum)
     _aboneleri_kur(oturum)
     sinir = 5
-    sinirli = dataclasses.replace(AYAR, gunluk_bulten_siniri=sinir)
+    sinirli = dataclasses.replace(AYAR, gunluk_eposta_siniri=sinir, onay_payi=0)
     ilk = SahteGonderici()
     rapor = bultenleri_gonder(oturum, ilk, sinirli)
     assert rapor["gonderilen"] == sinir and rapor["ertelendi"] > 0
     ikinci = SahteGonderici()
-    bultenleri_gonder(oturum, ikinci, sinirli)  # ertesi gün: dün alamayanlar önce
+    bultenleri_gonder(oturum, ikinci, sinirli, simdi() + timedelta(days=1))  # ertesi gün: dün alamayanlar önce
     assert {e.alici for e in ikinci.gidenler}.isdisjoint({e.alici for e in ilk.gidenler})
 
     birlesik = _alinanlar(ilk.gidenler, basliklar) | _alinanlar(ikinci.gidenler, basliklar)

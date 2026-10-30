@@ -215,7 +215,7 @@ def test_yakin_ilanlar_gevsetme_sirasi():
 def test_butce_dolunca_hos_geldin_atlanir_sabah_bulten_kapatir(oturum):
     ilan_ekle(oturum, "https://j.test/1", "Yazılım Stajı")
     g = SahteGonderici()
-    istemci = istemci_kur(oturum, g, dataclasses.replace(AYAR, gunluk_hos_geldin_siniri=1))
+    istemci = istemci_kur(oturum, g, dataclasses.replace(AYAR, gunluk_eposta_siniri=4, onay_payi=1))
     assert kaydol_onayla(istemci, g, "a@x.com").json()["hos_geldin"] == "gonderildi"
     cevap = kaydol_onayla(istemci, g, "b@x.com")
     assert cevap.status_code == 200 and cevap.json()["hos_geldin"] == "atlandi"
@@ -226,16 +226,19 @@ def test_butce_dolunca_hos_geldin_atlanir_sabah_bulten_kapatir(oturum):
 
 
 def test_varsayilan_eposta_butcesi_brevo_kotasina_sigar(monkeypatch):
-    for ad in (
-        "INTERNREADER_GUNLUK_BULTEN_SINIRI",
-        "INTERNREADER_GUNLUK_ONAY_SINIRI",
-        "INTERNREADER_GUNLUK_HOS_GELDIN_SINIRI",
-    ):
+    for ad in ("INTERNREADER_GUNLUK_EPOSTA_SINIRI", "INTERNREADER_ONAY_PAYI"):
         monkeypatch.delenv(ad, raising=False)
     a = ayarlari_oku()
-    assert (a.gunluk_bulten_siniri, a.gunluk_onay_siniri, a.gunluk_hos_geldin_siniri) == (200, 50, 50)
-    monkeypatch.setenv("INTERNREADER_GUNLUK_HOS_GELDIN_SINIRI", "7")
-    assert ayarlari_oku().gunluk_hos_geldin_siniri == 7
+    assert (a.gunluk_eposta_siniri, a.onay_payi, a.toplu_eposta_siniri, a.hos_geldin_eposta_siniri) == (
+        300,
+        50,
+        250,
+        150,
+    )
+    monkeypatch.setenv("INTERNREADER_GUNLUK_EPOSTA_SINIRI", "1000")
+    assert ayarlari_oku().toplu_eposta_siniri == 950
+    monkeypatch.setenv("INTERNREADER_GUNLUK_EPOSTA_SINIRI", "0")  # 0 = sınırsız
+    assert ayarlari_oku().toplu_eposta_siniri == 0
 
 
 def test_haftalik_abone_pazartesi_mantigi_bozulmaz(oturum):

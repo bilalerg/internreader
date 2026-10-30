@@ -68,9 +68,13 @@ Kişi kaydolunca motive olsun diye: e-postasını onayladığı anda hazır veri
 - **Sıra önemli:** önce onay kaydedilir, sonra e-posta denenir. E-posta patlasa da abonelik başlamıştır; kullanıcıya hata gösterilmez.
 - **Yakın ilanlar** (`secim.py` → `yakin_ilanlar`): tam uyan yoksa tercihler teker teker gevşetilir, alan en son. "Yakın" olduğu
   e-postada açıkça yazar. Yakın ilan bülten sayılmaz: tam uyan ilan çıkarsa ilk sabah gider.
-- **Bütçe:** Brevo günde 300 → 200 bülten + 50 onay + 50 hoş geldin. Dolarsa hoş geldin atlanır, sabah bülteni kapatır.
+- **Bütçe:** Brevo günde 300. Bütün e-postalar tek sayaçtan düşer (`depo.eposta_kotasi_ayir`, atomik `UPDATE ... WHERE adet < azami`).
+  50'si yalnızca onaya ayrılır, hoş geldin sayacın yarısında durur: 200 kişi aynı gün kaydolup onaylasa da herkes girer (toplam 275 e-posta),
+  abone çokken bülten kayıt yolunu kapatamaz.
+- **Hız sınırı:** IP başına 10 dakikada 30 kayıt; okul ve yurt ağında çok kişi tek IP'den çıkar. Aynı adrese 10 dakikada bir onay e-postası.
 
 > Soru 6: Onay ve e-postayı tek veritabanı işleminde yapsaydık SMTP takıldığında ne olurdu?
+> Soru 6b: Kayıtta kota neden adrese bakılmadan, `kayit_iste`'den önce ayrılıyor? Sonra ayrılsaydı dışarıya ne sızardı?
 
 ## 8. Hızlı test — `bulten/gonderim.py` → `deneme_gonder`, `.github/workflows/test_bulten.yml`
 Her deneme için sabahı beklemek yerine: Actions → Test bülteni → Run. Kayıt yazmaz, korumalara takılmaz, konu `[TEST]` ile başlar.

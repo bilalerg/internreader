@@ -64,7 +64,9 @@ def test_korumalara_takilmaz_ve_abonenin_durumunu_degistirmez(oturum, tmp_path):
         son = depo.abone_eposta_ile(o, ADRES).son_bulten
     sayilar = kayit_sayilari(oturum)
     g = SahteGonderici()
-    rapor = deneme_gonder(oturum, g, dataclasses.replace(AYAR, gunluk_bulten_siniri=1), ADRES, klasor=tmp_path)
+    rapor = deneme_gonder(
+        oturum, g, dataclasses.replace(AYAR, gunluk_eposta_siniri=1, onay_payi=0), ADRES, klasor=tmp_path
+    )
     assert rapor["gonderildi"] and rapor["kayitli_abone"] and "Yazılım Stajı" in g.gidenler[0].metin
     with oturum() as o:
         assert depo.abone_eposta_ile(o, ADRES).son_bulten == son

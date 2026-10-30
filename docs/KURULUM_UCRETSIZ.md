@@ -163,12 +163,10 @@ E-posta `cikti/test_bulten.html` dosyasına yazılır; tarayıcıda aç.
 
 ## Sınırlar ve bilinmesi gerekenler
 - **Ani kalabalık:** site (Vercel CDN) ve API (sunucusuz) kendiliğinden ölçeklenir; veritabanı küçük kalır.
-  **Darboğaz e-posta kotasıdır** (Brevo ücretsiz: günde 300). Kod bunu korur: günde en fazla 200 bülten
-  (`INTERNREADER_GUNLUK_BULTEN_SINIRI`), 50 onay e-postası (`INTERNREADER_GUNLUK_ONAY_SINIRI`) ve 50 hoş geldin
-  e-postası (`INTERNREADER_GUNLUK_HOS_GELDIN_SINIRI`). Sınır dolunca bülten alamayanlar ertesi gün ilk sırada; onay
-  sınırı dolarsa form "yarın tekrar dene" der; hoş geldin sınırı dolarsa e-posta atlanır, ertesi sabah bülten kapatır. Art arda 5
-  gönderim hatasında bülten durur (kota ya da SMTP sorunu). Aboneler ~200'ü geçince: Brevo ücretli plan ya da
-  haftalık bülteni varsayılan yapmak; değerleri GitHub ve Vercel'de yükselt.
+  **Darboğaz e-posta kotasıdır** (Brevo ücretsiz: günde 300). Bütün e-postalar tek günlük sayaçtan düşer
+  (`INTERNREADER_GUNLUK_EPOSTA_SINIRI`, Türkiye gününe göre). 50'si yalnızca onay e-postasına ayrılır
+  (`INTERNREADER_ONAY_PAYI`): bülten en çok 250, hoş geldin en çok 150 kullanır. Sayaç dolunca bülten alamayanlar ertesi gün ilk sıraya
+  geçer, hoş geldin atlanır, yeni kayıt ertesi güne kalır. Bugünkü sayı: Actions Summary → `eposta_bugun`.
 - **Ara tarama kotaları (30.10 ölçümü):** tek tarama ~36 sn + Actions kurulumu, ~2 dk. Neon: ayda ~3 CU-saat ek (kota 100 CU-saat;
   compute 0,25 CU'da kalırsa). Vercel: günde en fazla 4 ek dağıtım (sınır 100). Yapay zekâ tavanı çalıştırma başına 0,05 $;
   aylık 2 $ tavanı ortaktır, dolarsa sistem yapay zekâsız devam eder. Kariyer sayfaları günde bir taranır, artırılmadı.

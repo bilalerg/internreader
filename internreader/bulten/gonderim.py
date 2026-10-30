@@ -8,6 +8,7 @@ Kurallar:
   gitmiş aboneye ertesi çalıştırmada aynı ilanlar tekrar gitmez.
 - Bir e-postada en fazla AZAMI_ILAN ilan ve firma başına en fazla 2 ilan; fazlası bir sonraki bültene kalır.
 - Bir abone aynı Türkiye gününde tek bülten alır: sabah işi iki kez çalışsa da (bkz. depo/bulten.py).
+- Bütün e-postalar tek günlük sayaçtan düşer (depo/bulten.py → eposta_kotasi_ayir); dolunca kalanlar ertesi güne kalır.
 - Bir abonenin e-postası gönderilemezse (adres reddi vb.) diğerleri etkilenmez; hata kaydedilir.
 """
 
@@ -53,15 +54,6 @@ def bultenleri_gonder(
     baglam = gonderici if hasattr(gonderici, "__enter__") else nullcontext(gonderici)
     with baglam as g:
         for sira, (abone_id, eposta, tercihler, siklik) in enumerate(aboneler):
-            if ayar.gunluk_bulten_siniri and rapor["gonderilen"] >= ayar.gunluk_bulten_siniri:
-                # Günlük e-posta bütçesi doldu: kalanlar ertesi gün listenin başında (adil sıra, depo/bulten.py)
-                rapor["ertelendi"] = len(aboneler) - sira
-                kayit.warning(
-                    "Günlük bülten sınırı (%d) doldu; %d abone yarına kaldı",
-                    ayar.gunluk_bulten_siniri,
-                    rapor["ertelendi"],
-                )
-                break
             if ardisik_hata >= ARDISIK_HATA_SINIRI:
                 rapor["ertelendi"] = len(aboneler) - sira
                 kayit.error(
@@ -74,6 +66,13 @@ def bultenleri_gonder(
             if not secilen:
                 rapor["bos"] += 1
                 continue
+            with oturum.begin() as o:
+                yer_var = depo.eposta_kotasi_ayir(o, an, ayar.toplu_eposta_siniri)
+            if not yer_var:
+                # Günlük e-posta bütçesi doldu: kalanlar ertesi gün listenin başında (adil sıra, depo/bulten.py)
+                rapor["ertelendi"] = len(aboneler) - sira
+                kayit.warning("Günlük e-posta sınırı doldu; %d abone yarına kaldı", rapor["ertelendi"])
+                break
             jeton = iptal_jetonu(abone_id, ayar.gizli_anahtar)
             ileti = bulten_epostasi(
                 alici=eposta,
@@ -96,6 +95,8 @@ def bultenleri_gonder(
             with oturum.begin() as o:
                 if durum == "gonderildi":
                     depo.gonderim_kaydet(o, depo.abone_id_ile(o, abone_id), [i["kimlik"] for i in secilen], an)
+                else:
+                    depo.eposta_kotasi_iade(o, an)
                 depo.bulten_kaydet(o, abone_id, len(secilen), durum, an)
             rapor["gonderilen" if durum == "gonderildi" else "hata"] += 1
             rapor["ilan"] += len(secilen) if durum == "gonderildi" else 0
@@ -127,14 +128,14 @@ def hos_geldin_gonder(
         abone = depo.abone_id_ile(o, abone_id)
         if abone is None:
             return "atlandi"
-        if ayar.gunluk_hos_geldin_siniri and depo.son_gun_hos_geldin_sayisi(o, an) >= ayar.gunluk_hos_geldin_siniri:
-            kayit.warning(
-                "Günlük hoş geldin sınırı (%d) doldu; ertesi sabahki bülten kapatacak", ayar.gunluk_hos_geldin_siniri
-            )
-            return "atlandi"
         eposta, tercihler, siklik = abone.eposta, dict(abone.tercihler or {}), abone.siklik
         ilanlar = [zenginlestir(x) for x in depo.yayinlanacak_ilanlar(o, an=an)]
     secilen, sonuc = hos_geldin_secimi(ilanlar, tercihler)
+    with oturum.begin() as o:
+        yer_var = depo.eposta_kotasi_ayir(o, an, ayar.hos_geldin_eposta_siniri)
+    if not yer_var:
+        kayit.warning("Günlük e-posta sınırı doldu; hoş geldin atlandı, ertesi sabahki bülten kapatacak")
+        return "atlandi"
     jeton = iptal_jetonu(abone_id, ayar.gizli_anahtar)
     ileti = hos_geldin_epostasi(
         alici=eposta,
@@ -152,6 +153,7 @@ def hos_geldin_gonder(
     except Exception:  # onay yine başarılı: abonelik başladı, ertesi sabah normal bülten gider
         kayit.exception("Hoş geldin e-postası gönderilemedi (abone %d)", abone_id)
         with oturum.begin() as o:
+            depo.eposta_kotasi_iade(o, an)
             depo.bulten_kaydet(o, abone_id, len(secilen), "hata", an)
         return "hata"
     with oturum.begin() as o:

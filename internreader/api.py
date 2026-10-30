@@ -9,7 +9,8 @@ Uç noktalar (site ile aynı alan adında, /api altında; ters vekil (Caddy) yö
   GET  /api/cron/gunluk   Vercel Cron çağırır (Authorization: Bearer CRON_SECRET): GitHub'da sabah işini başlatır
 
 Güvenlik:
-- IP başına hız sınırı (bellekte; tek sunucu için yeterli).
+- IP başına hız sınırı (bellekte). Okul ve yurt ağlarında çok kişi tek IP'den çıktığı için geniş tutuldu; asıl koruma
+  günlük e-posta sayacı ve adres başına 10 dakikada bir onay e-postası.
 - Bal küpü (honeypot): insanların görmediği "web_sitesi" alanını dolduran istek sessizce yok sayılır.
 - Adres sızdırmama: adres kayıtlı olsa da olmasa da aynı cevap döner.
 - Onay ve çıkış GET değil POST: e-posta güvenlik tarayıcıları bağlantıları önceden açınca kendiliğinden onay olmaz.
@@ -144,8 +145,8 @@ def uygulama_olustur(
 ) -> FastAPI:
     # Herkese açık API belgesi kapalı: yalnızca kendi sitemiz kullanıyor
     app = FastAPI(title="InternReader", docs_url=None, redoc_url=None, openapi_url=None)
-    kayit_siniri = kayit_siniri or HizSiniri(azami=5, pencere_sn=600)
-    jeton_siniri = jeton_siniri or HizSiniri(azami=30, pencere_sn=600)
+    kayit_siniri = kayit_siniri or HizSiniri(azami=30, pencere_sn=600)
+    jeton_siniri = jeton_siniri or HizSiniri(azami=60, pencere_sn=600)
     tik_siniri = tik_siniri or HizSiniri(azami=120, pencere_sn=600)
 
     # Vercel'de istek platformun vekilinden gelir; gerçek IP'yi Vercel "x-real-ip" başlığına kendisi yazar
@@ -241,13 +242,13 @@ def uygulama_olustur(
             kayit.info("Bal küpü dolu bir kayıt isteği yok sayıldı")
             return KAYIT_CEVABI
         eposta = str(govde.eposta).lower()
-        if ayar.gunluk_onay_siniri:
-            with oturum() as o:
-                if depo.son_gun_onay_sayisi(o, simdi()) >= ayar.gunluk_onay_siniri:
-                    kayit.warning("Günlük onay e-postası sınırı (%d) doldu", ayar.gunluk_onay_siniri)
-                    return _hata(
-                        503, "gunluk_sinir", "Bugün çok fazla kayıt geldi. Yarın tekrar dener misin? Kusura bakma."
-                    )
+        an = simdi()
+        # Yer, adrese bakılmadan ayrılır: kota doluyken kayıtlı ve kayıtsız adres aynı cevabı alır
+        with oturum.begin() as o:
+            yer_var = depo.eposta_kotasi_ayir(o, an, ayar.gunluk_eposta_siniri)
+        if not yer_var:
+            kayit.warning("Günlük e-posta sınırı (%d) doldu", ayar.gunluk_eposta_siniri)
+            return _hata(503, "gunluk_sinir", "Bugün çok fazla kayıt geldi. Yarın tekrar dener misin? Kusura bakma.")
         tercihler = {
             "sehirler": govde.sehirler,
             "alanlar": govde.alanlar,
@@ -257,11 +258,16 @@ def uygulama_olustur(
         }
         with oturum.begin() as o:
             jeton = abonelik.kayit_iste(o, eposta, tercihler, govde.siklik, govde.kaynak or "site")
+            if not jeton:  # e-posta gerekmedi, ayrılan yer geri verilir
+                depo.eposta_kotasi_iade(o, an)
         if jeton:
             try:
                 gonderici.gonder(dogrulama_epostasi(eposta, f"{ayar.site_adresi}/onay?jeton={jeton}"))
             except Exception:
                 kayit.exception("Onay e-postası gönderilemedi")
+                with oturum.begin() as o:
+                    depo.eposta_kotasi_iade(o, an)
+                    abonelik.onay_gonderilemedi(o, eposta)
                 return _hata(
                     503, "eposta_gonderilemedi", "Onay e-postası şu an gönderilemedi. Biraz sonra tekrar dene."
                 )

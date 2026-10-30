@@ -3,10 +3,11 @@
 from collections.abc import Iterable
 from datetime import datetime, timedelta
 
-from sqlalchemy import delete, func, select
+from sqlalchemy import delete, func, select, update
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from internreader.db import Abone, Bulten, Gonderim
+from internreader.db import Abone, Bulten, EpostaSayaci, Gonderim
 from internreader.depo._ortak import utc
 from internreader.yayin import TURKIYE_SAATI
 
@@ -19,7 +20,7 @@ def gonderime_hazir_aboneler(oturum: Session, an: datetime) -> list[Abone]:
 
     Haftalık bülten "son bültenden 7 gün sonra" değil, takvime bağlı: herkes aynı gün alır, gün kaymaz. Sabah işi aynı
     gün iki kez çalışsa (Vercel tetiklemesi + GitHub yedek zamanlaması, elle tetikleme) kimse ikinci e-posta almaz;
-    günlük sınır yüzünden alamayan abone o ikinci çalışmada alır."""
+    günlük sınır yüzünden alamayan abone ertesi gün listenin başındadır."""
     yerel = an.astimezone(TURKIYE_SAATI)
     haftalik_gunu = yerel.weekday() == HAFTALIK_GUN
     gun_basi = yerel.replace(hour=0, minute=0, second=0, microsecond=0)
@@ -32,30 +33,6 @@ def gonderime_hazir_aboneler(oturum: Session, an: datetime) -> list[Abone]:
     # ertesi gün listenin başına geçer; aynı kişiler her gün dışarıda kalmaz.
     hazir.sort(key=lambda a: (a.son_bulten is not None, utc(a.son_bulten) or an))
     return hazir
-
-
-def son_gun_onay_sayisi(oturum: Session, an: datetime) -> int:
-    """Son 24 saatte onay e-postası gönderilen (bekleyen) kayıt sayısı: e-posta kotasını botlardan korumak için."""
-    return (
-        oturum.scalar(
-            select(func.count())
-            .select_from(Abone)
-            .where(Abone.durum == "bekliyor", Abone.onay_jetonu_tarihi >= an - timedelta(days=1))
-        )
-        or 0
-    )
-
-
-def son_gun_hos_geldin_sayisi(oturum: Session, an: datetime) -> int:
-    """Son 24 saatte giden hoş geldin e-postası: kota dolunca atlanır, ertesi sabahki bülten kapatır."""
-    return (
-        oturum.scalar(
-            select(func.count())
-            .select_from(Bulten)
-            .where(Bulten.durum == HOS_GELDIN_DURUMU, Bulten.tarih >= an - timedelta(days=1))
-        )
-        or 0
-    )
 
 
 def gonderilen_kimlikler(oturum: Session, abone_id: int) -> set[str]:
@@ -89,3 +66,42 @@ def bulten_istatistigi(oturum: Session, an: datetime, gun: int = 7) -> dict:
 def eski_gonderimleri_sil(oturum: Session, once: datetime) -> int:
     """Kapanmış ilanlar tekrar gönderilmeyeceği için eski gönderim kayıtları tutulmaz."""
     return oturum.execute(delete(Gonderim).where(Gonderim.tarih < once)).rowcount or 0
+
+
+def _turkiye_gunu(an: datetime) -> str:
+    return an.astimezone(TURKIYE_SAATI).date().isoformat()
+
+
+def eposta_kotasi_ayir(oturum: Session, an: datetime, azami: int) -> bool:
+    """Bugünün sayacından bir e-postalık yer ayırır; `azami` doluysa False. 0 = sınırsız, yine de sayılır.
+    Atomik: `UPDATE ... WHERE adet < azami`. Sabah işi ve API aynı anda çalışsa da kota aşılmaz. Sayaç ayrı olduğu için
+    aynı gün iki çalışma, onay ve hoş geldin e-postaları birlikte sayılır."""
+    gun = _turkiye_gunu(an)
+    kosul = [EpostaSayaci.gun == gun]
+    if azami:
+        kosul.append(EpostaSayaci.adet < azami)
+    artir = update(EpostaSayaci).where(*kosul).values(adet=EpostaSayaci.adet + 1)
+    if oturum.execute(artir).rowcount:
+        return True
+    if oturum.get(EpostaSayaci, gun) is not None:
+        return False
+    try:
+        with oturum.begin_nested():  # iki istek aynı anda günün ilk e-postasını ayırabilir
+            oturum.add(EpostaSayaci(gun=gun, adet=0))
+    except IntegrityError:
+        pass
+    return bool(oturum.execute(artir).rowcount)
+
+
+def eposta_kotasi_iade(oturum: Session, an: datetime) -> None:
+    """Gönderilemeyen ya da gerekmeyen e-postanın yeri geri verilir."""
+    oturum.execute(
+        update(EpostaSayaci)
+        .where(EpostaSayaci.gun == _turkiye_gunu(an), EpostaSayaci.adet > 0)
+        .values(adet=EpostaSayaci.adet - 1)
+    )
+
+
+def eposta_sayisi(oturum: Session, an: datetime) -> int:
+    sayac = oturum.get(EpostaSayaci, _turkiye_gunu(an))
+    return sayac.adet if sayac else 0

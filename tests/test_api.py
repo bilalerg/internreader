@@ -126,7 +126,7 @@ def test_saglik_veritabanini_kontrol_eder(ortam):
 
 def test_gunluk_onay_siniri_kotayi_botlardan_korur(oturum):
     ayar = dataclasses.replace(
-        ayarlari_oku(), site_adresi="https://internreader.test", gizli_anahtar="test-anahtari", gunluk_onay_siniri=2
+        ayarlari_oku(), site_adresi="https://internreader.test", gizli_anahtar="test-anahtari", gunluk_eposta_siniri=2
     )
     gonderici = SahteGonderici()
     istemci = TestClient(uygulama_olustur(ayar, oturum, gonderici))
