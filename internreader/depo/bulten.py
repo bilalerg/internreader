@@ -7,8 +7,9 @@ from sqlalchemy import delete, func, select, update
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from internreader.db import Abone, Bulten, EpostaSayaci, Gonderim
+from internreader.db import Abone, Bulten, EpostaSayaci, Gonderim, IlanKaydi
 from internreader.depo._ortak import utc
+from internreader.isleme.tekillestirme import ilan_anahtari
 from internreader.yayin import TURKIYE_SAATI
 
 HAFTALIK_GUN = 0  # pazartesi (datetime.weekday); haftalık bülten o sabahki çalışmada gider
@@ -36,7 +37,19 @@ def gonderime_hazir_aboneler(oturum: Session, an: datetime) -> list[Abone]:
 
 
 def gonderilen_kimlikler(oturum: Session, abone_id: int) -> set[str]:
-    return set(oturum.scalars(select(Gonderim.ilan_kimlik).where(Gonderim.abone_id == abone_id)))
+    """Aboneye giden ilanların kimlikleri ve firma + başlık anahtarları (isleme/tekillestirme.py → ilan_anahtari): aynı
+    ilan başka bir adresle yeniden yayınlansa da tekrar gitmez. Firma ve başlık `ilanlar` tablosundan okunur. Gönderim
+    kaydı ilana CASCADE ile bağlı: ilan silinirse kayıt da anahtar da kaybolur. Bugün ilan silinmiyor (kapanınca
+    aktif=False olur); silen bir bakım eklenirse anahtar gönderim kaydına taşınmalı."""
+    sorgu = (
+        select(Gonderim.ilan_kimlik, IlanKaydi.firma, IlanKaydi.baslik)
+        .join(IlanKaydi, IlanKaydi.kimlik == Gonderim.ilan_kimlik)
+        .where(Gonderim.abone_id == abone_id)
+    )
+    gonderilmis: set[str] = set()
+    for kimlik, firma, baslik in oturum.execute(sorgu):
+        gonderilmis |= {kimlik, ilan_anahtari(firma, baslik)}
+    return gonderilmis
 
 
 def gonderim_kaydet(

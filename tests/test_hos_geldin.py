@@ -191,6 +191,7 @@ def test_yakin_ilanlar_gevsetme_sirasi():
         {
             "kimlik": "a",
             "firma": "A",
+            "baslik": "Yazılım Stajı",
             "rol": "yazilim",
             "seviye": "staj",
             "sehirler": ["ankara"],
@@ -199,6 +200,7 @@ def test_yakin_ilanlar_gevsetme_sirasi():
         {
             "kimlik": "b",
             "firma": "B",
+            "baslik": "Veri Stajı",
             "rol": "veri",
             "seviye": "junior",
             "sehirler": ["izmir"],

@@ -6,9 +6,16 @@ gördüyse e-postada onu alır. Kural değişirse ikisi birlikte değişir.
 Boş ya da hiç olmayan tercih "hepsi" demektir: yeni tercihler (çalışma modeli, yalnızca girişimler) eklenmeden önce
 kaydolan aboneler eskisi gibi her şeyi alır. İlanın kategorileri (alanlar, calisma_modeli, girisim) depoda kurallarla
 eklenir (internreader/isleme/kategori.py).
+
+Aynı ilan bir kez gider: kimlik (URL) ya da firma + başlık anahtarı (isleme/tekillestirme.py → ilan_anahtari) daha önce
+gittiyse ya da aynı e-postada zaten seçildiyse ilan atlanır. Firma bir ilanı iki şehir için iki adresle yayınlasa da
+öğrenci onu bir kez görür.
 """
 
 from collections import Counter
+from collections.abc import Set
+
+from internreader.isleme.tekillestirme import ilan_anahtari
 
 FIRMA_BASINA_AZAMI = 2  # bir e-postada aynı firmadan en fazla; kalanlar sonraki bültene kalır
 YAKIN_ILAN_SAYISI = 5  # tam uyan ilan yokken gösterilen "yakın ilan" sayısı
@@ -38,26 +45,34 @@ def eslesir(ilan: dict, tercihler: dict) -> bool:
     return bool(ilan_sehirleri & sehirler) or uzak or not ilan_sehirleri
 
 
-def bulten_sec(ilanlar: list[dict], tercihler: dict, gonderilmis: set[str], azami: int) -> list[dict]:
+def bulten_sec(ilanlar: list[dict], tercihler: dict, gonderilmis: Set[str], azami: int) -> list[dict]:
     """Abonenin bu bültende alacağı ilanlar. Sıra depodan gelir (isleme/guncellik.py → siralama_anahtari). Seçilmeyen
-    ilan "gönderildi" sayılmaz: sınır ya da firma kotası yüzünden kalan ilan sonraki bültende gider."""
+    ilan "gönderildi" sayılmaz: sınır ya da firma kotası yüzünden kalan ilan sonraki bültende gider.
+    `gonderilmis`: aboneye daha önce giden ilanların kimlikleri ve firma + başlık anahtarları (depo.gonderilen_kimlikler).
+    Anahtar yalnızca seçilen ilan için ayrılır: İstanbul'daki kopyası uymayan aboneye Ankara'daki kopyası gider."""
     secilen: list[dict] = []
+    alinan = set(gonderilmis)
     firmalar: Counter[str] = Counter()
     for ilan in ilanlar:
-        if ilan["kimlik"] in gonderilmis or firmalar[ilan["firma"]] >= FIRMA_BASINA_AZAMI:
+        anahtar = ilan_anahtari(ilan["firma"], ilan["baslik"])
+        if ilan["kimlik"] in alinan or anahtar in alinan or firmalar[ilan["firma"]] >= FIRMA_BASINA_AZAMI:
             continue
         if eslesir(ilan, tercihler):
             secilen.append(ilan)
+            alinan.add(anahtar)
             firmalar[ilan["firma"]] += 1
             if len(secilen) >= azami:
                 break
     return secilen
 
 
-def yakin_ilanlar(ilanlar: list[dict], tercihler: dict, azami: int = YAKIN_ILAN_SAYISI) -> list[dict]:
-    """Tam uyan ilan yokken: tercihler teker teker gevşetilir, ilk sonuç veren adımın ilanları döner."""
+def yakin_ilanlar(
+    ilanlar: list[dict], tercihler: dict, azami: int = YAKIN_ILAN_SAYISI, gonderilmis: Set[str] = frozenset()
+) -> list[dict]:
+    """Tam uyan ilan yokken: tercihler teker teker gevşetilir, ilk sonuç veren adımın ilanları döner. Daha önce
+    gönderilenler (`gonderilmis`) yeniden önerilmez."""
     gevsek = dict(tercihler)
     for anahtar in GEVSETME_SIRASI:
-        if gevsek.pop(anahtar, None) and (secilen := bulten_sec(ilanlar, gevsek, set(), azami)):
+        if gevsek.pop(anahtar, None) and (secilen := bulten_sec(ilanlar, gevsek, gonderilmis, azami)):
             return secilen
     return []
