@@ -1,7 +1,7 @@
 {
  "surum": 1,
- "guncelleme": "2026-10-29T17:23:08.023653+03:00",
- "sayi": 21,
+ "guncelleme": "2026-10-30T13:35:10.125384+03:00",
+ "sayi": 20,
  "ilanlar": [
   {
    "kimlik": "0c63f1cb687413f2",
@@ -16,25 +16,13 @@
    "rol": "yazilim",
    "yapay_zeka": "yok",
    "ayrinti": null,
-   "firma_gorunen": "Analog Devices",
-   "sehirler": [
-    "istanbul"
+   "alanlar": [
+    "yazilim"
    ],
-   "uzaktan": false
-  },
-  {
-   "kimlik": "69237775f92b7bd9",
-   "firma": "Analog Devices",
-   "baslik": "Software Development Engineering Intern",
-   "url": "https://analogdevices.wd1.myworkdayjobs.com/External/job/Turkey-Istanbul-Bilisim-Vadisi/Software-Development-Engineering-Intern_R267000-1",
-   "konum": "Turkey, Istanbul, Bilisim Vadisi",
-   "kaynak": "workday",
-   "yayin_tarihi": "2026-10-13",
-   "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
-   "seviye": "staj",
-   "rol": "yazilim",
-   "yapay_zeka": "yok",
-   "ayrinti": null,
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": "2026-10-22",
+   "surekli_acik": false,
    "firma_gorunen": "Analog Devices",
    "sehirler": [
     "istanbul"
@@ -54,13 +42,21 @@
    "rol": "yazilim",
    "yapay_zeka": "yok",
    "ayrinti": {
-    "ozet": "Beakwise'ın İstanbul R&D merkezinde uzun dönemli bir yazılım mühendisliği stajı. Stajyer, müşteriye dönük uygulamalar, dashboard'lar ve backend servisleri/API'ler üzerinde çalışacak.",
+    "ozet": "Büyük kurumlar için sigorta ve finans platformları geliştiren ekipte, müşteri uygulamaları, portallar ve backend servisleri/API'ler üzerinde çalışılacak uygulamalı bir yazılım mühendisliği stajı.",
     "son_basvuru": null,
+    "ilan_tarihi": null,
     "hedef": "Öğrenciler",
     "calisma_modeli": "belirsiz",
     "ucretli": "belirsiz",
     "teknolojiler": []
    },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": true,
+   "yayin": null,
+   "surekli_acik": false,
    "firma_gorunen": "Beakwise",
    "sehirler": [
     "istanbul"
@@ -82,6 +78,7 @@
    "ayrinti": {
     "ozet": "Commencis Cloud Camp, 6 hafta süren, çevrimiçi ve ücretsiz bir bulut eğitimi programıdır. Seçilen katılımcılar AWS onaylı sertifika alır, uygun görülenler Commencis'te staj yapma ve iş teklifi alma fırsatı bulabilir.",
     "son_basvuru": "2026-12-31",
+    "ilan_tarihi": null,
     "hedef": "3. sınıf ve üzeri üniversite öğrencileri",
     "calisma_modeli": "uzaktan",
     "ucretli": "hayir",
@@ -89,35 +86,14 @@
      "AWS"
     ]
    },
-   "firma_gorunen": "Commencis",
-   "sehirler": [
-    "istanbul"
+   "alanlar": [
+    "yazilim"
    ],
-   "uzaktan": false
-  },
-  {
-   "kimlik": "5e76544331653d01",
-   "firma": "Dream Games",
-   "baslik": "Software Engineer (New Grad)",
-   "url": "https://jobs.lever.co/dreamgames/0714caf0-4077-44f3-a1d4-8985b9baf1bc",
-   "konum": "Istanbul",
-   "kaynak": "lever",
-   "yayin_tarihi": "2022-03-14",
-   "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
-   "seviye": "yeni_mezun",
-   "rol": "yazilim",
-   "yapay_zeka": "yok",
-   "ayrinti": {
-    "ozet": "Yeni mezun bir Software Engineer olarak Unity ile oyun grafikleri, oyun mantığı ve kullanıcı arayüzü geliştirmede çalışılacak. Oyun geliştirme deneyimi zorunlu değil; disiplinler arası bir ekipte görev yapılacak.",
-    "son_basvuru": null,
-    "hedef": "Yeni mezunlar (new grad)",
-    "calisma_modeli": "belirsiz",
-    "ucretli": "belirsiz",
-    "teknolojiler": [
-     "Unity"
-    ]
-   },
-   "firma_gorunen": "Dream Games",
+   "calisma_modeli": "uzaktan",
+   "girisim": true,
+   "yayin": "2026-10-26",
+   "surekli_acik": false,
+   "firma_gorunen": "Commencis",
    "sehirler": [
     "istanbul"
    ],
@@ -138,6 +114,7 @@
    "ayrinti": {
     "ozet": "Part-time çalışan bir Software Engineer, Unity ile grafik, oyun mantığı ve kullanıcı arayüzü programlamasında görev alacak. Oyun geliştirme deneyimi zorunlu değil; tasarımcı ve sanatçılarla çok disiplinli ekipte çalışılacak.",
     "son_basvuru": null,
+    "ilan_tarihi": null,
     "hedef": null,
     "calisma_modeli": "belirsiz",
     "ucretli": "belirsiz",
@@ -145,6 +122,51 @@
      "Unity"
     ]
    },
+   "alanlar": [
+    "yazilim",
+    "oyun"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": true,
+   "yayin": null,
+   "surekli_acik": true,
+   "firma_gorunen": "Dream Games",
+   "sehirler": [
+    "istanbul"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "5e76544331653d01",
+   "firma": "Dream Games",
+   "baslik": "Software Engineer (New Grad)",
+   "url": "https://jobs.lever.co/dreamgames/0714caf0-4077-44f3-a1d4-8985b9baf1bc",
+   "konum": "Istanbul",
+   "kaynak": "lever",
+   "yayin_tarihi": "2022-03-14",
+   "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
+   "seviye": "yeni_mezun",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Yeni mezun bir Software Engineer olarak Unity ile oyun grafikleri, oyun mantığı ve kullanıcı arayüzü geliştirmede çalışılacak. Oyun geliştirme deneyimi zorunlu değil; disiplinler arası bir ekipte görev yapılacak.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": "Yeni mezunlar (new grad)",
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": [
+     "Unity"
+    ]
+   },
+   "alanlar": [
+    "yazilim",
+    "oyun"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": true,
+   "yayin": null,
+   "surekli_acik": true,
    "firma_gorunen": "Dream Games",
    "sehirler": [
     "istanbul"
@@ -166,6 +188,7 @@
    "ayrinti": {
     "ozet": "Mobil oyunlar için yüksek kaliteli oyunlar geliştirilecek; yeni özellikler tasarlanıp uygulanacak, mevcut oyunlar bakımı yapılıp optimize edilecek ve oyun tasarımına katkı verilecek.",
     "son_basvuru": null,
+    "ilan_tarihi": null,
     "hedef": null,
     "calisma_modeli": "ofis",
     "ucretli": "belirsiz",
@@ -176,6 +199,14 @@
      "Git"
     ]
    },
+   "alanlar": [
+    "yazilim",
+    "oyun"
+   ],
+   "calisma_modeli": "yerinde",
+   "girisim": true,
+   "yayin": "2026-09-29",
+   "surekli_acik": false,
    "firma_gorunen": "Good Job Games",
    "sehirler": [
     "istanbul"
@@ -197,6 +228,7 @@
    "ayrinti": {
     "ozet": "Good Job Games'te dağıtık, yüksek performanslı oyun servislerini geliştirecek, iç araçlar ve altyapı üzerinde çalışacak bir Backend Developer (New Grad) pozisyonu.",
     "son_basvuru": null,
+    "ilan_tarihi": null,
     "hedef": "Bilgisayar Mühendisliği veya diğer mühendislik bölümlerinden lisans mezunları",
     "calisma_modeli": "ofis",
     "ucretli": "belirsiz",
@@ -206,6 +238,14 @@
      "CI/CD"
     ]
    },
+   "alanlar": [
+    "yazilim",
+    "oyun"
+   ],
+   "calisma_modeli": "yerinde",
+   "girisim": true,
+   "yayin": "2026-09-29",
+   "surekli_acik": false,
    "firma_gorunen": "Good Job Games",
    "sehirler": [
     "istanbul"
@@ -225,13 +265,21 @@
    "rol": "yazilim",
    "yapay_zeka": "yok",
    "ayrinti": {
-    "ozet": "Hitit ekibine yetenek havuzu için CV gönderme imkânı sunuluyor; belirli bir açık pozisyon ilanı yer almıyor.",
+    "ozet": "Hitit'in ilan sayfasında 0-3 yıl deneyimli adaylar için tam zamanlı New Talent pozisyonu yer alıyor; uygun açık pozisyon bulunmadığında CV gönderilmesi istenmektedir. İşin görev tanımı metinde yazmıyor.",
     "son_basvuru": null,
+    "ilan_tarihi": null,
     "hedef": "0-3 yıl deneyimli adaylar",
     "calisma_modeli": "belirsiz",
     "ucretli": "belirsiz",
     "teknolojiler": []
    },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": null,
+   "surekli_acik": false,
    "firma_gorunen": "Hitit",
    "sehirler": [],
    "uzaktan": false
@@ -249,9 +297,10 @@
    "rol": "yazilim",
    "yapay_zeka": "yok",
    "ayrinti": {
-    "ozet": "Mavvo'da ERP sistemlerinin işleyişini öğrenmek, kullanıcılara raporlama ve süreç tasarımı konularında destek vermek, müşteri raporları hazırlamak ve iş akışı (flow) tasarımlarında yer almak.",
+    "ozet": "ERP sistemlerinin işleyişini öğrenip kullanıcılara raporlama ve süreç tasarımı konularında destek olmak, müşteri raporlarını hazırlamak ve süreç analizi yaparak iş akışı tasarımlarına katkı vermek.",
     "son_basvuru": null,
-    "hedef": "İlgili mühendislik (Endüstri, Bilgisayar vb.), Yönetim Bilişim Sistemleri veya İstatistik bölümü öğrencileri ya da…",
+    "ilan_tarihi": null,
+    "hedef": "Mühendislik (Endüstri, Bilgisayar vb.), Yönetim Bilişim Sistemleri veya İstatistik bölümlerinde öğrenci olan ya da…",
     "calisma_modeli": "ofis",
     "ucretli": "belirsiz",
     "teknolojiler": [
@@ -259,6 +308,14 @@
      "SQL"
     ]
    },
+   "alanlar": [
+    "yazilim",
+    "savunma"
+   ],
+   "calisma_modeli": "yerinde",
+   "girisim": false,
+   "yayin": null,
+   "surekli_acik": false,
    "firma_gorunen": "Mavvo",
    "sehirler": [
     "ankara"
@@ -280,11 +337,19 @@
    "ayrinti": {
     "ozet": "Bilgisayar Mühendisliği öğrencilerine yönelik, ofiste yapılan bir kodlama yarışması (Midas Coders League). Zor problemleri çözmek isteyen öğrenciler başvurabilir.",
     "son_basvuru": null,
+    "ilan_tarihi": null,
     "hedef": "Tüm sınıflardan Bilgisayar Mühendisliği öğrencileri",
     "calisma_modeli": "ofis",
     "ucretli": "belirsiz",
     "teknolojiler": []
    },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "yerinde",
+   "girisim": true,
+   "yayin": "2026-10-20",
+   "surekli_acik": false,
    "firma_gorunen": "Midas",
    "sehirler": [
     "istanbul"
@@ -303,7 +368,27 @@
    "seviye": "staj",
    "rol": "yazilim",
    "yapay_zeka": "yok",
-   "ayrinti": null,
+   "ayrinti": {
+    "ozet": "",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": null,
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": [
+     "OCI",
+     "AWS",
+     "Oracle E-Business Suite",
+     "Oracle Fusion Cloud"
+    ]
+   },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": true,
+   "yayin": null,
+   "surekli_acik": false,
    "firma_gorunen": "Nova Spark X",
    "sehirler": [
     "istanbul"
@@ -325,6 +410,7 @@
    "ayrinti": {
     "ozet": "Jr. Data Analyst olarak şirketin veri ihtiyaçlarını analiz etmek, PowerBI ile dashboard ve raporlar hazırlamak, KPI'ları takip etmek ve iş birimlerine öneriler sunmak.",
     "son_basvuru": null,
+    "ilan_tarihi": null,
     "hedef": null,
     "calisma_modeli": "belirsiz",
     "ucretli": "belirsiz",
@@ -332,6 +418,13 @@
      "PowerBI"
     ]
    },
+   "alanlar": [
+    "veri"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": true,
+   "yayin": "2026-10-16",
+   "surekli_acik": false,
    "firma_gorunen": "Obilet",
    "sehirler": [
     "istanbul"
@@ -351,8 +444,9 @@
    "rol": "yazilim",
    "yapay_zeka": "yok",
    "ayrinti": {
-    "ozet": "SESTEK'te web uygulamaları tasarlama, geliştirme ve bakımında ekip ile çalışılacak; Angular ile kod yazma, kod incelemesi ve performans iyileştirme görevleri bulunuyor.",
+    "ozet": "Angular ile web uygulamaları geliştirme ve bakımında ekibe destek olunacak uzun dönemli staj pozisyonu. Kod inceleme, hata ayıklama ve performans iyileştirme çalışmalarında yer alınacak.",
     "son_basvuru": null,
+    "ilan_tarihi": null,
     "hedef": "4. sınıf mühendislik veya bilgisayar bilimi öğrencileri",
     "calisma_modeli": "hibrit",
     "ucretli": "belirsiz",
@@ -361,6 +455,13 @@
      "C#"
     ]
    },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "hibrit",
+   "girisim": false,
+   "yayin": null,
+   "surekli_acik": false,
    "firma_gorunen": "Sestek",
    "sehirler": [
     "istanbul",
@@ -383,6 +484,7 @@
    "ayrinti": {
     "ozet": "Sezzle'da React Native tabanlı mobil uygulamada yeni özellikler geliştirme, mevcut kodu bakım ve destek, kod incelemelerine katılma ve proje planlamasına yardımcı olma işi.",
     "son_basvuru": null,
+    "ilan_tarihi": null,
     "hedef": null,
     "calisma_modeli": "uzaktan",
     "ucretli": "evet",
@@ -395,6 +497,13 @@
      "Python"
     ]
    },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "uzaktan",
+   "girisim": false,
+   "yayin": "2026-09-25",
+   "surekli_acik": false,
    "firma_gorunen": "Sezzle",
    "sehirler": [],
    "uzaktan": true
@@ -414,6 +523,7 @@
    "ayrinti": {
     "ozet": "Muhasebe geçmişi olan bir junior yazılım mühendisi; finansal süreçlerde mutabakat ve raporlama için yazılım geliştirecek, otomasyon ve mutabakat iş akışlarını iyileştirecek.",
     "son_basvuru": null,
+    "ilan_tarihi": null,
     "hedef": "Muhasebe veya finans alanından gelip yazılıma geçmiş profesyoneller",
     "calisma_modeli": "uzaktan",
     "ucretli": "evet",
@@ -426,26 +536,16 @@
      "MySQL"
     ]
    },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "uzaktan",
+   "girisim": false,
+   "yayin": "2026-09-21",
+   "surekli_acik": false,
    "firma_gorunen": "Sezzle",
    "sehirler": [],
    "uzaktan": true
-  },
-  {
-   "kimlik": "a404da96657696a5",
-   "firma": "Siemens",
-   "baslik": "Part Time Working Student (Front End Developer)",
-   "url": "https://jobs.siemens.com/externaljobs/JobDetail/Part-Time-Working-Student-Front-End-Developer/522625",
-   "konum": "Turkey",
-   "kaynak": "avature",
-   "yayin_tarihi": "",
-   "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
-   "seviye": "yari_zamanli",
-   "rol": "yazilim",
-   "yapay_zeka": "yok",
-   "ayrinti": null,
-   "firma_gorunen": "Siemens",
-   "sehirler": [],
-   "uzaktan": false
   },
   {
    "kimlik": "e550fb609a9b0008",
@@ -460,10 +560,41 @@
    "rol": "yazilim",
    "yapay_zeka": "yok",
    "ayrinti": null,
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": null,
+   "surekli_acik": false,
    "firma_gorunen": "Siemens",
    "sehirler": [
     "istanbul"
    ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "a404da96657696a5",
+   "firma": "Siemens",
+   "baslik": "Part Time Working Student (Front End Developer)",
+   "url": "https://jobs.siemens.com/externaljobs/JobDetail/Part-Time-Working-Student-Front-End-Developer/522625",
+   "konum": "Turkey",
+   "kaynak": "avature",
+   "yayin_tarihi": "",
+   "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
+   "seviye": "yari_zamanli",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": null,
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": null,
+   "surekli_acik": false,
+   "firma_gorunen": "Siemens",
+   "sehirler": [],
    "uzaktan": false
   },
   {
@@ -479,9 +610,10 @@
    "rol": "yazilim",
    "yapay_zeka": "yok",
    "ayrinti": {
-    "ozet": "Gen AI ürünlerinin testi ve kalite güvence süreçlerinde destek olunacak uzun dönemli staj. Test senaryoları hazırlanıp uygulanacak, hatalar raporlanacak ve AI modellerinin doğruluğu kontrol edilecek.",
+    "ozet": "Generatif yapay zekâ ürünlerinin ve uygulamalarının test edilmesi, kalite güvencesi ve iyileştirilmesi süreçlerini destekleyecek; test senaryoları hazırlayıp çalıştıracak, hataları raporlayacak bir uzun dönemli staj pozisyonu.",
     "son_basvuru": null,
-    "hedef": "Öğrenciler",
+    "ilan_tarihi": null,
+    "hedef": "Akademik çalışmalarına devam eden öğrenciler",
     "calisma_modeli": "belirsiz",
     "ucretli": "belirsiz",
     "teknolojiler": [
@@ -493,6 +625,13 @@
      "GitHub"
     ]
    },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": true,
+   "yayin": null,
+   "surekli_acik": false,
    "firma_gorunen": "Skymod",
    "sehirler": [],
    "uzaktan": false
@@ -510,8 +649,9 @@
    "rol": "yazilim",
    "yapay_zeka": "yok",
    "ayrinti": {
-    "ozet": "Next.js ve Gemini AI destekli Hotel WD SaaS projesi için oteller ile teknoloji arasında köprü kuracak stratejik teknoloji danışmanı stajı. Otellere uzaktan kurulum yapmak, paneli tanıtmak ve birinci basamak destek vermek.",
+    "ozet": "Next.js ve Gemini AI destekli Hotel WD SaaS ürününü otellere tanıtıp kurulumunu yapacak, otel sahipleriyle iletişim kuracak stratejik teknoloji danışmanı stajı. Sabit staj maaşı ve ömür boyu komisyon sunulur.",
     "son_basvuru": null,
+    "ilan_tarihi": null,
     "hedef": null,
     "calisma_modeli": "uzaktan",
     "ucretli": "evet",
@@ -519,10 +659,17 @@
      "Next.js",
      "Gemini API",
      "Google Cloud",
-     "Stripe",
-     "Google Meet"
+     "Stripe"
     ]
    },
+   "alanlar": [
+    "yazilim",
+    "savunma"
+   ],
+   "calisma_modeli": "uzaktan",
+   "girisim": false,
+   "yayin": null,
+   "surekli_acik": false,
    "firma_gorunen": "Türk SEM",
    "sehirler": [],
    "uzaktan": false
@@ -540,16 +687,24 @@
    "rol": "yapay_zeka",
    "yapay_zeka": "arti",
    "ayrinti": {
-    "ozet": "Görüntü işleme alanında staj programı; kamera görüntüsüne dayalı otomasyon ve kalite kontrol çözümlerinin uygulanmasında çalışmayı kapsıyor.",
+    "ozet": "",
     "son_basvuru": null,
+    "ilan_tarihi": null,
     "hedef": null,
     "calisma_modeli": "belirsiz",
     "ucretli": "belirsiz",
     "teknolojiler": [
-     "Yedibox",
-     "Yedivision"
+     "Datamatrix",
+     "QR"
     ]
    },
+   "alanlar": [
+    "yapay_zeka"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": null,
+   "surekli_acik": false,
    "firma_gorunen": "Yeditek",
    "sehirler": [],
    "uzaktan": false

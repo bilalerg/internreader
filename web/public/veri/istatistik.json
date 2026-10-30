@@ -1,20 +1,20 @@
 {
  "surum": 1,
- "guncelleme": "2026-10-29T17:23:08.023653+03:00",
+ "guncelleme": "2026-10-30T13:35:10.125384+03:00",
  "takip_edilen_firma": 1293,
  "taranan_firma": 293,
- "aktif_ilan": 1272,
- "ogrenci_ilani": 21,
+ "aktif_ilan": 1358,
+ "ogrenci_ilani": 20,
  "sehirler": {
-  "uzaktan": 310,
-  "istanbul": 229,
-  "ankara": 26,
+  "uzaktan": 312,
+  "istanbul": 237,
+  "ankara": 37,
   "izmir": 4,
   "sakarya": 2,
-  "antalya": 1,
+  "kayseri": 1,
   "kocaeli": 1,
-  "gaziantep": 1,
-  "kayseri": 1
+  "antalya": 1,
+  "gaziantep": 1
  },
  "firmalar": [
   "Analog Devices",
