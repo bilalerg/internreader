@@ -16,3 +16,14 @@ def json_metni(ilanlar: list[dict], an: datetime) -> str:
         ensure_ascii=False,
         indent=1,
     )
+
+
+def icerik_degisti(yeni_metin: str, eski_metin: str | None) -> bool:
+    """İki ilan listesi `guncelleme` damgası dışında farklı mı? Ara tarama yalnızca veri gerçekten değiştiyse commit eder:
+    her commit bir Vercel dağıtımı demek. Eski dosya yoksa ya da bozuksa değişmiş sayılır."""
+    try:
+        eski = json.loads(eski_metin or "")
+    except ValueError:
+        return True
+    yeni = json.loads(yeni_metin)
+    return {k: v for k, v in yeni.items() if k != "guncelleme"} != {k: v for k, v in eski.items() if k != "guncelleme"}

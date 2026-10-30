@@ -21,8 +21,11 @@ from internreader.model import HEDEF_ROLLER, OGRENCI_SEVIYELERI, Ilan
 from internreader.yayin import TURKIYE_SAATI
 
 
-def ilanlari_kaydet(oturum: Session, ilanlar: list[Ilan], basarili_firmalar: set[str]) -> tuple[list[str], int]:
+def ilanlari_kaydet(
+    oturum: Session, ilanlar: list[Ilan], basarili_firmalar: set[str], sayfa_ilanlari_korunsun: bool = False
+) -> tuple[list[str], int]:
     """İlanları ekler/günceller. (yeni ilan kimlikleri, kapandığı anlaşılan ilan sayısı) döndürür.
+    `sayfa_ilanlari_korunsun`: ara tarama kariyer sayfalarını okumaz; o kaynaktan gelen ilanlar görülmedi diye kapanmaz.
 
     Kapanma kuralı: bu çalıştırmada başarıyla taranan bir firmanın, daha önce görülüp bu kez görülmeyen
     ilanı kapandı sayılır. Taraması başarısız olan firmanın ilanlarına dokunulmaz (site çöktü diye ilan silinmez).
@@ -51,6 +54,8 @@ def ilanlari_kaydet(oturum: Session, ilanlar: list[Ilan], basarili_firmalar: set
     kapanacak = []
     for parca in _parcalar(sorted(basarili_firmalar)):
         sorgu = select(IlanKaydi.kimlik).where(IlanKaydi.firma.in_(parca), IlanKaydi.aktif.is_(True))
+        if sayfa_ilanlari_korunsun:
+            sorgu = sorgu.where(IlanKaydi.kaynak != "kariyer_sayfasi")
         kapanacak += [k for k in oturum.scalars(sorgu) if k not in gelen]
     for parca in _parcalar(kapanacak):
         oturum.execute(update(IlanKaydi).where(IlanKaydi.kimlik.in_(parca)).values(aktif=False))

@@ -5,7 +5,7 @@ Kullanım (proje klasöründe):
   python -m internreader kesif [--yokla] [--kaynak K]    firmaların ilan sistemini / kariyer sayfasını bul (ayda bir)
   python -m internreader arama-kesif [--kuru] [--web-bul N]  arama API'siyle yeni firma bul (haftada bir; anahtar ister)
   python -m internreader firma-kapat "Acme"               "ilanımı kaldır" talebi: firmayı taramadan ve yayından çıkar
-  python -m internreader tara [--yz-tavani 0.50]         ilanları topla + sınıflandır
+  python -m internreader tara [--yz-tavani 0.50] [--yalnizca-ats]  ilanları topla + sınıflandır (ara tarama: kariyer sayfaları hariç)
   python -m internreader bulten-dene <eposta> [--hos-geldin] [--gonderme]  tek adrese test e-postası (kayıt yazmaz)
   python -m internreader yayinla                         README tablosu, JSON ve WhatsApp özeti üret
   python -m internreader bulten-gonder                  abonelere kişiye özel bülten (SMTP yoksa dosyaya yazar)
@@ -36,6 +36,7 @@ from internreader.gunluk import kayit_kur
 from internreader.ice_aktar import eski_onbellegi_ice_aktar, firma_listesini_esitle, firmalari_ice_aktar
 from internreader.kesif import kesfet
 from internreader.yayin import TURKIYE_SAATI
+from internreader.yayin.json_disa import icerik_degisti
 from internreader.yz.degerlendirme import degerlendir, seti_oku
 
 kayit = logging.getLogger("internreader")
@@ -68,8 +69,18 @@ def main(argv: list[str] | None = None) -> int:
         p.add_argument(
             "--yz-tavani", type=float, default=None, help="bu çalıştırma için en fazla yapay zekâ harcaması ($)"
         )
+        if ad == "tara":
+            p.add_argument(
+                "--yalnizca-ats", action="store_true", help="ara tarama: yalnızca ilan sistemleri, kariyer sayfası yok"
+            )
     p = alt.add_parser("yayinla")
     p.add_argument("--liste-linki", default="", help="WhatsApp özetinin sonuna eklenecek tam liste adresi")
+    p.add_argument(
+        "--ozetsiz", action="store_true", help="ara tarama: WhatsApp özeti yazılmaz, yeniler günlük özete kalır"
+    )
+    p = alt.add_parser("ilanlar-degisti-mi", help="iki ilanlar.json damga dışında farklıysa true, değilse false yaz")
+    p.add_argument("yeni", type=Path)
+    p.add_argument("eski", type=Path)
     alt.add_parser("durum")
     alt.add_parser("bulten-gonder", help="abonelere kişiye özel bülten")
     p = alt.add_parser("bulten-dene", help="o anki veriyle tek adrese test e-postası; veritabanına hiçbir şey yazmaz")
@@ -94,6 +105,10 @@ def main(argv: list[str] | None = None) -> int:
         ayar = dataclasses.replace(ayar, calisma_basina_yz_tavani_usd=arg.yz_tavani)
     if arg.komut == "goc-uret":
         return _goc_uret(ayar.veritabani_url, arg.aciklama)
+    if arg.komut == "ilanlar-degisti-mi":  # veritabanına bağlanmaz
+        eski = arg.eski.read_text(encoding="utf-8") if arg.eski.exists() else None
+        print("true" if icerik_degisti(arg.yeni.read_text(encoding="utf-8"), eski) else "false")
+        return 0
     oturum = oturum_fabrikasi(ayar.veritabani_url)
 
     if arg.komut == "ice-aktar":
@@ -124,9 +139,14 @@ def main(argv: list[str] | None = None) -> int:
         if arg.komut == "calistir":
             firma_listesini_esitle(oturum, VERI / "firmalar.csv")
         yz = boru.yz_olustur(ayar, oturum)  # tarama ve ayrıntılar aynı bütçeyi paylaşır
-        rapor = boru.tara(ayar, oturum, yz=yz)
+        yalnizca_ats = getattr(arg, "yalnizca_ats", False)
+        rapor = boru.tara(ayar, oturum, yz=yz, yalnizca_ats=yalnizca_ats)
         if rapor.hatalar:
             kayit.warning("Ulaşılamayan ilan sistemleri: %s", "; ".join(rapor.hatalar))
+        if (
+            yalnizca_ats
+        ):  # yeni ilan özetsiz ve rolü doğrulanmamış yayına girmesin; maliyet sabaha göre yalnızca öne alınır
+            boru.ayrintilari_zenginlestir(ayar, oturum, yz=yz, yalnizca_ats=True)
         if arg.komut == "calistir":
             boru.ayrintilari_zenginlestir(ayar, oturum, yz=yz)
             boru.yayinla(oturum)
@@ -159,7 +179,13 @@ def main(argv: list[str] | None = None) -> int:
     elif arg.komut == "bakim":
         print(json.dumps(bakim_yap(oturum), ensure_ascii=False, indent=1))
     elif arg.komut == "yayinla":
-        print(json.dumps(boru.yayinla(oturum, tam_liste_linki=arg.liste_linki), ensure_ascii=False, indent=1))
+        print(
+            json.dumps(
+                boru.yayinla(oturum, tam_liste_linki=arg.liste_linki, ozet_yaz=not arg.ozetsiz),
+                ensure_ascii=False,
+                indent=1,
+            )
+        )
     elif arg.komut == "api":
         import uvicorn  # yalnızca bu komutta gerekir
 

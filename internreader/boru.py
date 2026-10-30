@@ -53,6 +53,7 @@ class TaramaRaporu:
     imzadan: int = 0  # yeniden yayınlanan ilan: eski karar kullanıldı, yapay zekâya gidilmedi
     yz_usd: float = 0.0
     hatalar: list[str] = field(default_factory=list)
+    yalnizca_ats: bool = False  # ara tarama: kariyer sayfaları okunmadı
 
 
 # ---------------- toplama ----------------
@@ -151,18 +152,24 @@ def yz_olustur(ayar: Ayarlar, oturum: sessionmaker) -> YzIstemci:
 
 
 def tara(
-    ayar: Ayarlar, oturum: sessionmaker, http: HttpIstemci | None = None, yz: YzIstemci | None = None
+    ayar: Ayarlar,
+    oturum: sessionmaker,
+    http: HttpIstemci | None = None,
+    yz: YzIstemci | None = None,
+    yalnizca_ats: bool = False,
 ) -> TaramaRaporu:
+    """`yalnizca_ats`: ara tarama. Yalnızca ilan sistemleri okunur; kariyer sayfaları (yapay zekâyla okunduğu için pahalı)
+    ve onların ilanları günlük tam taramaya kalır. Yapay zekâ yalnızca yeni ilanları sınıflar."""
     http = http or HttpIstemci(ayar.kullanici_ajani, ayar.http_zaman_asimi)
     yz = yz or yz_olustur(ayar, oturum)
     kullanim_basi = len(yz.kullanimlar)
-    rapor = TaramaRaporu()
+    rapor = TaramaRaporu(yalnizca_ats=yalnizca_ats)
 
     with oturum() as o:
         firmalar = depo.aktif_firmalar(o)
         onbellek = depo.onbellek_hepsi(o)
     ats_firmalari = [f for f in firmalar if f.ats in TOPLAYICILAR]
-    sayfa_firmalari = [f for f in firmalar if f.kariyer and f.ats not in TOPLAYICILAR]
+    sayfa_firmalari = [] if yalnizca_ats else [f for f in firmalar if f.kariyer and f.ats not in TOPLAYICILAR]
     rapor.ats_firma, rapor.sayfa_firma = len(ats_firmalari), len(sayfa_firmalari)
     kayit.info(
         "Taranacak: %d firma ilan sisteminden, %d firma kariyer sayfasından", *[rapor.ats_firma, rapor.sayfa_firma]
@@ -176,16 +183,20 @@ def tara(
     rapor.ats_ilan = len(ats_ilanlari)
     kayit.info("İlan sistemlerinden %d ilan (%d firma hata verdi)", rapor.ats_ilan, len(rapor.hatalar))
 
-    sayfa_ilanlari, sayfa_basarili, yeni_onbellek, rapor.sayfa_durumlari = _sayfalari_tara(
-        http, yz, sayfa_firmalari, onbellek, ayar
-    )
+    sayfa_ilanlari, sayfa_basarili, yeni_onbellek = [], set(), {}
+    if not yalnizca_ats:
+        sayfa_ilanlari, sayfa_basarili, yeni_onbellek, rapor.sayfa_durumlari = _sayfalari_tara(
+            http, yz, sayfa_firmalari, onbellek, ayar
+        )
     rapor.sayfa_ilan = len(sayfa_ilanlari)
     kayit.info("Kariyer sayfalarından %d ilan | %s", rapor.sayfa_ilan, dict(rapor.sayfa_durumlari))
 
     ilanlar = tekillestir(ats_ilanlari + sayfa_ilanlari)
     rapor.toplam_ilan = len(ilanlar)
     with oturum.begin() as o:
-        yeniler, rapor.kapanan_ilan = depo.ilanlari_kaydet(o, ilanlar, ats_basarili | sayfa_basarili)
+        yeniler, rapor.kapanan_ilan = depo.ilanlari_kaydet(
+            o, ilanlar, ats_basarili | sayfa_basarili, sayfa_ilanlari_korunsun=yalnizca_ats
+        )
         depo.onbellek_yaz(o, yeni_onbellek)
     rapor.yeni_ilan = len(yeniler)
 
@@ -232,7 +243,12 @@ def tara(
 
 # ---------------- ayrıntılar ----------------
 def ayrintilari_zenginlestir(
-    ayar: Ayarlar, oturum: sessionmaker, http: HttpIstemci | None = None, yz: YzIstemci | None = None, sinir: int = 40
+    ayar: Ayarlar,
+    oturum: sessionmaker,
+    http: HttpIstemci | None = None,
+    yz: YzIstemci | None = None,
+    sinir: int = 40,
+    yalnizca_ats: bool = False,
 ) -> dict:
     """Öğrenciye uygun ve ayrıntısı olmayan ilanlar için metni bulur (ATS açıklaması, ilanın kendi sayfası ya da
     ilanların tek sayfada listelendiği kariyer sayfasındaki bölümü) ve yapay zekâyla özet, son başvuru, ilan tarihi,
@@ -242,7 +258,7 @@ def ayrintilari_zenginlestir(
     yz = yz or yz_olustur(ayar, oturum)
     kullanim_basi = len(yz.kullanimlar)
     with oturum() as o:
-        bekleyenler = depo.ayrinti_bekleyenler(o, sinir)
+        bekleyenler = depo.ayrinti_bekleyenler(o, sinir, yalnizca_ats)
         liste_sayfalari = depo.sayfa_basliklari(
             o, {i["url"].split("#")[0] for i in bekleyenler if i["kaynak"] == "kariyer_sayfasi" and "#" in i["url"]}
         )
@@ -304,7 +320,8 @@ def _yaz(yol: Path, metin: str) -> None:
     yol.write_text(metin, encoding="utf-8", newline="\n")
 
 
-def yayinla(oturum: sessionmaker, cikti_dizini: Path = CIKTI, tam_liste_linki: str = "") -> dict:
+def yayinla(oturum: sessionmaker, cikti_dizini: Path = CIKTI, tam_liste_linki: str = "", ozet_yaz: bool = True) -> dict:
+    """`ozet_yaz=False`: ara tarama. "Son özetten beri yeni ilanlar" işareti ilerlemez, yeniler günlük özete kalır."""
     an = datetime.now(TURKIYE_SAATI)
     cikti_dizini.mkdir(parents=True, exist_ok=True)
     with oturum() as o:
@@ -328,7 +345,7 @@ def yayinla(oturum: sessionmaker, cikti_dizini: Path = CIKTI, tam_liste_linki: s
     _yaz(cikti_dizini / "README.md", tablo_metni(hepsi, an))
     _yaz(cikti_dizini / "ilanlar.json", json_metni(hepsi, an))
     _yaz(cikti_dizini / "istatistik.json", site_ozeti)
-    metin = ozet_metni(yeniler, an, tam_liste_linki)
+    metin = ozet_metni(yeniler, an, tam_liste_linki) if ozet_yaz else None
     ozet_yolu = None
     if metin:
         ozet_yolu = cikti_dizini / f"whatsapp_{an:%Y-%m-%d_%H%M}.txt"

@@ -15,7 +15,7 @@ from internreader.depo._ortak import _parcalar
 AYRINTI_SURUMU = 3
 
 
-def ayrinti_bekleyenler(oturum: Session, sinir: int = 60) -> list[dict]:
+def ayrinti_bekleyenler(oturum: Session, sinir: int = 60, yalnizca_ats: bool = False) -> list[dict]:
     """Aktif, öğrenciye uygun ve ayrıntısı henüz çıkarılmamış ilanlar (en yeniler önce). Ardından eski sürümle
     çıkarılmış olanlar: bunlar bir kez yeniden çıkarılır (çıkarılınca sürüm güncellenir, bir daha gönderilmez)."""
     sorgu = (
@@ -30,6 +30,8 @@ def ayrinti_bekleyenler(oturum: Session, sinir: int = 60) -> list[dict]:
         .order_by(IlanAyrinti.kimlik.is_not(None), IlanKaydi.ilk_gorulme.desc())
         .limit(sinir)
     )
+    if yalnizca_ats:  # ara tarama: kariyer sayfası okunmaz
+        sorgu = sorgu.where(IlanKaydi.kaynak != "kariyer_sayfasi")
     return [
         {
             "kimlik": i.kimlik,
