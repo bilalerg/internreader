@@ -1,8 +1,36 @@
 {
  "surum": 1,
- "guncelleme": "2026-10-30T21:53:02.455362+03:00",
- "sayi": 20,
+ "guncelleme": "2026-10-31T15:21:26.129753+03:00",
+ "sayi": 21,
  "ilanlar": [
+  {
+   "kimlik": "77538c8e1766be6d",
+   "firma": "Analog Devices",
+   "baslik": "Software Engineer Intern",
+   "url": "https://analogdevices.wd1.myworkdayjobs.com/External/job/Turkey-Istanbul-Bilisim-Vadisi/Software-Engineer-Intern_R267005",
+   "konum": "Turkey, Istanbul, Bilisim Vadisi",
+   "kaynak": "workday",
+   "yayin_tarihi": "2026-10-31",
+   "ilk_gorulme": "2026-10-31T12:21:20.424356+00:00",
+   "seviye": "staj",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": null,
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": "2026-10-31",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Staj",
+   "firma_gorunen": "Analog Devices",
+   "sehirler": [
+    "istanbul"
+   ],
+   "uzaktan": false
+  },
   {
    "kimlik": "e550fb609a9b0008",
    "firma": "Siemens",
@@ -62,44 +90,6 @@
    "ilan_turu": "is",
    "seviye_etiketi": "Staj",
    "firma_gorunen": "Analog Devices",
-   "sehirler": [
-    "istanbul"
-   ],
-   "uzaktan": false
-  },
-  {
-   "kimlik": "12abda4e2ede08b9",
-   "firma": "Obilet",
-   "baslik": "Jr. Data Analyst",
-   "url": "https://careers.obilet.com/o/jr-data-analyst-2",
-   "konum": "Istanbul, İstanbul, Türkiye",
-   "kaynak": "recruitee",
-   "yayin_tarihi": "2026-10-16",
-   "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
-   "seviye": "junior",
-   "rol": "veri",
-   "yapay_zeka": "yok",
-   "ayrinti": {
-    "ozet": "Obilet'te veri analizi yapılacak; iş gereksinimlerini analiz etmek, PowerBI ile dashboard ve raporlar hazırlamak, KPI takibi yapmak ve bulguları paydaşlara iletmek.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": null,
-    "calisma_modeli": "belirsiz",
-    "ucretli": "belirsiz",
-    "teknolojiler": [
-     "PowerBI"
-    ]
-   },
-   "alanlar": [
-    "veri"
-   ],
-   "calisma_modeli": "belirsiz",
-   "girisim": false,
-   "yayin": "2026-10-16",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Junior",
-   "firma_gorunen": "Obilet",
    "sehirler": [
     "istanbul"
    ],
@@ -344,6 +334,44 @@
    "firma_gorunen": "Sezzle",
    "sehirler": [],
    "uzaktan": true
+  },
+  {
+   "kimlik": "12abda4e2ede08b9",
+   "firma": "Obilet",
+   "baslik": "Jr. Data Analyst",
+   "url": "https://careers.obilet.com/o/jr-data-analyst-2",
+   "konum": "Istanbul, İstanbul, Türkiye",
+   "kaynak": "recruitee",
+   "yayin_tarihi": "2026-10-16",
+   "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
+   "seviye": "junior",
+   "rol": "veri",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Obilet'te veri analizi yapılacak; iş gereksinimlerini analiz etmek, PowerBI ile dashboard ve raporlar hazırlamak, KPI takibi yapmak ve bulguları paydaşlara iletmek.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": null,
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": [
+     "PowerBI"
+    ]
+   },
+   "alanlar": [
+    "veri"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": "2026-10-16",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Junior",
+   "firma_gorunen": "Obilet",
+   "sehirler": [
+    "istanbul"
+   ],
+   "uzaktan": false
   },
   {
    "kimlik": "a404da96657696a5",

@@ -1,21 +1,21 @@
 {
  "surum": 1,
- "guncelleme": "2026-10-30T21:53:02.455362+03:00",
+ "guncelleme": "2026-10-31T15:21:26.129753+03:00",
  "takip_edilen_firma": 1355,
- "taranan_firma": 379,
- "aktif_ilan": 1459,
- "ogrenci_ilani": 20,
+ "taranan_firma": 384,
+ "aktif_ilan": 1568,
+ "ogrenci_ilani": 21,
  "sehirler": {
-  "uzaktan": 311,
-  "istanbul": 267,
+  "uzaktan": 315,
+  "istanbul": 269,
   "ankara": 58,
   "kocaeli": 5,
   "izmir": 4,
   "sakarya": 2,
   "kayseri": 1,
   "antalya": 1,
-  "gaziantep": 1,
-  "adana": 1
+  "adana": 1,
+  "gaziantep": 1
  },
  "firmalar": [
   "Analog Devices",
@@ -55,6 +55,7 @@
   "Uber",
   "Udemy",
   "Vercel",
+  "VNGRS",
   "Wise",
   "Yemeksepeti",
   "3TK",
@@ -76,8 +77,7 @@
   "Armelsan",
   "Armsto Konnektör",
   "Armut",
-  "Arçelik",
-  "Aselsan Sivas"
+  "Arçelik"
  ],
  "kararlar": [
   {
