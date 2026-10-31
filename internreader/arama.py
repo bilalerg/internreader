@@ -102,7 +102,7 @@ def brave_ayristir(veri: dict) -> list[Sonuc]:
     ]
 
 
-def ara(http: HttpIstemci, saglayici: str, anahtar: str, sorgu: str, adet: int = 20) -> list[Sonuc]:
+def ara(http: HttpIstemci, saglayici: str, anahtar: str, sorgu: str, adet: int = 10) -> list[Sonuc]:
     if saglayici == "serper":
         veri = http.json_gonder(
             "https://google.serper.dev/search",
@@ -116,6 +116,12 @@ def ara(http: HttpIstemci, saglayici: str, anahtar: str, sorgu: str, adet: int =
         )
         return brave_ayristir(http.json_al(adres, basliklar={"X-Subscription-Token": anahtar}))
     raise ValueError(f"bilinmeyen arama sağlayıcısı: {saglayici}")
+
+
+def hata_ozeti(hata: Exception) -> str:
+    """Kayda yazılacak kısa hata: "HTTPError 400". Anahtar başlıkta gittiği için kayda düşmez."""
+    kod = getattr(getattr(hata, "response", None), "status_code", "")
+    return f"{type(hata).__name__} {kod}".strip()
 
 
 # ---------- sonuçlardan aday çıkarma (saf fonksiyonlar) ----------
@@ -205,7 +211,7 @@ def arama_kesfi(
             sonuclar += ara(http, ayar.arama_saglayici, ayar.arama_anahtari, sorgu)
             sayac["sorgu"] += 1
         except Exception as hata:  # tek sorgunun hatası (kota, ağ) keşfi durdurmaz
-            hatalar.append(f"{sorgu}: {type(hata).__name__}")
+            hatalar.append(f"{sorgu}: {hata_ozeti(hata)}")
             if "401" in str(hata) or "403" in str(hata):
                 break  # anahtar geçersiz: kalan sorgular da başarısız olur, kota harcamayalım
     ats_adaylari, web_adaylari, elenen = adaylari_ayir(sonuclar)
@@ -310,6 +316,7 @@ def web_adresi_bul(
             sonuclar = ara(http, ayar.arama_saglayici, ayar.arama_anahtari, f'"{ad}" kariyer')
         except Exception as hata:
             sayac["hata"] += 1
+            sayac[hata_ozeti(hata)] += 1
             if "401" in str(hata) or "403" in str(hata):
                 break
             continue
@@ -382,12 +389,14 @@ def kariyer_sayfasi_ara(
     adaylar.sort(key=lambda a: (_oncelik(a[3]), a[0]))
     sayac: Counter = Counter()
     bulunan: list[tuple[int, str, str, str, str]] = []
+    elenen: list[str] = []  # kuralın kaçırdığı sayfaları kayıttan görmek için
     for firma_id, ad, alan, _ in adaylar[:sinir]:
         sorgu = f'site:{alan} kariyer OR career OR jobs OR "açık pozisyon"'
         try:
             sonuclar = ara(http, ayar.arama_saglayici, ayar.arama_anahtari, sorgu, adet=10)
         except Exception as hata:  # tek sorgunun hatası taramayı durdurmaz; anahtar geçersizse kota harcanmaz
             sayac["hata"] += 1
+            sayac[hata_ozeti(hata)] += 1
             if "401" in str(hata) or "403" in str(hata):
                 break
             continue
@@ -395,6 +404,8 @@ def kariyer_sayfasi_ara(
         denenen.add(firma_id)
         adres = next((s.url for s in sonuclar if kariyer_adresi_mi(s.url, alan)), None)
         if not adres:
+            sayac["sonucsuz" if not sonuclar else "kariyer_degil"] += 1
+            elenen += [s.url for s in sonuclar[:1]]
             continue
         try:
             ats, slug = sayfadan_ats_bul(http.sayfa(adres)[1])
@@ -410,6 +421,7 @@ def kariyer_sayfasi_ara(
         **sayac,
         "kalan": max(len(adaylar) - sinir, 0),
         "ornekler": [f"{ad}: {adres}" for _, ad, adres, _, _ in bulunan[:15]],
+        "elenen_ornekler": elenen[:25],
     }
     if kuru:
         return rapor
@@ -420,5 +432,7 @@ def kariyer_sayfasi_ara(
             if ats:
                 firma.ats, firma.slug = ats, slug
         depo.durum_yaz(o, DENENEN_ANAHTARI, json.dumps(sorted(denenen)))
-    kayit.info("Kariyer sayfası araması: %s", {k: v for k, v in rapor.items() if k != "ornekler"})
+    kayit.info(
+        "Kariyer sayfası araması: %s", {k: v for k, v in rapor.items() if k not in ("ornekler", "elenen_ornekler")}
+    )
     return rapor

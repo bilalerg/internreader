@@ -245,3 +245,26 @@ def test_kariyer_aramasi_kuru_modda_yazmaz_ve_anahtarsiz_atlanir(oturum):
     with oturum() as o:
         assert o.scalar(select(Firma)).kariyer is None
     assert kariyer_sayfasi_ara(_ayar(""), oturum)["durum"] == "anahtar-yok"
+
+
+def test_serper_sorgusu_on_sonuc_ister_ve_hata_kodu_kayda_gecer(oturum):
+    http = SahteHttp(jsonlar={"serper.dev": _serper(("https://firma.com/kariyer", "Kariyer"))})
+    rapor = arama_kesfi(_ayar(), oturum, sorgu_siniri=1, http=http, kesif_yap=False)
+    assert http.istekler[0][1]["num"] == 10 and not rapor["hatalar"]
+
+    bozuk = SahteHttp()  # hazır cevap yok: 404 döner
+    rapor = arama_kesfi(_ayar(), oturum, sorgu_siniri=1, http=bozuk, kesif_yap=False)
+    assert rapor["hatalar"][0].endswith("HTTPError 404")
+
+
+def test_kariyer_aramasi_elenen_sayfalari_raporlar(oturum):
+    with oturum.begin() as o:
+        depo.firma_ekle_veya_guncelle(o, "Ekipli", web="https://ekipli.com")
+        depo.firma_ekle_veya_guncelle(o, "Sessiz", web="https://sessiz.com")
+
+    def cevap(url, govde):
+        return _serper(("https://ekipli.com/ekibimiz", "Ekip")) if "ekipli" in govde["q"] else _serper()
+
+    rapor = kariyer_sayfasi_ara(_ayar(), oturum, http=SahteHttp(jsonlar={"serper.dev": cevap}), kuru=True)
+    assert rapor["kariyer_degil"] == 1 and rapor["sonucsuz"] == 1
+    assert rapor["elenen_ornekler"] == ["https://ekipli.com/ekibimiz"]
