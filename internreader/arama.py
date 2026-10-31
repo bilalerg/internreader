@@ -17,6 +17,7 @@ import logging
 import re
 import urllib.parse
 from collections import Counter
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from datetime import timedelta
 
@@ -344,6 +345,8 @@ def web_adresi_bul(
 ONCELIK = ("girisim", "savunma_dogrulandi", "ai", "savunma")  # önce en çok işimize yarayacak firmalar
 DENENEN_ANAHTARI = "kariyer_arama_denenen"  # denenen firma kimlikleri: kota aynı firmaya iki kez harcanmaz
 KARIYER_ALT_ALANI = {"kariyer", "career", "careers", "jobs"}
+ARAMA_PARCASI = 50  # sonuçlar parça parça yazılır: uzun arama yarıda kesilse de yapılan iş ve kredi kaybolmaz
+ARAMA_IS_PARCACIGI = 4
 
 
 def kariyer_adresi_mi(url: str, firma_alani: str) -> bool:
@@ -381,34 +384,55 @@ def kariyer_sayfasi_ara(
             if f.id not in denenen and not f.anahtar.startswith("ad:")
         ]
     adaylar.sort(key=lambda a: (_oncelik(a[3]), a[0]))
-    sayac: Counter = Counter()
-    bulunan: list[tuple[int, str, str, str, str]] = []
-    elenen: list[str] = []  # kuralın kaçırdığı sayfaları kayıttan görmek için
-    for firma_id, ad, alan, _ in adaylar[:sinir]:
+    hedef = adaylar[:sinir]
+
+    def tek(aday: tuple) -> tuple[int, str, tuple | None, list[str], bool]:
+        """(firma id, sonuç adı, bulunan kayıt, elenen adresler, hata mı)"""
+        firma_id, ad, alan, _ = aday
         sorgu = f'site:{alan} kariyer OR career OR jobs OR "açık pozisyon"'
         try:
             sonuclar = ara(http, ayar.arama_saglayici, ayar.arama_anahtari, sorgu, adet=10)
-        except Exception as hata:  # tek sorgunun hatası taramayı durdurmaz; anahtar geçersizse kota harcanmaz
-            sayac["hata"] += 1
-            sayac[hata_ozeti(hata)] += 1
-            if "401" in str(hata) or "403" in str(hata):
-                break
-            continue
-        sayac["sorgu"] += 1
-        denenen.add(firma_id)
+        except Exception as hata:  # tek sorgunun hatası taramayı durdurmaz
+            return firma_id, hata_ozeti(hata), None, [], True
         adres = next((s.url for s in sonuclar if kariyer_adresi_mi(s.url, alan)), None)
         if not adres:
-            sayac["sonucsuz" if not sonuclar else "kariyer_degil"] += 1
-            elenen += [s.url for s in sonuclar[:1]]
-            continue
+            return firma_id, "sonucsuz" if not sonuclar else "kariyer_degil", None, [s.url for s in sonuclar[:1]], False
         try:
             ats, slug = sayfadan_ats_bul(http.sayfa(adres)[1])
         except RobotsEngeli:  # robots.txt izin vermiyorsa sayfa hiç kaydedilmez
-            sayac["robots"] += 1
-            continue
+            return firma_id, "robots", None, [], False
         except (requests.RequestException, ValueError):
             ats, slug = "", ""  # bugün açılmadı: sabah taraması yeniden dener
-        bulunan.append((firma_id, ad, adres, ats, slug))
+        return firma_id, "bulundu", (firma_id, ad, adres, ats, slug), [], False
+
+    sayac: Counter = Counter()
+    bulunan: list[tuple[int, str, str, str, str]] = []
+    elenen: list[str] = []  # kuralın kaçırdığı sayfaları kayıttan görmek için
+    with ThreadPoolExecutor(max_workers=ARAMA_IS_PARCACIGI) as havuz:
+        for bas in range(0, len(hedef), ARAMA_PARCASI):
+            sonuclar = list(havuz.map(tek, hedef[bas : bas + ARAMA_PARCASI]))
+            yeni = [s[2] for s in sonuclar if s[2]]
+            for firma_id, sonuc, _, atilan, hatali in sonuclar:
+                sayac["hata" if hatali else "sorgu"] += 1
+                if sonuc != "bulundu":
+                    sayac[sonuc] += 1
+                if not hatali:
+                    denenen.add(firma_id)
+                elenen += atilan
+            bulunan += yeni
+            if not kuru:
+                with oturum.begin() as o:
+                    for firma_id, _, adres, ats, slug in yeni:
+                        firma = o.get(Firma, firma_id)
+                        firma.kariyer = adres
+                        if ats:
+                            firma.ats, firma.slug = ats, slug
+                    depo.durum_yaz(o, DENENEN_ANAHTARI, json.dumps(sorted(denenen)))
+            kayit.info(
+                "Kariyer araması: %d/%d firma | %s", min(bas + ARAMA_PARCASI, len(hedef)), len(hedef), dict(sayac)
+            )
+            if all(s[4] for s in sonuclar):  # anahtar geçersiz ya da kredi bitti: kalan sorgular boşa gider
+                break
     sayac.update(bulunan=len(bulunan), ilan_sistemi=sum(1 for b in bulunan if b[3]))
     rapor = {
         "durum": "kuru" if kuru else "tamam",
@@ -419,13 +443,6 @@ def kariyer_sayfasi_ara(
     }
     if kuru:
         return rapor
-    with oturum.begin() as o:
-        for firma_id, _, adres, ats, slug in bulunan:
-            firma = o.get(Firma, firma_id)
-            firma.kariyer = adres
-            if ats:
-                firma.ats, firma.slug = ats, slug
-        depo.durum_yaz(o, DENENEN_ANAHTARI, json.dumps(sorted(denenen)))
     kayit.info(
         "Kariyer sayfası araması: %s", {k: v for k, v in rapor.items() if k not in ("ornekler", "elenen_ornekler")}
     )

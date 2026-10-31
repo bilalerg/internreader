@@ -1,6 +1,7 @@
 # Firma keşfi (yapay zekâ kullanmaz):
 # - her pazartesi: arama API'siyle listede olmayan firmaları bul (SERPER_API_KEY ya da BRAVE_API_KEY yoksa atlanır)
 # - ayın 1'i: listedeki tüm firmaların ilan sistemi / kariyer sayfası keşfi
+# - elle çalıştırma: ikisi birden, kaynağı bilinmeyen bütün firmalar için (Serper kredisi harcar, aşağıdaki sayılar kadar)
 name: Keşif
 
 on:
@@ -12,7 +13,11 @@ on:
       kariyer_ara:
         description: "Kaç firmanın kariyer sayfası aransın (firma başına bir Serper kredisi)"
         type: number
-        default: 40
+        default: 1200
+      web_bul:
+        description: "Sitesi bilinmeyen kaç firmanın web adresi aransın (firma başına bir Serper kredisi)"
+        type: number
+        default: 300
 
 permissions:
   contents: read
@@ -24,7 +29,7 @@ concurrency:
 jobs:
   kesif:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 120
     env:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       SERPER_API_KEY: ${{ secrets.SERPER_API_KEY }}
@@ -39,11 +44,24 @@ jobs:
           cache-dependency-path: requirements.txt
       - name: Bağımlılıklar
         run: pip install -r requirements.txt
-      - name: Arama keşfi
-        if: ${{ github.event.schedule != '0 2 1 * *' }}
-        run: |
-          python -m internreader arama-kesif --web-bul 40
-          python -m internreader kariyer-ara --sinir ${{ inputs.kariyer_ara || 40 }}
+      # Önce ücretsiz keşif: ana sayfasında kariyer bağlantısı olan firmaya arama kredisi harcanmaz
       - name: Aylık keşif
         if: ${{ github.event.schedule == '0 2 1 * *' || github.event_name == 'workflow_dispatch' }}
         run: python -m internreader kesif
+      - name: Arama keşfi
+        if: ${{ github.event.schedule != '0 2 1 * *' }}
+        run: |
+          python -m internreader arama-kesif --web-bul ${{ inputs.web_bul || 40 }}
+          {
+            echo '```json'
+            python -m internreader kariyer-ara --sinir ${{ inputs.kariyer_ara || 40 }}
+            echo '```'
+          } | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Özet
+        if: ${{ always() }}
+        run: |
+          {
+            echo '```json'
+            python -m internreader durum
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

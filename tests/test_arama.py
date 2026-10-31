@@ -1,9 +1,10 @@
 import dataclasses
 
+import pytest
 import requests
 from sqlalchemy import select
 
-from internreader import depo
+from internreader import arama, depo
 from internreader.arama import (
     Sonuc,
     ad_alanla_uyusuyor_mu,
@@ -222,8 +223,9 @@ def test_kariyer_sayfasi_aranir_ilan_sistemi_yazilir_ve_ayni_firma_tekrar_sorgul
     http = SahteHttp(jsonlar={"serper.dev": cevap}, sayfalar=sayfalar)
     rapor = kariyer_sayfasi_ara(_ayar(), oturum, sinir=2, http=http)
     assert rapor["sorgu"] == 2 and rapor["kalan"] == 1
-    gonderilen = [g["q"] for _, g, _ in http.istekler]
-    assert "site:girisim.ai" in gonderilen[0] and "site:bos.com" in gonderilen[1]  # öncelik: girişim, sonra ai
+    gonderilen = " ".join(g["q"] for _, g, _ in http.istekler)
+    assert "site:girisim.ai" in gonderilen and "site:bos.com" in gonderilen  # öncelik: girişim, sonra ai
+    assert "site:kurumsal.com" not in gonderilen
     with oturum() as o:
         firmalar = {f.ad: f for f in o.scalars(select(Firma))}
     assert firmalar["Girisim"].ats == "lever" and firmalar["Girisim"].slug == "girisim"
@@ -234,6 +236,40 @@ def test_kariyer_sayfasi_aranir_ilan_sistemi_yazilir_ve_ayni_firma_tekrar_sorgul
     assert rapor["sorgu"] == 1 and rapor["bulunan"] == 1  # yalnızca denenmemiş olan
     with oturum() as o:
         assert o.scalar(select(Firma).where(Firma.ad == "Kurumsal")).kariyer == "https://kurumsal.com/kariyer"
+
+
+def test_uzun_kariyer_aramasi_kesilirse_yapilan_is_ve_harcanan_kredi_kaybolmaz(oturum, monkeypatch):
+    class Kesildi(BaseException):
+        pass
+
+    monkeypatch.setattr(arama, "ARAMA_PARCASI", 1)
+    with oturum.begin() as o:
+        depo.firma_ekle_veya_guncelle(o, "Ilk", web="https://ilk.com")
+        depo.firma_ekle_veya_guncelle(o, "Ikinci", web="https://ikinci.com")
+
+    def cevap(url, govde):
+        if "ikinci" in govde["q"]:
+            raise Kesildi
+        return _serper(("https://ilk.com/kariyer", "Kariyer"))
+
+    http = SahteHttp(jsonlar={"serper.dev": cevap}, sayfalar={"https://ilk.com/kariyer": "<p>Kariyer</p>"})
+    with pytest.raises(Kesildi):
+        kariyer_sayfasi_ara(_ayar(), oturum, http=http)
+    with oturum() as o:
+        assert o.scalar(select(Firma).where(Firma.ad == "Ilk")).kariyer == "https://ilk.com/kariyer"
+
+    ikinci = SahteHttp(jsonlar={"serper.dev": _serper()})
+    assert kariyer_sayfasi_ara(_ayar(), oturum, http=ikinci)["sorgu"] == 1  # yalnızca yarım kalan firma
+
+
+def test_kredi_bitince_ya_da_anahtar_gecersizse_arama_durur(oturum):
+    with oturum.begin() as o:
+        for n in range(arama.ARAMA_PARCASI + 5):
+            depo.firma_ekle_veya_guncelle(o, f"Firma {n}", web=f"https://firma{n}.com")
+    http = SahteHttp()  # hazır cevap yok: her sorgu hata alır
+    rapor = kariyer_sayfasi_ara(_ayar(), oturum, sinir=500, http=http)
+    assert rapor["hata"] == arama.ARAMA_PARCASI and len(http.istekler) == arama.ARAMA_PARCASI
+    assert rapor["HTTPError 404"] == arama.ARAMA_PARCASI
 
 
 def test_kariyer_aramasi_kuru_modda_yazmaz_ve_anahtarsiz_atlanir(oturum):
