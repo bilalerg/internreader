@@ -1,7 +1,7 @@
 {
  "surum": 1,
- "guncelleme": "2026-10-31T20:08:08.208362+03:00",
- "sayi": 36,
+ "guncelleme": "2026-11-01T01:29:59.611016+03:00",
+ "sayi": 38,
  "ilanlar": [
   {
    "kimlik": "77538c8e1766be6d",
@@ -805,6 +805,42 @@
    "uzaktan": true
   },
   {
+   "kimlik": "71217068e2f59c58",
+   "firma": "Appnation",
+   "baslik": "Software Engineer (Backend)",
+   "url": "https://jobs.lever.co/appnation/090895b2-15dd-4c50-a3ff-a5f0362a3a76",
+   "konum": "İstanbul",
+   "kaynak": "lever",
+   "yayin_tarihi": "2026-10-16",
+   "ilk_gorulme": "2026-10-31T22:29:02.250765+00:00",
+   "seviye": "junior",
+   "rol": "yazilim",
+   "yapay_zeka": "arti",
+   "ayrinti": {
+    "ozet": "Mobil uygulamaların arka uç sistemlerini geliştirip iyileştirecek; API'ler, veri akışları ve entegrasyonlar üzerinde çalışacak bir backend yazılım mühendisi.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": null,
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": []
+   },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": "2026-10-16",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Junior",
+   "firma_gorunen": "Appnation",
+   "sehirler": [
+    "istanbul"
+   ],
+   "uzaktan": false
+  },
+  {
    "kimlik": "12abda4e2ede08b9",
    "firma": "Obilet",
    "baslik": "Jr. Data Analyst",
@@ -1320,6 +1356,34 @@
    "ilan_turu": "is",
    "seviye_etiketi": "Yarı zamanlı",
    "firma_gorunen": "Dream Games",
+   "sehirler": [
+    "istanbul"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "ae69fcee1a0db3c4",
+   "firma": "Wordsmithadvertising",
+   "baslik": "Web Design & UX Intern",
+   "url": "https://jobs.smartrecruiters.com/WordSmithAdvertising/75558756",
+   "konum": "Istanbul, tr",
+   "kaynak": "smartrecruiters",
+   "yayin_tarihi": "2014-02-20",
+   "ilk_gorulme": "2026-10-31T22:29:02.250765+00:00",
+   "seviye": "staj",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": null,
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": null,
+   "surekli_acik": true,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Staj",
+   "firma_gorunen": "Wordsmithadvertising",
    "sehirler": [
     "istanbul"
    ],

@@ -1,22 +1,26 @@
 {
  "surum": 1,
- "guncelleme": "2026-10-31T20:08:08.208362+03:00",
- "takip_edilen_firma": 1830,
- "taranan_firma": 384,
- "aktif_ilan": 1615,
- "ogrenci_ilani": 36,
+ "guncelleme": "2026-11-01T01:29:59.611016+03:00",
+ "takip_edilen_firma": 1907,
+ "taranan_firma": 626,
+ "aktif_ilan": 6329,
+ "ogrenci_ilani": 38,
  "sehirler": {
-  "uzaktan": 315,
-  "istanbul": 296,
-  "ankara": 68,
-  "kocaeli": 6,
-  "izmir": 4,
-  "sakarya": 2,
-  "kayseri": 1,
-  "antalya": 1,
-  "adana": 1,
-  "gaziantep": 1,
-  "bursa": 1
+  "uzaktan": 1227,
+  "istanbul": 555,
+  "ankara": 134,
+  "izmir": 62,
+  "kocaeli": 59,
+  "antalya": 54,
+  "bursa": 54,
+  "tekirdag": 54,
+  "kayseri": 51,
+  "adana": 51,
+  "gaziantep": 51,
+  "konya": 50,
+  "trabzon": 50,
+  "samsun": 50,
+  "sakarya": 2
  },
  "firmalar": [
   "Analog Devices",
@@ -62,23 +66,23 @@
   "3TK",
   "5U AI",
   "Acacia Maden",
+  "Accenture",
+  "Acronis",
   "Advens",
+  "Aerofen",
   "Aerotim",
   "Agena",
   "Akdoğan",
   "AKGÜN",
+  "Albaraka",
   "Algocor",
   "ALGOFACT",
   "Alpata Havacılık",
   "Alyo",
   "Andasis",
   "ANKASYS",
-  "ARCANOR",
-  "ARKSOFT",
-  "Armelsan",
-  "Armsto Konnektör",
-  "Armut",
-  "Arçelik"
+  "Aras Deniz İnşaat",
+  "Aras Salvage"
  ],
  "kararlar": [
   {
@@ -130,11 +134,11 @@
    "uygun": true
   },
   {
-   "baslik": "HR Operations Specialist",
-   "firma": "Codeway",
+   "baslik": "Waiter",
+   "firma": "Accorhotel",
    "seviye": "belirsiz",
    "rol": "teknik_degil",
-   "gerekce": "İK operasyonları, deneyim seviyesi belirtilmemiş",
+   "gerekce": "Restoran garsonluğu, teknik değil",
    "uygun": false
   },
   {
@@ -202,11 +206,11 @@
    "uygun": false
   },
   {
-   "baslik": "Aday Mühendis Programı",
-   "firma": "Opsin Elektro Optik",
-   "seviye": "yeni_mezun",
-   "rol": "diger_teknik",
-   "gerekce": "Aday mühendis programı, elektro-optik donanım alanı.",
+   "baslik": "PART TİME",
+   "firma": "Pvh",
+   "seviye": "yari_zamanli",
+   "rol": "teknik_degil",
+   "gerekce": "Yarı zamanlı outlet mağaza satış işi",
    "uygun": false
   }
  ]
