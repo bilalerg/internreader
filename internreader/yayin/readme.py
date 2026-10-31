@@ -15,8 +15,8 @@ def tablo_metni(ilanlar: list[dict], an: datetime) -> str:
         "",
         f"Son güncelleme: **{tarih_yazisi(an)}** · Açık ilan: **{len(ilanlar)}**",
         "",
-        "İlanlar şirketlerin kendi kariyer sayfalarından ve ilan sistemlerinden her gün otomatik toplanır; "
-        "yapay zekâ öğrenciye uygun olanları ayıklar. Başvuru, şirketin kendi sayfasında yapılır.",
+        "İlanlar şirketlerin kariyer sayfalarından, ilan sistemlerinden ve Jooble'dan otomatik toplanır; "
+        "yapay zekâ öğrenciye uygun olanları ayıklar.",
         "",
         "| Firma | Pozisyon | Seviye | Alan | Konum | Eklenme | Başvuru |",
         "|---|---|---|---|---|---|---|",

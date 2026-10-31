@@ -12,6 +12,7 @@ from internreader.api import uygulama_olustur
 from internreader.ayar import GELISTIRME_ANAHTARI, ayarlari_oku
 from internreader.bakim import bakim_yap
 from internreader.bulten import bultenleri_gonder, eslesir
+from internreader.bulten.sablon import DIS_ARAMA_NOTU, DIS_ARAMALAR, bulten_epostasi
 from internreader.db import Abone, simdi
 from internreader.eposta import Eposta, SmtpGonderici
 from internreader.model import Ilan
@@ -225,3 +226,13 @@ def test_art_arda_hatada_gonderim_durur(oturum):
         abone_ekle(oturum, e, HEPSI)
     rapor = bultenleri_gonder(oturum, SahteGonderici(hatali=set(adresler)), AYAR)
     assert rapor["hata"] == 5 and rapor["ertelendi"] == 3  # kota dolmuşsa 8'ini de boşuna denemez
+
+
+def test_eposta_dis_arama_baglantilarini_veri_cekmeden_verir():
+    an = datetime(2026, 11, 2, 6, 0, tzinfo=UTC)
+    eposta = bulten_epostasi("a@b.co", [], an, "https://site", "https://site/iptal", "https://site/tek", "gunluk")
+    assert DIS_ARAMA_NOTU in eposta.html and DIS_ARAMA_NOTU in eposta.metin
+    assert "f_E=1" in eposta.metin and "location=T%C3%BCrkiye" in eposta.metin
+    for _, adres in DIS_ARAMALAR:
+        assert adres in eposta.metin
+        assert adres.replace("&", "&amp;") in eposta.html

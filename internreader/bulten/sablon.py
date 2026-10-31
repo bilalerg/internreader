@@ -8,6 +8,7 @@ fosfor vurgusu. Dinamik her metin html.escape'ten geçer (ilan başlığında "<
 import html
 from collections.abc import Callable
 from datetime import datetime
+from urllib.parse import quote
 
 from internreader.eposta import Eposta
 from internreader.isleme.sehir import SEHIRLER
@@ -21,6 +22,22 @@ SANS = "-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif"
 CALISMA = {"yerinde": "Ofiste", "hibrit": "Hibrit", "uzaktan": "Uzaktan"}
 ALAN_ETIKETI = {"oyun": "Oyun", "savunma": "Savunma/siber/havacılık"}
 Baglanti = Callable[[dict], str]  # ilan → "Başvur" adresi
+
+
+def _linkedin(sorgu: str) -> str:
+    """Türkiye, staj seviyesi, son bir hafta. f_E=1 ve f_TPR LinkedIn'in kendi arama süzgeçleridir."""
+    return f"https://www.linkedin.com/jobs/search/?keywords={quote(sorgu)}&location=T%C3%BCrkiye&f_E=1&f_TPR=r604800"
+
+
+# Bu sitelerden veri çekilmez: öğrenci hazır aramaya gider, ilanlar bizim listemize girmez. Kariyer.net'te yalnız bu iki
+# adres doğrulandı (31.10.2026); "veri+stajyeri" gibi kalıplar ana ilan sayfasına yönleniyor.
+DIS_ARAMALAR = (
+    ("LinkedIn: yazılım stajları", _linkedin("software OR yazılım")),
+    ("LinkedIn: yapay zekâ ve veri stajları", _linkedin('data OR "yapay zeka" OR "machine learning"')),
+    ("Kariyer.net: yazılım stajyeri", "https://www.kariyer.net/is-ilanlari/yazilim+stajyeri"),
+    ("Kariyer.net: bütün stajyer ilanları", "https://www.kariyer.net/is-ilanlari/stajyer"),
+)
+DIS_ARAMA_NOTU = "Bu ilanlar listemizde değil; aramayı senin için hazırladık."
 
 
 def _konum(ilan: dict) -> str:
@@ -113,6 +130,9 @@ def _eposta(
         else ""
     )
     govde = "".join(_html_ilan(i, baglanti(i) if baglanti else i["url"], adres_goster) for i in ilanlar)
+    dis_aramalar = "<br>".join(
+        f'<a href="{e(adres)}" style="color:{MUREKKEP}">{e(ad)}</a>' for ad, adres in DIS_ARAMALAR
+    )
     html_metin = f"""<!doctype html>
 <html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>{e(konu)}</title></head>
 <body style="margin:0;padding:0;background:{KAGIT}">
@@ -125,6 +145,11 @@ def _eposta(
   <p style="margin:12px 0 0;font:15px/1.55 {SANS};color:{IKINCIL}">{e(giris)}</p>
 </td></tr>{bolum_html}
 <tr><td style="padding:8px 32px 12px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0">{govde}</table></td></tr>
+<tr><td style="padding:20px 32px;border-top:1px solid {CIZGI}">
+  <p style="margin:0;font:600 15px/1.4 {SANS};color:{MUREKKEP}">Başka yerlerde de bak</p>
+  <p style="margin:6px 0 0;font:13px/1.5 {SANS};color:{IKINCIL}">{e(DIS_ARAMA_NOTU)}</p>
+  <p style="margin:10px 0 0;font:14px/1.8 {SANS};color:{MUREKKEP}">{dis_aramalar}</p>
+</td></tr>
 <tr><td style="padding:20px 32px 28px;border-top:1px solid {CIZGI}">
   <p style="margin:0;font:13px/1.6 {SANS};color:{IKINCIL}">Bu e-postayı InternReader bültenine abone olduğun için aldın. Yapay zekâ hata yapabilir; başvurmadan önce ilanı şirketin sayfasında oku.</p>
   <p style="margin:10px 0 0;font:13px/1.6 {SANS};color:{IKINCIL}"><a href="{e(site_adresi)}/#bulten" style="color:{MUREKKEP}">Tercihlerini değiştir</a> &nbsp;·&nbsp; <a href="{e(iptal_adresi)}" style="color:{MUREKKEP}">Abonelikten çık</a> &nbsp;·&nbsp; <a href="{e(site_adresi)}/kvkk" style="color:{MUREKKEP}">KVKK</a></p>
@@ -138,6 +163,7 @@ def _eposta(
             giris,
             *([bolum] if bolum else []),
             *(_metin_ilan(no, i) for no, i in enumerate(ilanlar, start=1)),
+            "\n".join(["Başka yerlerde de bak", DIS_ARAMA_NOTU, *(f"{ad}: {adres}" for ad, adres in DIS_ARAMALAR)]),
             "—",
             f"Tercihlerini değiştir: {site_adresi}/#bulten\nAbonelikten çık: {iptal_adresi}",
         ]
@@ -172,7 +198,7 @@ def bulten_epostasi(
         alici,
         f"{donem} sana uygun {n} yeni staj ilanı",
         f'{donem} sana uygun <span style="background:{FOSFOR};color:{MUREKKEP};padding:0 4px">{n} yeni ilan</span>',
-        "Şirketlerin kendi sayfalarından, seçtiğin şehir, alan ve seviyeye göre ayıklandı. Başvuru şirketin kendi sayfasında.",
+        "Şirketlerin sayfalarından ve ilan sitelerinden, seçtiğin şehir, alan ve seviyeye göre ayıklandı.",
         ilanlar,
         an,
         site_adresi,
