@@ -1,21 +1,22 @@
 {
  "surum": 1,
- "guncelleme": "2026-10-31T19:33:45.604632+03:00",
+ "guncelleme": "2026-10-31T20:08:08.208362+03:00",
  "takip_edilen_firma": 1830,
  "taranan_firma": 384,
- "aktif_ilan": 1569,
- "ogrenci_ilani": 21,
+ "aktif_ilan": 1615,
+ "ogrenci_ilani": 36,
  "sehirler": {
   "uzaktan": 315,
-  "istanbul": 269,
-  "ankara": 58,
-  "kocaeli": 5,
+  "istanbul": 296,
+  "ankara": 68,
+  "kocaeli": 6,
   "izmir": 4,
   "sakarya": 2,
   "kayseri": 1,
   "antalya": 1,
   "adana": 1,
-  "gaziantep": 1
+  "gaziantep": 1,
+  "bursa": 1
  },
  "firmalar": [
   "Analog Devices",
@@ -121,11 +122,11 @@
    "uygun": true
   },
   {
-   "baslik": "Long-Term Test Engineer Intern",
-   "firma": "Skymod",
-   "seviye": "uzun_donem_staj",
+   "baslik": "Yazılım Geliştirme Uzmanı",
+   "firma": "BEŞ YILDIZ EĞİTİM KURUMLARI",
+   "seviye": "yari_zamanli",
    "rol": "yazilim",
-   "gerekce": "Uzun dönem test mühendisliği stajı",
+   "gerekce": "Yarı zamanlı eğitim kurumu yazılım geliştirme uzmanı arıyor",
    "uygun": true
   },
   {
@@ -177,6 +178,14 @@
    "uygun": false
   },
   {
+   "baslik": "Community & Social Media Intern / Part-Time",
+   "firma": "Hiroba Games",
+   "seviye": "staj",
+   "rol": "teknik_degil",
+   "gerekce": "Topluluk ve sosyal medya stajı, pazarlama işi",
+   "uygun": false
+  },
+  {
    "baslik": "Growth Specialist (New Grad)",
    "firma": "Cypher Games",
    "seviye": "yeni_mezun",
@@ -198,14 +207,6 @@
    "seviye": "yeni_mezun",
    "rol": "diger_teknik",
    "gerekce": "Aday mühendis programı, elektro-optik donanım alanı.",
-   "uygun": false
-  },
-  {
-   "baslik": "Staj Programı",
-   "firma": "Opsin Elektro Optik",
-   "seviye": "staj",
-   "rol": "diger_teknik",
-   "gerekce": "Staj programı; alan belirtilmemiş, elektro-optik firma",
    "uygun": false
   }
  ]
