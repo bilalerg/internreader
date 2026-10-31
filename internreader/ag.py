@@ -49,7 +49,9 @@ class HttpIstemci:
             backoff_factor=1.5,
             status_forcelist=(429, 500, 502, 503, 504),
             allowed_methods=frozenset({"GET", "POST"}),
-            respect_retry_after_header=True,
+            # Sunucunun "şu kadar sonra dene" başlığına uyulmaz: bir site saatler yazınca iş parçacığı orada bekliyor ve
+            # keşif bitmiyordu (01.11.2026'da 45 dakikalık sınıra takılan yığın dökümünde görüldü). Kısa bekleme yeter.
+            respect_retry_after_header=False,
         )
         adaptor = HTTPAdapter(max_retries=yeniden, pool_connections=havuz_boyutu, pool_maxsize=havuz_boyutu)
         self.oturum.mount("https://", adaptor)

@@ -3,7 +3,7 @@
 import pytest
 import requests
 
-from internreader.ag import govdeyi_oku, metni_coz
+from internreader.ag import HttpIstemci, govdeyi_oku, metni_coz
 
 
 class SahteYanit:
@@ -36,3 +36,9 @@ def test_govde_boyutu_sinirlanir():
 def test_damla_damla_gonderen_sunucu_toplam_sureye_takilir():
     with pytest.raises(requests.Timeout):
         govdeyi_oku(SahteYanit([b"x"] * 5), azami_bayt=10_000, toplam_sure=-1)
+
+
+def test_sunucunun_uzun_bekleme_istegine_uyulmaz():
+    # "Retry-After: 7200" gibi bir başlık iş parçacığını saatlerce bekletip keşfi kilitliyordu (01.11.2026)
+    yeniden = HttpIstemci("test").oturum.get_adapter("https://ornek.com").max_retries
+    assert yeniden.respect_retry_after_header is False

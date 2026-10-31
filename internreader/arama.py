@@ -31,7 +31,7 @@ from internreader.ayar import Ayarlar
 from internreader.db import Firma, simdi
 from internreader.isleme.filtre import TURKIYE
 from internreader.kaynaklar.ats import TOPLAYICILAR
-from internreader.kesif import KARIYER_LINKI, YANLIS_SAYFA, kesfet, sayfadan_ats_bul
+from internreader.kesif import DOSYA, KARIYER_LINKI, YANLIS_SAYFA, kesfet, sayfadan_ats_bul
 
 kayit = logging.getLogger(__name__)
 
@@ -74,6 +74,7 @@ SIRKET_DEGIL = re.compile(
     r"talent\.com|bebee|ziprecruiter|monster|wellfound|angel\.co|otta|remoteok|weworkremotely|builtin|"
     r"techcareer|coderspace|toptalent|anbean|stajim|stajyeri|kampusum|stajimvar|startupjobs|kariyerim\.com|"
     r"hiring\.cafe|jobs\.com|simplyhired|adzuna|whatjobs|jobrapido|jora|neuvoo|trovit|"
+    r"isinolsun|jobsinistanbul|iagora|cvyolla|youthside|kariyerkapisi|"
     r"google|youtube|facebook|instagram|twitter|x\.com|tiktok|reddit|medium|github|wikipedia|eksisozluk|"
     r"quora|stackoverflow|teknoloji|webtekno|shiftdelete|haberturk|hurriyet|milliyet|sozcu|ntv|cnnturk|"
     r"gov\.tr|edu\.tr|bel\.tr"
@@ -355,7 +356,7 @@ def kariyer_adresi_mi(url: str, firma_alani: str) -> bool:
     if alan != firma_alani and not alan.endswith("." + firma_alani):
         return False
     yol = urllib.parse.urlparse(url).path
-    if YANLIS_SAYFA.search(yol):
+    if YANLIS_SAYFA.search(yol) or DOSYA.search(yol):
         return False
     return bool(KARIYER_LINKI.search(yol)) or alan.split(".")[0] in KARIYER_ALT_ALANI
 
