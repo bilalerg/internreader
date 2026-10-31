@@ -4,6 +4,7 @@ Kullanım (proje klasöründe):
   python -m internreader ice-aktar veri/firmalar.csv     firma listesini veritabanına al
   python -m internreader kesif [--yokla] [--kaynak K]    firmaların ilan sistemini / kariyer sayfasını bul (ayda bir)
   python -m internreader arama-kesif [--kuru] [--web-bul N]  arama API'siyle yeni firma bul (haftada bir; anahtar ister)
+  python -m internreader kariyer-ara [--sinir N] [--kuru]  sitesi olup kaynağı bilinmeyen firmaların kariyer sayfasını ara
   python -m internreader firma-kapat "Acme"               "ilanımı kaldır" talebi: firmayı taramadan ve yayından çıkar
   python -m internreader tara [--yz-tavani 0.50] [--yalnizca-ats]  ilanları topla + sınıflandır (ara tarama: kariyer sayfaları hariç)
   python -m internreader bulten-dene <eposta> [--hos-geldin | --yeni] [--gonderme]  tek adrese test e-postası (kayıt yazmaz)
@@ -27,7 +28,7 @@ from datetime import date, datetime
 from pathlib import Path
 
 from internreader import boru, depo
-from internreader.arama import arama_kesfi, web_adresi_bul
+from internreader.arama import arama_kesfi, kariyer_sayfasi_ara, web_adresi_bul
 from internreader.ayar import CIKTI, VERI, ayarlari_oku
 from internreader.bakim import bakim_yap
 from internreader.bulten import bultenleri_gonder
@@ -59,6 +60,9 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--yokla", action="store_true", help="ATS API'lerini firma adından tahminle yokla (yavaş)")
     p.add_argument("--kaynak", default=None, help="yalnızca bu kaynaktan gelen firmalar (ör. tohum_1810)")
 
+    p = alt.add_parser("kariyer-ara", help="web adresi olup kaynağı bilinmeyen firmaların kariyer sayfasını ara")
+    p.add_argument("--sinir", type=int, default=40, help="en fazla kaç firma aransın (firma başına bir kredi)")
+    p.add_argument("--kuru", action="store_true", help="veritabanına yazmadan yalnızca raporla")
     p = alt.add_parser("arama-kesif", help="arama API'siyle listede olmayan firmaları bul (haftada bir)")
     p.add_argument("--sorgu-siniri", type=int, default=None, help="en fazla kaç sorgu atılsın (kota denemesi için)")
     p.add_argument("--kuru", action="store_true", help="hiçbir şey yazma, yalnızca bulunacakları raporla")
@@ -126,6 +130,8 @@ def main(argv: list[str] | None = None) -> int:
             eski_onbellegi_ice_aktar(oturum, arg.eski_onbellek)
     elif arg.komut == "kesif":
         kesfet(ayar, oturum, arg.sinir, arg.yokla, arg.kaynak)
+    elif arg.komut == "kariyer-ara":
+        print(json.dumps(kariyer_sayfasi_ara(ayar, oturum, arg.sinir, kuru=arg.kuru), ensure_ascii=False, indent=1))
     elif arg.komut == "arama-kesif":
         rapor = {"arama": arama_kesfi(ayar, oturum, arg.sorgu_siniri, arg.kuru)}
         if arg.web_bul:

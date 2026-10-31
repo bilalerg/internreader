@@ -12,6 +12,7 @@ Arama sağlayıcısı API anahtarıyla çalışır (Serper ya da Brave); anahtar
 """
 
 import datetime
+import json
 import logging
 import re
 import urllib.parse
@@ -19,16 +20,17 @@ from collections import Counter
 from dataclasses import dataclass
 from datetime import timedelta
 
+import requests
 from sqlalchemy import select
 from sqlalchemy.orm import sessionmaker
 
 from internreader import depo
-from internreader.ag import HttpIstemci
+from internreader.ag import HttpIstemci, RobotsEngeli
 from internreader.ayar import Ayarlar
 from internreader.db import Firma, simdi
 from internreader.isleme.filtre import TURKIYE
 from internreader.kaynaklar.ats import TOPLAYICILAR
-from internreader.kesif import kesfet, sayfadan_ats_bul
+from internreader.kesif import KARIYER_LINKI, YANLIS_SAYFA, kesfet, sayfadan_ats_bul
 
 kayit = logging.getLogger(__name__)
 
@@ -100,17 +102,17 @@ def brave_ayristir(veri: dict) -> list[Sonuc]:
     ]
 
 
-def ara(http: HttpIstemci, saglayici: str, anahtar: str, sorgu: str) -> list[Sonuc]:
+def ara(http: HttpIstemci, saglayici: str, anahtar: str, sorgu: str, adet: int = 20) -> list[Sonuc]:
     if saglayici == "serper":
         veri = http.json_gonder(
             "https://google.serper.dev/search",
-            {"q": sorgu, "gl": "tr", "hl": "tr", "num": 20},
+            {"q": sorgu, "gl": "tr", "hl": "tr", "num": adet},
             basliklar={"X-API-KEY": anahtar},
         )
         return serper_ayristir(veri)
     if saglayici == "brave":
         adres = "https://api.search.brave.com/res/v1/web/search?" + urllib.parse.urlencode(
-            {"q": sorgu, "count": 20, "country": "TR", "search_lang": "tr"}
+            {"q": sorgu, "count": adet, "country": "TR", "search_lang": "tr"}
         )
         return brave_ayristir(http.json_al(adres, basliklar={"X-Subscription-Token": anahtar}))
     raise ValueError(f"bilinmeyen arama sağlayıcısı: {saglayici}")
@@ -334,4 +336,89 @@ def web_adresi_bul(
                 f.kesif_tarihi = simdi()
     if kesif_yap and bulunan:
         kesfet(ayar, oturum, kaynak=etiket, http=http)
+    return rapor
+
+
+# ---------- web adresi olan ama kaynağı bulunamayan firmalara kariyer sayfası arama ----------
+ONCELIK = ("girisim", "savunma_dogrulandi", "ai", "savunma")  # önce en çok işimize yarayacak firmalar
+DENENEN_ANAHTARI = "kariyer_arama_denenen"  # denenen firma kimlikleri: kota aynı firmaya iki kez harcanmaz
+KARIYER_ALT_ALANI = {"kariyer", "career", "careers", "jobs"}
+
+
+def kariyer_adresi_mi(url: str, firma_alani: str) -> bool:
+    """Arama sonucu, firmanın kendi sitesindeki bir kariyer sayfası mı? ("kariyer.firma.com" ya da "firma.com/careers")"""
+    alan = alan_adi(url)
+    if alan != firma_alani and not alan.endswith("." + firma_alani):
+        return False
+    yol = urllib.parse.urlparse(url).path
+    if YANLIS_SAYFA.search(yol):
+        return False
+    return bool(KARIYER_LINKI.search(yol)) or alan.split(".")[0] in KARIYER_ALT_ALANI
+
+
+def _oncelik(etiketler: list[str]) -> int:
+    return next((n for n, e in enumerate(ONCELIK) if e in etiketler), len(ONCELIK))
+
+
+def kariyer_sayfasi_ara(
+    ayar: Ayarlar, oturum: sessionmaker, sinir: int = 40, http: HttpIstemci | None = None, kuru: bool = False
+) -> dict:
+    """Keşfin ana sayfadan bulamadığı kariyer sayfalarını "site:firma.com kariyer" aramasıyla bulur.
+    Sayfada bir ilan sistemi bağlantısı varsa o da yazılır: ilanlar yapay zekâsız okunur. Sorgu başına bir arama kredisi."""
+    if not ayar.arama_saglayici:
+        return {"durum": "anahtar-yok"}
+    http = http or HttpIstemci(ayar.kullanici_ajani, ayar.http_zaman_asimi)
+    with oturum() as o:
+        denenen = set(json.loads(depo.durum_al(o, DENENEN_ANAHTARI) or "[]"))
+        adaylar = [
+            (f.id, f.ad, f.anahtar, f.etiket or [])
+            for f in o.scalars(
+                select(Firma).where(
+                    Firma.web.is_not(None), Firma.ats.is_(None), Firma.kariyer.is_(None), Firma.aktif.is_(True)
+                )
+            )
+            if f.id not in denenen and not f.anahtar.startswith("ad:")
+        ]
+    adaylar.sort(key=lambda a: (_oncelik(a[3]), a[0]))
+    sayac: Counter = Counter()
+    bulunan: list[tuple[int, str, str, str, str]] = []
+    for firma_id, ad, alan, _ in adaylar[:sinir]:
+        sorgu = f'site:{alan} kariyer OR career OR jobs OR "açık pozisyon"'
+        try:
+            sonuclar = ara(http, ayar.arama_saglayici, ayar.arama_anahtari, sorgu, adet=10)
+        except Exception as hata:  # tek sorgunun hatası taramayı durdurmaz; anahtar geçersizse kota harcanmaz
+            sayac["hata"] += 1
+            if "401" in str(hata) or "403" in str(hata):
+                break
+            continue
+        sayac["sorgu"] += 1
+        denenen.add(firma_id)
+        adres = next((s.url for s in sonuclar if kariyer_adresi_mi(s.url, alan)), None)
+        if not adres:
+            continue
+        try:
+            ats, slug = sayfadan_ats_bul(http.sayfa(adres)[1])
+        except RobotsEngeli:  # robots.txt izin vermiyorsa sayfa hiç kaydedilmez
+            sayac["robots"] += 1
+            continue
+        except (requests.RequestException, ValueError):
+            ats, slug = "", ""  # bugün açılmadı: sabah taraması yeniden dener
+        bulunan.append((firma_id, ad, adres, ats, slug))
+    sayac.update(bulunan=len(bulunan), ilan_sistemi=sum(1 for b in bulunan if b[3]))
+    rapor = {
+        "durum": "kuru" if kuru else "tamam",
+        **sayac,
+        "kalan": max(len(adaylar) - sinir, 0),
+        "ornekler": [f"{ad}: {adres}" for _, ad, adres, _, _ in bulunan[:15]],
+    }
+    if kuru:
+        return rapor
+    with oturum.begin() as o:
+        for firma_id, _, adres, ats, slug in bulunan:
+            firma = o.get(Firma, firma_id)
+            firma.kariyer = adres
+            if ats:
+                firma.ats, firma.slug = ats, slug
+        depo.durum_yaz(o, DENENEN_ANAHTARI, json.dumps(sorted(denenen)))
+    kayit.info("Kariyer sayfası araması: %s", {k: v for k, v in rapor.items() if k != "ornekler"})
     return rapor

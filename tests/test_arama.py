@@ -11,6 +11,8 @@ from internreader.arama import (
     arama_kesfi,
     ats_adi,
     basliktan_ad,
+    kariyer_adresi_mi,
+    kariyer_sayfasi_ara,
     sorgular,
     web_adresi_bul,
 )
@@ -190,3 +192,56 @@ def test_web_adresi_bulunamayan_firma_hemen_yeniden_sorgulanmaz(oturum):
     assert web_adresi_bul(_ayar(), oturum, http=http, kesif_yap=False)["sorgu"] == 1
     assert web_adresi_bul(_ayar(), oturum, http=http, kesif_yap=False).get("sorgu", 0) == 0
     assert len(http.istekler) == 1
+
+
+def test_kariyer_adresi_yalnizca_firmanin_kendi_kariyer_sayfasidir():
+    assert kariyer_adresi_mi("https://www.acme.com.tr/tr/kariyer", "acme.com.tr")
+    assert kariyer_adresi_mi("https://kariyer.acme.com.tr/", "acme.com.tr")
+    assert not kariyer_adresi_mi("https://www.acme.com.tr/hakkimizda", "acme.com.tr")
+    assert not kariyer_adresi_mi("https://www.acme.com.tr/blog/kariyer", "acme.com.tr")
+    assert not kariyer_adresi_mi("https://notacme.com.tr/kariyer", "acme.com.tr")
+
+
+def test_kariyer_sayfasi_aranir_ilan_sistemi_yazilir_ve_ayni_firma_tekrar_sorgulanmaz(oturum):
+    with oturum.begin() as o:
+        depo.firma_ekle_veya_guncelle(o, "Kurumsal", web="https://kurumsal.com", etiket=["teknopark"])
+        depo.firma_ekle_veya_guncelle(o, "Girisim", web="https://girisim.ai", etiket=["girisim"])
+        depo.firma_ekle_veya_guncelle(o, "Bos", web="https://bos.com", etiket=["ai"])
+
+    def cevap(url, govde):
+        if "site:girisim.ai" in govde["q"]:
+            return _serper(("https://girisim.ai/careers", "Careers"))
+        if "site:kurumsal.com" in govde["q"]:
+            return _serper(("https://kurumsal.com/kariyer", "Kariyer"))
+        return _serper(("https://bos.com/hakkimizda", "Biz"))
+
+    sayfalar = {
+        "https://girisim.ai/careers": '<a href="https://jobs.lever.co/girisim">Jobs</a>',
+        "https://kurumsal.com/kariyer": "<p>Kariyer</p>",
+    }
+    http = SahteHttp(jsonlar={"serper.dev": cevap}, sayfalar=sayfalar)
+    rapor = kariyer_sayfasi_ara(_ayar(), oturum, sinir=2, http=http)
+    assert rapor["sorgu"] == 2 and rapor["kalan"] == 1
+    gonderilen = [g["q"] for _, g, _ in http.istekler]
+    assert "site:girisim.ai" in gonderilen[0] and "site:bos.com" in gonderilen[1]  # öncelik: girişim, sonra ai
+    with oturum() as o:
+        firmalar = {f.ad: f for f in o.scalars(select(Firma))}
+    assert firmalar["Girisim"].ats == "lever" and firmalar["Girisim"].slug == "girisim"
+    assert firmalar["Bos"].kariyer is None
+
+    ikinci = SahteHttp(jsonlar={"serper.dev": cevap}, sayfalar=sayfalar)
+    rapor = kariyer_sayfasi_ara(_ayar(), oturum, sinir=5, http=ikinci)
+    assert rapor["sorgu"] == 1 and rapor["bulunan"] == 1  # yalnızca denenmemiş olan
+    with oturum() as o:
+        assert o.scalar(select(Firma).where(Firma.ad == "Kurumsal")).kariyer == "https://kurumsal.com/kariyer"
+
+
+def test_kariyer_aramasi_kuru_modda_yazmaz_ve_anahtarsiz_atlanir(oturum):
+    with oturum.begin() as o:
+        depo.firma_ekle_veya_guncelle(o, "Firma", web="https://firma.com")
+    http = SahteHttp(jsonlar={"serper.dev": _serper(("https://firma.com/careers", "C"))})
+    rapor = kariyer_sayfasi_ara(_ayar(), oturum, http=http, kuru=True)
+    assert rapor["durum"] == "kuru" and rapor["bulunan"] == 1
+    with oturum() as o:
+        assert o.scalar(select(Firma)).kariyer is None
+    assert kariyer_sayfasi_ara(_ayar(""), oturum)["durum"] == "anahtar-yok"

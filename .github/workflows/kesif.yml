@@ -8,6 +8,11 @@ on:
     - cron: "0 3 * * 1" # pazartesi 06:00 (Türkiye)
     - cron: "0 2 1 * *" # ayın 1'i 05:00 (Türkiye)
   workflow_dispatch:
+    inputs:
+      kariyer_ara:
+        description: "Kaç firmanın kariyer sayfası aransın (firma başına bir Serper kredisi)"
+        type: number
+        default: 40
 
 permissions:
   contents: read
@@ -36,7 +41,9 @@ jobs:
         run: pip install -r requirements.txt
       - name: Arama keşfi
         if: ${{ github.event.schedule != '0 2 1 * *' }}
-        run: python -m internreader arama-kesif --web-bul 40
+        run: |
+          python -m internreader arama-kesif --web-bul 40
+          python -m internreader kariyer-ara --sinir ${{ inputs.kariyer_ara || 40 }}
       - name: Aylık keşif
         if: ${{ github.event.schedule == '0 2 1 * *' || github.event_name == 'workflow_dispatch' }}
         run: python -m internreader kesif

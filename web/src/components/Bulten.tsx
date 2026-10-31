@@ -321,8 +321,7 @@ export default function Bulten({ ilanlar: gomulu, guncelleme: gomuluTarih }: Pro
               </div>
               <p className="mt-2 text-[0.8rem] text-murekkep-3">
                 Çalışma modelini yazmayan ilanlar yalnızca &ldquo;fark etmez&rdquo;de gelir. Girişim: elle doğrulanmış
-                ya da yapay zekâ girişim haritasındaki firmalar; büyük ve köklü şirketler hariç. zekâ girişimi
-                listelerindeki firmalar; bankalar ve büyük şirketler hariç.
+                ya da yapay zekâ girişim haritasındaki firmalar; büyük ve köklü şirketler hariç.
               </p>
             </fieldset>
 
