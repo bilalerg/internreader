@@ -47,9 +47,12 @@ jobs:
       # Önce ücretsiz keşif: ana sayfasında kariyer bağlantısı olan firmaya arama kredisi harcanmaz
       - name: Aylık keşif
         if: ${{ github.event.schedule == '0 2 1 * *' || github.event_name == 'workflow_dispatch' }}
+        timeout-minutes: 50
+        continue-on-error: true # takılsa da arama adımı çalışır
         run: python -m internreader kesif
       - name: Arama keşfi
         if: ${{ github.event.schedule != '0 2 1 * *' }}
+        timeout-minutes: 60
         run: |
           python -m internreader arama-kesif --web-bul ${{ inputs.web_bul || 40 }}
           {

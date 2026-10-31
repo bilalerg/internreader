@@ -1,5 +1,7 @@
 """Keşif: ATS bağlantısı bulma, kariyer bağlantısı seçme ve yoklama (sahte ağ ile)."""
 
+import time
+
 from internreader import depo
 from internreader.ayar import ayarlari_oku
 from internreader.kesif import firmayi_kesfet, kariyer_baglantilari, kesfet, sayfadan_ats_bul
@@ -83,3 +85,11 @@ def test_yeni_ilan_sistemleri_sayfadan_bulunur():
 def test_on_ekli_kariyer_baglantisi_bulunur():
     html = '<a href="/why-join-us">Neden biz</a><a href="/blog-careers-tips">x</a><a href="/products">y</a>'
     assert kariyer_baglantilari("https://www.kaizenloyalty.com/", html) == ["https://www.kaizenloyalty.com/why-join-us"]
+
+
+def test_gomulu_buyuk_gorsel_ilan_sistemi_aramasini_kilitlemez():
+    gorsel = "aB3d" * 750_000  # 3 MB base64: düzeltmeden önce bu sayfada arama saatler sürüyordu
+    sayfa = f'<img src="data:image/png;base64,{gorsel}"><a href="https://jobs.lever.co/acme">İlanlar</a>'
+    bas = time.monotonic()
+    assert sayfadan_ats_bul(sayfa) == ("lever", "acme")
+    assert time.monotonic() - bas < 5

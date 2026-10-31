@@ -72,7 +72,14 @@ YOKLAMA_SIRASI = [
 ]
 
 
+# Sayfaya gömülü görsel ve yazı tipleri (base64). Harf dizisi arayan desenler ("x.recruitee.com") böyle bir dizide her
+# harften yeniden başlar: 3 MB'lik sayfada saatler sürer ve bütün iş parçacıklarını durdurur (31.10.2026 keşfi 600/618'de
+# 2 saat takıldı). Hiçbir ilan sistemi adresi bu kadar uzun değil.
+_UZUN_DIZI = re.compile(r"[A-Za-z0-9+/=_.\-]{500,}")
+
+
 def sayfadan_ats_bul(metin: str) -> tuple[str, str]:
+    metin = _UZUN_DIZI.sub(" ", metin)
     for ats, desen in ATS_DESENLERI:
         # Avature'da büyük/küçük harf anlamlı (en_US, SearchJobs); diğer desenler harf duyarsız aranır.
         bulunan = re.findall(desen, metin) if ats == "avature" else re.findall(desen, metin, re.I)

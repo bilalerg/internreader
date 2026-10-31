@@ -22,8 +22,10 @@ Kullanım (proje klasöründe):
 
 import argparse
 import dataclasses
+import faulthandler
 import json
 import logging
+import sys
 from datetime import date, datetime
 from pathlib import Path
 
@@ -43,6 +45,7 @@ from internreader.yayin.json_disa import icerik_degisti
 from internreader.yz.degerlendirme import degerlendir, seti_oku
 
 kayit = logging.getLogger("internreader")
+KESIF_AZAMI_SN = 45 * 60
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -129,7 +132,12 @@ def main(argv: list[str] | None = None) -> int:
         if arg.eski_onbellek:
             eski_onbellegi_ice_aktar(oturum, arg.eski_onbellek)
     elif arg.komut == "kesif":
-        kesfet(ayar, oturum, arg.sinir, arg.yokla, arg.kaynak)
+        # Takılırsa nerede takıldığı kayda düşer ve süreç biter: sonuçlar parça parça yazıldığı için iş kaybolmaz
+        faulthandler.dump_traceback_later(KESIF_AZAMI_SN, exit=True, file=sys.__stderr__)
+        try:
+            kesfet(ayar, oturum, arg.sinir, arg.yokla, arg.kaynak)
+        finally:
+            faulthandler.cancel_dump_traceback_later()
     elif arg.komut == "kariyer-ara":
         print(json.dumps(kariyer_sayfasi_ara(ayar, oturum, arg.sinir, kuru=arg.kuru), ensure_ascii=False, indent=1))
     elif arg.komut == "arama-kesif":
