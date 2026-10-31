@@ -25,6 +25,12 @@ class RobotsEngeli(Exception):
     """Site robots.txt ile bu sayfanın okunmasına izin vermiyor."""
 
 
+def hata_ozeti(hata: Exception) -> str:
+    """Kayda yazılacak kısa hata: "HTTPError 400". Hata metni kayda düşmez: içinde anahtarlı adres olabilir (Jooble)."""
+    kod = getattr(getattr(hata, "response", None), "status_code", "")
+    return f"{type(hata).__name__} {kod}".strip()
+
+
 class HttpIstemci:
     # Sunucu bu sürede bağlantıyı kabul etmezse kapalı sayılır (okuma süresi ayrı). Düşük tutmak cazip ama bazı
     # Türk barındırma firmalarının DDoS korumaları ilk bağlantı denemelerini düşürüyor: Windows/VPN üzerinden

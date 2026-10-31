@@ -61,6 +61,7 @@ class Ayarlar:
     bulten_elle: bool = False
     arama_saglayici: str = ""  # "serper", "brave" ya da "" (arama keşfi kapalı)
     arama_anahtari: str = field(default="", repr=False)  # seçilen sağlayıcının API anahtarı; asla yazdırılmaz
+    jooble_anahtari: str = field(default="", repr=False)  # boşsa Jooble kaynağı atlanır; asla yazdırılmaz
     # Sabah işini tetikleyen Vercel Cron (docs/KURULUM_UCRETSIZ.md). Boşsa uç çalışmaz, GitHub yedek zamanlaması kalır.
     cron_gizli: str = field(default="", repr=False)  # Vercel'in CRON_SECRET değeri
     github_tetik_tokeni: str = field(default="", repr=False)  # ince taneli token: yalnız bu depo, Actions: write
@@ -121,6 +122,7 @@ def ayarlari_oku() -> Ayarlar:
         bulten_elle=_ortam("INTERNREADER_BULTEN_ELLE", "0") == "1",
         arama_saglayici=arama_saglayici,
         arama_anahtari=arama_anahtari,
+        jooble_anahtari=_ortam("JOOBLE_API_KEY", ""),
         cron_gizli=_ortam("CRON_SECRET", ""),
         github_tetik_tokeni=_ortam("GITHUB_TETIK_TOKENI", ""),
         github_depo=_ortam("GITHUB_DEPO", "bilalerg/internreader"),

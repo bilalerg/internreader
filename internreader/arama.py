@@ -25,7 +25,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import sessionmaker
 
 from internreader import depo
-from internreader.ag import HttpIstemci, RobotsEngeli
+from internreader.ag import HttpIstemci, RobotsEngeli, hata_ozeti
 from internreader.ayar import Ayarlar
 from internreader.db import Firma, simdi
 from internreader.isleme.filtre import TURKIYE
@@ -116,12 +116,6 @@ def ara(http: HttpIstemci, saglayici: str, anahtar: str, sorgu: str, adet: int =
         )
         return brave_ayristir(http.json_al(adres, basliklar={"X-Subscription-Token": anahtar}))
     raise ValueError(f"bilinmeyen arama sağlayıcısı: {saglayici}")
-
-
-def hata_ozeti(hata: Exception) -> str:
-    """Kayda yazılacak kısa hata: "HTTPError 400". Anahtar başlıkta gittiği için kayda düşmez."""
-    kod = getattr(getattr(hata, "response", None), "status_code", "")
-    return f"{type(hata).__name__} {kod}".strip()
 
 
 # ---------- sonuçlardan aday çıkarma (saf fonksiyonlar) ----------

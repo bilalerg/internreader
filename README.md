@@ -207,6 +207,7 @@ Günlük zamanlama, gece yedeği, haftalık arama keşfi ve aylık keşif için 
       gerçek gönderim kod tarafından reddedilir)
 - [ ] Alan adının DNS kaydı sunucuya yönlendirilmiş olmalı (Caddy sertifikayı kendisi alır)
 - [ ] (İsteğe bağlı) `SERPER_API_KEY` ya da `BRAVE_API_KEY`: haftalık arama keşfi; yoksa adım atlanır
+- [ ] (İsteğe bağlı) `JOOBLE_API_KEY`: haftalık Türkiye ilanları (`tr.jooble.org/api/about`); yoksa adım atlanır
 - [ ] **Herkese açık duyurudan önce:** İŞKUR'dan yazılı görüş (özel istihdam bürosu izni gerekir mi?). Site CV
       toplamıyor, başvuru almıyor, ücret almıyor, yalnızca şirketin kendi ilan sayfasına bağlantı veriyor; bu çizgi
       korunmalı (aday havuzu / işverene ücretli öne çıkarma "aracılık" sayılabilir)

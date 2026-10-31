@@ -19,7 +19,8 @@ Kurallar:
    ilan tarihi) yok → kalkar.
 4. Genel CV toplama sayfası (ilan_turu == "genel_basvuru", Hitit "New Talent") → kalkar (her kaynak).
 ATS ilanları 2 ve 3'le kalkmaz: pano kapanınca zaten düşerler. Yayın tarihi 365 günden eskiyse "sürekli açık başvuru"
-sayılır (Dream Games'in 2022'den beri açık ilanı gibi); kartta eski yıl yazılmaz.
+sayılır (Dream Games'in 2022'den beri açık ilanı gibi); kartta eski yıl yazılmaz. Jooble bir pano değildir, kapanan ilanı
+hemen düşürmez: kariyer sayfası gibi değerlendirilir.
 
 Sıralama (siralama_anahtari; bülten, site ve özet aynı sırayı kullanır): önce yeni tarihli ilanlar, aynı tazelikte
 işler eğitim ve yarışmadan, girişimler diğerlerinden, ücretliler ücreti yazmayanlardan önce; tarihsizler ve sürekli
@@ -121,7 +122,7 @@ def guncellik(
 ) -> dict:
     """{"bayat": neden ya da None, "yayin": kartta gösterilecek yayın tarihi ya da None, "surekli_acik": bool}"""
     son, ilan_gunu, yayin = _gun(son_basvuru), _gun(ilan_tarihi), _gun(yayin_tarihi)
-    ats = kaynak != "kariyer_sayfasi"
+    ats = kaynak not in ("kariyer_sayfasi", "jooble")
     surekli_acik = ats and yayin is not None and yayin < bugun - SUREKLI_ACIK_ESIGI
     gosterilen = None if surekli_acik else (yayin or ilan_gunu)
     sonuc = {"bayat": None, "yayin": gosterilen.isoformat() if gosterilen else None, "surekli_acik": surekli_acik}

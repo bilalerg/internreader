@@ -33,6 +33,7 @@ jobs:
     env:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      JOOBLE_API_KEY: ${{ secrets.JOOBLE_API_KEY }}
       INTERNREADER_GIZLI_ANAHTAR: ${{ secrets.INTERNREADER_GIZLI_ANAHTAR }}
       INTERNREADER_SITE_ADRESI: https://internreader.me
       SMTP_SUNUCU: ${{ secrets.SMTP_SUNUCU }}

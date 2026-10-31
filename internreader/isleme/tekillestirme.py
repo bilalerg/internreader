@@ -7,6 +7,7 @@ Aynı ilan farklı URL'lerle de yayınlanabiliyor (Binance Accelerator Program �
 
 import re
 import unicodedata
+from collections.abc import Iterable
 
 from internreader.model import Ilan
 
@@ -26,6 +27,19 @@ def ilan_anahtari(firma: str, baslik: str) -> str:
     """Aynı ilanı farklı URL'de tanımak için firma + başlık anahtarı. Firma farklıysa anahtar da farklıdır: başka
     firmanın aynı başlıklı ilanı ayrı ilandır."""
     return f"{_sade(firma)}|{_sade(baslik)}"
+
+
+def _ayni_firma(a: str, b: str) -> bool:
+    """İlan sitesinde firma adı farklı yazılabiliyor ("Vertigo" / "Vertigo Games", "Analog Devices, Inc.")."""
+    return a == b or (min(len(a), len(b)) >= 4 and (a.startswith(b) or b.startswith(a)))
+
+
+def bilinenleri_ele(ilanlar: list[Ilan], bilinen: Iterable[tuple[str, str]]) -> list[Ilan]:
+    """İlan sitesinden gelen sonuçlardan, firmanın kendi kaynağından zaten okuduğumuz ilanları (firma, başlık) eler."""
+    firmalar: dict[str, set[str]] = {}
+    for firma, baslik in bilinen:
+        firmalar.setdefault(_sade(baslik), set()).add(_sade(firma))
+    return [i for i in ilanlar if not any(_ayni_firma(_sade(i.firma), f) for f in firmalar.get(_sade(i.baslik), ()))]
 
 
 def tekillestir(ilanlar: list[Ilan]) -> list[Ilan]:

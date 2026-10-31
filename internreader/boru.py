@@ -11,20 +11,21 @@ import logging
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime, timedelta
 from pathlib import Path
 
 import requests
 from sqlalchemy.orm import sessionmaker
 
 from internreader import depo
-from internreader.ag import HttpIstemci, RobotsEngeli
+from internreader.ag import HttpIstemci, RobotsEngeli, hata_ozeti
 from internreader.ayar import CIKTI, Ayarlar
 from internreader.isleme.filtre import konum_uygun, yedek_siniflandirma
-from internreader.isleme.tekillestirme import tekillestir
+from internreader.isleme.tekillestirme import bilinenleri_ele, tekillestir
 from internreader.kaynaklar.ats import TOPLAYICILAR
+from internreader.kaynaklar.jooble import jooble_tara
 from internreader.kaynaklar.kariyer_sayfasi import html_ayikla, ilan_bolumu, ilan_metni, sayfa_oku
-from internreader.model import FirmaBilgisi
+from internreader.model import FirmaBilgisi, Ilan
 from internreader.yayin import TURKIYE_SAATI, zenginlestir
 from internreader.yayin.istatistik import istatistik_metni
 from internreader.yayin.json_disa import json_metni
@@ -44,6 +45,7 @@ class TaramaRaporu:
     sayfa_firma: int = 0
     ats_ilan: int = 0
     sayfa_ilan: int = 0
+    jooble_ilan: int = 0
     sayfa_durumlari: Counter = field(default_factory=Counter)
     toplam_ilan: int = 0
     yeni_ilan: int = 0
@@ -135,6 +137,32 @@ def _sayfalari_tara(http: HttpIstemci, yz: YzIstemci, firmalar: list[FirmaBilgis
     return ilanlar, basarili, yeni_onbellek, durumlar
 
 
+JOOBLE_ARALIGI = timedelta(days=7)
+
+
+def _jooble_tara(
+    ayar: Ayarlar, oturum: sessionmaker, http: HttpIstemci, okunan: list[Ilan], rapor: TaramaRaporu
+) -> list[Ilan]:
+    """Haftada bir (istek hakkı sınırlı). Anahtar yoksa atlanır. Hata taramayı durdurmaz; ertesi gün yeniden denenir."""
+    if not ayar.jooble_anahtari:
+        return []
+    bugun = datetime.now(UTC).date()
+    with oturum() as o:
+        son = depo.durum_al(o, "jooble_son_tarama")
+        if son and bugun - date.fromisoformat(son) < JOOBLE_ARALIGI:
+            return []
+        bilinen = depo.jooble_disi_aktif_ilanlar(o)
+    try:
+        ilanlar = jooble_tara(http, ayar.jooble_anahtari, bugun)
+    except Exception as hata:  # hata metninde anahtarlı adres olabilir: yalnızca özeti yazılır
+        rapor.hatalar.append(f"jooble: {hata_ozeti(hata)}")
+        kayit.warning("Jooble taranamadı (%s)", hata_ozeti(hata))
+        return []
+    with oturum.begin() as o:
+        depo.durum_yaz(o, "jooble_son_tarama", bugun.isoformat())
+    return bilinenleri_ele(ilanlar, [*bilinen, *((i.firma, i.baslik) for i in okunan)])
+
+
 def yz_olustur(ayar: Ayarlar, oturum: sessionmaker) -> YzIstemci:
     """Bir çalıştırmanın yapay zekâ istemcisi: tavan = min(çalıştırma tavanı, aylıktan kalan). Bir çalıştırmadaki
     bütün yapay zekâ işleri (sayfa okuma, sınıflandırma, ayrıntı) bu tek istemciyi ve bütçesini paylaşır."""
@@ -191,7 +219,12 @@ def tara(
     rapor.sayfa_ilan = len(sayfa_ilanlari)
     kayit.info("Kariyer sayfalarından %d ilan | %s", rapor.sayfa_ilan, dict(rapor.sayfa_durumlari))
 
-    ilanlar = tekillestir(ats_ilanlari + sayfa_ilanlari)
+    jooble_ilanlari = [] if yalnizca_ats else _jooble_tara(ayar, oturum, http, ats_ilanlari + sayfa_ilanlari, rapor)
+    rapor.jooble_ilan = len(jooble_ilanlari)
+    if not yalnizca_ats:
+        kayit.info("Jooble'dan %d ilan", rapor.jooble_ilan)
+
+    ilanlar = tekillestir(ats_ilanlari + sayfa_ilanlari + jooble_ilanlari)
     rapor.toplam_ilan = len(ilanlar)
     with oturum.begin() as o:
         yeniler, rapor.kapanan_ilan = depo.ilanlari_kaydet(

@@ -31,11 +31,12 @@ class Ilan:
     tarih: str = ""  # kaynağın verdiği yayın tarihi (YYYY-AA-GG), yoksa boş
     aciklama: str = ""  # düz metin; bazı kaynaklar listede vermez
     etiket: list[str] = field(default_factory=list)
+    kalici_url: str = ""  # adresi çalıştırmadan çalıştırmaya değişen kaynaklar (Jooble) için kimliğin kökü
 
     @property
     def kimlik(self) -> str:
         """Aynı ilanı her çalıştırmada tanımak için URL'den türetilen kalıcı kimlik."""
-        return hashlib.sha1(self.url.encode()).hexdigest()[:16]
+        return hashlib.sha1((self.kalici_url or self.url).encode()).hexdigest()[:16]
 
     def sozluk(self) -> dict:
         return {"kimlik": self.kimlik, **asdict(self)}

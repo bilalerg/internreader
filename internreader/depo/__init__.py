@@ -56,9 +56,11 @@ from internreader.depo.firmalar import (
     kesif_sonucu_yaz,
 )
 from internreader.depo.ilanlar import (
+    gorulmeyen_jooble_ilanlarini_kapat,
     ilan_gizle,
     ilanlari_kaydet,
     imzayla_kararlar,
+    jooble_disi_aktif_ilanlar,
     kapali_ilan_metinlerini_temizle,
     rol_guncelle,
     siniflandirilmamislar,
@@ -97,6 +99,8 @@ __all__ = [
     "sessiz_aboneler",
     "son_bulten_tarihi",
     "girisim_listesi_csv",
+    "gorulmeyen_jooble_ilanlarini_kapat",
+    "jooble_disi_aktif_ilanlar",
     "kapali_ilan_metinlerini_temizle",
     "rol_guncelle",
     "AYRINTI_SURUMU",

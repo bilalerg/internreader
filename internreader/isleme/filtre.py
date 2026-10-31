@@ -33,6 +33,8 @@ def konum_uygun(ilan: Ilan) -> bool:
     # Kariyer sayfası listemizdeki firmalar Türkiye'deki firmalar; sayfa konum yazmıyorsa Türkiye sayılır.
     if ilan.kaynak == "kariyer_sayfasi" and not ilan.konum:
         return True
+    if ilan.kaynak == "jooble":  # tr.jooble.org yalnız Türkiye ilanı verir; "Manisa" gibi şehirler listede yok
+        return True
     if TURKIYE.search(ilan.konum):
         return True
     # "Remote", "Remote - EMEA" gibi genel uzaktan ilanlar kabul; "Chile, Remote" gibi başka ülkeye bağlı olanlar değil.

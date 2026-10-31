@@ -13,6 +13,8 @@ import requests
 from internreader.db import Taban, oturum_fabrikasi
 from internreader.yz.istemci import YzIstemci
 
+os.environ["JOOBLE_API_KEY"] = ""  # env_yukle var olanı ezmez: .env'deki anahtar testlere girmez
+
 
 @pytest.fixture
 def oturum(tmp_path):

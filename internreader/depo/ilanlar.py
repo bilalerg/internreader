@@ -30,6 +30,8 @@ def ilanlari_kaydet(
 
     Kapanma kuralı: bu çalıştırmada başarıyla taranan bir firmanın, daha önce görülüp bu kez görülmeyen
     ilanı kapandı sayılır. Taraması başarısız olan firmanın ilanlarına dokunulmaz (site çöktü diye ilan silinmez).
+    Jooble ilanı bu kuralla kapanmaz: haftada bir gelir, aynı adlı firmanın günlük taramasında görülmemesi bir şey
+    söylemez. Uzun süre görülmeyince bakım kapatır (gorulmeyen_jooble_ilanlarini_kapat).
     """
     an = simdi()
     gelen = {i.kimlik: i for i in ilanlar}
@@ -54,13 +56,30 @@ def ilanlari_kaydet(
     # (Windows) art arda iki çalıştırma aynı zamanı alabiliyor ve "son_gorulme < an" kapananları kaçırıyordu.
     kapanacak = []
     for parca in _parcalar(sorted(basarili_firmalar)):
-        sorgu = select(IlanKaydi.kimlik).where(IlanKaydi.firma.in_(parca), IlanKaydi.aktif.is_(True))
+        sorgu = select(IlanKaydi.kimlik).where(
+            IlanKaydi.firma.in_(parca), IlanKaydi.aktif.is_(True), IlanKaydi.kaynak != "jooble"
+        )
         if sayfa_ilanlari_korunsun:
             sorgu = sorgu.where(IlanKaydi.kaynak != "kariyer_sayfasi")
         kapanacak += [k for k in oturum.scalars(sorgu) if k not in gelen]
     for parca in _parcalar(kapanacak):
         oturum.execute(update(IlanKaydi).where(IlanKaydi.kimlik.in_(parca)).values(aktif=False))
     return yeniler, len(kapanacak)
+
+
+def jooble_disi_aktif_ilanlar(oturum: Session) -> list[tuple[str, str]]:
+    """Firmanın kendi kaynağından okuduğumuz açık ilanlar (firma, başlık): Jooble'dan gelen kopyaları elemek için."""
+    sorgu = select(IlanKaydi.firma, IlanKaydi.baslik).where(IlanKaydi.aktif.is_(True), IlanKaydi.kaynak != "jooble")
+    return [(firma, baslik) for firma, baslik in oturum.execute(sorgu)]
+
+
+def gorulmeyen_jooble_ilanlarini_kapat(oturum: Session, once: datetime) -> int:
+    sonuc = oturum.execute(
+        update(IlanKaydi)
+        .where(IlanKaydi.kaynak == "jooble", IlanKaydi.aktif.is_(True), IlanKaydi.son_gorulme < once)
+        .values(aktif=False)
+    )
+    return sonuc.rowcount or 0
 
 
 def siniflandirilmamislar(oturum: Session, kimlikler: Iterable[str]) -> set[str]:
