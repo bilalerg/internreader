@@ -405,6 +405,7 @@ def yayinla(oturum: sessionmaker, cikti_dizini: Path = CIKTI, tam_liste_linki: s
             konumlar=depo.aktif_konumlar(o),
             firma_adlari=depo.ornek_firma_adlari(o),
             kararlar=depo.ornek_kararlar(o, uygun=True, sinir=6) + depo.ornek_kararlar(o, uygun=False, sinir=10),
+            huni=depo.ilan_hunisi(o),
         )
     yeniler = [i for i in yeniler if taze_mi(i, an)]
 

@@ -1,6 +1,7 @@
 """Site ve izleme için özet veriler (sayılar, örnek firmalar, yapay zekâ kararlarından örnekler)."""
 
 import json
+from collections import Counter
 
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
@@ -11,6 +12,8 @@ from internreader.depo.bulten import bulten_istatistigi
 from internreader.depo.durum import durum_al
 from internreader.depo.ilanlar import yayinlanacak_ilanlar
 from internreader.depo.kullanim import bu_ay_harcanan
+from internreader.isleme.filtre import konum_uygun
+from internreader.model import HEDEF_ROLLER, OGRENCI_SEVIYELERI, Ilan
 
 
 def taranan_firma_sayisi(oturum: Session) -> int:
@@ -40,6 +43,53 @@ def ornek_firma_adlari(oturum: Session, sinir: int = 60) -> list[str]:
         .order_by(Firma.id)
     )
     return list(oturum.scalars(sorgu.limit(sinir)))
+
+
+def ilan_hunisi(oturum: Session, ornek: int = 20) -> dict:
+    """Aktif ilanların yayına kadar nerede elendiği. Kaçırılan ilan var mı diye bakmak için en sınırdaki iki gruptan
+    örnek başlık verir: seviyesi belirsiz hedef rol işleri ve öğrenci seviyesinde "diğer teknik" işler."""
+    sorgu = (
+        select(
+            IlanKaydi.firma,
+            IlanKaydi.baslik,
+            IlanKaydi.konum,
+            IlanKaydi.kaynak,
+            Siniflandirma.seviye,
+            Siniflandirma.rol,
+        )
+        .outerjoin(Siniflandirma, Siniflandirma.kimlik == IlanKaydi.kimlik)
+        .where(IlanKaydi.aktif.is_(True), IlanKaydi.gizli.is_(False))
+        .order_by(IlanKaydi.kimlik)
+    )
+    aktif = konum_disi = siniflanmamis = 0
+    seviyeler, roller = Counter(), Counter()
+    belirsiz, diger_teknik = [], []
+    for firma, baslik, konum, kaynak, seviye, rol in oturum.execute(sorgu):
+        aktif += 1
+        if not konum_uygun(Ilan(firma=firma, baslik=baslik, url="", kaynak=kaynak, konum=konum or "")):
+            konum_disi += 1
+        elif seviye is None:
+            siniflanmamis += 1
+        else:
+            seviyeler[seviye] += 1
+            roller[rol] += 1
+            if seviye == "belirsiz" and rol in HEDEF_ROLLER:
+                belirsiz.append(f"{firma}: {baslik}")
+            elif seviye in OGRENCI_SEVIYELERI and rol == "diger_teknik":
+                diger_teknik.append(f"{firma}: {baslik}")
+    nedenler = Counter(i["bayat"] or "yayinda" for i in yayinlanacak_ilanlar(oturum, bayatlar_dahil=True))
+    return {
+        "aktif": aktif,
+        "konum_disi": konum_disi,
+        "siniflanmamis": siniflanmamis,
+        "seviye": dict(seviyeler.most_common()),
+        "rol": dict(roller.most_common()),
+        "ogrenciye_uygun": dict(nedenler.most_common()),
+        "belirsiz_seviye_hedef_rol": len(belirsiz),
+        "ogrenci_seviye_diger_teknik": len(diger_teknik),
+        "ornek_belirsiz": belirsiz[:ornek],
+        "ornek_diger_teknik": diger_teknik[:ornek],
+    }
 
 
 def ornek_kararlar(oturum: Session, uygun: bool, sinir: int = 8) -> list[dict]:

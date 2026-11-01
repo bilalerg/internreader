@@ -81,6 +81,7 @@ from internreader.depo.onbellek import (
 )
 from internreader.depo.ozet import (
     aktif_konumlar,
+    ilan_hunisi,
     istatistik,
     ornek_firma_adlari,
     ornek_kararlar,
@@ -103,6 +104,7 @@ __all__ = [
     "son_bulten_tarihi",
     "girisim_listesi_csv",
     "firma_adlari",
+    "ilan_hunisi",
     "gorulmeyen_jooble_ilanlarini_kapat",
     "jooble_disi_aktif_ilanlar",
     "sayfa_tarihi_bekleyenler",

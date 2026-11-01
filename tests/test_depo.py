@@ -84,3 +84,25 @@ def test_ayni_firma_adresli_ve_adresiz_gelince_tek_kayit_olur(oturum):
     with oturum() as o:
         firmalar = depo.aktif_firmalar(o)
         assert len(firmalar) == 1 and firmalar[0].web == "https://vngrs.com" and firmalar[0].etiket == ["ai"]
+
+
+def test_ilan_hunisi_elenenleri_sayar_siniri_gosterir(oturum):
+    def kayit(url, baslik, konum, karar=None):
+        i = Ilan(firma="Acme", baslik=baslik, url=url, kaynak="lever", konum=konum, tarih="")
+        with oturum.begin() as o:
+            depo.ilanlari_kaydet(o, [i], set())
+            if karar:
+                seviye, rol = karar
+                depo.siniflandirma_kaydet(o, {i.kimlik: {"seviye": seviye, "rol": rol, "yapay_zeka": "yok"}}, "t")
+
+    kayit("https://a.test/1", "Backend", "Berlin")
+    kayit("https://a.test/2", "Bekleyen", "Istanbul")
+    kayit("https://a.test/3", "Software Engineer", "Istanbul", ("belirsiz", "yazilim"))
+    kayit("https://a.test/4", "Donanım Stajı", "Ankara", ("staj", "diger_teknik"))
+    kayit("https://a.test/5", "Yazılım Stajı", "Istanbul", ("staj", "yazilim"))
+    with oturum() as o:
+        huni = depo.ilan_hunisi(o)
+    assert huni["aktif"] == 5 and huni["konum_disi"] == 1 and huni["siniflanmamis"] == 1
+    assert huni["ogrenciye_uygun"] == {"yayinda": 1}
+    assert huni["ornek_belirsiz"] == ["Acme: Software Engineer"]
+    assert huni["ornek_diger_teknik"] == ["Acme: Donanım Stajı"]

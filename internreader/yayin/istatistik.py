@@ -33,6 +33,7 @@ def istatistik_metni(
     konumlar: list[str],
     firma_adlari: list[str],
     kararlar: list[dict],
+    huni: dict | None = None,
 ) -> str:
     veri = {
         "surum": SURUM,
@@ -44,5 +45,6 @@ def istatistik_metni(
         "sehirler": sehir_dagilimi(konumlar),
         "firmalar": list(dict.fromkeys(gorunen_ad(a) for a in firma_adlari)),
         "kararlar": [{**k, "firma": gorunen_ad(k["firma"])} for k in kararlar],
+        "huni": huni or {},  # aktif ilanların yayına kadar nerede elendiği (site kullanmaz, izleme için)
     }
     return json.dumps(veri, ensure_ascii=False, indent=1)
