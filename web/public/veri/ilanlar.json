@@ -1,7 +1,7 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-01T09:24:15.626772+03:00",
- "sayi": 38,
+ "guncelleme": "2026-11-01T16:04:56.520616+03:00",
+ "sayi": 50,
  "ilanlar": [
   {
    "kimlik": "77538c8e1766be6d",
@@ -10,7 +10,7 @@
    "url": "https://analogdevices.wd1.myworkdayjobs.com/External/job/Turkey-Istanbul-Bilisim-Vadisi/Software-Engineer-Intern_R267005",
    "konum": "Turkey, Istanbul, Bilisim Vadisi",
    "kaynak": "workday",
-   "yayin_tarihi": "2026-11-01",
+   "yayin_tarihi": "2026-10-31",
    "ilk_gorulme": "2026-10-31T12:21:20.424356+00:00",
    "seviye": "staj",
    "rol": "yazilim",
@@ -21,7 +21,7 @@
    ],
    "calisma_modeli": "belirsiz",
    "girisim": false,
-   "yayin": "2026-11-01",
+   "yayin": "2026-10-31",
    "surekli_acik": false,
    "ilan_turu": "is",
    "seviye_etiketi": "Staj",
@@ -543,7 +543,7 @@
    "url": "https://analogdevices.wd1.myworkdayjobs.com/External/job/Turkey-Istanbul-Bilisim-Vadisi/Embedded-Software-Engineering-Intern_R267001",
    "konum": "Turkey, Istanbul, Bilisim Vadisi",
    "kaynak": "workday",
-   "yayin_tarihi": "2026-10-23",
+   "yayin_tarihi": "2026-10-22",
    "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
    "seviye": "staj",
    "rol": "yazilim",
@@ -554,7 +554,7 @@
    ],
    "calisma_modeli": "belirsiz",
    "girisim": false,
-   "yayin": "2026-10-23",
+   "yayin": "2026-10-22",
    "surekli_acik": false,
    "ilan_turu": "is",
    "seviye_etiketi": "Staj",
@@ -1078,6 +1078,142 @@
    "uzaktan": false
   },
   {
+   "kimlik": "94bcf5557752da7c",
+   "firma": "Rapsodo",
+   "baslik": "Junior Computer Vision Engineer",
+   "url": "https://apply.workable.com/j/C227097436",
+   "konum": "Ankara, Turkey",
+   "kaynak": "workable",
+   "yayin_tarihi": "2026-03-31",
+   "ilk_gorulme": "2026-11-01T13:03:46.911796+00:00",
+   "seviye": "junior",
+   "rol": "yapay_zeka",
+   "yapay_zeka": "ozunde",
+   "ayrinti": null,
+   "alanlar": [
+    "yapay_zeka"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": "2026-03-31",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Junior",
+   "firma_gorunen": "Rapsodo",
+   "sehirler": [
+    "ankara"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "d1ffb977ed7972e0",
+   "firma": "Werover",
+   "baslik": "Machine Learning & Data Intern",
+   "url": "https://www.werover.com/careers#60a97d2c",
+   "konum": "İzmir / Qatar",
+   "kaynak": "kariyer_sayfasi",
+   "yayin_tarihi": "",
+   "ilk_gorulme": "2026-11-01T13:03:46.911796+00:00",
+   "seviye": "staj",
+   "rol": "yapay_zeka",
+   "yapay_zeka": "ozunde",
+   "ayrinti": {
+    "ozet": "",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": null,
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": []
+   },
+   "alanlar": [
+    "yapay_zeka"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": true,
+   "yayin": null,
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Staj",
+   "firma_gorunen": "Werover",
+   "sehirler": [
+    "izmir"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "a841cb48f9841396",
+   "firma": "Werover",
+   "baslik": "QA Intern",
+   "url": "https://www.werover.com/careers#b8b29881",
+   "konum": "İzmir / Qatar",
+   "kaynak": "kariyer_sayfasi",
+   "yayin_tarihi": "",
+   "ilk_gorulme": "2026-11-01T13:03:46.911796+00:00",
+   "seviye": "staj",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Werover platformunda QA stajı: özellikleri test edip hataları raporlamak, test senaryoları yazmak ve düzeltmeleri doğrulamak. Geliştirici stajyeriyle birlikte çalışılır.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": "CS, Yazılım Mühendisliği veya ilgili bölümlerde kayıtlı, zorunlu staj yapması gereken İngilizce bilen öğrenciler…",
+    "calisma_modeli": "hibrit",
+    "ucretli": "belirsiz",
+    "teknolojiler": []
+   },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "hibrit",
+   "girisim": true,
+   "yayin": null,
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Staj",
+   "firma_gorunen": "Werover",
+   "sehirler": [
+    "izmir"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "3526c5843c4ac115",
+   "firma": "Werover",
+   "baslik": "Software Development Intern",
+   "url": "https://www.werover.com/careers#92196f10",
+   "konum": "İzmir / Qatar",
+   "kaynak": "kariyer_sayfasi",
+   "yayin_tarihi": "",
+   "ilk_gorulme": "2026-11-01T13:03:46.911796+00:00",
+   "seviye": "staj",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": null,
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": []
+   },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": true,
+   "yayin": null,
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Staj",
+   "firma_gorunen": "Werover",
+   "sehirler": [
+    "izmir"
+   ],
+   "uzaktan": false
+  },
+  {
    "kimlik": "4e21d0369bdd61bf",
    "firma": "Skymod",
    "baslik": "Long-Term Test Engineer Intern",
@@ -1115,6 +1251,314 @@
    "ilan_turu": "is",
    "seviye_etiketi": "Uzun dönem staj",
    "firma_gorunen": "Skymod",
+   "sehirler": [],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "a1071dad2b5da606",
+   "firma": "PİXA BİLİŞİM TEKNOLOJİLERİ A.Ş.",
+   "baslik": "05 Yazılım Geliştirici Stajyeri",
+   "url": "https://pixasoftware.com/kariyer/yazilim-gelistirici-stajyeri/",
+   "konum": "İstanbul [Hibrit]",
+   "kaynak": "kariyer_sayfasi",
+   "yayin_tarihi": "",
+   "ilk_gorulme": "2026-11-01T13:03:46.911796+00:00",
+   "seviye": "staj",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Canlıdaki ürünün kodunda ekiple çalışarak küçük geliştirmeler, hata düzeltmeleri ve pazaryeri ile kargo entegrasyonları yapılacak.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": "Bilgisayar ya da yazılım mühendisliği veya ilgili bölümlerde 3. veya 4. sınıf öğrencileri, haftada en az 3 tam gün…",
+    "calisma_modeli": "hibrit",
+    "ucretli": "evet",
+    "teknolojiler": [
+     "Node.js",
+     "TypeScript",
+     "Vue.js",
+     "Express",
+     "SQL",
+     "Git"
+    ]
+   },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "hibrit",
+   "girisim": false,
+   "yayin": null,
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Staj",
+   "firma_gorunen": "PİXA",
+   "sehirler": [
+    "istanbul"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "b7c4bafeb907660e",
+   "firma": "5M",
+   "baslik": "Junior Yazılım Uzmanı",
+   "url": "https://www.5m.com.tr/insan-kaynaklari/#931dd3af",
+   "konum": "",
+   "kaynak": "kariyer_sayfasi",
+   "yayin_tarihi": "",
+   "ilk_gorulme": "2026-11-01T13:03:46.911796+00:00",
+   "seviye": "junior",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Junior yazılım uzmanı pozisyonu için başvuru alınmaktadır. Görev ayrıntıları metinde yer almamaktadır.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": null,
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": []
+   },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": null,
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Junior",
+   "firma_gorunen": "5M",
+   "sehirler": [],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "d11d3a41c3cee4d5",
+   "firma": "Heetsoft",
+   "baslik": "Junior Yazılım Geliştirme Uzmanı",
+   "url": "https://heetsoft.com/junior-yazilim-gelistirme-uzmani-acik-pozisyonlar",
+   "konum": "İstanbul",
+   "kaynak": "kariyer_sayfasi",
+   "yayin_tarihi": "",
+   "ilk_gorulme": "2026-11-01T13:03:46.911796+00:00",
+   "seviye": "junior",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Yazılım projelerini analiz edip tasarlamak, web, masaüstü ve backend uygulamaları geliştirmek ve ekip içinde raporlama yapmak. İstanbul Anadolu Yakası'nda çalışılacak.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": "Yeni mezun veya en fazla 2 yıl deneyimli, ilgili lisans bölümü mezunu adaylar",
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": [
+     "C#",
+     ".NET",
+     "MS-SQL",
+     "MongoDB"
+    ]
+   },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": null,
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Junior",
+   "firma_gorunen": "Heetsoft",
+   "sehirler": [
+    "istanbul"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "c3f74cc560bf9501",
+   "firma": "Heetsoft",
+   "baslik": "Uzun Dönem Yazılım Geliştirme Stajyeri",
+   "url": "https://heetsoft.com/uzun-donem-yazilim-gelistirme-stajyeri-acik-pozisyonlar",
+   "konum": "İstanbul",
+   "kaynak": "kariyer_sayfasi",
+   "yayin_tarihi": "",
+   "ilk_gorulme": "2026-11-01T13:03:46.911796+00:00",
+   "seviye": "uzun_donem_staj",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Şirket içi ihtiyaçlar ve projeler için kodlama, dokümantasyon ve test faaliyetlerini yürütecek uzun dönem yazılım geliştirme stajı. Kurumsal web ve masaüstü uygulamaları geliştirilecek.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": "Bilgisayar, Yazılım, Elektrik-Elektronik, Endüstri veya Matematik Mühendisliği bölümlerinde 4. sınıf öğrencileri veya…",
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": [
+     "JavaScript",
+     "React",
+     "Angular JS",
+     "C#",
+     "Java",
+     "Python"
+    ]
+   },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": null,
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Uzun dönem staj",
+   "firma_gorunen": "Heetsoft",
+   "sehirler": [
+    "istanbul"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "783a7f0fb4e07817",
+   "firma": "MGS SOFTWARE BİLGİSAYAR HİZM. SAN. VE TİC. LTD. ŞTİ",
+   "baslik": "Junior Backend Yazılımcı",
+   "url": "https://mgssoftware.net/careers#42b6b7cc",
+   "konum": "",
+   "kaynak": "kariyer_sayfasi",
+   "yayin_tarihi": "",
+   "ilk_gorulme": "2026-11-01T13:03:46.911796+00:00",
+   "seviye": "junior",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": null,
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": []
+   },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": null,
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Junior",
+   "firma_gorunen": "MGS SOFTWARE BİLGİSAYAR HİZM",
+   "sehirler": [],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "efabb7ae6d99bb10",
+   "firma": "MGS SOFTWARE BİLGİSAYAR HİZM. SAN. VE TİC. LTD. ŞTİ",
+   "baslik": "Junior Frontend Yazılımcı",
+   "url": "https://mgssoftware.net/careers#6a9a13dd",
+   "konum": "",
+   "kaynak": "kariyer_sayfasi",
+   "yayin_tarihi": "",
+   "ilk_gorulme": "2026-11-01T13:03:46.911796+00:00",
+   "seviye": "junior",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": null,
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": []
+   },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": null,
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Junior",
+   "firma_gorunen": "MGS SOFTWARE BİLGİSAYAR HİZM",
+   "sehirler": [],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "fa71d10b39e3c844",
+   "firma": "NAR BULUT BİLGİ TEKNOLOJİLERİ SAN. VE TİC. A.Ş. TEKNOPARK ŞUBESİ",
+   "baslik": "Backend Yazılım Geliştirici (Junior)",
+   "url": "https://narbulut.com/insan-kaynaklari/#b0d845f4",
+   "konum": "İkitelli, İstanbul",
+   "kaynak": "kariyer_sayfasi",
+   "yayin_tarihi": "",
+   "ilk_gorulme": "2026-11-01T13:03:46.911796+00:00",
+   "seviye": "junior",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Backend yazılım geliştirici (junior) pozisyonu. En az bir backend programlama dilinde temel bilgi ve SQL temelleri bekleniyor. Kıdemli geliştiricilerden mentorluk alarak gerçek ürünlere katkı sağlanacak.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": null,
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": [
+     "SQL"
+    ]
+   },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": null,
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Junior",
+   "firma_gorunen": "NAR BULUT BİLGİ",
+   "sehirler": [
+    "istanbul"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "f301646c9d64ef57",
+   "firma": "Özgür Yazılım A.Ş.",
+   "baslik": "Taze (Jr) Java Web Geliştiricisi (W34)",
+   "url": "https://www.ozguryazilim.com.tr/is-ilani/taze-jr-java-web-gelistiricisi-w34/",
+   "konum": "",
+   "kaynak": "kariyer_sayfasi",
+   "yayin_tarihi": "",
+   "ilk_gorulme": "2026-11-01T13:03:46.911796+00:00",
+   "seviye": "junior",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Java web geliştiricisi olarak mevcut bir yazılımla uyumlu kod yazmak ve müşteri isteklerine çözüm üretmek. İlan kapanmış.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": null,
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": [
+     "Java",
+     "Spring",
+     "Maven",
+     "JPA",
+     "Thymeleaf",
+     "HTML"
+    ]
+   },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": null,
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Junior",
+   "firma_gorunen": "Özgür",
    "sehirler": [],
    "uzaktan": false
   },

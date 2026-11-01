@@ -1,21 +1,21 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-01T09:24:15.626772+03:00",
- "takip_edilen_firma": 1903,
- "taranan_firma": 622,
- "aktif_ilan": 6316,
- "ogrenci_ilani": 38,
+ "guncelleme": "2026-11-01T16:04:56.520616+03:00",
+ "takip_edilen_firma": 1937,
+ "taranan_firma": 656,
+ "aktif_ilan": 7930,
+ "ogrenci_ilani": 50,
  "sehirler": {
-  "uzaktan": 1220,
-  "istanbul": 555,
-  "ankara": 134,
-  "izmir": 62,
-  "kocaeli": 59,
-  "tekirdag": 54,
-  "bursa": 54,
-  "antalya": 54,
+  "uzaktan": 1381,
+  "istanbul": 705,
+  "ankara": 146,
+  "izmir": 73,
+  "kocaeli": 60,
+  "adana": 58,
+  "antalya": 56,
+  "tekirdag": 55,
+  "bursa": 55,
   "kayseri": 51,
-  "adana": 51,
   "gaziantep": 51,
   "konya": 50,
   "trabzon": 50,
@@ -150,11 +150,11 @@
    "uygun": false
   },
   {
-   "baslik": "R&D Engineer (Native Arabic Speaker)",
-   "firma": "Sestek",
+   "baslik": "Back-End Engineer",
+   "firma": "Rapsodo",
    "seviye": "belirsiz",
    "rol": "yazilim",
-   "gerekce": "Ar-Ge mühendisi, konuşma teknolojisi; AI bilgisi muhtemelen aranıyor.",
+   "gerekce": "Back-end geliştirme, seviye belirtilmemiş",
    "uygun": false
   },
   {
@@ -166,6 +166,22 @@
    "uygun": false
   },
   {
+   "baslik": "Software Architect",
+   "firma": "Roofstacks",
+   "seviye": "deneyimli",
+   "rol": "yazilim",
+   "gerekce": "Yazılım mimarı, en az 10 yıl deneyim",
+   "uygun": false
+  },
+  {
+   "baslik": "Taze (Jr) DevOps & Linux Sistem Yöneticisi (S36)",
+   "firma": "Özgür",
+   "seviye": "junior",
+   "rol": "diger_teknik",
+   "gerekce": "Jr DevOps ve Linux sistem yönetimi",
+   "uygun": false
+  },
+  {
    "baslik": "Rider Senior Supervisor",
    "firma": "Delivery Hero",
    "seviye": "deneyimli",
@@ -174,19 +190,11 @@
    "uygun": false
   },
   {
-   "baslik": "Senior ABAP Developer",
-   "firma": "SNI",
-   "seviye": "deneyimli",
-   "rol": "yazilim",
-   "gerekce": "Kıdemli ABAP geliştirici, kod yazma ağırlıklı",
-   "uygun": false
-  },
-  {
-   "baslik": "Community & Social Media Intern / Part-Time",
-   "firma": "Hiroba Games",
+   "baslik": "Staj Başvurusu",
+   "firma": "Asist Bilgi",
    "seviye": "staj",
    "rol": "teknik_degil",
-   "gerekce": "Topluluk ve sosyal medya stajı, pazarlama işi",
+   "gerekce": "Staj başvurusu, alan açıkça belirtilmemiş",
    "uygun": false
   },
   {
@@ -203,14 +211,6 @@
    "seviye": "deneyimli",
    "rol": "diger_teknik",
    "gerekce": "IT yönetici pozisyonu, yönetici seviyesi",
-   "uygun": false
-  },
-  {
-   "baslik": "PART TİME",
-   "firma": "Pvh",
-   "seviye": "yari_zamanli",
-   "rol": "teknik_degil",
-   "gerekce": "Yarı zamanlı outlet mağaza satış işi",
    "uygun": false
   }
  ]
