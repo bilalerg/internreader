@@ -1,20 +1,20 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-01T16:04:56.520616+03:00",
- "takip_edilen_firma": 1937,
- "taranan_firma": 656,
- "aktif_ilan": 7930,
- "ogrenci_ilani": 50,
+ "guncelleme": "2026-11-01T16:48:24.722705+03:00",
+ "takip_edilen_firma": 3394,
+ "taranan_firma": 931,
+ "aktif_ilan": 8297,
+ "ogrenci_ilani": 46,
  "sehirler": {
-  "uzaktan": 1381,
-  "istanbul": 705,
-  "ankara": 146,
-  "izmir": 73,
-  "kocaeli": 60,
+  "uzaktan": 1413,
+  "istanbul": 746,
+  "ankara": 198,
+  "izmir": 74,
+  "bursa": 66,
+  "kocaeli": 63,
   "adana": 58,
   "antalya": 56,
   "tekirdag": 55,
-  "bursa": 55,
   "kayseri": 51,
   "gaziantep": 51,
   "konya": 50,
@@ -158,6 +158,14 @@
    "uygun": false
   },
   {
+   "baslik": "Junior Product Manager (m/d/w)",
+   "firma": "Alphabots Robotik",
+   "seviye": "junior",
+   "rol": "teknik_degil",
+   "gerekce": "Ürün yöneticiliği, junior unvanı, teknik olmayan rol",
+   "uygun": false
+  },
+  {
    "baslik": "Senior Specialist, Generative AI & LLM",
    "firma": "Etiya",
    "seviye": "deneyimli",
@@ -203,14 +211,6 @@
    "seviye": "yeni_mezun",
    "rol": "teknik_degil",
    "gerekce": "Başlıkta New Grad; pazarlama büyüme rolü.",
-   "uygun": false
-  },
-  {
-   "baslik": "Head of IT",
-   "firma": "Ticimax",
-   "seviye": "deneyimli",
-   "rol": "diger_teknik",
-   "gerekce": "IT yönetici pozisyonu, yönetici seviyesi",
    "uygun": false
   }
  ]
