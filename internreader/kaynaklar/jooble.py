@@ -52,7 +52,8 @@ def jooble_ayristir(veri: dict) -> list[Ilan]:
     """Arama adresleri (`link`) sorguya göre değişir; kimlik Jooble'ın değişmeyen ilan numarasından türetilir."""
     ilanlar = []
     for j in veri.get("jobs", []):
-        firma, baslik, link = (j.get("company") or "").strip(), duz_metin(j.get("title")), j.get("link") or ""
+        firma = re.sub(r"^\d+\s+", "", (j.get("company") or "").strip())  # "2078 Bentley Systems"
+        baslik, link = duz_metin(j.get("title")), j.get("link") or ""
         if not (firma and baslik and link) or _YASAK_KAYNAK.search(j.get("source") or ""):
             continue
         ilanlar.append(

@@ -21,7 +21,8 @@ from internreader import depo
 from internreader.ag import HttpIstemci, RobotsEngeli, hata_ozeti
 from internreader.ayar import CIKTI, Ayarlar
 from internreader.isleme.filtre import konum_uygun, yedek_siniflandirma
-from internreader.isleme.tekillestirme import bilinenleri_ele, tekillestir
+from internreader.isleme.guncellik import sayfa_tarihleri
+from internreader.isleme.tekillestirme import bilinenleri_ele, firma_adlarini_esle, tekillestir
 from internreader.kaynaklar.ats import TOPLAYICILAR
 from internreader.kaynaklar.jooble import jooble_tara
 from internreader.kaynaklar.kariyer_sayfasi import html_ayikla, ilan_bolumu, ilan_metni, sayfa_oku
@@ -46,6 +47,7 @@ class TaramaRaporu:
     ats_ilan: int = 0
     sayfa_ilan: int = 0
     jooble_ilan: int = 0
+    sayfa_tarihi: int = 0  # sayfa kodundan tarihi okunan kariyer sayfası sayısı
     sayfa_durumlari: Counter = field(default_factory=Counter)
     toplam_ilan: int = 0
     yeni_ilan: int = 0
@@ -152,6 +154,7 @@ def _jooble_tara(
         if son and bugun - date.fromisoformat(son) < JOOBLE_ARALIGI:
             return []
         bilinen = depo.jooble_disi_aktif_ilanlar(o)
+        firma_adlari = depo.firma_adlari(o)
     try:
         ilanlar = jooble_tara(http, ayar.jooble_anahtari, bugun)
     except Exception as hata:  # hata metninde anahtarlı adres olabilir: yalnızca özeti yazılır
@@ -160,7 +163,34 @@ def _jooble_tara(
         return []
     with oturum.begin() as o:
         depo.durum_yaz(o, "jooble_son_tarama", bugun.isoformat())
+    firma_adlarini_esle(ilanlar, firma_adlari)
     return bilinenleri_ele(ilanlar, [*bilinen, *((i.firma, i.baslik) for i in okunan)])
+
+
+def _sayfa_tarihlerini_guncelle(ayar: Ayarlar, oturum: sessionmaker, http: HttpIstemci) -> int:
+    """Yayına girebilecek kariyer sayfası ilanlarının sayfa kodundaki tarihi okunur: yapay zekâ gerekmez, hayalet ilanı
+    yakalar. Okunamayan sayfa o gün atlanır."""
+    bugun = datetime.now(TURKIYE_SAATI).date()
+    with oturum() as o:
+        adresler = depo.sayfa_tarihi_bekleyenler(o)
+
+    def oku(adres: str) -> tuple[str, date | None, date | None]:
+        try:
+            return adres, *sayfa_tarihleri(http.sayfa(adres)[1], bugun)
+        except (requests.RequestException, RobotsEngeli, ValueError):
+            return adres, None, None
+
+    bulunan = 0
+    with ThreadPoolExecutor(max_workers=ayar.is_parcacigi) as havuz:
+        sonuclar = list(havuz.map(oku, adresler))
+    with oturum.begin() as o:
+        for adres, tarih, son in sonuclar:
+            if tarih or son:
+                bulunan += 1
+                depo.sayfa_tarihi_yaz(
+                    o, adresler[adres], tarih.isoformat() if tarih else "", son.isoformat() if son else None
+                )
+    return bulunan
 
 
 def yz_olustur(ayar: Ayarlar, oturum: sessionmaker) -> YzIstemci:
@@ -261,6 +291,9 @@ def tara(
         depo.siniflandirma_kaydet(o, imzadan, "imza")
         depo.siniflandirma_kaydet(o, yedekler, "kural")  # bir sonraki çalıştırmada yapay zekâyla yeniden denenir
         depo.kullanim_yaz(o, yz.kullanimlar[kullanim_basi:])
+    if not yalnizca_ats:
+        rapor.sayfa_tarihi = _sayfa_tarihlerini_guncelle(ayar, oturum, http)
+    with oturum.begin() as o:
         # İzleme: son taramanın özeti ("durum" komutu gösterir; sunucuda sorun tek bakışta görülür)
         # (asdict kullanılmaz: Counter alanını bozuyor — anahtarları demete çeviriyor)
         ozet = {**vars(rapor), "sayfa_durumlari": dict(rapor.sayfa_durumlari), "zaman": datetime.now(UTC).isoformat()}

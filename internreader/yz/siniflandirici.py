@@ -54,7 +54,8 @@ rol:
   ERP danışmanlığı/uyarlama, raporlama, Excel-Office ağırlıklı işler, BT destek.
 - teknik_degil: satış, pazarlama, sosyal medya, İK, finans, satın alma, hukuk, idari, müşteri hizmetleri;
   yapay zekâ araçlarını kullanarak reklam, içerik, görsel ya da video üretmek (yapay zekâ geliştirmek değildir);
-  müşteri kurulumu ve eğitimi, teknoloji danışmanlığı (satış ağırlıklı).
+  müşteri kurulumu ve eğitimi, teknoloji danışmanlığı (satış ağırlıklı); veri girişi, anket, içerik etiketleme gibi
+  "deneyim gerekmez" diye toplu açılan mikro görevler (başlıkta analist yazsa da).
 Yazılım firmasında olmak ya da metinde teknoloji adı geçmesi yazılım saymaya yetmez: aday ağırlıklı olarak kod yazmıyorsa
 yazilim değildir.
 

@@ -12,15 +12,16 @@ Sinyaller (hepsi ya kodla bulunur ya da kodla doğrulanır):
   dönem bildiren yıllar. "2015'te kurulduk" gibi şirket tanıtımı yılları sayılmaz; "2026 mezunları" da sayılmaz
   (geçen yılın mezunlarını arayan ilan hâlâ açık olabilir).
 
-Kurallar:
+Kurallar (ileri tarihli son başvuru 2, 3 ve 5'i durdurur):
 1. Son başvuru geçmişte → yayından kalkar (her kaynak).
-2. Kariyer sayfası ilanı: ilan_tarihi 180 günden eski ve ileri bir son başvuru yok → kalkar.
-3. Kariyer sayfası ilanı: dönem yılları var ve hepsi geçmiş yıllar; bu yıl ya da sonrası bir tarih (son başvuru,
-   ilan tarihi) yok → kalkar.
+2. Hayalet ilan: en yeni tarih (yayın, sayfa kodu ya da metin) 180 günden eski → kalkar (her kaynak; 2022'den beri açık
+   duran ATS ilanı da).
+3. Dönem geçmiş: başlıkta geçmiş yıl (her kaynak), Eylül'den sonra bu yılın yaz dönemi; kariyer sayfası ve Jooble'da metinde
+   geçmiş dönem yılı → kalkar.
 4. Genel CV toplama sayfası (ilan_turu == "genel_basvuru", Hitit "New Talent") → kalkar (her kaynak).
-ATS ilanları 2 ve 3'le kalkmaz: pano kapanınca zaten düşerler. Yayın tarihi 365 günden eskiyse "sürekli açık başvuru"
-sayılır (Dream Games'in 2022'den beri açık ilanı gibi); kartta eski yıl yazılmaz. Jooble bir pano değildir, kapanan ilanı
-hemen düşürmez: kariyer sayfası gibi değerlendirilir.
+5. Hiç tarihi olmayan ilan: ilk görüldüğünden 120 gün sonra kalkar.
+Kartta tarihi olmayan ilan "Tarih belirtilmemiş" yazar ve sıralamada geride kalır. Yeniden yayınlanan ilanın eski tarihi
+korunur (depo.ilanlari_kaydet): tarih yenilemek ilanı yeni yapmaz. Şüpheli kalıplar için: supheli_ilan.
 
 Sıralama (siralama_anahtari; bülten, site ve özet aynı sırayı kullanır): önce yeni tarihli ilanlar, aynı tazelikte
 işler eğitim ve yarışmadan, girişimler diğerlerinden, ücretliler ücreti yazmayanlardan önce; tarihsizler ve sürekli
@@ -30,8 +31,9 @@ açık ilanlar geride.
 import re
 from datetime import date, timedelta
 
-ILAN_TARIHI_OMRU = timedelta(days=180)
-SUREKLI_ACIK_ESIGI = timedelta(days=365)
+HAYALET_ESIGI = timedelta(days=180)  # bundan eski tarihli ilan, ileri bir son başvuru yoksa yayına girmez
+TARIHSIZ_OMRU = timedelta(days=120)  # tarihi hiç bulunamayan ilan, ilk görüldüğünden bu kadar sonra düşer
+_YAZ_DONEMI = re.compile(r"(?i)\byaz\b|summer")
 
 _AYLAR = {
     **dict.fromkeys(["ocak", "january", "jan"], 1),
@@ -119,25 +121,71 @@ def guncellik(
     yillar: set[int],
     bugun: date,
     ilan_turu: str = "is",
+    baslik: str = "",
+    ilk_gorulme: date | None = None,
 ) -> dict:
-    """{"bayat": neden ya da None, "yayin": kartta gösterilecek yayın tarihi ya da None, "surekli_acik": bool}"""
+    """{"bayat": neden ya da None, "yayin": kartta gösterilecek yayın tarihi ya da None, "surekli_acik": bool}.
+    `surekli_acik` artık hep False: 180 günden eski ilan yayına girmez (site ve bülten alanı okumaya devam ediyor)."""
     son, ilan_gunu, yayin = _gun(son_basvuru), _gun(ilan_tarihi), _gun(yayin_tarihi)
-    ats = kaynak not in ("kariyer_sayfasi", "jooble")
-    surekli_acik = ats and yayin is not None and yayin < bugun - SUREKLI_ACIK_ESIGI
-    gosterilen = None if surekli_acik else (yayin or ilan_gunu)
-    sonuc = {"bayat": None, "yayin": gosterilen.isoformat() if gosterilen else None, "surekli_acik": surekli_acik}
+    sayfa_gibi = kaynak in ("kariyer_sayfasi", "jooble")
+    gosterilen = yayin or ilan_gunu
+    en_yeni = max((t for t in (yayin, ilan_gunu) if t), default=None)
+    sonuc = {"bayat": None, "yayin": gosterilen.isoformat() if gosterilen else None, "surekli_acik": False}
     ileri_son_basvuru = son is not None and son >= bugun
+    bu_yil_tarihi = any(t and t.year >= bugun.year for t in (son, ilan_gunu))
+    baslik_yili = baslik_yillari(baslik)
     if ilan_turu == "genel_basvuru":
         sonuc["bayat"] = "genel_basvuru"
     elif son is not None and not ileri_son_basvuru:
         sonuc["bayat"] = "son_basvuru_gecti"
-    elif not ats and not ileri_son_basvuru and ilan_gunu and ilan_gunu < bugun - ILAN_TARIHI_OMRU:
-        sonuc["bayat"] = "eski_ilan_tarihi"
-    elif not ats and yillar and max(yillar) < bugun.year:
-        bu_yil_tarihi = any(t and t.year >= bugun.year for t in (son, ilan_gunu))
-        if not bu_yil_tarihi:
-            sonuc["bayat"] = "gecmis_donem"
+    elif ileri_son_basvuru:
+        pass
+    elif en_yeni and en_yeni < bugun - HAYALET_ESIGI:
+        sonuc["bayat"] = "eski_ilan_tarihi" if en_yeni == ilan_gunu else "hayalet"
+    elif baslik_yili and max(baslik_yili) < bugun.year and not bu_yil_tarihi:
+        sonuc["bayat"] = "gecmis_donem"
+    elif bugun.year in baslik_yili and bugun.month >= 9 and _YAZ_DONEMI.search(baslik) and not bu_yil_tarihi:
+        sonuc["bayat"] = "gecmis_donem"  # Kasım'da "2026 Yaz Stajı"
+    elif sayfa_gibi and yillar and max(yillar) < bugun.year and not bu_yil_tarihi:
+        sonuc["bayat"] = "gecmis_donem"
+    elif not en_yeni and ilk_gorulme and ilk_gorulme < bugun - TARIHSIZ_OMRU:
+        sonuc["bayat"] = "tarihsiz_eski"
     return sonuc
+
+
+_SAYFA_TARIHI = re.compile(
+    r"""(?i)(datePosted|datePublished|dateModified|article:published_time|article:modified_time|validThrough)"""
+    r"""[^0-9]{0,40}(20\d\d-\d{2}-\d{2})"""
+)
+
+
+def sayfa_tarihleri(html: str, bugun: date) -> tuple[date | None, date | None]:
+    """Sayfa kodundaki yapılandırılmış tarihler: (en son yayın ya da güncelleme, son başvuru). Sayfa bu tarihten sonra
+    değişmediyse ilan da daha yeni olamaz. Heetsoft'un "yeni" görünen ilanları böyle Mart 2025 çıktı (01.11.2026)."""
+    yayinlar, son_basvurular = [], []
+    for alan, metin in _SAYFA_TARIHI.findall(html or ""):
+        tarih = _gun(metin)
+        if tarih is None:
+            continue
+        if alan.lower() == "validthrough":
+            son_basvurular.append(tarih)
+        elif tarih <= bugun:
+            yayinlar.append(tarih)
+    return max(yayinlar, default=None), max(son_basvurular, default=None)
+
+
+_SUPHELI_BASLIK = re.compile(
+    r"(?i)no experience required|deneyim gerekmez|tecrübe gerekmez|data entry|veri girişi|evden ek gelir|anket doldur|"
+    r"bakıcı|oyun ablası"
+)
+_SUPHELI_FIRMA = re.compile(
+    r"(?i)jobgether|jobleads|crossover|lensa\b|bakıcı|\bkolej|\beğitim kurumları|\bokulları\b|\bdershane"
+)
+
+
+def supheli_ilan(firma: str, baslik: str) -> bool:
+    """Gerçek bir staj ya da junior işi olmayan kalıplar: toplu mikro görev ilanları, işe alım aracıları, okullar."""
+    return bool(_SUPHELI_BASLIK.search(baslik or "") or _SUPHELI_FIRMA.search(firma or ""))
 
 
 YENI_GUN, TAZE_GUN = 14, 45  # yayın tarihi bu kadar gün içindeyse "yeni", "taze" sayılır

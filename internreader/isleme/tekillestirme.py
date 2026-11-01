@@ -42,6 +42,13 @@ def bilinenleri_ele(ilanlar: list[Ilan], bilinen: Iterable[tuple[str, str]]) -> 
     return [i for i in ilanlar if not any(_ayni_firma(_sade(i.firma), f) for f in firmalar.get(_sade(i.baslik), ()))]
 
 
+def firma_adlarini_esle(ilanlar: list[Ilan], adlar: Iterable[str]) -> None:
+    """İlan sitesindeki "BAYKAR" bizdeki "Baykar" kaydına bağlanır: firmanın etiketleri (savunma, girişim) ilana geçer."""
+    harita = {_sade(a): a for a in adlar}
+    for i in ilanlar:
+        i.firma = harita.get(_sade(i.firma), i.firma)
+
+
 def tekillestir(ilanlar: list[Ilan]) -> list[Ilan]:
     tekil: dict[str, Ilan] = {}
     for ilan in ilanlar:

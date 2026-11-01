@@ -141,7 +141,8 @@ def test_onizleme_butun_yeni_ilanlari_sinirsiz_gosterir_eski_tarihliyi_isaretler
     for n in range(20):  # bültende firma başına 2, e-posta başına 15; önizlemede hepsi
         ilan_ekle(oturum, f"https://a.test/{n}", f"Staj {n}", "Istanbul", firma="Acme")
     with oturum.begin() as o:
-        eski = Ilan(firma="Eski", baslik="Eski Staj", url="https://e.test/1", kaynak="lever", tarih="2026-01-01")
+        tarih = (simdi() - timedelta(days=100)).date().isoformat()  # eski ama hayalet değil
+        eski = Ilan(firma="Eski", baslik="Eski Staj", url="https://e.test/1", kaynak="lever", tarih=tarih)
         depo.ilanlari_kaydet(o, [eski], set())
         depo.siniflandirma_kaydet(o, {eski.kimlik: {"seviye": "staj", "rol": "yazilim", "yapay_zeka": "yok"}}, "t")
     g = SahteGonderici()

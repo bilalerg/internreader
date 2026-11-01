@@ -6,8 +6,9 @@ from datetime import UTC, date, datetime
 from internreader import boru, depo
 from internreader.ayar import ayarlari_oku
 from internreader.bulten.sablon import bulten_epostasi
-from internreader.db import IlanAyrinti
-from internreader.isleme.guncellik import donem_yillari, guncellik, metindeki_tarihler
+from internreader.db import IlanAyrinti, IlanKaydi
+from internreader.isleme.guncellik import donem_yillari, guncellik, metindeki_tarihler, sayfa_tarihleri, supheli_ilan
+from internreader.isleme.tekillestirme import firma_adlarini_esle
 from internreader.kaynaklar.kariyer_sayfasi import ilan_bolumu
 from internreader.model import Ilan
 from internreader.yayin import tarih_bilgisi, zenginlestir
@@ -67,9 +68,19 @@ def test_guncellik_kurallari():
     assert guncellik(ks, "", "2026-11-15", "2023-05-08", {2025}, BUGUN)["bayat"] is None
     # Son başvurusu geçmiş ilan her kaynakta kaldırılır
     assert guncellik(ats, "2026-10-01", "2026-10-20", None, set(), BUGUN)["bayat"] == "son_basvuru_gecti"
-    # 2022 tarihli ATS ilanı kalır; eski yıl yazılmaz, "sürekli açık" sayılır
-    ats_2022 = guncellik(ats, "2022-03-01", None, None, {2022}, BUGUN)
-    assert ats_2022 == {"bayat": None, "yayin": None, "surekli_acik": True}
+    # 180 günden eski ilan her kaynakta hayalet sayılır (2022'den beri açık ATS ilanı da, sayfa kodundan okunan tarih de)
+    assert guncellik(ats, "2022-03-01", None, None, {2022}, BUGUN)["bayat"] == "hayalet"
+    assert guncellik(ks, "2025-03-21", None, None, set(), BUGUN)["bayat"] == "hayalet"
+    assert guncellik(ats, "2026-06-01", None, None, set(), BUGUN)["bayat"] is None
+    # Başlıkta geçmiş yıl her kaynakta, Eylül'den sonra bu yılın yaz dönemi de kalkar
+    assert (
+        guncellik(ats, "2026-10-01", None, None, set(), BUGUN, baslik="2025 Summer Intern")["bayat"] == "gecmis_donem"
+    )
+    assert guncellik(ats, "2026-10-01", None, None, set(), BUGUN, baslik="2026 Yaz Stajı")["bayat"] == "gecmis_donem"
+    assert guncellik(ats, "2026-10-01", None, None, set(), BUGUN, baslik="2027 Yaz Stajı")["bayat"] is None
+    # Hiç tarihi olmayan ilan ilk görüldüğünden 120 gün sonra düşer
+    assert guncellik(ks, "", None, None, set(), BUGUN, ilk_gorulme=date(2026, 6, 1))["bayat"] == "tarihsiz_eski"
+    assert guncellik(ks, "", None, None, set(), BUGUN, ilk_gorulme=date(2026, 8, 1))["bayat"] is None
     # Tarihsiz kariyer sayfası ilanı kalır
     assert guncellik(ks, "", None, None, set(), BUGUN) == {"bayat": None, "yayin": None, "surekli_acik": False}
     # Yeni ilan tarihi gösterilir
@@ -107,12 +118,9 @@ def test_bayat_ilanlar_yayindan_ve_bultenden_duser(oturum):
     with oturum() as o:
         ilanlar = {i["baslik"]: i for i in depo.yayinlanacak_ilanlar(o, an=AN)}
         nedenler = {i["baslik"]: i["bayat"] for i in depo.yayinlanacak_ilanlar(o, an=AN, bayatlar_dahil=True)}
-    assert set(ilanlar) == {"2025 Yaz Stajı (uzatıldı)", "Software Engineer (New Grad)", "Yazılım Stajyeri"}
+    assert set(ilanlar) == {"2025 Yaz Stajı (uzatıldı)", "Yazılım Stajyeri"}
     assert nedenler["Proje Stajyeri"] == "eski_ilan_tarihi" and nedenler["2025 Yaz Stajı"] == "gecmis_donem"
-    assert (
-        ilanlar["Software Engineer (New Grad)"]["surekli_acik"]
-        and ilanlar["Software Engineer (New Grad)"]["yayin"] is None
-    )
+    assert nedenler["Software Engineer (New Grad)"] == "hayalet"
 
     eposta = bulten_epostasi(
         "a@x.com",
@@ -124,7 +132,7 @@ def test_bayat_ilanlar_yayindan_ve_bultenden_duser(oturum):
         "gunluk",
     )
     for metin in (eposta.metin, eposta.html):
-        assert "Sürekli açık başvuru" in metin and "Tarih belirtilmemiş" in metin and "Son başvuru: 15.11.2026" in metin
+        assert "Tarih belirtilmemiş" in metin and "Son başvuru: 15.11.2026" in metin
         assert "2022" not in metin
 
 
@@ -175,3 +183,57 @@ def test_tarihsiz_eski_ayrinti_bir_kez_yeniden_cikarilir_ve_bayatsa_duser(oturum
     assert boru.ayrintilari_zenginlestir(ayar, oturum, http=http, yz=yz)["bekleyen"] == 0  # bir kez
     with oturum() as o:
         assert [i["baslik"] for i in depo.yayinlanacak_ilanlar(o)] == ["Data Intern"]  # Yeditek benzeri düştü
+
+
+# ---------------- hayalet ilan, sayfa kodu, şüpheli kalıplar ----------------
+def test_sayfa_kodundan_tarih_okunur():
+    yoast = '<meta property="article:published_time" content="2025-01-21T08:00:00+00:00"><meta property="article:modified_time" content="2025-03-21T09:00:00+00:00">'
+    assert sayfa_tarihleri(yoast, BUGUN) == (date(2025, 3, 21), None)
+    jsonld = '{"@type":"JobPosting","datePosted":"2026-06-03","validThrough":"2026-11-30T00:00:00"}'
+    assert sayfa_tarihleri(jsonld, BUGUN) == (date(2026, 6, 3), date(2026, 11, 30))
+    assert sayfa_tarihleri('{"datePublished":"2027-01-01"}', BUGUN) == (None, None)  # gelecekte yayın olmaz
+    assert sayfa_tarihleri("<p>Yazılım stajyeri</p>", BUGUN) == (None, None)
+
+
+def test_supheli_kaliplar():
+    assert supheli_ilan("Peroptyx", "Data Analyst No Experience Required")
+    assert supheli_ilan("BEŞ YILDIZ EĞİTİM KURUMLARI", "Yazılım Geliştirme Uzmanı")
+    assert supheli_ilan("Bakıcıbul", "Oyun Ablası Aranıyor")
+    assert not supheli_ilan("Okul.com", "Software Intern")
+    assert not supheli_ilan("Werover", "Machine Learning & Data Intern")
+
+
+def test_tarih_yenilemek_ilani_yeni_yapmaz(oturum):
+    i = Ilan(firma="Acme", baslik="Staj", url="https://acme.test/1", kaynak="greenhouse", tarih="2026-02-01")
+    with oturum.begin() as o:
+        depo.ilanlari_kaydet(o, [i], set())
+    i.tarih = "2026-10-30"
+    with oturum.begin() as o:
+        depo.ilanlari_kaydet(o, [i], set())
+    with oturum() as o:
+        assert o.get(IlanKaydi, i.kimlik).yayin_tarihi == "2026-02-01"
+
+
+def test_tarama_sayfa_kodundaki_tarihle_hayalet_ilani_dusurur(oturum):
+    eski = ilan_kur(oturum, "https://acme.test/eski-staj", "Eski Staj", ayrinti_alanlari={})
+    taze = ilan_kur(oturum, "https://acme.test/taze-staj", "Taze Staj", ayrinti_alanlari={})
+    kod = '<meta property="article:modified_time" content="{}T09:00:00Z"><p>Staj</p>'
+    http = SahteHttp(
+        sayfalar={
+            "https://acme.test/eski-staj": kod.format("2025-03-21"),
+            "https://acme.test/taze-staj": kod.format("2026-10-23"),
+        }
+    )
+    assert boru._sayfa_tarihlerini_guncelle(ayarlari_oku(), oturum, http) == 2
+    with oturum() as o:
+        kalan = {i["kimlik"]: i for i in depo.yayinlanacak_ilanlar(o, an=AN)}
+    assert eski not in kalan and kalan[taze]["yayin"] == "2026-10-23"
+
+
+def test_ilan_sitesindeki_firma_adi_bizim_kayda_baglanir():
+    ilanlar = [
+        Ilan(firma="BAYKAR", baslik="Staj", url="u", kaynak="jooble"),
+        Ilan(firma="Yeni", baslik="Staj", url="v", kaynak="jooble"),
+    ]
+    firma_adlarini_esle(ilanlar, ["Baykar", "Acme"])
+    assert [i.firma for i in ilanlar] == ["Baykar", "Yeni"]

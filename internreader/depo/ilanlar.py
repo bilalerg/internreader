@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 
 from internreader.db import Firma, IlanAyrinti, IlanKaydi, Siniflandirma, simdi
 from internreader.depo._ortak import _parcalar, utc
-from internreader.isleme.guncellik import baslik_yillari, donem_yillari, guncellik, siralama_anahtari
+from internreader.isleme.guncellik import baslik_yillari, donem_yillari, guncellik, siralama_anahtari, supheli_ilan
 from internreader.isleme.kategori import (
     alanlari_bul,
     calisma_modeli,
@@ -48,7 +48,9 @@ def ilanlari_kaydet(
             oturum.add(kayit)
             yeniler.append(kimlik)
         kayit.firma, kayit.baslik, kayit.url, kayit.kaynak = i.firma, i.baslik, i.url, i.kaynak
-        kayit.konum, kayit.calisma_tipi, kayit.yayin_tarihi = i.konum, i.calisma_tipi[:80], i.tarih[:10]
+        kayit.konum, kayit.calisma_tipi = i.konum, i.calisma_tipi[:80]
+        # En eski tarih kalır: kaynak ilanın tarihini yenilese de (Greenhouse updated_at, Jooble) ilan yeni sayılmaz
+        kayit.yayin_tarihi = min((t for t in (kayit.yayin_tarihi, i.tarih[:10]) if t), default="")
         kayit.aciklama, kayit.etiket = kisisel_veriyi_maskele(i.aciklama)[:20_000], i.etiket
         kayit.son_gorulme, kayit.aktif = an, True
 
@@ -71,6 +73,37 @@ def jooble_disi_aktif_ilanlar(oturum: Session) -> list[tuple[str, str]]:
     """Firmanın kendi kaynağından okuduğumuz açık ilanlar (firma, başlık): Jooble'dan gelen kopyaları elemek için."""
     sorgu = select(IlanKaydi.firma, IlanKaydi.baslik).where(IlanKaydi.aktif.is_(True), IlanKaydi.kaynak != "jooble")
     return [(firma, baslik) for firma, baslik in oturum.execute(sorgu)]
+
+
+def firma_adlari(oturum: Session) -> list[str]:
+    return list(oturum.scalars(select(Firma.ad).where(Firma.aktif.is_(True))))
+
+
+def sayfa_tarihi_bekleyenler(oturum: Session) -> dict[str, list[str]]:
+    """Yayına girebilecek kariyer sayfası ilanları: adres → ilan kimlikleri (tek sayfada birden çok ilan olabilir)."""
+    sorgu = (
+        select(IlanKaydi.url, IlanKaydi.kimlik)
+        .join(Siniflandirma, Siniflandirma.kimlik == IlanKaydi.kimlik)
+        .where(
+            IlanKaydi.aktif.is_(True),
+            IlanKaydi.gizli.is_(False),
+            IlanKaydi.kaynak == "kariyer_sayfasi",
+            Siniflandirma.ogrenciye_uygun.is_(True),
+        )
+    )
+    adresler: dict[str, list[str]] = {}
+    for url, kimlik in oturum.execute(sorgu):
+        adresler.setdefault(url.split("#")[0], []).append(kimlik)
+    return adresler
+
+
+def sayfa_tarihi_yaz(oturum: Session, kimlikler: list[str], tarih: str, son_basvuru: str | None) -> None:
+    for kimlik in kimlikler:
+        if tarih:
+            oturum.get(IlanKaydi, kimlik).yayin_tarihi = tarih
+        ayrinti = oturum.get(IlanAyrinti, kimlik)
+        if son_basvuru and ayrinti is not None and not ayrinti.son_basvuru:
+            ayrinti.son_basvuru = son_basvuru
 
 
 def gorulmeyen_jooble_ilanlarini_kapat(oturum: Session, once: datetime) -> int:
@@ -167,7 +200,11 @@ def yayinlanacak_ilanlar(
             yillar,
             bugun,
             ayrinti.ilan_turu if ayrinti else "is",
+            ilan.baslik,
+            utc(ilan.ilk_gorulme).astimezone(TURKIYE_SAATI).date(),
         )
+        if not durum["bayat"] and supheli_ilan(ilan.firma, ilan.baslik):
+            durum["bayat"] = "supheli"
         if durum["bayat"] and not bayatlar_dahil:
             continue
         satirlar.append(
