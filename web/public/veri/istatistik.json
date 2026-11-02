@@ -1,20 +1,20 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-01T16:48:24.722705+03:00",
- "takip_edilen_firma": 3394,
- "taranan_firma": 931,
- "aktif_ilan": 8297,
- "ogrenci_ilani": 46,
+ "guncelleme": "2026-11-02T19:35:18.253036+03:00",
+ "takip_edilen_firma": 3396,
+ "taranan_firma": 932,
+ "aktif_ilan": 8254,
+ "ogrenci_ilani": 44,
  "sehirler": {
-  "uzaktan": 1413,
-  "istanbul": 746,
-  "ankara": 198,
-  "izmir": 74,
-  "bursa": 66,
-  "kocaeli": 63,
+  "uzaktan": 1405,
+  "istanbul": 740,
+  "ankara": 197,
+  "izmir": 77,
+  "bursa": 64,
+  "kocaeli": 62,
   "adana": 58,
-  "antalya": 56,
-  "tekirdag": 55,
+  "antalya": 55,
+  "tekirdag": 54,
   "kayseri": 51,
   "gaziantep": 51,
   "konya": 50,
@@ -25,7 +25,6 @@
  "firmalar": [
   "Analog Devices",
   "Agave Games",
-  "Anyscale",
   "Bigger Games",
   "Binance",
   "Bitpanda",
@@ -82,7 +81,8 @@
   "Andasis",
   "ANKASYS",
   "Aras Deniz İnşaat",
-  "Aras Salvage"
+  "Aras Salvage",
+  "ARCANOR"
  ],
  "kararlar": [
   {
@@ -134,11 +134,11 @@
    "uygun": true
   },
   {
-   "baslik": "Waiter",
-   "firma": "Accorhotel",
+   "baslik": "HR Operations Specialist",
+   "firma": "Codeway",
    "seviye": "belirsiz",
    "rol": "teknik_degil",
-   "gerekce": "Restoran garsonluğu, teknik değil",
+   "gerekce": "İK operasyonları, deneyim seviyesi belirtilmemiş",
    "uygun": false
   },
   {
@@ -190,19 +190,19 @@
    "uygun": false
   },
   {
-   "baslik": "Rider Senior Supervisor",
-   "firma": "Delivery Hero",
-   "seviye": "deneyimli",
-   "rol": "teknik_degil",
-   "gerekce": "Senior supervisor unvanı, kurye operasyon yönetimi",
-   "uygun": false
-  },
-  {
    "baslik": "Staj Başvurusu",
    "firma": "Asist Bilgi",
    "seviye": "staj",
    "rol": "teknik_degil",
    "gerekce": "Staj başvurusu, alan açıkça belirtilmemiş",
+   "uygun": false
+  },
+  {
+   "baslik": "Medical Science Manager (GU & GYN Cancers)",
+   "firma": "Astrazeneca",
+   "seviye": "deneyimli",
+   "rol": "teknik_degil",
+   "gerekce": "Yönetici unvanı, tıbbi bilim alanında deneyim gerektiriyor",
    "uygun": false
   },
   {
@@ -213,5 +213,79 @@
    "gerekce": "Başlıkta New Grad; pazarlama büyüme rolü.",
    "uygun": false
   }
- ]
+ ],
+ "huni": {
+  "aktif": 8254,
+  "konum_disi": 6601,
+  "siniflanmamis": 0,
+  "seviye": {
+   "belirsiz": 839,
+   "deneyimli": 549,
+   "staj": 98,
+   "junior": 90,
+   "yeni_mezun": 35,
+   "yari_zamanli": 33,
+   "uzun_donem_staj": 9
+  },
+  "rol": {
+   "teknik_degil": 790,
+   "yazilim": 410,
+   "diger_teknik": 368,
+   "yapay_zeka": 45,
+   "veri": 40
+  },
+  "ogrenciye_uygun": {
+   "yayinda": 44,
+   "hayalet": 10,
+   "supheli": 2,
+   "eski_ilan_tarihi": 1,
+   "genel_basvuru": 1
+  },
+  "belirsiz_seviye_hedef_rol": 220,
+  "ogrenci_seviye_diger_teknik": 51,
+  "ornek_belirsiz": [
+   "Rapsodo: Back-End Engineer",
+   "Sestek: R&D Engineer (Native Arabic Speaker)",
+   "ADIM TEKNOLOJİ A.Ş. Yazılım, 3D Simülasyon ve Modelleme: VR Developer",
+   "3E ENDÜSTRİYEL MÜHENDİSLİK SAN. VE TİC. LTD. ŞTİ.: Software Engineer",
+   "Lotus AI Yapay Zeka ve Bilişim Çözümleri A.Ş.: Java Spring Developer",
+   "VERİ-SİS VERİ VE İLETİŞİM SİSTEMLERİ SAN.VE TİC.AŞ: Front End Developer",
+   "LOTEC ArGe Yazılım Donanım İthalat İhracat Danışmanlık Teknoloji Savunma ve Tic. A.Ş: Full Stack Uygulama Geliştirici",
+   "Teltonika: Network Software Engineer",
+   "ENHENCER YAZILIM A.Ş: Full Stack Developer",
+   "Analog Devices: Engineer, Firmware Engineering",
+   "BOOKLOGIC BİLGİ TEKNOLOJİLERİ VE TURİZM LTD. ŞTİ.: Software Development",
+   "Algocor Teknoloji A.Ş.: Software Engineer C++",
+   "SEKGAMES OYUN YAZILIM TEKNOLOJİ VE PAZARLAMA ANONİM ŞİRKETİ: Marketing Developer",
+   "Özgür Yazılım A.Ş.: DevOps & Linux Sistem Yöneticisi (S38)",
+   "Valven: Linux System Engineer",
+   "MULTİGOO BİLİŞİM ANONİM ŞİRKETİ: Frontend (React) Developer",
+   "ESEN: Software Design Engineer",
+   "MAGLAB OYUN TEKNOLOJİLERİ BİLİŞİM YAZILIM TASARIM YAYINCILIK TİCARET ANONİM ŞİRKETİ: Game Developer, On-Site Ankara · Full Time",
+   "SİMOFUN OYUN TEKNOLOJİLERİ ANONİM ŞİRKETİ: Unity Oyun Geliştiricisi",
+   "MULTİGOO BİLİŞİM ANONİM ŞİRKETİ: Backend (.Net) Developer"
+  ],
+  "ornek_diger_teknik": [
+   "Özgür Yazılım A.Ş.: Taze (Jr) DevOps & Linux Sistem Yöneticisi (S36)",
+   "Opsin Elektro Optik: Aday Mühendis Programı",
+   "Opsin Elektro Optik: Staj Programı",
+   "Luxoft: (Graduate) Home Trial Engineer",
+   "RENA MEKATRONİK SİSTEMLERİ SAN. VE TİC. LTD.ŞTİ: Stajyer Mühendis (Tüm Bölümler)",
+   "Siemens: Part Time Working Student (Project Engineer)",
+   "Analog Devices: Associate Engineer, RF Design Engineering",
+   "Solenis: Associate Scientist - Gebze",
+   "DEMSAY ELEKTRONİK San. ve Tic. A.Ş: Ar-Ge Merkezi Staj Programı",
+   "Mesut Bilgisayar San. Tic. Ltd. Şti.: Mesut Bilgisayar San. Tic. Ltd. Şti. İçin Ağ İşletmenliği Stajyeri",
+   "Valven: New Graduate Program",
+   "INTERPROBE BİLGİ TEKNOLOJİLERİ: Intern",
+   "BİLGİKURUMSAL YAZILIM TEKNOLOJİLERİ A.Ş.: Stajyer",
+   "Sungrow Emea: Field Service Engineer - Turkiye",
+   "MAPP PAZARLAMA VE TANITIM HİZMETLERİ: Ankara Teknik Servis Teknoloji Asistanı",
+   "Analog Devices: Associate Designer, Layout",
+   "KoçSistem: KoçSistem Level Up",
+   "TÜBİTAK BİLGEM: Part-Time Candidate Researcher",
+   "BAYKAR: 2027 Yaz Dönemi Staj | Hafif Platformlar Kontrol ve Güdüm Sistemleri",
+   "Modanisa: Stajyer"
+  ]
+ }
 }

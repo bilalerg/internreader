@@ -1,7 +1,7 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-01T16:48:24.722705+03:00",
- "sayi": 46,
+ "guncelleme": "2026-11-02T19:35:18.253036+03:00",
+ "sayi": 44,
  "ilanlar": [
   {
    "kimlik": "a1071dad2b5da606",
@@ -921,77 +921,6 @@
    "ilan_turu": "is",
    "seviye_etiketi": "Junior",
    "firma_gorunen": "Obilet",
-   "sehirler": [
-    "istanbul"
-   ],
-   "uzaktan": false
-  },
-  {
-   "kimlik": "a404da96657696a5",
-   "firma": "Siemens",
-   "baslik": "Part Time Working Student (Front End Developer)",
-   "url": "https://jobs.siemens.com/externaljobs/JobDetail/Part-Time-Working-Student-Front-End-Developer/522625",
-   "konum": "Gebze, Kocaeli, Türkiye; Kocaeli, Kocaeli, Türkiye (Hibrit)",
-   "kaynak": "avature",
-   "yayin_tarihi": "2026-09-16",
-   "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
-   "seviye": "yari_zamanli",
-   "rol": "yazilim",
-   "yapay_zeka": "yok",
-   "ayrinti": {
-    "ozet": "Siemens Gebze Anahtarlama Fabrikası'nda dijitalleşme projelerinde, REST API'lerle entegre çalışan modern ve responsive web arayüzleri geliştirilecek. Dijital Dönüşüm ekibiyle birlikte iş ihtiyaçlarını kullanıcı dostu çözümlere dönüştürme işi yapılacak.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": "3. veya 4. sınıf lisans öğrencileri ya da yüksek lisans öğrencileri (Yazılım Mühendisliği, Bilgisayar Mühendisliği…",
-    "calisma_modeli": "hibrit",
-    "ucretli": "belirsiz",
-    "teknolojiler": [
-     "HTML5",
-     "CSS",
-     "JavaScript",
-     "REST API",
-     "Git",
-     "TypeScript"
-    ]
-   },
-   "alanlar": [
-    "yazilim"
-   ],
-   "calisma_modeli": "hibrit",
-   "girisim": false,
-   "yayin": "2026-09-16",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Yarı zamanlı",
-   "firma_gorunen": "Siemens",
-   "sehirler": [
-    "kocaeli"
-   ],
-   "uzaktan": false
-  },
-  {
-   "kimlik": "71972f102eeb4c32",
-   "firma": "Pixery",
-   "baslik": "AI Creative Specialist JR",
-   "url": "https://pixery.breezy.hr/p/0259ef1ce410-ai-creative-specialist-jr",
-   "konum": "İstanbul, TR",
-   "kaynak": "breezy",
-   "yayin_tarihi": "2026-08-31",
-   "ilk_gorulme": "2026-10-30T18:52:20.434753+00:00",
-   "seviye": "junior",
-   "rol": "yapay_zeka",
-   "yapay_zeka": "arti",
-   "ayrinti": null,
-   "alanlar": [
-    "yapay_zeka"
-   ],
-   "calisma_modeli": "belirsiz",
-   "girisim": false,
-   "yayin": "2026-08-31",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Junior",
-   "firma_gorunen": "Pixery",
    "sehirler": [
     "istanbul"
    ],
