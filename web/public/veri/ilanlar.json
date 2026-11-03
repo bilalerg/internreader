@@ -1,7 +1,7 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-02T19:35:18.253036+03:00",
- "sayi": 44,
+ "guncelleme": "2026-11-03T17:41:31.992360+03:00",
+ "sayi": 43,
  "ilanlar": [
   {
    "kimlik": "a1071dad2b5da606",
@@ -545,42 +545,6 @@
    "firma_gorunen": "Analog Devices, Inc",
    "sehirler": [
     "kocaeli"
-   ],
-   "uzaktan": false
-  },
-  {
-   "kimlik": "e550fb609a9b0008",
-   "firma": "Siemens",
-   "baslik": "Part-Time Working Student (Software Developer)",
-   "url": "https://jobs.siemens.com/externaljobs/JobDetail/Part-Time-Working-Student-Software-Developer/527260",
-   "konum": "Istanbul, Istanbul, Türkiye (Hibrit)",
-   "kaynak": "avature",
-   "yayin_tarihi": "2026-10-27",
-   "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
-   "seviye": "yari_zamanli",
-   "rol": "yazilim",
-   "yapay_zeka": "yok",
-   "ayrinti": {
-    "ozet": "Vinç projeleri için yazılım tasarımı, geliştirme, birim ve otomatik UI testleri, hata ayıklama ve sürüm görevlerinde çok siteli uluslararası bir ekipte çalışılacak.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": "3. veya 4. sınıf Bilgisayar Mühendisliği öğrencileri; haftada en az 2.5 gün müsait olanlar",
-    "calisma_modeli": "hibrit",
-    "ucretli": "belirsiz",
-    "teknolojiler": []
-   },
-   "alanlar": [
-    "yazilim"
-   ],
-   "calisma_modeli": "hibrit",
-   "girisim": false,
-   "yayin": "2026-10-27",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Yarı zamanlı",
-   "firma_gorunen": "Siemens",
-   "sehirler": [
-    "istanbul"
    ],
    "uzaktan": false
   },

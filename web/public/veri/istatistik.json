@@ -1,20 +1,20 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-02T19:35:18.253036+03:00",
+ "guncelleme": "2026-11-03T17:41:31.992360+03:00",
  "takip_edilen_firma": 3396,
  "taranan_firma": 932,
- "aktif_ilan": 8254,
- "ogrenci_ilani": 44,
+ "aktif_ilan": 8243,
+ "ogrenci_ilani": 43,
  "sehirler": {
-  "uzaktan": 1405,
-  "istanbul": 740,
-  "ankara": 197,
+  "uzaktan": 1398,
+  "istanbul": 748,
+  "ankara": 198,
   "izmir": 77,
   "bursa": 64,
-  "kocaeli": 62,
+  "kocaeli": 63,
   "adana": 58,
   "antalya": 55,
-  "tekirdag": 54,
+  "tekirdag": 53,
   "kayseri": 51,
   "gaziantep": 51,
   "konya": 50,
@@ -134,11 +134,11 @@
    "uygun": true
   },
   {
-   "baslik": "HR Operations Specialist",
-   "firma": "Codeway",
+   "baslik": "Organizational Development Operations Specialist",
+   "firma": "Trendyol",
    "seviye": "belirsiz",
    "rol": "teknik_degil",
-   "gerekce": "İK operasyonları, deneyim seviyesi belirtilmemiş",
+   "gerekce": "Organizasyonel gelişim ve yetenek operasyonları",
    "uygun": false
   },
   {
@@ -215,34 +215,34 @@
   }
  ],
  "huni": {
-  "aktif": 8254,
-  "konum_disi": 6601,
+  "aktif": 8243,
+  "konum_disi": 6581,
   "siniflanmamis": 0,
   "seviye": {
-   "belirsiz": 839,
-   "deneyimli": 549,
-   "staj": 98,
-   "junior": 90,
+   "belirsiz": 842,
+   "deneyimli": 553,
+   "staj": 99,
+   "junior": 91,
    "yeni_mezun": 35,
    "yari_zamanli": 33,
    "uzun_donem_staj": 9
   },
   "rol": {
-   "teknik_degil": 790,
-   "yazilim": 410,
-   "diger_teknik": 368,
+   "teknik_degil": 797,
+   "yazilim": 408,
+   "diger_teknik": 369,
    "yapay_zeka": 45,
-   "veri": 40
+   "veri": 43
   },
   "ogrenciye_uygun": {
-   "yayinda": 44,
+   "yayinda": 43,
    "hayalet": 10,
    "supheli": 2,
    "eski_ilan_tarihi": 1,
    "genel_basvuru": 1
   },
-  "belirsiz_seviye_hedef_rol": 220,
-  "ogrenci_seviye_diger_teknik": 51,
+  "belirsiz_seviye_hedef_rol": 222,
+  "ogrenci_seviye_diger_teknik": 52,
   "ornek_belirsiz": [
    "Rapsodo: Back-End Engineer",
    "Sestek: R&D Engineer (Native Arabic Speaker)",
@@ -271,11 +271,13 @@
    "Opsin Elektro Optik: Staj Programı",
    "Luxoft: (Graduate) Home Trial Engineer",
    "RENA MEKATRONİK SİSTEMLERİ SAN. VE TİC. LTD.ŞTİ: Stajyer Mühendis (Tüm Bölümler)",
+   "Analog Devices: RF Design Engineering Summer Intern",
    "Siemens: Part Time Working Student (Project Engineer)",
    "Analog Devices: Associate Engineer, RF Design Engineering",
    "Solenis: Associate Scientist - Gebze",
    "DEMSAY ELEKTRONİK San. ve Tic. A.Ş: Ar-Ge Merkezi Staj Programı",
    "Mesut Bilgisayar San. Tic. Ltd. Şti.: Mesut Bilgisayar San. Tic. Ltd. Şti. İçin Ağ İşletmenliği Stajyeri",
+   "Analog Devices: RF Design Engineering Intern",
    "Valven: New Graduate Program",
    "INTERPROBE BİLGİ TEKNOLOJİLERİ: Intern",
    "BİLGİKURUMSAL YAZILIM TEKNOLOJİLERİ A.Ş.: Stajyer",
@@ -283,9 +285,7 @@
    "MAPP PAZARLAMA VE TANITIM HİZMETLERİ: Ankara Teknik Servis Teknoloji Asistanı",
    "Analog Devices: Associate Designer, Layout",
    "KoçSistem: KoçSistem Level Up",
-   "TÜBİTAK BİLGEM: Part-Time Candidate Researcher",
-   "BAYKAR: 2027 Yaz Dönemi Staj | Hafif Platformlar Kontrol ve Güdüm Sistemleri",
-   "Modanisa: Stajyer"
+   "TÜBİTAK BİLGEM: Part-Time Candidate Researcher"
   ]
  }
 }
