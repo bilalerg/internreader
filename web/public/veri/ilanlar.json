@@ -1,6 +1,6 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-04T09:41:29.013613+03:00",
+ "guncelleme": "2026-11-04T17:56:13.900476+03:00",
  "sayi": 43,
  "ilanlar": [
   {
@@ -41,6 +41,35 @@
    "ilan_turu": "is",
    "seviye_etiketi": "Staj",
    "firma_gorunen": "PİXA",
+   "sehirler": [
+    "istanbul"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "8725e1243bcfb88b",
+   "firma": "Vertigo Games",
+   "baslik": "Game Developer - Intern",
+   "url": "https://apply.workable.com/j/137AC5D636",
+   "konum": "Istanbul, Turkey",
+   "kaynak": "workable",
+   "yayin_tarihi": "2026-11-04",
+   "ilk_gorulme": "2026-11-04T14:55:26.179925+00:00",
+   "seviye": "staj",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": null,
+   "alanlar": [
+    "yazilim",
+    "oyun"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": "2026-11-04",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Staj",
+   "firma_gorunen": "Vertigo Games",
    "sehirler": [
     "istanbul"
    ],
@@ -885,35 +914,6 @@
    "ilan_turu": "yarisma",
    "seviye_etiketi": "Yarışma",
    "firma_gorunen": "Midas",
-   "sehirler": [
-    "istanbul"
-   ],
-   "uzaktan": false
-  },
-  {
-   "kimlik": "90215ba1ac129abf",
-   "firma": "Vertigo Games",
-   "baslik": "Game Developer - Intern",
-   "url": "https://apply.workable.com/j/7F708BF16C",
-   "konum": "Istanbul, Turkey",
-   "kaynak": "workable",
-   "yayin_tarihi": "2026-08-31",
-   "ilk_gorulme": "2026-10-30T18:52:20.434753+00:00",
-   "seviye": "staj",
-   "rol": "yazilim",
-   "yapay_zeka": "yok",
-   "ayrinti": null,
-   "alanlar": [
-    "yazilim",
-    "oyun"
-   ],
-   "calisma_modeli": "belirsiz",
-   "girisim": false,
-   "yayin": "2026-08-31",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Staj",
-   "firma_gorunen": "Vertigo Games",
    "sehirler": [
     "istanbul"
    ],

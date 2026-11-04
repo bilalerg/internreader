@@ -1,22 +1,22 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-04T09:41:29.013613+03:00",
+ "guncelleme": "2026-11-04T17:56:13.900476+03:00",
  "takip_edilen_firma": 3396,
  "taranan_firma": 932,
- "aktif_ilan": 8231,
+ "aktif_ilan": 8253,
  "ogrenci_ilani": 43,
  "sehirler": {
-  "uzaktan": 1399,
-  "istanbul": 746,
-  "ankara": 197,
-  "izmir": 77,
-  "bursa": 64,
-  "kocaeli": 63,
+  "uzaktan": 1403,
+  "istanbul": 749,
+  "ankara": 199,
+  "izmir": 79,
+  "bursa": 66,
+  "kocaeli": 62,
   "adana": 58,
   "antalya": 55,
   "tekirdag": 53,
+  "gaziantep": 52,
   "kayseri": 51,
-  "gaziantep": 51,
   "konya": 50,
   "trabzon": 50,
   "samsun": 50,
@@ -134,11 +134,11 @@
    "uygun": true
   },
   {
-   "baslik": "Organizational Development Operations Specialist",
-   "firma": "Trendyol",
+   "baslik": "HR Operations Specialist",
+   "firma": "Codeway",
    "seviye": "belirsiz",
    "rol": "teknik_degil",
-   "gerekce": "Organizasyonel gelişim ve yetenek operasyonları",
+   "gerekce": "İK operasyonları, deneyim seviyesi belirtilmemiş",
    "uygun": false
   },
   {
@@ -215,24 +215,24 @@
   }
  ],
  "huni": {
-  "aktif": 8231,
-  "konum_disi": 6573,
+  "aktif": 8253,
+  "konum_disi": 6584,
   "siniflanmamis": 0,
   "seviye": {
-   "belirsiz": 842,
-   "deneyimli": 550,
+   "belirsiz": 846,
+   "deneyimli": 554,
    "staj": 99,
-   "junior": 91,
-   "yeni_mezun": 35,
-   "yari_zamanli": 32,
+   "junior": 92,
+   "yeni_mezun": 36,
+   "yari_zamanli": 33,
    "uzun_donem_staj": 9
   },
   "rol": {
-   "teknik_degil": 795,
-   "yazilim": 408,
+   "teknik_degil": 803,
+   "yazilim": 409,
    "diger_teknik": 367,
    "yapay_zeka": 45,
-   "veri": 43
+   "veri": 45
   },
   "ogrenciye_uygun": {
    "yayinda": 43,
