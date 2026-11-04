@@ -1,14 +1,14 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-03T17:41:31.992360+03:00",
+ "guncelleme": "2026-11-04T09:41:29.013613+03:00",
  "takip_edilen_firma": 3396,
  "taranan_firma": 932,
- "aktif_ilan": 8243,
+ "aktif_ilan": 8231,
  "ogrenci_ilani": 43,
  "sehirler": {
-  "uzaktan": 1398,
-  "istanbul": 748,
-  "ankara": 198,
+  "uzaktan": 1399,
+  "istanbul": 746,
+  "ankara": 197,
   "izmir": 77,
   "bursa": 64,
   "kocaeli": 63,
@@ -215,22 +215,22 @@
   }
  ],
  "huni": {
-  "aktif": 8243,
-  "konum_disi": 6581,
+  "aktif": 8231,
+  "konum_disi": 6573,
   "siniflanmamis": 0,
   "seviye": {
    "belirsiz": 842,
-   "deneyimli": 553,
+   "deneyimli": 550,
    "staj": 99,
    "junior": 91,
    "yeni_mezun": 35,
-   "yari_zamanli": 33,
+   "yari_zamanli": 32,
    "uzun_donem_staj": 9
   },
   "rol": {
-   "teknik_degil": 797,
+   "teknik_degil": 795,
    "yazilim": 408,
-   "diger_teknik": 369,
+   "diger_teknik": 367,
    "yapay_zeka": 45,
    "veri": 43
   },
@@ -242,7 +242,7 @@
    "genel_basvuru": 1
   },
   "belirsiz_seviye_hedef_rol": 222,
-  "ogrenci_seviye_diger_teknik": 52,
+  "ogrenci_seviye_diger_teknik": 51,
   "ornek_belirsiz": [
    "Rapsodo: Back-End Engineer",
    "Sestek: R&D Engineer (Native Arabic Speaker)",
@@ -281,11 +281,11 @@
    "Valven: New Graduate Program",
    "INTERPROBE BİLGİ TEKNOLOJİLERİ: Intern",
    "BİLGİKURUMSAL YAZILIM TEKNOLOJİLERİ A.Ş.: Stajyer",
-   "Sungrow Emea: Field Service Engineer - Turkiye",
    "MAPP PAZARLAMA VE TANITIM HİZMETLERİ: Ankara Teknik Servis Teknoloji Asistanı",
    "Analog Devices: Associate Designer, Layout",
    "KoçSistem: KoçSistem Level Up",
-   "TÜBİTAK BİLGEM: Part-Time Candidate Researcher"
+   "TÜBİTAK BİLGEM: Part-Time Candidate Researcher",
+   "BAYKAR: 2027 Yaz Dönemi Staj | Hafif Platformlar Kontrol ve Güdüm Sistemleri"
   ]
  }
 }

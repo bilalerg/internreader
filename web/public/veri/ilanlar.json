@@ -1,6 +1,6 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-03T17:41:31.992360+03:00",
+ "guncelleme": "2026-11-04T09:41:29.013613+03:00",
  "sayi": 43,
  "ilanlar": [
   {
@@ -577,42 +577,6 @@
    "uzaktan": false
   },
   {
-   "kimlik": "6d0f4f257a3f00d4",
-   "firma": "Midas",
-   "baslik": "Midas Coders League",
-   "url": "https://jobs.lever.co/getmidas/dbb5fd25-e840-4780-b00c-b4a6c9d36e1b",
-   "konum": "İstanbul, Turkey",
-   "kaynak": "lever",
-   "yayin_tarihi": "2026-10-20",
-   "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
-   "seviye": "staj",
-   "rol": "yazilim",
-   "yapay_zeka": "yok",
-   "ayrinti": {
-    "ozet": "Bilgisayar Mühendisliği öğrencilerine yönelik, yerinde yapılan bir kodlama yarışması. Öğrenciler zorlu problemleri çözerek becerilerini test edecek.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": "Tüm sınıflardaki Bilgisayar Mühendisliği öğrencileri",
-    "calisma_modeli": "ofis",
-    "ucretli": "belirsiz",
-    "teknolojiler": []
-   },
-   "alanlar": [
-    "yazilim"
-   ],
-   "calisma_modeli": "yerinde",
-   "girisim": true,
-   "yayin": "2026-10-20",
-   "surekli_acik": false,
-   "ilan_turu": "yarisma",
-   "seviye_etiketi": "Yarışma",
-   "firma_gorunen": "Midas",
-   "sehirler": [
-    "istanbul"
-   ],
-   "uzaktan": false
-  },
-  {
    "kimlik": "3936cb1a8411f8ef",
    "firma": "Commencis",
    "baslik": "Commencis Cloud Camp 2027",
@@ -885,6 +849,42 @@
    "ilan_turu": "is",
    "seviye_etiketi": "Junior",
    "firma_gorunen": "Obilet",
+   "sehirler": [
+    "istanbul"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "6d0f4f257a3f00d4",
+   "firma": "Midas",
+   "baslik": "Midas Coders League",
+   "url": "https://jobs.lever.co/getmidas/dbb5fd25-e840-4780-b00c-b4a6c9d36e1b",
+   "konum": "İstanbul, Turkey",
+   "kaynak": "lever",
+   "yayin_tarihi": "2026-10-20",
+   "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
+   "seviye": "staj",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Bilgisayar Mühendisliği öğrencilerine yönelik, yerinde yapılan bir kodlama yarışması. Öğrenciler zorlu problemleri çözerek becerilerini test edecek.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": "Tüm sınıflardaki Bilgisayar Mühendisliği öğrencileri",
+    "calisma_modeli": "ofis",
+    "ucretli": "belirsiz",
+    "teknolojiler": []
+   },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "yerinde",
+   "girisim": true,
+   "yayin": "2026-10-20",
+   "surekli_acik": false,
+   "ilan_turu": "yarisma",
+   "seviye_etiketi": "Yarışma",
+   "firma_gorunen": "Midas",
    "sehirler": [
     "istanbul"
    ],
