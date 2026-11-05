@@ -1,22 +1,22 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-04T17:56:13.900476+03:00",
+ "guncelleme": "2026-11-05T17:59:21.627293+03:00",
  "takip_edilen_firma": 3396,
  "taranan_firma": 932,
- "aktif_ilan": 8253,
- "ogrenci_ilani": 43,
+ "aktif_ilan": 8244,
+ "ogrenci_ilani": 44,
  "sehirler": {
-  "uzaktan": 1403,
-  "istanbul": 749,
-  "ankara": 199,
-  "izmir": 79,
-  "bursa": 66,
-  "kocaeli": 62,
+  "uzaktan": 1375,
+  "istanbul": 733,
+  "ankara": 201,
+  "izmir": 78,
+  "bursa": 67,
+  "kocaeli": 63,
   "adana": 58,
   "antalya": 55,
   "tekirdag": 53,
-  "gaziantep": 52,
   "kayseri": 51,
+  "gaziantep": 51,
   "konya": 50,
   "trabzon": 50,
   "samsun": 50,
@@ -110,14 +110,6 @@
    "uygun": true
   },
   {
-   "baslik": "Embedded Software Engineering Intern",
-   "firma": "Analog Devices",
-   "seviye": "staj",
-   "rol": "yazilim",
-   "gerekce": "Gömülü yazılım mühendisliği stajı",
-   "uygun": true
-  },
-  {
    "baslik": "Jr. Data Analyst",
    "firma": "Obilet",
    "seviye": "junior",
@@ -132,6 +124,22 @@
    "rol": "yazilim",
    "gerekce": "Yarı zamanlı eğitim kurumu yazılım geliştirme uzmanı arıyor",
    "uygun": true
+  },
+  {
+   "baslik": "Software Development Intern",
+   "firma": "Werover",
+   "seviye": "staj",
+   "rol": "yazilim",
+   "gerekce": "Yazılım geliştirme stajı",
+   "uygun": true
+  },
+  {
+   "baslik": "Education Strategy & Development Analyst / Associate",
+   "firma": "Constructor Tech",
+   "seviye": "junior",
+   "rol": "teknik_degil",
+   "gerekce": "Eğitim stratejisi analisti, strateji ve kurumsal gelişim ağırlıklı",
+   "uygun": false
   },
   {
    "baslik": "HR Operations Specialist",
@@ -158,14 +166,6 @@
    "uygun": false
   },
   {
-   "baslik": "Junior Product Manager (m/d/w)",
-   "firma": "Alphabots Robotik",
-   "seviye": "junior",
-   "rol": "teknik_degil",
-   "gerekce": "Ürün yöneticiliği, junior unvanı, teknik olmayan rol",
-   "uygun": false
-  },
-  {
    "baslik": "Senior Specialist, Generative AI & LLM",
    "firma": "Etiya",
    "seviye": "deneyimli",
@@ -179,6 +179,14 @@
    "seviye": "deneyimli",
    "rol": "yazilim",
    "gerekce": "Yazılım mimarı, en az 10 yıl deneyim",
+   "uygun": false
+  },
+  {
+   "baslik": "İdari İşler Uzmanı",
+   "firma": "İNVENTRA",
+   "seviye": "deneyimli",
+   "rol": "teknik_degil",
+   "gerekce": "Uzman unvanlı idari işler, teknik içerik yok",
    "uygun": false
   },
   {
@@ -198,51 +206,43 @@
    "uygun": false
   },
   {
-   "baslik": "Medical Science Manager (GU & GYN Cancers)",
-   "firma": "Astrazeneca",
+   "baslik": "Head of IT",
+   "firma": "Ticimax",
    "seviye": "deneyimli",
-   "rol": "teknik_degil",
-   "gerekce": "Yönetici unvanı, tıbbi bilim alanında deneyim gerektiriyor",
-   "uygun": false
-  },
-  {
-   "baslik": "Growth Specialist (New Grad)",
-   "firma": "Cypher Games",
-   "seviye": "yeni_mezun",
-   "rol": "teknik_degil",
-   "gerekce": "Başlıkta New Grad; pazarlama büyüme rolü.",
+   "rol": "diger_teknik",
+   "gerekce": "IT yönetici pozisyonu, yönetici seviyesi",
    "uygun": false
   }
  ],
  "huni": {
-  "aktif": 8253,
-  "konum_disi": 6584,
+  "aktif": 8244,
+  "konum_disi": 6592,
   "siniflanmamis": 0,
   "seviye": {
-   "belirsiz": 846,
-   "deneyimli": 554,
+   "belirsiz": 834,
+   "deneyimli": 552,
    "staj": 99,
-   "junior": 92,
-   "yeni_mezun": 36,
-   "yari_zamanli": 33,
+   "junior": 93,
+   "yeni_mezun": 34,
+   "yari_zamanli": 31,
    "uzun_donem_staj": 9
   },
   "rol": {
-   "teknik_degil": 803,
-   "yazilim": 409,
-   "diger_teknik": 367,
-   "yapay_zeka": 45,
-   "veri": 45
+   "teknik_degil": 784,
+   "yazilim": 406,
+   "diger_teknik": 370,
+   "veri": 47,
+   "yapay_zeka": 45
   },
   "ogrenciye_uygun": {
-   "yayinda": 43,
+   "yayinda": 44,
    "hayalet": 10,
    "supheli": 2,
    "eski_ilan_tarihi": 1,
    "genel_basvuru": 1
   },
-  "belirsiz_seviye_hedef_rol": 222,
-  "ogrenci_seviye_diger_teknik": 51,
+  "belirsiz_seviye_hedef_rol": 219,
+  "ogrenci_seviye_diger_teknik": 54,
   "ornek_belirsiz": [
    "Rapsodo: Back-End Engineer",
    "Sestek: R&D Engineer (Native Arabic Speaker)",

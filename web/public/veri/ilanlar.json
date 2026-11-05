@@ -1,7 +1,7 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-04T17:56:13.900476+03:00",
- "sayi": 43,
+ "guncelleme": "2026-11-05T17:59:21.627293+03:00",
+ "sayi": 44,
  "ilanlar": [
   {
    "kimlik": "a1071dad2b5da606",
@@ -44,6 +44,68 @@
    "sehirler": [
     "istanbul"
    ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "d472f4ba4135149c",
+   "firma": "Bosch Türkiye",
+   "baslik": "Smart Start Data Analytics & Digitalization Engineer",
+   "url": "https://jobs.smartrecruiters.com/BoschGroup/744000159887118",
+   "konum": "Bursa, tr",
+   "kaynak": "smartrecruiters",
+   "yayin_tarihi": "2026-11-05",
+   "ilk_gorulme": "2026-11-05T14:58:47.951557+00:00",
+   "seviye": "staj",
+   "rol": "veri",
+   "yapay_zeka": "yok",
+   "ayrinti": null,
+   "alanlar": [
+    "veri"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": "2026-11-05",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Staj",
+   "firma_gorunen": "Bosch Türkiye",
+   "sehirler": [
+    "bursa"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "5a40af0ef5371f0b",
+   "firma": "Insiderone",
+   "baslik": "Junior Software Engineer (Backend, AI-Enabled) — Remote",
+   "url": "https://jobs.lever.co/insiderone/176f6234-e706-492e-a984-9eee80d28d22",
+   "konum": "Turkey",
+   "kaynak": "lever",
+   "yayin_tarihi": "2026-11-05",
+   "ilk_gorulme": "2026-11-05T14:58:47.951557+00:00",
+   "seviye": "junior",
+   "rol": "yazilim",
+   "yapay_zeka": "arti",
+   "ayrinti": {
+    "ozet": "Junior yazılım mühendisi olarak backend tarafında, AI destekli özellikler geliştirilmesine katkı sağlanacak uzaktan çalışma pozisyonu.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": null,
+    "calisma_modeli": "uzaktan",
+    "ucretli": "belirsiz",
+    "teknolojiler": []
+   },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "uzaktan",
+   "girisim": false,
+   "yayin": "2026-11-05",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Junior",
+   "firma_gorunen": "Insiderone",
+   "sehirler": [],
    "uzaktan": false
   },
   {
@@ -574,34 +636,6 @@
    "firma_gorunen": "Analog Devices, Inc",
    "sehirler": [
     "kocaeli"
-   ],
-   "uzaktan": false
-  },
-  {
-   "kimlik": "0c63f1cb687413f2",
-   "firma": "Analog Devices",
-   "baslik": "Embedded Software Engineering Intern",
-   "url": "https://analogdevices.wd1.myworkdayjobs.com/External/job/Turkey-Istanbul-Bilisim-Vadisi/Embedded-Software-Engineering-Intern_R267001",
-   "konum": "Turkey, Istanbul, Bilisim Vadisi",
-   "kaynak": "workday",
-   "yayin_tarihi": "2026-10-22",
-   "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
-   "seviye": "staj",
-   "rol": "yazilim",
-   "yapay_zeka": "yok",
-   "ayrinti": null,
-   "alanlar": [
-    "yazilim"
-   ],
-   "calisma_modeli": "belirsiz",
-   "girisim": false,
-   "yayin": "2026-10-22",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Staj",
-   "firma_gorunen": "Analog Devices",
-   "sehirler": [
-    "istanbul"
    ],
    "uzaktan": false
   },
