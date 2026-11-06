@@ -1,7 +1,7 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-06T09:59:39.906283+03:00",
- "sayi": 44,
+ "guncelleme": "2026-11-06T17:38:34.847609+03:00",
+ "sayi": 43,
  "ilanlar": [
   {
    "kimlik": "a1071dad2b5da606",
@@ -43,34 +43,6 @@
    "firma_gorunen": "PİXA",
    "sehirler": [
     "istanbul"
-   ],
-   "uzaktan": false
-  },
-  {
-   "kimlik": "d472f4ba4135149c",
-   "firma": "Bosch Türkiye",
-   "baslik": "Smart Start Data Analytics & Digitalization Engineer",
-   "url": "https://jobs.smartrecruiters.com/BoschGroup/744000159887118",
-   "konum": "Bursa, tr",
-   "kaynak": "smartrecruiters",
-   "yayin_tarihi": "2026-11-05",
-   "ilk_gorulme": "2026-11-05T14:58:47.951557+00:00",
-   "seviye": "staj",
-   "rol": "veri",
-   "yapay_zeka": "yok",
-   "ayrinti": null,
-   "alanlar": [
-    "veri"
-   ],
-   "calisma_modeli": "belirsiz",
-   "girisim": false,
-   "yayin": "2026-11-05",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Staj",
-   "firma_gorunen": "Bosch Türkiye",
-   "sehirler": [
-    "bursa"
    ],
    "uzaktan": false
   },

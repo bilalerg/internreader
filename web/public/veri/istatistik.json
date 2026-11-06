@@ -1,16 +1,16 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-06T09:59:39.906283+03:00",
+ "guncelleme": "2026-11-06T17:38:34.847609+03:00",
  "takip_edilen_firma": 3396,
  "taranan_firma": 932,
- "aktif_ilan": 8001,
- "ogrenci_ilani": 44,
+ "aktif_ilan": 8030,
+ "ogrenci_ilani": 43,
  "sehirler": {
-  "uzaktan": 1366,
-  "istanbul": 730,
-  "ankara": 201,
+  "uzaktan": 1358,
+  "istanbul": 731,
+  "ankara": 206,
   "izmir": 75,
-  "bursa": 65,
+  "bursa": 64,
   "kocaeli": 63,
   "adana": 58,
   "antalya": 55,
@@ -215,37 +215,36 @@
   }
  ],
  "huni": {
-  "aktif": 8001,
-  "konum_disi": 6358,
+  "aktif": 8030,
+  "konum_disi": 6382,
   "siniflanmamis": 0,
   "seviye": {
-   "belirsiz": 834,
+   "belirsiz": 836,
    "deneyimli": 545,
-   "staj": 99,
-   "junior": 93,
-   "yeni_mezun": 34,
-   "yari_zamanli": 29,
+   "staj": 97,
+   "junior": 94,
+   "yeni_mezun": 36,
+   "yari_zamanli": 31,
    "uzun_donem_staj": 9
   },
   "rol": {
-   "teknik_degil": 777,
-   "yazilim": 406,
-   "diger_teknik": 368,
-   "veri": 48,
+   "teknik_degil": 782,
+   "yazilim": 405,
+   "diger_teknik": 371,
+   "veri": 46,
    "yapay_zeka": 44
   },
   "ogrenciye_uygun": {
-   "yayinda": 44,
+   "yayinda": 43,
    "hayalet": 10,
    "supheli": 2,
    "eski_ilan_tarihi": 1,
    "genel_basvuru": 1
   },
-  "belirsiz_seviye_hedef_rol": 221,
-  "ogrenci_seviye_diger_teknik": 53,
+  "belirsiz_seviye_hedef_rol": 219,
+  "ogrenci_seviye_diger_teknik": 54,
   "ornek_belirsiz": [
    "Rapsodo: Back-End Engineer",
-   "Sestek: R&D Engineer (Native Arabic Speaker)",
    "ADIM TEKNOLOJİ A.Ş. Yazılım, 3D Simülasyon ve Modelleme: VR Developer",
    "3E ENDÜSTRİYEL MÜHENDİSLİK SAN. VE TİC. LTD. ŞTİ.: Software Engineer",
    "Lotus AI Yapay Zeka ve Bilişim Çözümleri A.Ş.: Java Spring Developer",
@@ -263,7 +262,8 @@
    "ESEN: Software Design Engineer",
    "MAGLAB OYUN TEKNOLOJİLERİ BİLİŞİM YAZILIM TASARIM YAYINCILIK TİCARET ANONİM ŞİRKETİ: Game Developer, On-Site Ankara · Full Time",
    "SİMOFUN OYUN TEKNOLOJİLERİ ANONİM ŞİRKETİ: Unity Oyun Geliştiricisi",
-   "MULTİGOO BİLİŞİM ANONİM ŞİRKETİ: Backend (.Net) Developer"
+   "MULTİGOO BİLİŞİM ANONİM ŞİRKETİ: Backend (.Net) Developer",
+   "Vita RND: Mobil Uygulama Geliştirici"
   ],
   "ornek_diger_teknik": [
    "Özgür Yazılım A.Ş.: Taze (Jr) DevOps & Linux Sistem Yöneticisi (S36)",
