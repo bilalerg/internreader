@@ -1,6 +1,6 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-06T17:38:34.847609+03:00",
+ "guncelleme": "2026-11-06T22:32:18.877553+03:00",
  "sayi": 43,
  "ilanlar": [
   {
@@ -49,7 +49,7 @@
   {
    "kimlik": "5a40af0ef5371f0b",
    "firma": "Insiderone",
-   "baslik": "Junior Software Engineer (Backend, AI-Enabled) — Remote",
+   "baslik": "Junior Software Engineer (AI-Enabled) — Remote",
    "url": "https://jobs.lever.co/insiderone/176f6234-e706-492e-a984-9eee80d28d22",
    "konum": "Turkey",
    "kaynak": "lever",
@@ -738,7 +738,7 @@
    "firma": "Sezzle (Türkiye, uzaktan)",
    "baslik": "Mobile Engineer (Turkey, All Levels)",
    "url": "https://job-boards.greenhouse.io/sezzle/jobs/7541145003",
-   "konum": "Türkiye, Remote",
+   "konum": "Türkiye",
    "kaynak": "greenhouse",
    "yayin_tarihi": "2026-09-25",
    "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
@@ -772,7 +772,7 @@
    "seviye_etiketi": "Tüm seviyeler",
    "firma_gorunen": "Sezzle",
    "sehirler": [],
-   "uzaktan": true
+   "uzaktan": false
   },
   {
    "kimlik": "71217068e2f59c58",

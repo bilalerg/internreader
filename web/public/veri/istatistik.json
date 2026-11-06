@@ -1,16 +1,16 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-06T17:38:34.847609+03:00",
+ "guncelleme": "2026-11-06T22:32:18.877553+03:00",
  "takip_edilen_firma": 3396,
  "taranan_firma": 932,
- "aktif_ilan": 8030,
+ "aktif_ilan": 8010,
  "ogrenci_ilani": 43,
  "sehirler": {
-  "uzaktan": 1358,
-  "istanbul": 731,
+  "uzaktan": 1352,
+  "istanbul": 734,
   "ankara": 206,
   "izmir": 75,
-  "bursa": 64,
+  "bursa": 65,
   "kocaeli": 63,
   "adana": 58,
   "antalya": 55,
@@ -215,23 +215,23 @@
   }
  ],
  "huni": {
-  "aktif": 8030,
-  "konum_disi": 6382,
+  "aktif": 8010,
+  "konum_disi": 6358,
   "siniflanmamis": 0,
   "seviye": {
-   "belirsiz": 836,
-   "deneyimli": 545,
-   "staj": 97,
+   "belirsiz": 837,
+   "deneyimli": 547,
+   "staj": 98,
    "junior": 94,
    "yeni_mezun": 36,
    "yari_zamanli": 31,
    "uzun_donem_staj": 9
   },
   "rol": {
-   "teknik_degil": 782,
-   "yazilim": 405,
-   "diger_teknik": 371,
-   "veri": 46,
+   "teknik_degil": 784,
+   "yazilim": 406,
+   "diger_teknik": 373,
+   "veri": 45,
    "yapay_zeka": 44
   },
   "ogrenciye_uygun": {
@@ -241,8 +241,8 @@
    "eski_ilan_tarihi": 1,
    "genel_basvuru": 1
   },
-  "belirsiz_seviye_hedef_rol": 219,
-  "ogrenci_seviye_diger_teknik": 54,
+  "belirsiz_seviye_hedef_rol": 218,
+  "ogrenci_seviye_diger_teknik": 55,
   "ornek_belirsiz": [
    "Rapsodo: Back-End Engineer",
    "ADIM TEKNOLOJİ A.Ş. Yazılım, 3D Simülasyon ve Modelleme: VR Developer",
