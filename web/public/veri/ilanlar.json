@@ -1,6 +1,6 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-05T17:59:21.627293+03:00",
+ "guncelleme": "2026-11-06T09:59:39.906283+03:00",
  "sayi": 44,
  "ilanlar": [
   {
@@ -803,47 +803,6 @@
    "uzaktan": true
   },
   {
-   "kimlik": "f7652ebe347e75ee",
-   "firma": "Sezzle (Türkiye, uzaktan)",
-   "baslik": "Junior Software Engineer with Accounting Experience ",
-   "url": "https://job-boards.greenhouse.io/sezzle/jobs/6668069003",
-   "konum": "Türkiye, Remote",
-   "kaynak": "greenhouse",
-   "yayin_tarihi": "2026-09-21",
-   "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
-   "seviye": "junior",
-   "rol": "yazilim",
-   "yapay_zeka": "yok",
-   "ayrinti": {
-    "ozet": "Muhasebe geçmişi olan junior yazılım mühendisi; finansal süreçler için yazılım geliştirme, kod yazma, dokümantasyon ve mutabakat/otomasyon iş akışlarını iyileştirme görevleri.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": "Muhasebe veya finans alanından yazılıma geçmiş, muhasebe deneyimli adaylar",
-    "calisma_modeli": "uzaktan",
-    "ucretli": "evet",
-    "teknolojiler": [
-     "Golang",
-     "React",
-     "React Native",
-     "Kubernetes",
-     "AWS",
-     "MySQL"
-    ]
-   },
-   "alanlar": [
-    "yazilim"
-   ],
-   "calisma_modeli": "uzaktan",
-   "girisim": false,
-   "yayin": "2026-09-21",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Junior",
-   "firma_gorunen": "Sezzle",
-   "sehirler": [],
-   "uzaktan": true
-  },
-  {
    "kimlik": "71217068e2f59c58",
    "firma": "Appnation",
    "baslik": "Software Engineer (Backend)",
@@ -952,6 +911,47 @@
     "istanbul"
    ],
    "uzaktan": false
+  },
+  {
+   "kimlik": "f7652ebe347e75ee",
+   "firma": "Sezzle (Türkiye, uzaktan)",
+   "baslik": "Junior Software Engineer with Accounting Experience ",
+   "url": "https://job-boards.greenhouse.io/sezzle/jobs/6668069003",
+   "konum": "Türkiye, Remote",
+   "kaynak": "greenhouse",
+   "yayin_tarihi": "2026-09-21",
+   "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
+   "seviye": "junior",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Muhasebe geçmişi olan junior yazılım mühendisi; finansal süreçler için yazılım geliştirme, kod yazma, dokümantasyon ve mutabakat/otomasyon iş akışlarını iyileştirme görevleri.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": "Muhasebe veya finans alanından yazılıma geçmiş, muhasebe deneyimli adaylar",
+    "calisma_modeli": "uzaktan",
+    "ucretli": "evet",
+    "teknolojiler": [
+     "Golang",
+     "React",
+     "React Native",
+     "Kubernetes",
+     "AWS",
+     "MySQL"
+    ]
+   },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "uzaktan",
+   "girisim": false,
+   "yayin": "2026-09-21",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Junior",
+   "firma_gorunen": "Sezzle",
+   "sehirler": [],
+   "uzaktan": true
   },
   {
    "kimlik": "07b4811d8738db9f",

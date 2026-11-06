@@ -1,16 +1,16 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-05T17:59:21.627293+03:00",
+ "guncelleme": "2026-11-06T09:59:39.906283+03:00",
  "takip_edilen_firma": 3396,
  "taranan_firma": 932,
- "aktif_ilan": 8244,
+ "aktif_ilan": 8001,
  "ogrenci_ilani": 44,
  "sehirler": {
-  "uzaktan": 1375,
-  "istanbul": 733,
+  "uzaktan": 1366,
+  "istanbul": 730,
   "ankara": 201,
-  "izmir": 78,
-  "bursa": 67,
+  "izmir": 75,
+  "bursa": 65,
   "kocaeli": 63,
   "adana": 58,
   "antalya": 55,
@@ -215,24 +215,24 @@
   }
  ],
  "huni": {
-  "aktif": 8244,
-  "konum_disi": 6592,
+  "aktif": 8001,
+  "konum_disi": 6358,
   "siniflanmamis": 0,
   "seviye": {
    "belirsiz": 834,
-   "deneyimli": 552,
+   "deneyimli": 545,
    "staj": 99,
    "junior": 93,
    "yeni_mezun": 34,
-   "yari_zamanli": 31,
+   "yari_zamanli": 29,
    "uzun_donem_staj": 9
   },
   "rol": {
-   "teknik_degil": 784,
+   "teknik_degil": 777,
    "yazilim": 406,
-   "diger_teknik": 370,
-   "veri": 47,
-   "yapay_zeka": 45
+   "diger_teknik": 368,
+   "veri": 48,
+   "yapay_zeka": 44
   },
   "ogrenciye_uygun": {
    "yayinda": 44,
@@ -241,8 +241,8 @@
    "eski_ilan_tarihi": 1,
    "genel_basvuru": 1
   },
-  "belirsiz_seviye_hedef_rol": 219,
-  "ogrenci_seviye_diger_teknik": 54,
+  "belirsiz_seviye_hedef_rol": 221,
+  "ogrenci_seviye_diger_teknik": 53,
   "ornek_belirsiz": [
    "Rapsodo: Back-End Engineer",
    "Sestek: R&D Engineer (Native Arabic Speaker)",
