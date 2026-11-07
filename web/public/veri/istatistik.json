@@ -1,22 +1,22 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-07T09:13:15.458948+03:00",
+ "guncelleme": "2026-11-07T16:34:36.575967+03:00",
  "takip_edilen_firma": 3396,
  "taranan_firma": 932,
- "aktif_ilan": 8022,
- "ogrenci_ilani": 43,
+ "aktif_ilan": 8035,
+ "ogrenci_ilani": 50,
  "sehirler": {
   "uzaktan": 1355,
-  "istanbul": 734,
-  "ankara": 206,
-  "izmir": 75,
+  "istanbul": 746,
+  "ankara": 210,
+  "izmir": 76,
   "bursa": 65,
   "kocaeli": 63,
   "adana": 58,
   "antalya": 55,
   "tekirdag": 53,
+  "gaziantep": 52,
   "kayseri": 51,
-  "gaziantep": 51,
   "konya": 50,
   "trabzon": 50,
   "samsun": 50,
@@ -86,14 +86,6 @@
  ],
  "kararlar": [
   {
-   "baslik": "Junior Java Developer",
-   "firma": "Checkbox",
-   "seviye": "junior",
-   "rol": "yazilim",
-   "gerekce": "Junior unvan; Java yazılım geliştirme.",
-   "uygun": true
-  },
-  {
    "baslik": "Game Developer - New Grad",
    "firma": "Vertigo Games",
    "seviye": "yeni_mezun",
@@ -107,6 +99,14 @@
    "seviye": "staj",
    "rol": "yapay_zeka",
    "gerekce": "Görüntü işleme proje stajı, yapay zeka bilgisi tercih sebebi",
+   "uygun": true
+  },
+  {
+   "baslik": "Entry-Level Java Software Developer",
+   "firma": "OmegaHires",
+   "seviye": "junior",
+   "rol": "yazilim",
+   "gerekce": "Entry-level Java yazılım geliştirici, uzaktan",
    "uygun": true
   },
   {
@@ -198,51 +198,51 @@
    "uygun": false
   },
   {
+   "baslik": "2027 Yaz Dönemi Staj | Kullanıcı Teknik Destek",
+   "firma": "Baykar",
+   "seviye": "staj",
+   "rol": "diger_teknik",
+   "gerekce": "Kullanıcı teknik destek ve BT altyapı stajı",
+   "uygun": false
+  },
+  {
    "baslik": "Staj Başvurusu",
    "firma": "Asist Bilgi",
    "seviye": "staj",
    "rol": "teknik_degil",
    "gerekce": "Staj başvurusu, alan açıkça belirtilmemiş",
    "uygun": false
-  },
-  {
-   "baslik": "Head of IT",
-   "firma": "Ticimax",
-   "seviye": "deneyimli",
-   "rol": "diger_teknik",
-   "gerekce": "IT yönetici pozisyonu, yönetici seviyesi",
-   "uygun": false
   }
  ],
  "huni": {
-  "aktif": 8022,
+  "aktif": 8035,
   "konum_disi": 6370,
   "siniflanmamis": 0,
   "seviye": {
-   "belirsiz": 837,
-   "deneyimli": 547,
-   "staj": 98,
-   "junior": 94,
-   "yeni_mezun": 36,
-   "yari_zamanli": 31,
-   "uzun_donem_staj": 9
+   "belirsiz": 835,
+   "deneyimli": 542,
+   "staj": 109,
+   "junior": 98,
+   "yari_zamanli": 35,
+   "yeni_mezun": 34,
+   "uzun_donem_staj": 12
   },
   "rol": {
-   "teknik_degil": 785,
-   "yazilim": 405,
-   "diger_teknik": 373,
-   "veri": 45,
+   "teknik_degil": 795,
+   "yazilim": 408,
+   "diger_teknik": 372,
+   "veri": 46,
    "yapay_zeka": 44
   },
   "ogrenciye_uygun": {
-   "yayinda": 43,
-   "hayalet": 10,
+   "yayinda": 50,
+   "hayalet": 9,
    "supheli": 2,
    "eski_ilan_tarihi": 1,
    "genel_basvuru": 1
   },
   "belirsiz_seviye_hedef_rol": 218,
-  "ogrenci_seviye_diger_teknik": 55,
+  "ogrenci_seviye_diger_teknik": 58,
   "ornek_belirsiz": [
    "Rapsodo: Back-End Engineer",
    "ADIM TEKNOLOJİ A.Ş. Yazılım, 3D Simülasyon ve Modelleme: VR Developer",
@@ -267,6 +267,8 @@
   ],
   "ornek_diger_teknik": [
    "Özgür Yazılım A.Ş.: Taze (Jr) DevOps & Linux Sistem Yöneticisi (S36)",
+   "Baykar: 2027 Yaz Dönemi Staj | Kullanıcı Teknik Destek",
+   "Merck: Clinical Research Intern",
    "Opsin Elektro Optik: Aday Mühendis Programı",
    "Opsin Elektro Optik: Staj Programı",
    "Luxoft: (Graduate) Home Trial Engineer",
@@ -283,9 +285,7 @@
    "BİLGİKURUMSAL YAZILIM TEKNOLOJİLERİ A.Ş.: Stajyer",
    "MAPP PAZARLAMA VE TANITIM HİZMETLERİ: Ankara Teknik Servis Teknoloji Asistanı",
    "Analog Devices: Associate Designer, Layout",
-   "KoçSistem: KoçSistem Level Up",
-   "TÜBİTAK BİLGEM: Part-Time Candidate Researcher",
-   "BAYKAR: 2027 Yaz Dönemi Staj | Hafif Platformlar Kontrol ve Güdüm Sistemleri"
+   "KoçSistem: KoçSistem Level Up"
   ]
  }
 }

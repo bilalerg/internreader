@@ -1,8 +1,120 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-07T09:13:15.458948+03:00",
- "sayi": 43,
+ "guncelleme": "2026-11-07T16:34:36.575967+03:00",
+ "sayi": 50,
  "ilanlar": [
+  {
+   "kimlik": "440ffe70c38b3897",
+   "firma": "Manc Games",
+   "baslik": "Junior Game Developer (Unity)",
+   "url": "https://tr.jooble.org/away/-7398365518634777467?p=1&pos=5&rgn=0&cid=215&ckey=junior+developer&jobAge=23&relb=70&brelb=10&scr=4024.5825900000004&bscr=574.94037&aq=5097468954549727963&elckey=848531658476752645",
+   "konum": "İstanbul, Fatih",
+   "kaynak": "jooble",
+   "yayin_tarihi": "2026-11-06",
+   "ilk_gorulme": "2026-11-07T13:34:00.335732+00:00",
+   "seviye": "junior",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Unity ile oyun geliştirmeye odaklanan junior bir rol; ekipte senior bir mühendisle birlikte çalışılacak ve ilk profesyonel oyun sürümünün oyunculara ulaşması hedeflenecek.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": "0–2 yıl deneyimli junior geliştiriciler",
+    "calisma_modeli": "ofis",
+    "ucretli": "evet",
+    "teknolojiler": []
+   },
+   "alanlar": [
+    "yazilim",
+    "oyun"
+   ],
+   "calisma_modeli": "yerinde",
+   "girisim": false,
+   "yayin": "2026-11-06",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Junior",
+   "firma_gorunen": "Manc Games",
+   "sehirler": [
+    "istanbul"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "935bb19cb0f790a4",
+   "firma": "Hiroba Games",
+   "baslik": "Game Developer Intern - Unity (Paid Long-Term Internship)",
+   "url": "https://tr.jooble.org/desc/-3422181411492028891?ckey=software+intern&rgn=0&pos=60&elckey=3118034694714498093&p=1&aq=4485659695152808605&cid=215&jobAge=81&relb=110&brelb=110&bscr=2420.8406&scr=2420.8406",
+   "konum": "Ankara",
+   "kaynak": "jooble",
+   "yayin_tarihi": "2026-11-04",
+   "ilk_gorulme": "2026-11-07T13:34:00.335732+00:00",
+   "seviye": "uzun_donem_staj",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Mobil oyun geliştirme ekibinde Unity deneyimiyle çalışacak bir Game Developer stajyeri aranıyor. Staj ilk günden itibaren ücretli; mentorluk ve gerçek projelerde çalışma imkânı sunuluyor.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": null,
+    "calisma_modeli": "belirsiz",
+    "ucretli": "evet",
+    "teknolojiler": [
+     "Unity"
+    ]
+   },
+   "alanlar": [
+    "yazilim",
+    "oyun"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": "2026-11-04",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Uzun dönem staj",
+   "firma_gorunen": "Hiroba Games",
+   "sehirler": [
+    "ankara"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "0a5543902f930582",
+   "firma": "OmegaHires",
+   "baslik": "Entry-Level Java Software Developer",
+   "url": "https://tr.jooble.org/desc/4403916165296651403?ckey=software+intern&rgn=0&pos=72&elckey=3118034694714498093&p=1&aq=4485659695152808605&cid=215&jobAge=327&relb=100&brelb=100&bscr=2335.778&scr=2335.778",
+   "konum": "Evden çalışmak",
+   "kaynak": "jooble",
+   "yayin_tarihi": "2026-10-25",
+   "ilk_gorulme": "2026-11-07T13:34:00.335732+00:00",
+   "seviye": "junior",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Uzaktan çalışılan, sözleşmeli giriş seviyeli Java yazılım geliştirici pozisyonu; yapılandırılmış eğitim ve sonrasında proje deneyimi içerir.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": null,
+    "calisma_modeli": "uzaktan",
+    "ucretli": "evet",
+    "teknolojiler": [
+     "Java"
+    ]
+   },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "uzaktan",
+   "girisim": false,
+   "yayin": "2026-10-25",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Junior",
+   "firma_gorunen": "OmegaHires",
+   "sehirler": [],
+   "uzaktan": false
+  },
   {
    "kimlik": "5a40af0ef5371f0b",
    "firma": "Insiderone",
@@ -35,6 +147,81 @@
    "seviye_etiketi": "Junior",
    "firma_gorunen": "Insiderone",
    "sehirler": [],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "1064a948119d9c43",
+   "firma": "Amadeus Bilgi Teknolojisi Hizmetleri A.S.",
+   "baslik": "Junior QA Engineer",
+   "url": "https://tr.jooble.org/away/-3138120606450385747?p=1&pos=31&rgn=0&cid=215&ckey=junior+developer&jobAge=71&relb=70&brelb=10&scr=2582.95086&bscr=368.99298&aq=5097468954549727963&elckey=848531658476752645",
+   "konum": "İstanbul, Fatih",
+   "kaynak": "jooble",
+   "yayin_tarihi": "2026-11-04",
+   "ilk_gorulme": "2026-11-07T13:34:00.335732+00:00",
+   "seviye": "junior",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": null,
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": []
+   },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": "2026-11-04",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Junior",
+   "firma_gorunen": "Amadeus Bilgi Teknolojisi",
+   "sehirler": [
+    "istanbul"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "7539aa6afa57a281",
+   "firma": "Procter & Gamble",
+   "baslik": "Summer Internship 2027: Analytics & Insights",
+   "url": "https://tr.jooble.org/desc/4955266397160211820?ckey=machine+learning+intern&rgn=0&pos=42&elckey=958467746767060621&p=1&aq=6152982650191155123&cid=215&jobAge=76&relb=100&brelb=100&bscr=1130.7493&scr=1130.7493",
+   "konum": "İstanbul",
+   "kaynak": "jooble",
+   "yayin_tarihi": "2026-11-04",
+   "ilk_gorulme": "2026-11-07T13:34:00.335732+00:00",
+   "seviye": "staj",
+   "rol": "veri",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Analytics & Insights ekibinde yaz stajı; pazar ve perakende verilerini analiz ederek iş stratejisi konusunda içeriden danışmanlık desteği veriliyor.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": null,
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": [
+     "Cloud Technologies",
+     "Machine Learning"
+    ]
+   },
+   "alanlar": [
+    "veri"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": "2026-11-04",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Staj",
+   "firma_gorunen": "Procter & Gamble",
+   "sehirler": [
+    "istanbul"
+   ],
    "uzaktan": false
   },
   {
@@ -98,7 +285,7 @@
    "kimlik": "5cafb9fe3181c585",
    "firma": "Baykar",
    "baslik": "2027 Yaz Dönemi Staj | Hafif Platformlar Yazılım Test ve Otomasyon",
-   "url": "https://tr.jooble.org/away/-5805514709525252205?p=1&pos=63&rgn=0&cid=215&ckey=yapay+zeka+stajyeri&jobAge=2&relb=70&brelb=10&scr=574.126945&bscr=82.018135&aq=1513912718296561378&elckey=1614341164444384974",
+   "url": "https://tr.jooble.org/away/-5805514709525252205?p=1&pos=69&rgn=0&cid=215&ckey=yapay+zeka+stajyeri&jobAge=63&relb=70&brelb=10&scr=580.57412&bscr=82.93916&aq=-387171679564898808&elckey=4978894579215258576",
    "konum": "İstanbul, Fatih",
    "kaynak": "jooble",
    "yayin_tarihi": "2026-10-31",
@@ -135,7 +322,7 @@
    "kimlik": "d60c43b0b8db12f9",
    "firma": "Baykar",
    "baslik": "2027 Yaz Dönemi Staj | Web Yazılım Geliştirme",
-   "url": "https://tr.jooble.org/away/-800742162295030925?p=1&pos=42&rgn=0&cid=215&ckey=yapay+zeka+stajyeri&jobAge=2&relb=70&brelb=10&scr=977.40349&bscr=139.62907&aq=1513912718296561378&elckey=1614341164444384974",
+   "url": "https://tr.jooble.org/away/-800742162295030925?p=1&pos=44&rgn=0&cid=215&ckey=yapay+zeka+stajyeri&jobAge=63&relb=70&brelb=10&scr=983.0614500000001&bscr=140.43735&aq=-387171679564898808&elckey=4978894579215258576",
    "konum": "İstanbul, Fatih",
    "kaynak": "jooble",
    "yayin_tarihi": "2026-10-31",
@@ -172,7 +359,7 @@
    "kimlik": "7ef539d8d948b60f",
    "firma": "Baykar",
    "baslik": "2027 Yaz Dönemi Staj | Yazılım Test ve Otomasyon Mühendisliği",
-   "url": "https://tr.jooble.org/away/-5909116023632262211?p=1&pos=95&rgn=0&cid=215&ckey=yapay+zeka+stajyeri&jobAge=2&relb=70&brelb=10&scr=306.27625&bscr=43.75375&aq=1513912718296561378&elckey=1614341164444384974",
+   "url": "https://tr.jooble.org/away/-5909116023632262211?p=1&pos=91&rgn=0&cid=215&ckey=yapay+zeka+stajyeri&jobAge=63&relb=70&brelb=10&scr=306.970202&bscr=43.852886&aq=-387171679564898808&elckey=4978894579215258576",
    "konum": "İstanbul, Fatih",
    "kaynak": "jooble",
    "yayin_tarihi": "2026-10-31",
@@ -209,7 +396,7 @@
    "kimlik": "e5b509b835a3e9fe",
    "firma": "Hypermonk Games",
    "baslik": "Junior Game Developer",
-   "url": "https://tr.jooble.org/away/-1816807584295613968?p=1&pos=3&rgn=0&cid=215&ckey=junior+software+developer&jobAge=19&relb=69&brelb=10&scr=4494.59928&bscr=651.3912&aq=289116116297788624&elckey=6063536846274726013",
+   "url": "https://tr.jooble.org/away/-1816807584295613968?p=1&pos=2&rgn=0&cid=215&ckey=junior+developer&jobAge=63&relb=70&brelb=10&scr=4154.7961&bscr=593.5423&aq=5097468954549727963&elckey=848531658476752645",
    "konum": "Ankara, Çankaya",
    "kaynak": "jooble",
    "yayin_tarihi": "2026-10-31",
@@ -284,7 +471,7 @@
    "kimlik": "2f231601a46fe224",
    "firma": "Utilwork Information Technology",
    "baslik": "Junior PL/SQL Developers",
-   "url": "https://tr.jooble.org/away/-2819595859574032867?p=1&pos=2&rgn=0&cid=215&ckey=junior+software+developer&jobAge=19&relb=69&brelb=10&scr=4604.63634&bscr=667.3386&aq=289116116297788624&elckey=6063536846274726013",
+   "url": "https://tr.jooble.org/away/-2819595859574032867?p=1&pos=3&rgn=0&cid=215&ckey=junior+developer&jobAge=63&relb=70&brelb=10&scr=4138.0045&bscr=591.1435&aq=5097468954549727963&elckey=848531658476752645",
    "konum": "İstanbul, Fatih",
    "kaynak": "jooble",
    "yayin_tarihi": "2026-10-31",
@@ -311,114 +498,6 @@
    "ilan_turu": "is",
    "seviye_etiketi": "Junior",
    "firma_gorunen": "Utilwork Information Technology",
-   "sehirler": [
-    "istanbul"
-   ],
-   "uzaktan": false
-  },
-  {
-   "kimlik": "f1c48faa34af8481",
-   "firma": "BAYKAR",
-   "baslik": "2027 Yaz Dönemi Staj | Görüntüleme Sistemleri Yazılım Mühendisi",
-   "url": "https://tr.jooble.org/away/-4557784286492753905?p=1&pos=94&rgn=0&cid=215&ckey=yapay+zeka+stajyeri&jobAge=43&relb=70&brelb=10&scr=306.317102&bscr=43.759586&aq=1513912718296561378&elckey=1614341164444384974",
-   "konum": "İstanbul, Fatih",
-   "kaynak": "jooble",
-   "yayin_tarihi": "2026-10-30",
-   "ilk_gorulme": "2026-10-31T17:07:30.982091+00:00",
-   "seviye": "staj",
-   "rol": "yazilim",
-   "yapay_zeka": "yok",
-   "ayrinti": {
-    "ozet": "Görüntüleme sistemlerinin yazılım geliştirme süreçlerinde görev alınacak bir staj. Hava araçları ve faydalı yük sistemlerinden elde edilen görüntü ve ham verilerin işlenmesi üzerine çalışılacak.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": null,
-    "calisma_modeli": "belirsiz",
-    "ucretli": "belirsiz",
-    "teknolojiler": []
-   },
-   "alanlar": [
-    "yazilim"
-   ],
-   "calisma_modeli": "belirsiz",
-   "girisim": false,
-   "yayin": "2026-10-30",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Staj",
-   "firma_gorunen": "BAYKAR",
-   "sehirler": [
-    "istanbul"
-   ],
-   "uzaktan": false
-  },
-  {
-   "kimlik": "7326358252fad401",
-   "firma": "BAYKAR",
-   "baslik": "2027 Yaz Dönemi Staj | Hafif Platformlar Otopilot ve Akıllı Sistem Yazılımları",
-   "url": "https://tr.jooble.org/away/-8193086024317859187?p=1&pos=72&rgn=0&cid=215&ckey=yapay+zeka+stajyeri&jobAge=43&relb=70&brelb=10&scr=539.4761120000001&bscr=77.068016&aq=1513912718296561378&elckey=1614341164444384974",
-   "konum": "İstanbul, Fatih",
-   "kaynak": "jooble",
-   "yayin_tarihi": "2026-10-30",
-   "ilk_gorulme": "2026-10-31T17:07:30.982091+00:00",
-   "seviye": "staj",
-   "rol": "yazilim",
-   "yapay_zeka": "arti",
-   "ayrinti": {
-    "ozet": "Hafif platformlar için otopilot ve akıllı sistem yazılımları alanında yaz dönemi stajı; gömülü yazılım, kontrol ve güdüm sistemleri gibi takımlarda çalışma imkânı sunulmaktadır.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": null,
-    "calisma_modeli": "belirsiz",
-    "ucretli": "belirsiz",
-    "teknolojiler": []
-   },
-   "alanlar": [
-    "yazilim"
-   ],
-   "calisma_modeli": "belirsiz",
-   "girisim": false,
-   "yayin": "2026-10-30",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Staj",
-   "firma_gorunen": "BAYKAR",
-   "sehirler": [
-    "istanbul"
-   ],
-   "uzaktan": false
-  },
-  {
-   "kimlik": "ea5f8ea46a27fdf9",
-   "firma": "BAYKAR",
-   "baslik": "2027 Yaz Dönemi Staj | Simülasyon Sistemleri Yazılım ve Modelleme",
-   "url": "https://tr.jooble.org/away/1450523028695297551?p=1&pos=16&rgn=0&cid=215&ckey=uzun+d%c3%b6nem+stajyer+yaz%c4%b1l%c4%b1m&jobAge=43&relb=70&brelb=10&scr=3467.0238400000003&bscr=495.28912&aq=-5631039591400048331&elckey=5665357516356375486",
-   "konum": "İstanbul, Fatih",
-   "kaynak": "jooble",
-   "yayin_tarihi": "2026-10-30",
-   "ilk_gorulme": "2026-10-31T17:07:30.982091+00:00",
-   "seviye": "staj",
-   "rol": "yazilim",
-   "yapay_zeka": "yok",
-   "ayrinti": {
-    "ozet": "Simülasyon Sistemleri Modelleme ve Yazılımı ekibinde, insansız hava araçlarının pilotaj eğitimine yönelik simülasyon sistemleri üzerine AR-GE kapsamında yaz dönemi staj pozisyonu.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": null,
-    "calisma_modeli": "belirsiz",
-    "ucretli": "belirsiz",
-    "teknolojiler": []
-   },
-   "alanlar": [
-    "yazilim"
-   ],
-   "calisma_modeli": "belirsiz",
-   "girisim": false,
-   "yayin": "2026-10-30",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Staj",
-   "firma_gorunen": "BAYKAR",
    "sehirler": [
     "istanbul"
    ],
@@ -462,10 +541,84 @@
    "uzaktan": false
   },
   {
+   "kimlik": "f1c48faa34af8481",
+   "firma": "Baykar",
+   "baslik": "2027 Yaz Dönemi Staj | Görüntüleme Sistemleri Yazılım Mühendisi",
+   "url": "https://tr.jooble.org/away/-4557784286492753905?p=1&pos=92&rgn=0&cid=215&ckey=yapay+zeka+stajyeri&jobAge=87&relb=70&brelb=10&scr=306.382524&bscr=43.768932&aq=-387171679564898808&elckey=4978894579215258576",
+   "konum": "İstanbul, Fatih",
+   "kaynak": "jooble",
+   "yayin_tarihi": "2026-10-30",
+   "ilk_gorulme": "2026-10-31T17:07:30.982091+00:00",
+   "seviye": "staj",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Görüntüleme sistemlerinin yazılım geliştirme süreçlerinde görev alınacak bir staj. Hava araçları ve faydalı yük sistemlerinden elde edilen görüntü ve ham verilerin işlenmesi üzerine çalışılacak.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": null,
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": []
+   },
+   "alanlar": [
+    "yazilim",
+    "savunma"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": "2026-10-30",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Staj",
+   "firma_gorunen": "Baykar",
+   "sehirler": [
+    "istanbul"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "7326358252fad401",
+   "firma": "Baykar",
+   "baslik": "2027 Yaz Dönemi Staj | Hafif Platformlar Otopilot ve Akıllı Sistem Yazılımları",
+   "url": "https://tr.jooble.org/away/-8193086024317859187?p=1&pos=74&rgn=0&cid=215&ckey=yapay+zeka+stajyeri&jobAge=87&relb=70&brelb=10&scr=526.9115599999999&bscr=75.27308&aq=-387171679564898808&elckey=4978894579215258576",
+   "konum": "İstanbul, Fatih",
+   "kaynak": "jooble",
+   "yayin_tarihi": "2026-10-30",
+   "ilk_gorulme": "2026-10-31T17:07:30.982091+00:00",
+   "seviye": "staj",
+   "rol": "yazilim",
+   "yapay_zeka": "arti",
+   "ayrinti": {
+    "ozet": "Hafif platformlar için otopilot ve akıllı sistem yazılımları alanında yaz dönemi stajı; gömülü yazılım, kontrol ve güdüm sistemleri gibi takımlarda çalışma imkânı sunulmaktadır.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": null,
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": []
+   },
+   "alanlar": [
+    "yazilim",
+    "savunma"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": "2026-10-30",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Staj",
+   "firma_gorunen": "Baykar",
+   "sehirler": [
+    "istanbul"
+   ],
+   "uzaktan": false
+  },
+  {
    "kimlik": "6395298a78383045",
    "firma": "Baykar",
    "baslik": "2027 Yaz Dönemi Staj | Haritalama",
-   "url": "https://tr.jooble.org/away/-6297806479418092678?p=1&pos=87&rgn=0&cid=215&ckey=yapay+zeka+stajyeri&jobAge=34&relb=69&brelb=10&scr=367.53515849999997&bscr=53.265965&aq=1513912718296561378&elckey=1614341164444384974",
+   "url": "https://tr.jooble.org/away/-6297806479418092678?p=1&pos=86&rgn=0&cid=215&ckey=yapay+zeka+stajyeri&jobAge=87&relb=70&brelb=10&scr=364.797692&bscr=52.113956&aq=-387171679564898808&elckey=4978894579215258576",
    "konum": "İstanbul, Fatih",
    "kaynak": "jooble",
    "yayin_tarihi": "2026-10-30",
@@ -484,6 +637,43 @@
    },
    "alanlar": [
     "yapay_zeka",
+    "savunma"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": "2026-10-30",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Staj",
+   "firma_gorunen": "Baykar",
+   "sehirler": [
+    "istanbul"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "ea5f8ea46a27fdf9",
+   "firma": "Baykar",
+   "baslik": "2027 Yaz Dönemi Staj | Simülasyon Sistemleri Yazılım ve Modelleme",
+   "url": "https://tr.jooble.org/away/1450523028695297551?p=1&pos=25&rgn=0&cid=215&ckey=uzun+d%c3%b6nem+stajyer+yaz%c4%b1l%c4%b1m&jobAge=87&relb=70&brelb=10&scr=3585.5880899999997&bscr=512.22687&aq=-3590162958707519368&elckey=-5122659083614180272",
+   "konum": "İstanbul, Fatih",
+   "kaynak": "jooble",
+   "yayin_tarihi": "2026-10-30",
+   "ilk_gorulme": "2026-10-31T17:07:30.982091+00:00",
+   "seviye": "staj",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Simülasyon Sistemleri Modelleme ve Yazılımı ekibinde, insansız hava araçlarının pilotaj eğitimine yönelik simülasyon sistemleri üzerine AR-GE kapsamında yaz dönemi staj pozisyonu.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": null,
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": []
+   },
+   "alanlar": [
+    "yazilim",
     "savunma"
    ],
    "calisma_modeli": "belirsiz",
@@ -566,6 +756,79 @@
    "sehirler": [
     "kocaeli"
    ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "8b8c077c008ea42a",
+   "firma": "GoFasti",
+   "baslik": "1182 - Junior Frontend Developer",
+   "url": "https://tr.jooble.org/desc/-1269290163744619032?ckey=game+developer+intern&rgn=0&pos=66&elckey=-2565409591184209016&p=1&aq=8626575621926315919&cid=215&jobAge=327&relb=100&brelb=100&bscr=2398.3147&scr=2398.3147",
+   "konum": "Evden çalışmak",
+   "kaynak": "jooble",
+   "yayin_tarihi": "2026-10-25",
+   "ilk_gorulme": "2026-11-07T13:34:00.335732+00:00",
+   "seviye": "junior",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Kullanıcıya yönelik yeni özellikler geliştirilecek; PHP, HTML, CSS ve JavaScript kullanılacak.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": null,
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": [
+     "PHP",
+     "HTML",
+     "CSS",
+     "JavaScript"
+    ]
+   },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": "2026-10-25",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Junior",
+   "firma_gorunen": "GoFasti",
+   "sehirler": [],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "f590d1f50f4b38db",
+   "firma": "Kalepa",
+   "baslik": "Junior Backend Engineer (Europe)",
+   "url": "https://tr.jooble.org/desc/-5212427779392858373?ckey=junior+software+developer&rgn=0&pos=12&elckey=-4724479753695829745&p=1&aq=3517837399867454931&cid=215&jobAge=327&relb=100&brelb=100&bscr=3561.0415&scr=3561.0415",
+   "konum": "Evden çalışmak",
+   "kaynak": "jooble",
+   "yayin_tarihi": "2026-10-25",
+   "ilk_gorulme": "2026-11-07T13:34:00.335732+00:00",
+   "seviye": "junior",
+   "rol": "yazilim",
+   "yapay_zeka": "arti",
+   "ayrinti": {
+    "ozet": "",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": null,
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": []
+   },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": "2026-10-25",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Junior",
+   "firma_gorunen": "Kalepa",
+   "sehirler": [],
    "uzaktan": false
   },
   {
@@ -693,7 +956,7 @@
   {
    "kimlik": "a1071dad2b5da606",
    "firma": "PİXA BİLİŞİM TEKNOLOJİLERİ A.Ş.",
-   "baslik": "05 Yazılım Geliştirici Stajyeri",
+   "baslik": "Yazılım Geliştirici Stajyeri",
    "url": "https://pixasoftware.com/kariyer/yazilim-gelistirici-stajyeri/",
    "konum": "İstanbul [Hibrit]",
    "kaynak": "kariyer_sayfasi",
