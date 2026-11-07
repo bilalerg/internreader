@@ -1,12 +1,12 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-06T22:32:18.877553+03:00",
+ "guncelleme": "2026-11-07T09:13:15.458948+03:00",
  "takip_edilen_firma": 3396,
  "taranan_firma": 932,
- "aktif_ilan": 8010,
+ "aktif_ilan": 8022,
  "ogrenci_ilani": 43,
  "sehirler": {
-  "uzaktan": 1352,
+  "uzaktan": 1355,
   "istanbul": 734,
   "ankara": 206,
   "izmir": 75,
@@ -215,8 +215,8 @@
   }
  ],
  "huni": {
-  "aktif": 8010,
-  "konum_disi": 6358,
+  "aktif": 8022,
+  "konum_disi": 6370,
   "siniflanmamis": 0,
   "seviye": {
    "belirsiz": 837,
@@ -228,8 +228,8 @@
    "uzun_donem_staj": 9
   },
   "rol": {
-   "teknik_degil": 784,
-   "yazilim": 406,
+   "teknik_degil": 785,
+   "yazilim": 405,
    "diger_teknik": 373,
    "veri": 45,
    "yapay_zeka": 44

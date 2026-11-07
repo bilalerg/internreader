@@ -1,51 +1,8 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-06T22:32:18.877553+03:00",
+ "guncelleme": "2026-11-07T09:13:15.458948+03:00",
  "sayi": 43,
  "ilanlar": [
-  {
-   "kimlik": "a1071dad2b5da606",
-   "firma": "PİXA BİLİŞİM TEKNOLOJİLERİ A.Ş.",
-   "baslik": "05 Yazılım Geliştirici Stajyeri",
-   "url": "https://pixasoftware.com/kariyer/yazilim-gelistirici-stajyeri/",
-   "konum": "İstanbul [Hibrit]",
-   "kaynak": "kariyer_sayfasi",
-   "yayin_tarihi": "2026-10-23",
-   "ilk_gorulme": "2026-11-01T13:03:46.911796+00:00",
-   "seviye": "staj",
-   "rol": "yazilim",
-   "yapay_zeka": "yok",
-   "ayrinti": {
-    "ozet": "Canlıdaki ürünün kodunda ekiple çalışarak küçük geliştirmeler, hata düzeltmeleri ve pazaryeri ile kargo entegrasyonları yapılacak.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": "Bilgisayar ya da yazılım mühendisliği veya ilgili bölümlerde 3. veya 4. sınıf öğrencileri, haftada en az 3 tam gün…",
-    "calisma_modeli": "hibrit",
-    "ucretli": "evet",
-    "teknolojiler": [
-     "Node.js",
-     "TypeScript",
-     "Vue.js",
-     "Express",
-     "SQL",
-     "Git"
-    ]
-   },
-   "alanlar": [
-    "yazilim"
-   ],
-   "calisma_modeli": "hibrit",
-   "girisim": false,
-   "yayin": "2026-10-23",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Staj",
-   "firma_gorunen": "PİXA",
-   "sehirler": [
-    "istanbul"
-   ],
-   "uzaktan": false
-  },
   {
    "kimlik": "5a40af0ef5371f0b",
    "firma": "Insiderone",
@@ -728,6 +685,49 @@
    "ilan_turu": "is",
    "seviye_etiketi": "Yeni mezun",
    "firma_gorunen": "Good Job Games",
+   "sehirler": [
+    "istanbul"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "a1071dad2b5da606",
+   "firma": "PİXA BİLİŞİM TEKNOLOJİLERİ A.Ş.",
+   "baslik": "05 Yazılım Geliştirici Stajyeri",
+   "url": "https://pixasoftware.com/kariyer/yazilim-gelistirici-stajyeri/",
+   "konum": "İstanbul [Hibrit]",
+   "kaynak": "kariyer_sayfasi",
+   "yayin_tarihi": "2026-10-23",
+   "ilk_gorulme": "2026-11-01T13:03:46.911796+00:00",
+   "seviye": "staj",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Canlıdaki ürünün kodunda ekiple çalışarak küçük geliştirmeler, hata düzeltmeleri ve pazaryeri ile kargo entegrasyonları yapılacak.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": "Bilgisayar ya da yazılım mühendisliği veya ilgili bölümlerde 3. veya 4. sınıf öğrencileri, haftada en az 3 tam gün…",
+    "calisma_modeli": "hibrit",
+    "ucretli": "evet",
+    "teknolojiler": [
+     "Node.js",
+     "TypeScript",
+     "Vue.js",
+     "Express",
+     "SQL",
+     "Git"
+    ]
+   },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "hibrit",
+   "girisim": false,
+   "yayin": "2026-10-23",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Staj",
+   "firma_gorunen": "PİXA",
    "sehirler": [
     "istanbul"
    ],
