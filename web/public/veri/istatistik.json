@@ -1,13 +1,13 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-07T16:34:36.575967+03:00",
+ "guncelleme": "2026-11-08T16:52:23.621327+03:00",
  "takip_edilen_firma": 3396,
  "taranan_firma": 932,
- "aktif_ilan": 8035,
+ "aktif_ilan": 8009,
  "ogrenci_ilani": 50,
  "sehirler": {
   "uzaktan": 1355,
-  "istanbul": 746,
+  "istanbul": 747,
   "ankara": 210,
   "izmir": 76,
   "bursa": 65,
@@ -150,14 +150,6 @@
    "uygun": false
   },
   {
-   "baslik": "Mekanik Tekniker / Montaj Ustası",
-   "firma": "Novatek Endüstriyel Sistemler",
-   "seviye": "belirsiz",
-   "rol": "diger_teknik",
-   "gerekce": "Mekanik tekniker ve montaj, seviye belirtilmemiş",
-   "uygun": false
-  },
-  {
    "baslik": "Back-End Engineer",
    "firma": "Rapsodo",
    "seviye": "belirsiz",
@@ -198,6 +190,14 @@
    "uygun": false
   },
   {
+   "baslik": "Yardım Masası Yetkilisi",
+   "firma": "SEKTÖRSOFT",
+   "seviye": "belirsiz",
+   "rol": "diger_teknik",
+   "gerekce": "Yardım masası, BT destek işi",
+   "uygun": false
+  },
+  {
    "baslik": "2027 Yaz Dönemi Staj | Kullanıcı Teknik Destek",
    "firma": "Baykar",
    "seviye": "staj",
@@ -215,22 +215,22 @@
   }
  ],
  "huni": {
-  "aktif": 8035,
-  "konum_disi": 6370,
+  "aktif": 8009,
+  "konum_disi": 6369,
   "siniflanmamis": 0,
   "seviye": {
-   "belirsiz": 835,
+   "belirsiz": 808,
    "deneyimli": 542,
    "staj": 109,
    "junior": 98,
-   "yari_zamanli": 35,
-   "yeni_mezun": 34,
+   "yari_zamanli": 36,
+   "yeni_mezun": 35,
    "uzun_donem_staj": 12
   },
   "rol": {
-   "teknik_degil": 795,
-   "yazilim": 408,
-   "diger_teknik": 372,
+   "teknik_degil": 786,
+   "yazilim": 410,
+   "diger_teknik": 354,
    "veri": 46,
    "yapay_zeka": 44
   },
@@ -241,7 +241,7 @@
    "eski_ilan_tarihi": 1,
    "genel_basvuru": 1
   },
-  "belirsiz_seviye_hedef_rol": 218,
+  "belirsiz_seviye_hedef_rol": 220,
   "ogrenci_seviye_diger_teknik": 58,
   "ornek_belirsiz": [
    "Rapsodo: Back-End Engineer",
