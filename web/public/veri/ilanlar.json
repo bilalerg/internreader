@@ -1,6 +1,6 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-08T16:52:23.621327+03:00",
+ "guncelleme": "2026-11-09T01:16:17.086471+03:00",
  "sayi": 50,
  "ilanlar": [
   {
@@ -77,42 +77,6 @@
    "sehirler": [
     "ankara"
    ],
-   "uzaktan": false
-  },
-  {
-   "kimlik": "0a5543902f930582",
-   "firma": "OmegaHires",
-   "baslik": "Entry-Level Java Software Developer",
-   "url": "https://tr.jooble.org/desc/4403916165296651403?ckey=software+intern&rgn=0&pos=72&elckey=3118034694714498093&p=1&aq=4485659695152808605&cid=215&jobAge=327&relb=100&brelb=100&bscr=2335.778&scr=2335.778",
-   "konum": "Evden çalışmak",
-   "kaynak": "jooble",
-   "yayin_tarihi": "2026-10-25",
-   "ilk_gorulme": "2026-11-07T13:34:00.335732+00:00",
-   "seviye": "junior",
-   "rol": "yazilim",
-   "yapay_zeka": "yok",
-   "ayrinti": {
-    "ozet": "Uzaktan çalışılan, sözleşmeli giriş seviyeli Java yazılım geliştirici pozisyonu; yapılandırılmış eğitim ve sonrasında proje deneyimi içerir.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": null,
-    "calisma_modeli": "uzaktan",
-    "ucretli": "evet",
-    "teknolojiler": [
-     "Java"
-    ]
-   },
-   "alanlar": [
-    "yazilim"
-   ],
-   "calisma_modeli": "uzaktan",
-   "girisim": false,
-   "yayin": "2026-10-25",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Junior",
-   "firma_gorunen": "OmegaHires",
-   "sehirler": [],
    "uzaktan": false
   },
   {
@@ -759,79 +723,6 @@
    "uzaktan": false
   },
   {
-   "kimlik": "8b8c077c008ea42a",
-   "firma": "GoFasti",
-   "baslik": "1182 - Junior Frontend Developer",
-   "url": "https://tr.jooble.org/desc/-1269290163744619032?ckey=game+developer+intern&rgn=0&pos=66&elckey=-2565409591184209016&p=1&aq=8626575621926315919&cid=215&jobAge=327&relb=100&brelb=100&bscr=2398.3147&scr=2398.3147",
-   "konum": "Evden çalışmak",
-   "kaynak": "jooble",
-   "yayin_tarihi": "2026-10-25",
-   "ilk_gorulme": "2026-11-07T13:34:00.335732+00:00",
-   "seviye": "junior",
-   "rol": "yazilim",
-   "yapay_zeka": "yok",
-   "ayrinti": {
-    "ozet": "Kullanıcıya yönelik yeni özellikler geliştirilecek; PHP, HTML, CSS ve JavaScript kullanılacak.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": null,
-    "calisma_modeli": "belirsiz",
-    "ucretli": "belirsiz",
-    "teknolojiler": [
-     "PHP",
-     "HTML",
-     "CSS",
-     "JavaScript"
-    ]
-   },
-   "alanlar": [
-    "yazilim"
-   ],
-   "calisma_modeli": "belirsiz",
-   "girisim": false,
-   "yayin": "2026-10-25",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Junior",
-   "firma_gorunen": "GoFasti",
-   "sehirler": [],
-   "uzaktan": false
-  },
-  {
-   "kimlik": "f590d1f50f4b38db",
-   "firma": "Kalepa",
-   "baslik": "Junior Backend Engineer (Europe)",
-   "url": "https://tr.jooble.org/desc/-5212427779392858373?ckey=junior+software+developer&rgn=0&pos=12&elckey=-4724479753695829745&p=1&aq=3517837399867454931&cid=215&jobAge=327&relb=100&brelb=100&bscr=3561.0415&scr=3561.0415",
-   "konum": "Evden çalışmak",
-   "kaynak": "jooble",
-   "yayin_tarihi": "2026-10-25",
-   "ilk_gorulme": "2026-11-07T13:34:00.335732+00:00",
-   "seviye": "junior",
-   "rol": "yazilim",
-   "yapay_zeka": "arti",
-   "ayrinti": {
-    "ozet": "",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": null,
-    "calisma_modeli": "belirsiz",
-    "ucretli": "belirsiz",
-    "teknolojiler": []
-   },
-   "alanlar": [
-    "yazilim"
-   ],
-   "calisma_modeli": "belirsiz",
-   "girisim": false,
-   "yayin": "2026-10-25",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Junior",
-   "firma_gorunen": "Kalepa",
-   "sehirler": [],
-   "uzaktan": false
-  },
-  {
    "kimlik": "3936cb1a8411f8ef",
    "firma": "Commencis",
    "baslik": "Commencis Cloud Camp 2027",
@@ -954,6 +845,42 @@
    "uzaktan": false
   },
   {
+   "kimlik": "0a5543902f930582",
+   "firma": "OmegaHires",
+   "baslik": "Entry-Level Java Software Developer",
+   "url": "https://tr.jooble.org/desc/4403916165296651403?ckey=software+intern&rgn=0&pos=72&elckey=3118034694714498093&p=1&aq=4485659695152808605&cid=215&jobAge=327&relb=100&brelb=100&bscr=2335.778&scr=2335.778",
+   "konum": "Evden çalışmak",
+   "kaynak": "jooble",
+   "yayin_tarihi": "2026-10-25",
+   "ilk_gorulme": "2026-11-07T13:34:00.335732+00:00",
+   "seviye": "junior",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Uzaktan çalışılan, sözleşmeli giriş seviyeli Java yazılım geliştirici pozisyonu; yapılandırılmış eğitim ve sonrasında proje deneyimi içerir.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": null,
+    "calisma_modeli": "uzaktan",
+    "ucretli": "evet",
+    "teknolojiler": [
+     "Java"
+    ]
+   },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "uzaktan",
+   "girisim": false,
+   "yayin": "2026-10-25",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Junior",
+   "firma_gorunen": "OmegaHires",
+   "sehirler": [],
+   "uzaktan": false
+  },
+  {
    "kimlik": "a1071dad2b5da606",
    "firma": "PİXA BİLİŞİM TEKNOLOJİLERİ A.Ş.",
    "baslik": "Yazılım Geliştirici Stajyeri",
@@ -1034,6 +961,79 @@
    "ilan_turu": "is",
    "seviye_etiketi": "Tüm seviyeler",
    "firma_gorunen": "Sezzle",
+   "sehirler": [],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "8b8c077c008ea42a",
+   "firma": "GoFasti",
+   "baslik": "1182 - Junior Frontend Developer",
+   "url": "https://tr.jooble.org/desc/-1269290163744619032?ckey=game+developer+intern&rgn=0&pos=66&elckey=-2565409591184209016&p=1&aq=8626575621926315919&cid=215&jobAge=327&relb=100&brelb=100&bscr=2398.3147&scr=2398.3147",
+   "konum": "Evden çalışmak",
+   "kaynak": "jooble",
+   "yayin_tarihi": "2026-10-25",
+   "ilk_gorulme": "2026-11-07T13:34:00.335732+00:00",
+   "seviye": "junior",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Kullanıcıya yönelik yeni özellikler geliştirilecek; PHP, HTML, CSS ve JavaScript kullanılacak.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": null,
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": [
+     "PHP",
+     "HTML",
+     "CSS",
+     "JavaScript"
+    ]
+   },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": "2026-10-25",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Junior",
+   "firma_gorunen": "GoFasti",
+   "sehirler": [],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "f590d1f50f4b38db",
+   "firma": "Kalepa",
+   "baslik": "Junior Backend Engineer (Europe)",
+   "url": "https://tr.jooble.org/desc/-5212427779392858373?ckey=junior+software+developer&rgn=0&pos=12&elckey=-4724479753695829745&p=1&aq=3517837399867454931&cid=215&jobAge=327&relb=100&brelb=100&bscr=3561.0415&scr=3561.0415",
+   "konum": "Evden çalışmak",
+   "kaynak": "jooble",
+   "yayin_tarihi": "2026-10-25",
+   "ilk_gorulme": "2026-11-07T13:34:00.335732+00:00",
+   "seviye": "junior",
+   "rol": "yazilim",
+   "yapay_zeka": "arti",
+   "ayrinti": {
+    "ozet": "",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": null,
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": []
+   },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": "2026-10-25",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Junior",
+   "firma_gorunen": "Kalepa",
    "sehirler": [],
    "uzaktan": false
   },
