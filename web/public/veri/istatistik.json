@@ -1,16 +1,16 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-09T19:55:50.941237+03:00",
+ "guncelleme": "2026-11-10T01:31:13.940210+03:00",
  "takip_edilen_firma": 3408,
  "taranan_firma": 939,
  "aktif_ilan": 8066,
  "ogrenci_ilani": 50,
  "sehirler": {
-  "uzaktan": 1356,
-  "istanbul": 751,
-  "ankara": 207,
+  "uzaktan": 1353,
+  "istanbul": 752,
+  "ankara": 206,
   "izmir": 77,
-  "bursa": 67,
+  "bursa": 66,
   "kocaeli": 63,
   "adana": 59,
   "antalya": 55,
@@ -142,19 +142,19 @@
    "uygun": false
   },
   {
-   "baslik": "Purchasing Quality Engineer",
-   "firma": "Bosch Türkiye",
-   "seviye": "belirsiz",
-   "rol": "diger_teknik",
-   "gerekce": "Satın alma kalite mühendisliği, açıklama yok, seviye belirsiz",
-   "uygun": false
-  },
-  {
    "baslik": "HR Operations Specialist",
    "firma": "Codeway",
    "seviye": "belirsiz",
    "rol": "teknik_degil",
    "gerekce": "İK operasyonları, deneyim seviyesi belirtilmemiş",
+   "uygun": false
+  },
+  {
+   "baslik": "Mekanik Tekniker / Montaj Ustası",
+   "firma": "Novatek Endüstriyel Sistemler",
+   "seviye": "belirsiz",
+   "rol": "diger_teknik",
+   "gerekce": "Mekanik tekniker ve montaj, seviye belirtilmemiş",
    "uygun": false
   },
   {
@@ -216,11 +216,11 @@
  ],
  "huni": {
   "aktif": 8066,
-  "konum_disi": 6385,
+  "konum_disi": 6386,
   "siniflanmamis": 0,
   "seviye": {
-   "belirsiz": 854,
-   "deneyimli": 538,
+   "belirsiz": 852,
+   "deneyimli": 539,
    "staj": 109,
    "junior": 97,
    "yari_zamanli": 36,
@@ -230,7 +230,7 @@
   "rol": {
    "teknik_degil": 818,
    "yazilim": 407,
-   "diger_teknik": 366,
+   "diger_teknik": 365,
    "veri": 46,
    "yapay_zeka": 44
   },

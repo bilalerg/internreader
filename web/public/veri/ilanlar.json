@@ -1,6 +1,6 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-09T19:55:50.941237+03:00",
+ "guncelleme": "2026-11-10T01:31:13.940210+03:00",
  "sayi": 50,
  "ilanlar": [
   {
@@ -723,44 +723,6 @@
    "uzaktan": false
   },
   {
-   "kimlik": "3936cb1a8411f8ef",
-   "firma": "Commencis",
-   "baslik": "Commencis Cloud Camp 2027",
-   "url": "https://jobs.lever.co/commencis/a034ff92-231b-4f01-9154-57614a7804e9",
-   "konum": "Istanbul, Turkey",
-   "kaynak": "lever",
-   "yayin_tarihi": "2026-10-26",
-   "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
-   "seviye": "staj",
-   "rol": "yazilim",
-   "yapay_zeka": "yok",
-   "ayrinti": {
-    "ozet": "6 haftalık online bulut eğitimi programı; AWS onaylı sertifika, seçilenlere staj ve iş fırsatı sunulur. Ocak-Şubat 2027 arasında salı ve perşembe akşamları yapılır.",
-    "son_basvuru": "2026-12-31",
-    "ilan_tarihi": null,
-    "hedef": "3. sınıf ve üzeri üniversite öğrencileri",
-    "calisma_modeli": "uzaktan",
-    "ucretli": "hayir",
-    "teknolojiler": [
-     "AWS"
-    ]
-   },
-   "alanlar": [
-    "yazilim"
-   ],
-   "calisma_modeli": "uzaktan",
-   "girisim": false,
-   "yayin": "2026-10-26",
-   "surekli_acik": false,
-   "ilan_turu": "egitim",
-   "seviye_etiketi": "Eğitim programı",
-   "firma_gorunen": "Commencis",
-   "sehirler": [
-    "istanbul"
-   ],
-   "uzaktan": false
-  },
-  {
    "kimlik": "ef22582e5c504cb2",
    "firma": "Good Job Games",
    "baslik": "Junior Game Developer",
@@ -921,47 +883,6 @@
    "sehirler": [
     "istanbul"
    ],
-   "uzaktan": false
-  },
-  {
-   "kimlik": "dbd868a0ecad88e3",
-   "firma": "Sezzle (Türkiye, uzaktan)",
-   "baslik": "Mobile Engineer (Turkey, All Levels)",
-   "url": "https://job-boards.greenhouse.io/sezzle/jobs/7541145003",
-   "konum": "Türkiye",
-   "kaynak": "greenhouse",
-   "yayin_tarihi": "2026-09-25",
-   "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
-   "seviye": "junior",
-   "rol": "yazilim",
-   "yapay_zeka": "yok",
-   "ayrinti": {
-    "ozet": "Sezzle'ın mobil uygulamasında React Native ile yeni özellikler geliştirilecek, kod inceleme ve tasarım tartışmalarına katılınacak. Tam zamanlı, uzaktan çalışma modeli geçerli.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": null,
-    "calisma_modeli": "uzaktan",
-    "ucretli": "evet",
-    "teknolojiler": [
-     "React Native",
-     "TypeScript",
-     "Swift",
-     "Golang",
-     "Python",
-     "Kubernetes"
-    ]
-   },
-   "alanlar": [
-    "yazilim"
-   ],
-   "calisma_modeli": "uzaktan",
-   "girisim": false,
-   "yayin": "2026-09-25",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Tüm seviyeler",
-   "firma_gorunen": "Sezzle",
-   "sehirler": [],
    "uzaktan": false
   },
   {
@@ -1145,6 +1066,85 @@
    "sehirler": [
     "istanbul"
    ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "3936cb1a8411f8ef",
+   "firma": "Commencis",
+   "baslik": "Commencis Cloud Camp 2027",
+   "url": "https://jobs.lever.co/commencis/a034ff92-231b-4f01-9154-57614a7804e9",
+   "konum": "Istanbul, Turkey",
+   "kaynak": "lever",
+   "yayin_tarihi": "2026-10-26",
+   "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
+   "seviye": "staj",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "6 haftalık online bulut eğitimi programı; AWS onaylı sertifika, seçilenlere staj ve iş fırsatı sunulur. Ocak-Şubat 2027 arasında salı ve perşembe akşamları yapılır.",
+    "son_basvuru": "2026-12-31",
+    "ilan_tarihi": null,
+    "hedef": "3. sınıf ve üzeri üniversite öğrencileri",
+    "calisma_modeli": "uzaktan",
+    "ucretli": "hayir",
+    "teknolojiler": [
+     "AWS"
+    ]
+   },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "uzaktan",
+   "girisim": false,
+   "yayin": "2026-10-26",
+   "surekli_acik": false,
+   "ilan_turu": "egitim",
+   "seviye_etiketi": "Eğitim programı",
+   "firma_gorunen": "Commencis",
+   "sehirler": [
+    "istanbul"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "dbd868a0ecad88e3",
+   "firma": "Sezzle (Türkiye, uzaktan)",
+   "baslik": "Mobile Engineer (Turkey, All Levels)",
+   "url": "https://job-boards.greenhouse.io/sezzle/jobs/7541145003",
+   "konum": "Türkiye",
+   "kaynak": "greenhouse",
+   "yayin_tarihi": "2026-09-25",
+   "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
+   "seviye": "junior",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Sezzle'ın mobil uygulamasında React Native ile yeni özellikler geliştirilecek, kod inceleme ve tasarım tartışmalarına katılınacak. Tam zamanlı, uzaktan çalışma modeli geçerli.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": null,
+    "calisma_modeli": "uzaktan",
+    "ucretli": "evet",
+    "teknolojiler": [
+     "React Native",
+     "TypeScript",
+     "Swift",
+     "Golang",
+     "Python",
+     "Kubernetes"
+    ]
+   },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "uzaktan",
+   "girisim": false,
+   "yayin": "2026-09-25",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Tüm seviyeler",
+   "firma_gorunen": "Sezzle",
+   "sehirler": [],
    "uzaktan": false
   },
   {
