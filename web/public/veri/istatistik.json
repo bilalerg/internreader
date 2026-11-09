@@ -1,25 +1,25 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-09T01:16:17.086471+03:00",
- "takip_edilen_firma": 3396,
- "taranan_firma": 932,
- "aktif_ilan": 8006,
+ "guncelleme": "2026-11-09T19:55:50.941237+03:00",
+ "takip_edilen_firma": 3408,
+ "taranan_firma": 939,
+ "aktif_ilan": 8066,
  "ogrenci_ilani": 50,
  "sehirler": {
-  "uzaktan": 1355,
-  "istanbul": 745,
-  "ankara": 210,
-  "izmir": 76,
-  "bursa": 65,
+  "uzaktan": 1356,
+  "istanbul": 751,
+  "ankara": 207,
+  "izmir": 77,
+  "bursa": 67,
   "kocaeli": 63,
-  "adana": 58,
+  "adana": 59,
   "antalya": 55,
   "tekirdag": 53,
   "gaziantep": 52,
   "kayseri": 51,
+  "samsun": 51,
   "konya": 50,
   "trabzon": 50,
-  "samsun": 50,
   "sakarya": 2
  },
  "firmalar": [
@@ -142,6 +142,14 @@
    "uygun": false
   },
   {
+   "baslik": "Purchasing Quality Engineer",
+   "firma": "Bosch Türkiye",
+   "seviye": "belirsiz",
+   "rol": "diger_teknik",
+   "gerekce": "Satın alma kalite mühendisliği, açıklama yok, seviye belirsiz",
+   "uygun": false
+  },
+  {
    "baslik": "HR Operations Specialist",
    "firma": "Codeway",
    "seviye": "belirsiz",
@@ -155,6 +163,14 @@
    "seviye": "belirsiz",
    "rol": "yazilim",
    "gerekce": "Back-end geliştirme, seviye belirtilmemiş",
+   "uygun": false
+  },
+  {
+   "baslik": "Country Financial Controller, Türkiye",
+   "firma": "Goodyear",
+   "seviye": "deneyimli",
+   "rol": "teknik_degil",
+   "gerekce": "Ülke finans kontrolörü, finans yönetici rolü",
    "uygun": false
   },
   {
@@ -174,27 +190,11 @@
    "uygun": false
   },
   {
-   "baslik": "İdari İşler Uzmanı",
-   "firma": "İNVENTRA",
-   "seviye": "deneyimli",
-   "rol": "teknik_degil",
-   "gerekce": "Uzman unvanlı idari işler, teknik içerik yok",
-   "uygun": false
-  },
-  {
    "baslik": "Taze (Jr) DevOps & Linux Sistem Yöneticisi (S36)",
    "firma": "Özgür",
    "seviye": "junior",
    "rol": "diger_teknik",
    "gerekce": "Jr DevOps ve Linux sistem yönetimi",
-   "uygun": false
-  },
-  {
-   "baslik": "Yardım Masası Yetkilisi",
-   "firma": "SEKTÖRSOFT",
-   "seviye": "belirsiz",
-   "rol": "diger_teknik",
-   "gerekce": "Yardım masası, BT destek işi",
    "uygun": false
   },
   {
@@ -215,34 +215,34 @@
   }
  ],
  "huni": {
-  "aktif": 8006,
-  "konum_disi": 6368,
+  "aktif": 8066,
+  "konum_disi": 6385,
   "siniflanmamis": 0,
   "seviye": {
-   "belirsiz": 807,
-   "deneyimli": 542,
+   "belirsiz": 854,
+   "deneyimli": 538,
    "staj": 109,
-   "junior": 98,
+   "junior": 97,
+   "yari_zamanli": 36,
    "yeni_mezun": 35,
-   "yari_zamanli": 35,
    "uzun_donem_staj": 12
   },
   "rol": {
-   "teknik_degil": 784,
-   "yazilim": 410,
-   "diger_teknik": 354,
+   "teknik_degil": 818,
+   "yazilim": 407,
+   "diger_teknik": 366,
    "veri": 46,
    "yapay_zeka": 44
   },
   "ogrenciye_uygun": {
    "yayinda": 50,
-   "hayalet": 9,
+   "hayalet": 10,
    "supheli": 2,
    "eski_ilan_tarihi": 1,
    "genel_basvuru": 1
   },
-  "belirsiz_seviye_hedef_rol": 220,
-  "ogrenci_seviye_diger_teknik": 58,
+  "belirsiz_seviye_hedef_rol": 218,
+  "ogrenci_seviye_diger_teknik": 57,
   "ornek_belirsiz": [
    "Rapsodo: Back-End Engineer",
    "ADIM TEKNOLOJİ A.Ş. Yazılım, 3D Simülasyon ve Modelleme: VR Developer",
