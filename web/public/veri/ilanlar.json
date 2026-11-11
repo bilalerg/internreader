@@ -1,6 +1,6 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-10T18:16:05.323892+03:00",
+ "guncelleme": "2026-11-11T09:45:02.518029+03:00",
  "sayi": 50,
  "ilanlar": [
   {
@@ -687,42 +687,6 @@
    "uzaktan": false
   },
   {
-   "kimlik": "f93b74066408668a",
-   "firma": "Analog Devices, Inc.",
-   "baslik": "Software Development Engineering Intern",
-   "url": "https://tr.jooble.org/away/6156243530307154941?p=1&pos=2&rgn=0&cid=215&ckey=software+intern&jobAge=115&relb=70&brelb=10&scr=3875.6606&bscr=553.6658&aq=-9018227981068880028&elckey=-4540692779024497765",
-   "konum": "Kocaeli, Dilovası",
-   "kaynak": "jooble",
-   "yayin_tarihi": "2026-10-27",
-   "ilk_gorulme": "2026-10-31T17:07:30.982091+00:00",
-   "seviye": "staj",
-   "rol": "yazilim",
-   "yapay_zeka": "yok",
-   "ayrinti": {
-    "ozet": "",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": null,
-    "calisma_modeli": "belirsiz",
-    "ucretli": "belirsiz",
-    "teknolojiler": []
-   },
-   "alanlar": [
-    "yazilim"
-   ],
-   "calisma_modeli": "belirsiz",
-   "girisim": false,
-   "yayin": "2026-10-27",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Staj",
-   "firma_gorunen": "Analog Devices, Inc",
-   "sehirler": [
-    "kocaeli"
-   ],
-   "uzaktan": false
-  },
-  {
    "kimlik": "ef22582e5c504cb2",
    "firma": "Good Job Games",
    "baslik": "Junior Game Developer",
@@ -882,6 +846,42 @@
    "firma_gorunen": "PİXA",
    "sehirler": [
     "istanbul"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "f93b74066408668a",
+   "firma": "Analog Devices, Inc.",
+   "baslik": "Software Development Engineering Intern",
+   "url": "https://tr.jooble.org/away/6156243530307154941?p=1&pos=2&rgn=0&cid=215&ckey=software+intern&jobAge=115&relb=70&brelb=10&scr=3875.6606&bscr=553.6658&aq=-9018227981068880028&elckey=-4540692779024497765",
+   "konum": "Kocaeli, Dilovası",
+   "kaynak": "jooble",
+   "yayin_tarihi": "2026-10-27",
+   "ilk_gorulme": "2026-10-31T17:07:30.982091+00:00",
+   "seviye": "staj",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": null,
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": []
+   },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": "2026-10-27",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Staj",
+   "firma_gorunen": "Analog Devices, Inc",
+   "sehirler": [
+    "kocaeli"
    ],
    "uzaktan": false
   },

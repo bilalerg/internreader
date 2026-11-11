@@ -1,16 +1,16 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-10T18:16:05.323892+03:00",
+ "guncelleme": "2026-11-11T09:45:02.518029+03:00",
  "takip_edilen_firma": 3408,
  "taranan_firma": 939,
- "aktif_ilan": 8049,
+ "aktif_ilan": 8036,
  "ogrenci_ilani": 50,
  "sehirler": {
-  "uzaktan": 1347,
-  "istanbul": 747,
+  "uzaktan": 1344,
+  "istanbul": 744,
   "ankara": 206,
-  "izmir": 79,
-  "bursa": 66,
+  "izmir": 77,
+  "bursa": 65,
   "kocaeli": 63,
   "adana": 58,
   "antalya": 55,
@@ -215,23 +215,23 @@
   }
  ],
  "huni": {
-  "aktif": 8049,
-  "konum_disi": 6379,
+  "aktif": 8036,
+  "konum_disi": 6375,
   "siniflanmamis": 0,
   "seviye": {
-   "belirsiz": 845,
-   "deneyimli": 543,
-   "staj": 108,
+   "belirsiz": 846,
+   "deneyimli": 534,
+   "staj": 107,
    "junior": 96,
    "yari_zamanli": 36,
    "yeni_mezun": 30,
    "uzun_donem_staj": 12
   },
   "rol": {
-   "teknik_degil": 815,
-   "yazilim": 405,
-   "diger_teknik": 360,
-   "veri": 47,
+   "teknik_degil": 810,
+   "yazilim": 404,
+   "diger_teknik": 359,
+   "veri": 45,
    "yapay_zeka": 43
   },
   "ogrenciye_uygun": {
@@ -242,7 +242,7 @@
    "genel_basvuru": 1
   },
   "belirsiz_seviye_hedef_rol": 217,
-  "ogrenci_seviye_diger_teknik": 56,
+  "ogrenci_seviye_diger_teknik": 55,
   "ornek_belirsiz": [
    "Rapsodo: Back-End Engineer",
    "ADIM TEKNOLOJİ A.Ş. Yazılım, 3D Simülasyon ve Modelleme: VR Developer",
@@ -282,10 +282,10 @@
    "Analog Devices: RF Design Engineering Intern",
    "Valven: New Graduate Program",
    "INTERPROBE BİLGİ TEKNOLOJİLERİ: Intern",
-   "Bosch Türkiye: Smart Start Assembly Technologies for Special Machinery",
    "BİLGİKURUMSAL YAZILIM TEKNOLOJİLERİ A.Ş.: Stajyer",
    "MAPP PAZARLAMA VE TANITIM HİZMETLERİ: Ankara Teknik Servis Teknoloji Asistanı",
-   "Analog Devices: Associate Designer, Layout"
+   "Analog Devices: Associate Designer, Layout",
+   "KoçSistem: KoçSistem Level Up"
   ]
  }
 }
