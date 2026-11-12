@@ -1,6 +1,6 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-11T17:46:10.924017+03:00",
+ "guncelleme": "2026-11-12T10:25:27.611078+03:00",
  "sayi": 50,
  "ilanlar": [
   {
@@ -653,40 +653,6 @@
    "uzaktan": false
   },
   {
-   "kimlik": "92b485bcdd689d21",
-   "firma": "2078 Bentley Systems Yazılım Çözümleri Limited Şirketi",
-   "baslik": "Software Quality Analyst, Intern",
-   "url": "https://tr.jooble.org/away/-1039121458242137194?p=1&pos=3&rgn=0&cid=215&ckey=software+intern&jobAge=91&relb=70&brelb=10&scr=3795.7654&bscr=542.2522&aq=-9018227981068880028&elckey=-4540692779024497765",
-   "konum": "Türkiye",
-   "kaynak": "jooble",
-   "yayin_tarihi": "2026-10-28",
-   "ilk_gorulme": "2026-10-31T17:07:30.982091+00:00",
-   "seviye": "staj",
-   "rol": "yazilim",
-   "yapay_zeka": "yok",
-   "ayrinti": {
-    "ozet": "Bentley Systems Ankara ekibinde Software Quality Analyst stajı; ekibin yazılım kalite güvence çalışmalarına katılınacak.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": null,
-    "calisma_modeli": "belirsiz",
-    "ucretli": "belirsiz",
-    "teknolojiler": []
-   },
-   "alanlar": [
-    "yazilim"
-   ],
-   "calisma_modeli": "belirsiz",
-   "girisim": false,
-   "yayin": "2026-10-28",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Staj",
-   "firma_gorunen": "2078 Bentley Systems",
-   "sehirler": [],
-   "uzaktan": false
-  },
-  {
    "kimlik": "ef22582e5c504cb2",
    "firma": "Good Job Games",
    "baslik": "Junior Game Developer",
@@ -847,6 +813,40 @@
    "sehirler": [
     "istanbul"
    ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "92b485bcdd689d21",
+   "firma": "2078 Bentley Systems Yazılım Çözümleri Limited Şirketi",
+   "baslik": "Software Quality Analyst, Intern",
+   "url": "https://tr.jooble.org/away/-1039121458242137194?p=1&pos=3&rgn=0&cid=215&ckey=software+intern&jobAge=91&relb=70&brelb=10&scr=3795.7654&bscr=542.2522&aq=-9018227981068880028&elckey=-4540692779024497765",
+   "konum": "Türkiye",
+   "kaynak": "jooble",
+   "yayin_tarihi": "2026-10-28",
+   "ilk_gorulme": "2026-10-31T17:07:30.982091+00:00",
+   "seviye": "staj",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Bentley Systems Ankara ekibinde Software Quality Analyst stajı; ekibin yazılım kalite güvence çalışmalarına katılınacak.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": null,
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": []
+   },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": "2026-10-28",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Staj",
+   "firma_gorunen": "2078 Bentley Systems",
+   "sehirler": [],
    "uzaktan": false
   },
   {

@@ -1,13 +1,13 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-11T17:46:10.924017+03:00",
+ "guncelleme": "2026-11-12T10:25:27.611078+03:00",
  "takip_edilen_firma": 3408,
  "taranan_firma": 939,
- "aktif_ilan": 8040,
+ "aktif_ilan": 8030,
  "ogrenci_ilani": 50,
  "sehirler": {
-  "uzaktan": 1370,
-  "istanbul": 741,
+  "uzaktan": 1366,
+  "istanbul": 739,
   "ankara": 206,
   "izmir": 76,
   "bursa": 65,
@@ -166,6 +166,14 @@
    "uygun": false
   },
   {
+   "baslik": "Engineering Manager - Realtime",
+   "firma": "Supabase",
+   "seviye": "deneyimli",
+   "rol": "diger_teknik",
+   "gerekce": "Mühendislik yöneticisi, 5+ yıl deneyim isteniyor",
+   "uygun": false
+  },
+  {
    "baslik": "Country Financial Controller, Türkiye",
    "firma": "Goodyear",
    "seviye": "deneyimli",
@@ -204,33 +212,25 @@
    "rol": "diger_teknik",
    "gerekce": "Kullanıcı teknik destek ve BT altyapı stajı",
    "uygun": false
-  },
-  {
-   "baslik": "Staj Başvurusu",
-   "firma": "Asist Bilgi",
-   "seviye": "staj",
-   "rol": "teknik_degil",
-   "gerekce": "Staj başvurusu, alan açıkça belirtilmemiş",
-   "uygun": false
   }
  ],
  "huni": {
-  "aktif": 8040,
-  "konum_disi": 6381,
+  "aktif": 8030,
+  "konum_disi": 6374,
   "siniflanmamis": 0,
   "seviye": {
-   "belirsiz": 840,
-   "deneyimli": 537,
+   "belirsiz": 841,
+   "deneyimli": 534,
    "staj": 107,
    "junior": 96,
    "yeni_mezun": 34,
-   "yari_zamanli": 33,
+   "yari_zamanli": 32,
    "uzun_donem_staj": 12
   },
   "rol": {
-   "teknik_degil": 807,
-   "yazilim": 405,
-   "diger_teknik": 360,
+   "teknik_degil": 803,
+   "yazilim": 404,
+   "diger_teknik": 362,
    "yapay_zeka": 44,
    "veri": 43
   },
