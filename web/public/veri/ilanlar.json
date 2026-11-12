@@ -1,7 +1,7 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-12T18:38:12.831502+03:00",
- "sayi": 50,
+ "guncelleme": "2026-11-12T23:07:24.274197+03:00",
+ "sayi": 51,
  "ilanlar": [
   {
    "kimlik": "440ffe70c38b3897",
@@ -76,6 +76,34 @@
    "firma_gorunen": "Hiroba Games",
    "sehirler": [
     "ankara"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "51ebfa69a2d8c2f3",
+   "firma": "Analog Devices",
+   "baslik": "Embedded Software Engineering Intern",
+   "url": "https://analogdevices.wd1.myworkdayjobs.com/External/job/Turkey-Istanbul-Bilisim-Vadisi/Embedded-Software-Engineering-Intern_R267002",
+   "konum": "Turkey, Istanbul, Bilisim Vadisi",
+   "kaynak": "workday",
+   "yayin_tarihi": "2026-11-12",
+   "ilk_gorulme": "2026-11-12T20:07:09.741477+00:00",
+   "seviye": "staj",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": null,
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": "2026-11-12",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Staj",
+   "firma_gorunen": "Analog Devices",
+   "sehirler": [
+    "istanbul"
    ],
    "uzaktan": false
   },

@@ -1,13 +1,13 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-12T18:38:12.831502+03:00",
+ "guncelleme": "2026-11-12T23:07:24.274197+03:00",
  "takip_edilen_firma": 3408,
  "taranan_firma": 939,
- "aktif_ilan": 8006,
- "ogrenci_ilani": 50,
+ "aktif_ilan": 8013,
+ "ogrenci_ilani": 51,
  "sehirler": {
   "uzaktan": 1366,
-  "istanbul": 746,
+  "istanbul": 747,
   "ankara": 206,
   "izmir": 77,
   "bursa": 65,
@@ -215,13 +215,13 @@
   }
  ],
  "huni": {
-  "aktif": 8006,
-  "konum_disi": 6350,
+  "aktif": 8013,
+  "konum_disi": 6355,
   "siniflanmamis": 0,
   "seviye": {
    "belirsiz": 840,
-   "deneyimli": 537,
-   "staj": 105,
+   "deneyimli": 538,
+   "staj": 106,
    "junior": 96,
    "yeni_mezun": 33,
    "yari_zamanli": 33,
@@ -229,13 +229,13 @@
   },
   "rol": {
    "teknik_degil": 806,
-   "yazilim": 403,
-   "diger_teknik": 359,
+   "yazilim": 404,
+   "diger_teknik": 360,
    "yapay_zeka": 45,
    "veri": 43
   },
   "ogrenciye_uygun": {
-   "yayinda": 50,
+   "yayinda": 51,
    "hayalet": 10,
    "supheli": 2,
    "eski_ilan_tarihi": 1,
