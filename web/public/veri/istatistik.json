@@ -1,19 +1,19 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-12T23:07:24.274197+03:00",
+ "guncelleme": "2026-11-13T17:56:33.670896+03:00",
  "takip_edilen_firma": 3408,
  "taranan_firma": 939,
- "aktif_ilan": 8013,
+ "aktif_ilan": 8031,
  "ogrenci_ilani": 51,
  "sehirler": {
-  "uzaktan": 1366,
-  "istanbul": 747,
-  "ankara": 206,
-  "izmir": 77,
-  "bursa": 65,
+  "uzaktan": 1370,
+  "istanbul": 745,
+  "ankara": 201,
+  "izmir": 78,
   "kocaeli": 61,
+  "bursa": 61,
   "adana": 59,
-  "antalya": 55,
+  "antalya": 54,
   "tekirdag": 53,
   "gaziantep": 52,
   "kayseri": 51,
@@ -142,6 +142,14 @@
    "uygun": false
   },
   {
+   "baslik": "ServiceNow Technical Delivery Lead & PMO Consultant",
+   "firma": "Bilge Adam",
+   "seviye": "deneyimli",
+   "rol": "diger_teknik",
+   "gerekce": "Kıdemli ServiceNow teslimat lideri ve PMO danışmanlığı",
+   "uygun": false
+  },
+  {
    "baslik": "HR Operations Specialist",
    "firma": "Codeway",
    "seviye": "belirsiz",
@@ -163,14 +171,6 @@
    "seviye": "belirsiz",
    "rol": "yazilim",
    "gerekce": "Back-end geliştirme, seviye belirtilmemiş",
-   "uygun": false
-  },
-  {
-   "baslik": "Engineering Manager - Realtime",
-   "firma": "Supabase",
-   "seviye": "deneyimli",
-   "rol": "diger_teknik",
-   "gerekce": "Mühendislik yöneticisi, 5+ yıl deneyim isteniyor",
    "uygun": false
   },
   {
@@ -206,33 +206,33 @@
    "uygun": false
   },
   {
-   "baslik": "2027 Yaz Dönemi Staj | Kullanıcı Teknik Destek",
-   "firma": "Baykar",
-   "seviye": "staj",
-   "rol": "diger_teknik",
-   "gerekce": "Kullanıcı teknik destek ve BT altyapı stajı",
+   "baslik": "Senior Data Analyst",
+   "firma": "Bilge Adam",
+   "seviye": "deneyimli",
+   "rol": "veri",
+   "gerekce": "Kıdemli veri analisti, analiz ağırlıklı iş",
    "uygun": false
   }
  ],
  "huni": {
-  "aktif": 8013,
-  "konum_disi": 6355,
+  "aktif": 8031,
+  "konum_disi": 6386,
   "siniflanmamis": 0,
   "seviye": {
-   "belirsiz": 840,
-   "deneyimli": 538,
-   "staj": 106,
-   "junior": 96,
+   "belirsiz": 836,
+   "deneyimli": 530,
+   "staj": 107,
+   "junior": 95,
    "yeni_mezun": 33,
-   "yari_zamanli": 33,
+   "yari_zamanli": 32,
    "uzun_donem_staj": 12
   },
   "rol": {
-   "teknik_degil": 806,
+   "teknik_degil": 798,
    "yazilim": 404,
-   "diger_teknik": 360,
-   "yapay_zeka": 45,
-   "veri": 43
+   "diger_teknik": 354,
+   "veri": 45,
+   "yapay_zeka": 44
   },
   "ogrenciye_uygun": {
    "yayinda": 51,
@@ -241,7 +241,7 @@
    "eski_ilan_tarihi": 1,
    "genel_basvuru": 1
   },
-  "belirsiz_seviye_hedef_rol": 215,
+  "belirsiz_seviye_hedef_rol": 216,
   "ogrenci_seviye_diger_teknik": 53,
   "ornek_belirsiz": [
    "Rapsodo: Back-End Engineer",
@@ -258,12 +258,12 @@
    "SEKGAMES OYUN YAZILIM TEKNOLOJİ VE PAZARLAMA ANONİM ŞİRKETİ: Marketing Developer",
    "Özgür Yazılım A.Ş.: DevOps & Linux Sistem Yöneticisi (S38)",
    "Valven: Linux System Engineer",
+   "Vertigo Games: Game Developer",
    "MULTİGOO BİLİŞİM ANONİM ŞİRKETİ: Frontend (React) Developer",
    "ESEN: Software Design Engineer",
    "MAGLAB OYUN TEKNOLOJİLERİ BİLİŞİM YAZILIM TASARIM YAYINCILIK TİCARET ANONİM ŞİRKETİ: Game Developer, On-Site Ankara · Full Time",
    "SİMOFUN OYUN TEKNOLOJİLERİ ANONİM ŞİRKETİ: Unity Oyun Geliştiricisi",
-   "MULTİGOO BİLİŞİM ANONİM ŞİRKETİ: Backend (.Net) Developer",
-   "Vita RND: Mobil Uygulama Geliştirici"
+   "MULTİGOO BİLİŞİM ANONİM ŞİRKETİ: Backend (.Net) Developer"
   ],
   "ornek_diger_teknik": [
    "Özgür Yazılım A.Ş.: Taze (Jr) DevOps & Linux Sistem Yöneticisi (S36)",
