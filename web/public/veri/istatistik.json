@@ -1,13 +1,13 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-14T16:50:54.973309+03:00",
+ "guncelleme": "2026-11-15T01:34:24.455596+03:00",
  "takip_edilen_firma": 3408,
  "taranan_firma": 939,
- "aktif_ilan": 8020,
+ "aktif_ilan": 8015,
  "ogrenci_ilani": 55,
  "sehirler": {
   "uzaktan": 1361,
-  "istanbul": 753,
+  "istanbul": 750,
   "ankara": 203,
   "izmir": 79,
   "kocaeli": 62,
@@ -17,9 +17,9 @@
   "tekirdag": 53,
   "kayseri": 52,
   "gaziantep": 52,
-  "samsun": 51,
   "konya": 50,
   "trabzon": 50,
+  "samsun": 50,
   "sakarya": 2
  },
  "firmalar": [
@@ -215,20 +215,20 @@
   }
  ],
  "huni": {
-  "aktif": 8020,
-  "konum_disi": 6360,
+  "aktif": 8015,
+  "konum_disi": 6359,
   "siniflanmamis": 0,
   "seviye": {
    "belirsiz": 844,
    "deneyimli": 531,
-   "staj": 111,
+   "staj": 109,
    "junior": 97,
    "yari_zamanli": 33,
-   "yeni_mezun": 30,
+   "yeni_mezun": 28,
    "uzun_donem_staj": 14
   },
   "rol": {
-   "teknik_degil": 808,
+   "teknik_degil": 804,
    "yazilim": 407,
    "diger_teknik": 355,
    "veri": 46,
