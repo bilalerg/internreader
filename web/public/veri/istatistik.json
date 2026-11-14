@@ -1,22 +1,22 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-14T09:43:45.376801+03:00",
+ "guncelleme": "2026-11-14T16:50:54.973309+03:00",
  "takip_edilen_firma": 3408,
  "taranan_firma": 939,
- "aktif_ilan": 8008,
- "ogrenci_ilani": 51,
+ "aktif_ilan": 8020,
+ "ogrenci_ilani": 55,
  "sehirler": {
   "uzaktan": 1361,
-  "istanbul": 745,
-  "ankara": 201,
-  "izmir": 78,
-  "kocaeli": 61,
+  "istanbul": 753,
+  "ankara": 203,
+  "izmir": 79,
+  "kocaeli": 62,
   "bursa": 61,
   "adana": 59,
   "antalya": 54,
   "tekirdag": 53,
+  "kayseri": 52,
   "gaziantep": 52,
-  "kayseri": 51,
   "samsun": 51,
   "konya": 50,
   "trabzon": 50,
@@ -215,33 +215,33 @@
   }
  ],
  "huni": {
-  "aktif": 8008,
-  "konum_disi": 6363,
+  "aktif": 8020,
+  "konum_disi": 6360,
   "siniflanmamis": 0,
   "seviye": {
-   "belirsiz": 836,
-   "deneyimli": 530,
-   "staj": 107,
-   "junior": 95,
-   "yeni_mezun": 33,
-   "yari_zamanli": 32,
-   "uzun_donem_staj": 12
+   "belirsiz": 844,
+   "deneyimli": 531,
+   "staj": 111,
+   "junior": 97,
+   "yari_zamanli": 33,
+   "yeni_mezun": 30,
+   "uzun_donem_staj": 14
   },
   "rol": {
-   "teknik_degil": 798,
-   "yazilim": 404,
-   "diger_teknik": 354,
-   "veri": 45,
+   "teknik_degil": 808,
+   "yazilim": 407,
+   "diger_teknik": 355,
+   "veri": 46,
    "yapay_zeka": 44
   },
   "ogrenciye_uygun": {
-   "yayinda": 51,
+   "yayinda": 55,
    "hayalet": 10,
    "supheli": 2,
    "eski_ilan_tarihi": 1,
    "genel_basvuru": 1
   },
-  "belirsiz_seviye_hedef_rol": 216,
+  "belirsiz_seviye_hedef_rol": 217,
   "ogrenci_seviye_diger_teknik": 53,
   "ornek_belirsiz": [
    "Rapsodo: Back-End Engineer",
@@ -279,13 +279,13 @@
    "Solenis: Associate Scientist - Gebze",
    "DEMSAY ELEKTRONİK San. ve Tic. A.Ş: Ar-Ge Merkezi Staj Programı",
    "Mesut Bilgisayar San. Tic. Ltd. Şti.: Mesut Bilgisayar San. Tic. Ltd. Şti. İçin Ağ İşletmenliği Stajyeri",
+   "BRY BİREY EĞİTİM YAYIN BASIM PAZARLAMA SAN. VE TİC. A.Ş.: Bilgi İşlem ve Grafik Tasarım Stajyeri",
    "Analog Devices: RF Design Engineering Intern",
    "Valven: New Graduate Program",
    "INTERPROBE BİLGİ TEKNOLOJİLERİ: Intern",
    "BİLGİKURUMSAL YAZILIM TEKNOLOJİLERİ A.Ş.: Stajyer",
    "MAPP PAZARLAMA VE TANITIM HİZMETLERİ: Ankara Teknik Servis Teknoloji Asistanı",
-   "Analog Devices: Associate Designer, Layout",
-   "KoçSistem: KoçSistem Level Up"
+   "Analog Devices: Associate Designer, Layout"
   ]
  }
 }
