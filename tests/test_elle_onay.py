@@ -22,6 +22,7 @@ from internreader.bulten.gonderim import HAZIRLIK, SON_GONDERIM, hazirligi_yaz, 
 from internreader.db import Bulten, IlanKaydi, motor_olustur, oturum_fabrikasi, simdi
 from internreader.model import Ilan
 from internreader.sema import alembic_ayari, semayi_hazirla
+from tests.conftest import SahteHttp
 from tests.test_bulten import AYAR, HEPSI, SahteGonderici, abone_ekle, ilan_ekle
 
 ADRES = "bilal.onizleme@ornek.com"
@@ -46,6 +47,8 @@ def komut_ortami(monkeypatch, tmp_path):
     monkeypatch.setenv("INTERNREADER_GIZLI_ANAHTAR", "test-anahtari")
     g = SahteGonderici()
     gercek_yayinla = boru.yayinla
+    gercek_dogrula = komut.basvurulari_dogrula
+    monkeypatch.setattr(komut, "basvurulari_dogrula", lambda a, o: gercek_dogrula(a, o, http=SahteHttp()))
     monkeypatch.setattr(komut, "gonderici_olustur", lambda _: g)
     monkeypatch.setattr(komut, "CIKTI", tmp_path / "cikti")
     monkeypatch.setattr(komut, "firma_listesini_esitle", lambda *_: None)

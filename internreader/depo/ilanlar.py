@@ -6,8 +6,9 @@ from datetime import UTC, datetime
 from sqlalchemy import select, update
 from sqlalchemy.orm import Session
 
-from internreader.db import Firma, IlanAyrinti, IlanKaydi, Siniflandirma, simdi
+from internreader.db import Firma, IlanAyrinti, IlanDogrulama, IlanKaydi, Siniflandirma, simdi
 from internreader.depo._ortak import _parcalar, utc
+from internreader.depo.dogrulama import dogrulama_kaydi, dogrulama_yayin_bilgisi
 from internreader.isleme.guncellik import baslik_yillari, donem_yillari, guncellik, siralama_anahtari, supheli_ilan
 from internreader.isleme.kategori import (
     alanlari_bul,
@@ -18,6 +19,7 @@ from internreader.isleme.kategori import (
 )
 from internreader.isleme.maske import kisisel_veriyi_maskele
 from internreader.isleme.tekillestirme import ilan_anahtari
+from internreader.kaynaklar.ats import TOPLAYICILAR
 from internreader.model import HEDEF_ROLLER, OGRENCI_SEVIYELERI, Ilan
 from internreader.yayin import TURKIYE_SAATI
 
@@ -28,8 +30,8 @@ def ilanlari_kaydet(
     """İlanları ekler/günceller. (yeni ilan kimlikleri, kapandığı anlaşılan ilan sayısı) döndürür.
     `sayfa_ilanlari_korunsun`: ara tarama kariyer sayfalarını okumaz; o kaynaktan gelen ilanlar görülmedi diye kapanmaz.
 
-    Kapanma kuralı: bu çalıştırmada başarıyla taranan bir firmanın, daha önce görülüp bu kez görülmeyen
-    ilanı kapandı sayılır. Taraması başarısız olan firmanın ilanlarına dokunulmaz (site çöktü diye ilan silinmez).
+    Kapanma kuralı: başarıyla taranan bir firmada üst üste iki başarılı listede görülmeyen ilan kapanır.
+    Hata veren tarama sayacı artırmaz. İlan yeniden görülürse sayaç sıfırlanır.
     Jooble ilanı bu kuralla kapanmaz: haftada bir gelir, aynı adlı firmanın günlük taramasında görülmemesi bir şey
     söylemez. Uzun süre görülmeyince bakım kapatır (gorulmeyen_jooble_ilanlarini_kapat).
     """
@@ -53,6 +55,13 @@ def ilanlari_kaydet(
         kayit.yayin_tarihi = min((t for t in (kayit.yayin_tarihi, i.tarih[:10]) if t), default="")
         kayit.aciklama, kayit.etiket = kisisel_veriyi_maskele(i.aciklama)[:20_000], i.etiket
         kayit.son_gorulme, kayit.aktif = an, True
+        kontrol = dogrulama_kaydi(oturum, kimlik, an)
+        kontrol.gorulmeme_sayisi = 0
+        if kontrol.neden == "iki_basarili_listede_gorulmedi":
+            kontrol.durum, kontrol.neden = "belirsiz", "listede_yeniden_goruldu"
+        if i.kaynak in TOPLAYICILAR and kontrol.durum != "kapali":
+            kontrol.durum, kontrol.neden = "acik", "ats_acik_ilan_listesinde"
+            kontrol.acik_dogrulama_zamani = an
 
     # "Bu çalıştırmada görülmedi" kümeyle bulunur, zaman damgasıyla değil: saat çözünürlüğü kaba olan sistemlerde
     # (Windows) art arda iki çalıştırma aynı zamanı alabiliyor ve "son_gorulme < an" kapananları kaçırıyordu.
@@ -63,7 +72,18 @@ def ilanlari_kaydet(
         )
         if sayfa_ilanlari_korunsun:
             sorgu = sorgu.where(IlanKaydi.kaynak != "kariyer_sayfasi")
-        kapanacak += [k for k in oturum.scalars(sorgu) if k not in gelen]
+        for kimlik in oturum.scalars(sorgu):
+            if kimlik in gelen:
+                continue
+            kontrol = dogrulama_kaydi(oturum, kimlik, an)
+            kontrol.gorulmeme_sayisi += 1
+            if kontrol.gorulmeme_sayisi >= 2:
+                if kontrol.durum != "kapali":
+                    kontrol.durum, kontrol.neden = "kapali", "iki_basarili_listede_gorulmedi"
+                kontrol.kontrol_zamani = an
+                kapanacak.append(kimlik)
+            elif kontrol.durum != "kapali":
+                kontrol.durum, kontrol.neden = "belirsiz", "ilk_basarili_listede_gorulmedi"
     for parca in _parcalar(kapanacak):
         oturum.execute(update(IlanKaydi).where(IlanKaydi.kimlik.in_(parca)).values(aktif=False))
     return yeniler, len(kapanacak)
@@ -184,8 +204,29 @@ def yayinlanacak_ilanlar(
         sorgu = sorgu.where(IlanKaydi.ilk_gorulme <= once.astimezone(UTC))
     sonuclar = list(oturum.execute(sorgu))
     firmalar = _firma_profilleri(oturum, {ilan.firma for ilan, _, _ in sonuclar})
+    kontroller = {}
+    for parca in _parcalar([ilan.kimlik for ilan, _, _ in sonuclar]):
+        kontroller.update(
+            {k.kimlik: k for k in oturum.scalars(select(IlanDogrulama).where(IlanDogrulama.kimlik.in_(parca)))}
+        )
+    # İlan yeni adrese taşınırsa eski adres iki kontrol boyunca kayıtlı kalır. Aynı başlık, kaynak ve konumla
+    # bu taramada görülen kopyası varsa bekleyen eski adresi ikinci kart olarak yayınlama; kaydı kapatma.
+    guncel_anahtarlar = {
+        (ilan_anahtari(i.firma, i.baslik), i.kaynak, i.konum)
+        for i, _, _ in sonuclar
+        if i.kimlik in kontroller and kontroller[i.kimlik].gorulmeme_sayisi == 0
+    }
     satirlar = []
     for ilan, sinif, ayrinti in sonuclar:
+        kontrol = kontroller.get(ilan.kimlik)
+        if (
+            kontrol is not None
+            and kontrol.gorulmeme_sayisi > 0
+            and (ilan_anahtari(ilan.firma, ilan.baslik), ilan.kaynak, ilan.konum) in guncel_anahtarlar
+            and not bayatlar_dahil
+        ):
+            continue
+        dogrulama = dogrulama_yayin_bilgisi(kontrol, an or simdi())
         etiket, kaynaklar = firmalar.get(ilan.firma, (set(), set()))
         etiket = etiket | set(ilan.etiket or [])
         ayrinti_sozlugu = _ayrinti_sozlugu(ayrinti)
@@ -203,6 +244,10 @@ def yayinlanacak_ilanlar(
             ilan.baslik,
             utc(ilan.ilk_gorulme).astimezone(TURKIYE_SAATI).date(),
         )
+        if dogrulama["durum"] == "kapali":
+            durum["bayat"] = "basvuru_kapali"
+        elif dogrulama["bayat"]:
+            durum["bayat"] = "basvuru_dogrulanamadi"
         if not durum["bayat"] and supheli_ilan(ilan.firma, ilan.baslik):
             durum["bayat"] = "supheli"
         if durum["bayat"] and not bayatlar_dahil:
@@ -217,6 +262,7 @@ def yayinlanacak_ilanlar(
                 "kaynak": ilan.kaynak,
                 "yayin_tarihi": ilan.yayin_tarihi,
                 "ilk_gorulme": utc(ilan.ilk_gorulme).isoformat(),
+                "dogrulama": dogrulama,
                 "seviye": sinif.seviye,
                 "rol": sinif.rol,
                 "yapay_zeka": sinif.yapay_zeka,

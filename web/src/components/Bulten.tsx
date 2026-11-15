@@ -500,6 +500,7 @@ export default function Bulten({ ilanlar: gomulu, guncelleme: gomuluTarih }: Pro
                             {tarihBilgisi(i).map((t) => (
                               <span key={t}>{t}</span>
                             ))}
+                            {i.dogrulama?.durum === "belirsiz" && <span>Başvuru durumu doğrulanamadı</span>}
                             {i.yapay_zeka !== "yok" && <span className="fosfor fosfor-hemen">yapay zekâ</span>}
                           </p>
                           {i.ayrinti?.ozet && (

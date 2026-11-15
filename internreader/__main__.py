@@ -36,6 +36,7 @@ from internreader.bakim import bakim_yap
 from internreader.bulten import bultenleri_gonder
 from internreader.bulten.gonderim import deneme_gonder, hazirligi_yaz, onay_siniri, onizleme_gonder
 from internreader.db import oturum_fabrikasi, simdi
+from internreader.dogrulama import basvurulari_dogrula
 from internreader.eposta import gonderici_olustur
 from internreader.gunluk import kayit_kur
 from internreader.ice_aktar import eski_onbellegi_ice_aktar, firma_listesini_esitle, firmalari_ice_aktar
@@ -52,6 +53,8 @@ def main(argv: list[str] | None = None) -> int:
     ayristirici = argparse.ArgumentParser(prog="internreader", description="Türkiye staj ilanı toplayıcı")
     ayristirici.add_argument("--ayrinti", action="store_true", help="ayrıntılı kayıt (DEBUG)")
     alt = ayristirici.add_subparsers(dest="komut", required=True)
+    p = alt.add_parser("dogrula", help="başvuru sayfalarını kontrol et (LLM kullanmaz; 24 saatte en çok bir kez)")
+    p.add_argument("--sinir", type=int, default=120)
 
     p = alt.add_parser("ice-aktar", help="firma CSV'sini veritabanına al")
     p.add_argument("csv", type=Path)
@@ -127,7 +130,9 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     oturum = oturum_fabrikasi(ayar.veritabani_url)
 
-    if arg.komut == "ice-aktar":
+    if arg.komut == "dogrula":
+        print(json.dumps(basvurulari_dogrula(ayar, oturum, sinir=arg.sinir), ensure_ascii=False))
+    elif arg.komut == "ice-aktar":
         firmalari_ice_aktar(oturum, arg.csv, arg.kaynak)
         if arg.eski_onbellek:
             eski_onbellegi_ice_aktar(oturum, arg.eski_onbellek)
@@ -172,6 +177,7 @@ def main(argv: list[str] | None = None) -> int:
             boru.ayrintilari_zenginlestir(ayar, oturum, yz=yz, yalnizca_ats=True)
         if arg.komut == "calistir":
             boru.ayrintilari_zenginlestir(ayar, oturum, yz=yz)
+            kayit.info("Başvuru doğrulama: %s", basvurulari_dogrula(ayar, oturum))
             boru.yayinla(oturum)
             if ayar.bulten_elle:  # pilot: önizleme Bilal'e gider, bülten "Bülteni gönder" ile elle çıkar
                 hazirligi_yaz(oturum)
