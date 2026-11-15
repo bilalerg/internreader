@@ -13,6 +13,7 @@ import threading
 import time
 import urllib.parse
 import urllib.robotparser
+from collections.abc import Callable
 
 import requests
 from requests.adapters import HTTPAdapter
@@ -89,8 +90,12 @@ class HttpIstemci:
         return True if rp is None else rp.can_fetch(self.kullanici_ajani, url)
 
     # --- istekler ---
-    def sayfa(self, url: str, robots_kontrolu: bool = True) -> tuple[str, str]:
+    def sayfa(
+        self, url: str, robots_kontrolu: bool = True, adres_izinli: Callable[[str], bool] | None = None
+    ) -> tuple[str, str]:
         """(son adres, HTML metni) döndürür. robots.txt izin vermezse RobotsEngeli fırlatır."""
+        if adres_izinli is not None:
+            return self._denetimli_sayfa(url, robots_kontrolu, adres_izinli)
         if robots_kontrolu and not self.izinli_mi(url):
             raise RobotsEngeli(url)
         p = urllib.parse.urlparse(url)
@@ -100,6 +105,20 @@ class HttpIstemci:
             yanit.raise_for_status()
             icerik = govdeyi_oku(yanit, SAYFA_AZAMI_BAYT)
             return yanit.url, metni_coz(icerik, yanit.headers.get("content-type", ""))
+
+    def _denetimli_sayfa(self, url: str, robots_kontrolu: bool, adres_izinli: Callable[[str], bool]):
+        """Doğrulayıcı yönlendirmede yasak kaynağa istek göndermesin; her adreste robots da tekrar denetlenir."""
+        for _ in range(6):
+            if not adres_izinli(url) or (robots_kontrolu and not self.izinli_mi(url)):
+                raise RobotsEngeli("Adres politikası veya robots engeli")
+            with self.oturum.get(url, timeout=self.zaman_asimi, stream=True, allow_redirects=False) as yanit:
+                if yanit.is_redirect:
+                    url = urllib.parse.urljoin(url, yanit.headers["location"])
+                    continue
+                yanit.raise_for_status()
+                icerik = govdeyi_oku(yanit, SAYFA_AZAMI_BAYT)
+                return yanit.url, metni_coz(icerik, yanit.headers.get("content-type", ""))
+        raise requests.TooManyRedirects("Doğrulama yönlendirme sınırı aşıldı")
 
     def json_al(self, url: str, basliklar: dict | None = None):
         """basliklar: isteğe özel başlıklar (ör. arama API'sinin anahtarı); oturumun ortak başlıklarına eklenir."""
