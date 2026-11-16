@@ -44,6 +44,8 @@ jobs:
           cache-dependency-path: requirements.txt
       - name: Bağımlılıklar
         run: pip install -r requirements.txt
+      - name: Canlı bağlantı imzasını denetle
+        run: python -m ops.anahtar_kontrol
       - name: Bülteni gönder
         # Rapor yalnızca sayılar (kaç kişiye gitti, kaç sessizlik e-postası); e-posta adresi yazılmaz
         run: |

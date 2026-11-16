@@ -3,7 +3,7 @@ savunma ve girişim etiketi, sıralama ve firma kotası, görünen ad, sabah iş
 
 import dataclasses
 import json
-from datetime import UTC, date, datetime, timedelta
+from datetime import date, timedelta
 from pathlib import Path
 
 import pytest
@@ -16,8 +16,10 @@ from internreader.api import is_akisini_tetikle, uygulama_olustur
 from internreader.ayar import ayarlari_oku
 from internreader.bulten import bultenleri_gonder
 from internreader.bulten.secim import bulten_sec
-from internreader.db import oturum_fabrikasi
+from internreader.db import oturum_fabrikasi, simdi
+from internreader.depo.dogrulama import dogrulama_yaz
 from internreader.ice_aktar import firma_listesini_esitle
+from internreader.isleme.basvuru import BasvuruSonucu
 from internreader.isleme.guncellik import siralama_anahtari
 from internreader.isleme.kategori import ilan_turu_bul, seviye_etiketi
 from internreader.kaynaklar.kariyer_sayfasi import ilan_metni
@@ -248,12 +250,16 @@ def test_siralama_yeni_once_girisim_ucretli_one_tarihsiz_ve_surekli_acik_geride(
 
 
 def test_firma_basina_en_fazla_iki_ilan_kalanlar_sonraki_bultene(oturum):
+    sabah = simdi()
+    yayin = (sabah - timedelta(days=2)).date().isoformat()
+    kimlikler = []
     for n in range(4):
-        ilan_kur(oturum, f"https://a.test/d{n}", f"Staj D{n}", firma="Dream Games", yayin="2026-10-28")
-    ilan_kur(oturum, "https://a.test/s", "Test Stajı", firma="Skymod", yayin="2026-10-27")
+        kimlikler.append(ilan_kur(oturum, f"https://a.test/d{n}", f"Staj D{n}", firma="Dream Games", yayin=yayin))
+    kimlikler.append(ilan_kur(oturum, "https://a.test/s", "Test Stajı", firma="Skymod", yayin=yayin))
     with oturum.begin() as o:
+        for ilan in kimlikler:
+            dogrulama_yaz(o, ilan.kimlik, BasvuruSonucu("acik", "testte_dogrulandi"), sabah)
         onayla(o, kayit_iste(o, "a@x.com", {}, "gunluk", "test"))
-    sabah = datetime(2026, 10, 30, 4, 30, tzinfo=UTC)
 
     class Gonderici:
         def __init__(self):

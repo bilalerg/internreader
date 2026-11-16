@@ -37,7 +37,7 @@ konum ön seçimi (Türkiye / uzaktan) → yalnızca YENİ ilanlar yapay zekâyl
 ayrıntılar: öğrenciye uygun ilanın metninden özet, son başvuru, kimler başvurabilir, çalışma modeli, ücret,
    │        teknolojiler (her ilan bir kez; teknoloji adı metinde geçmiyorsa ve tarih saçmaysa kod atar)
    ▼
-yayın: JSON (site) + istatistik → bülten: her aboneye tercihine uyan, daha önce gönderilmemiş ilanlar
+yayın: JSON (site) + istatistik → bülten: her aboneye tercihine uyan, yakın zamanda açık olduğu doğrulanmış ve daha önce gönderilmemiş ilanlar
    ▼
 bakım: onaylanmamış kayıtlar, eski gönderim kayıtları, kapanmış ilanların metinleri silinir
 ```
@@ -119,6 +119,7 @@ Astro ile statik derlenen tek sayfalık site + React adaları (yalnızca etkile�
   okuma çizgisi şehirleri tararken gerçek ilan sayılarıyla nabız atar, gerçek öğrenci ilanları belirir.
 - **Nasıl çalışır** (`BoruHatti.tsx`): dört adımlı simülasyon; yapay zekânın bu sabahki gerçek kabul/ret kararları ve gerekçeleri.
 - **Bülteni dene + abone ol** (`Bulten.tsx`): şehir/alan/seviye seç → bugünün gerçek ilanlarıyla e-posta önizlemesi → kayıt.
+- **Başvurularım** (`BasvuruTakibi.tsx`): kullanıcı gerçekten başvurduğu ilanı, tarihini, CV adını ve durumunu kendi tarayıcısında saklar. Sunucuya gönderilmez; cihazlar arasında eşitlenmez.
 - **Çift onaylı kayıt**: `/onay` ve `/iptal` sayfaları butonla POST atar (e-posta tarayıcıları bağlantıyı açınca kendiliğinden
   onay/çıkış olmaz). Çıkışta e-posta adresi silinir. KVKK aydınlatma metni: `/kvkk`.
 

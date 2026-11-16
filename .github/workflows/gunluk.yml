@@ -69,7 +69,11 @@ jobs:
           python -m internreader kesif
       - name: Tara, yayınla, bülten, bakım
         if: ${{ steps.kontrol.outputs.atla != 'true' }}
-        run: python -m internreader calistir
+        run: |
+          if [ "$INTERNREADER_BULTEN_ELLE" != "1" ] && [ -n "$INTERNREADER_GIZLI_ANAHTAR" ]; then
+            python -m ops.anahtar_kontrol
+          fi
+          python -m internreader calistir
       - name: Özet (abone, ilan, yapay zekâ harcaması)
         # Çalışma sayfasının "Summary" bölümünde görünür. Yalnızca sayılar; e-posta adresi yazılmaz.
         if: ${{ success() || failure() }}

@@ -1,0 +1,20 @@
+---
+import Taban from "../layouts/Taban.astro";
+import BasvuruTakibi from "../components/BasvuruTakibi";
+---
+
+<Taban baslik="Başvurularım" aciklama="Başvurduğun ilanları ve kullandığın CV'leri takip et." dizine_ekleme={false}>
+  <div class="mx-auto max-w-4xl px-5 py-14 md:px-8 md:py-20">
+    <p class="etiket">KİŞİSEL TAKİP</p>
+    <h1 class="baslik mt-4 text-[clamp(2.5rem,5vw,4rem)]">Başvurularım</h1>
+    <p class="mt-4 max-w-2xl leading-relaxed text-murekkep-2">
+      Hangi ilana ne zaman ve hangi CV ile başvurduğunu burada tut. “Başvur” bağlantısına tıklamak otomatik olarak
+      “başvurdum” sayılmaz; başvurunu tamamladıktan sonra kaydet.
+    </p>
+    <p class="mb-9 mt-4 rounded-md border border-cizgi bg-kagit-koyu/50 p-4 text-sm leading-relaxed text-murekkep-2">
+      Kayıtların yalnızca bu tarayıcıda saklanır; InternReader sunucusuna gönderilmez. Başka cihazda veya gizli sekmede
+      görünmez. Tarayıcı verilerini silersen kayıtların da silinir.
+    </p>
+    <BasvuruTakibi client:load />
+  </div>
+</Taban>

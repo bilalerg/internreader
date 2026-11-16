@@ -43,6 +43,13 @@ export interface Ilan {
   surekli_acik?: boolean;
   ilan_turu?: "is" | "egitim" | "yarisma"; // genel CV sayfaları yayınlanmaz
   seviye_etiketi?: string; // kartta yazacak ad: "Eğitim programı", "Yarışma", "Tüm seviyeler"...
+  dogrulama?: {
+    durum: "acik" | "kapali" | "belirsiz";
+    neden: string;
+    kontrol_zamani: string | null;
+    acik_dogrulama_zamani?: string | null;
+    bayat: boolean;
+  };
 }
 
 export interface IlanListesi {

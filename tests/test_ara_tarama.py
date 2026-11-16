@@ -80,7 +80,9 @@ def test_ayni_adli_firmanin_sayfa_ilani_ara_taramada_kapanmaz_ats_ilani_kapanir(
     boru.tara(AYAR, oturum, http=birinci, yz=SahteYz(yz_cevabi([])), yalnizca_ats=True)
     ikinci = SahteHttp(jsonlar={"api.lever.co": [lever_ilani(1)]})
     rapor = boru.tara(AYAR, oturum, http=ikinci, yz=SahteYz(yz_cevabi([])), yalnizca_ats=True)
-    assert rapor.kapanan_ilan == 1  # panodan kalkan ATS ilanı kapanır
+    assert rapor.kapanan_ilan == 0  # ilk başarılı listede kayıp: henüz kapanmaz
+    rapor = boru.tara(AYAR, oturum, http=ikinci, yz=SahteYz(yz_cevabi([])), yalnizca_ats=True)
+    assert rapor.kapanan_ilan == 1  # iki başarılı listede kayıp
     with oturum() as o:
         assert o.get(IlanKaydi, karisik.kimlik).aktif
 

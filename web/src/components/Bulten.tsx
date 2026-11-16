@@ -500,6 +500,7 @@ export default function Bulten({ ilanlar: gomulu, guncelleme: gomuluTarih }: Pro
                             {tarihBilgisi(i).map((t) => (
                               <span key={t}>{t}</span>
                             ))}
+                            {i.dogrulama?.durum === "belirsiz" && <span>Başvuru durumu doğrulanamadı</span>}
                             {i.yapay_zeka !== "yok" && <span className="fosfor fosfor-hemen">yapay zekâ</span>}
                           </p>
                           {i.ayrinti?.ozet && (
@@ -519,6 +520,12 @@ export default function Bulten({ ilanlar: gomulu, guncelleme: gomuluTarih }: Pro
                               ))}
                             </p>
                           )}
+                        </a>
+                        <a
+                          href={`/basvurular/?ilan=${encodeURIComponent(i.kimlik)}`}
+                          className="mt-2 inline-block text-[0.78rem] text-murekkep-2 underline underline-offset-2 hover:text-murekkep"
+                        >
+                          Başvurduysan takibe ekle
                         </a>
                       </motion.li>
                     ))}

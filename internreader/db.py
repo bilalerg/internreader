@@ -83,6 +83,20 @@ class IlanKaydi(Taban):
     __table_args__ = (Index("ix_ilanlar_aktif_ilk_gorulme", "aktif", "ilk_gorulme"),)
 
 
+class IlanDogrulama(Taban):
+    """Listede görülme ile başvuru durumunun kanıtı ayrıdır. Eski ilanlar kontrol edilene kadar kayıtsızdır."""
+
+    __tablename__ = "ilan_dogrulamalari"
+    kimlik: Mapped[str] = mapped_column(String(16), ForeignKey("ilanlar.kimlik", ondelete="CASCADE"), primary_key=True)
+    durum: Mapped[str] = mapped_column(String(12), default="belirsiz")
+    neden: Mapped[str] = mapped_column(String(100), default="henuz_kontrol_edilmedi")
+    ilk_kontrol: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=simdi)
+    kontrol_zamani: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    # Son kesin AÇIK kanıtı. Erişim hatası veya yalnızca listede görülme bu zamanı yenilemez.
+    acik_dogrulama_zamani: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    gorulmeme_sayisi: Mapped[int] = mapped_column(Integer, default=0)
+
+
 class Siniflandirma(Taban):
     __tablename__ = "siniflandirmalar"
     kimlik: Mapped[str] = mapped_column(String(16), ForeignKey("ilanlar.kimlik", ondelete="CASCADE"), primary_key=True)

@@ -15,7 +15,10 @@ def test_yeni_guncellenen_ve_kapanan_ilanlar(oturum):
 
     with oturum.begin() as o:  # ikinci gün: u/2 kalkmış, u/3 eklenmiş
         yeni, kapanan = depo.ilanlari_kaydet(o, [ilan("https://u/1"), ilan("https://u/3")], {"F"})
-    assert len(yeni) == 1 and kapanan == 1
+    assert len(yeni) == 1 and kapanan == 0  # tek kayıp kontrol kapatmaz
+    with oturum.begin() as o:
+        _, kapanan = depo.ilanlari_kaydet(o, [ilan("https://u/1"), ilan("https://u/3")], {"F"})
+    assert kapanan == 1
 
 
 def test_taramasi_basarisiz_firmanin_ilanlari_kapatilmaz(oturum):

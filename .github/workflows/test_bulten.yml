@@ -47,6 +47,8 @@ jobs:
           cache-dependency-path: requirements.txt
       - name: Bağımlılıklar
         run: pip install -r requirements.txt
+      - name: Canlı bağlantı imzasını denetle
+        run: python -m ops.anahtar_kontrol
       - name: Test e-postasını gönder
         env:
           TUR: ${{ inputs.tur }}

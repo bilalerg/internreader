@@ -56,7 +56,7 @@ class SahteHttp:
     def json_gonder(self, url, govde, basliklar=None):
         return self._cevap(url, govde, basliklar)
 
-    def sayfa(self, url, robots_kontrolu=True):
+    def sayfa(self, url, robots_kontrolu=True, adres_izinli=None):
         if url not in self.sayfalar:
             raise requests.ConnectionError(url)
         return url, self.sayfalar[url]

@@ -18,6 +18,8 @@ from internreader.api import SEVIYELER, Alan, uygulama_olustur
 from internreader.ayar import ayarlari_oku
 from internreader.bulten import bultenleri_gonder
 from internreader.db import simdi
+from internreader.depo.dogrulama import dogrulama_yaz
+from internreader.isleme.basvuru import BasvuruSonucu
 from internreader.isleme.kategori import ALANLAR, alanlari_bul, calisma_modeli, girisim_mi
 from internreader.model import OGRENCI_SEVIYELERI, Ilan
 
@@ -171,6 +173,7 @@ def _veriyi_kur(oturum) -> dict[str, str]:
             i = Ilan(firma=firma, baslik=baslik, url=f"https://ilan.test/{kod}", kaynak=sistem, konum=konum)
             depo.ilanlari_kaydet(o, [i], set())
             depo.siniflandirma_kaydet(o, {i.kimlik: {"seviye": seviye, "rol": rol, "yapay_zeka": yz}}, "test")
+            dogrulama_yaz(o, i.kimlik, BasvuruSonucu("acik", "testte_dogrulandi"))
             if model:
                 depo.ayrinti_kaydet(o, i.kimlik, {"ozet": "Kısa özet.", "calisma_modeli": model}, "ozet", "test")
     return {kod: v[0] for kod, v in ILANLAR.items()}

@@ -50,6 +50,15 @@ SON_GONDERIM = "son_bulten_gonderimi"  # durum: son bülten gönderiminin kapsad
 HAZIRLIK = "bulten_hazirligi"  # durum: elle onay modunda sabah işinin ilanları hazırladığı an (önizleme ve bülten sonu)
 
 
+def dogrulanmis_ilanlar(ilanlar: list[dict]) -> list[dict]:
+    """Başvuru kanıtı taze olmayan ilanı e-postaya koyma; sitede belirsiz etiketiyle görünebilir."""
+    return [
+        ilan
+        for ilan in ilanlar
+        if (bilgi := ilan.get("dogrulama")) and bilgi.get("durum") == "acik" and not bilgi.get("bayat")
+    ]
+
+
 def hazirligi_yaz(oturum: sessionmaker, an: datetime | None = None) -> None:
     """Elle onay modu: sabah işi ilanları hazırladı. Önizleme ve elle gönderilen bülten bu ana kadar görülen ilanlarla
     sınırlı kalır."""
@@ -76,7 +85,7 @@ def bultenleri_gonder(
         raise RuntimeError("Gerçek e-posta gönderimi için INTERNREADER_GIZLI_ANAHTAR tanımlı olmalı (API ile aynı)")
     an = (an or simdi()).astimezone(UTC)  # kayıtlar UTC: SQLite saat dilimi saklamaz
     with oturum() as o:
-        guncel = [zenginlestir(x) for x in depo.yayinlanacak_ilanlar(o, once=sinir)]
+        guncel = dogrulanmis_ilanlar([zenginlestir(x) for x in depo.yayinlanacak_ilanlar(o, once=sinir)])
         aboneler = [(a.id, a.eposta, dict(a.tercihler or {}), a.siklik) for a in depo.gonderime_hazir_aboneler(o, an)]
         firma_sayisi = depo.taranan_firma_sayisi(o)
     ilanlar = [i for i in guncel if taze_mi(i, an)]
@@ -240,7 +249,7 @@ def hos_geldin_gonder(
         if abone is None:
             return "atlandi"
         eposta, tercihler, siklik = abone.eposta, dict(abone.tercihler or {}), abone.siklik
-        ilanlar = [zenginlestir(x) for x in depo.yayinlanacak_ilanlar(o, an=an)]
+        ilanlar = dogrulanmis_ilanlar([zenginlestir(x) for x in depo.yayinlanacak_ilanlar(o, an=an)])
     secilen, sonuc = hos_geldin_secimi(ilanlar, tercihler)
     if sonuc == "bos":  # "şu an ilan yok" diyen boş e-posta güven kaybettirir; ilk uyan ilan sabah bülteniyle gelir
         kayit.info("Hoş geldin: gösterilecek ilan yok, e-posta gönderilmedi")
@@ -301,7 +310,9 @@ def onizleme_gonder(
     with oturum() as o:
         ilanlar = [
             i if taze_mi(i, an) else {**i, "onizleme_notu": "Eski tarihli: bültene girmez, yakın ilan olarak gidebilir"}
-            for i in (zenginlestir(x) for x in depo.yayinlanacak_ilanlar(o, sonra=baslangic, an=an, once=bitis))
+            for i in dogrulanmis_ilanlar(
+                [zenginlestir(x) for x in depo.yayinlanacak_ilanlar(o, sonra=baslangic, an=an, once=bitis)]
+            )
         ]
     rapor = {
         "tur": "onizleme",
@@ -353,7 +364,7 @@ def deneme_gonder(
         abone = depo.abone_eposta_ile(o, alici.strip().lower())
         kayitli = abone is not None
         tercihler, siklik = (dict(abone.tercihler or {}), abone.siklik) if abone else ({}, "gunluk")
-        ilanlar = [zenginlestir(x) for x in depo.yayinlanacak_ilanlar(o, an=an)]
+        ilanlar = dogrulanmis_ilanlar([zenginlestir(x) for x in depo.yayinlanacak_ilanlar(o, an=an)])
     jeton = iptal_jetonu(0, ayar.gizli_anahtar)
     baglantilar = {
         "site_adresi": ayar.site_adresi,
