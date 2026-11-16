@@ -1,7 +1,7 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-16T15:03:05.264654+03:00",
- "sayi": 55,
+ "guncelleme": "2026-11-17T01:24:52.265437+03:00",
+ "sayi": 56,
  "ilanlar": [
   {
    "kimlik": "440ffe70c38b3897",
@@ -88,6 +88,41 @@
    "firma_gorunen": "Hiroba Games",
    "sehirler": [
     "ankara"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "6ca5038b7243b96c",
+   "firma": "Rapsodo",
+   "baslik": "Research Intern",
+   "url": "https://apply.workable.com/j/A9979DC759",
+   "konum": "İzmir, Turkey",
+   "kaynak": "workable",
+   "yayin_tarihi": "2026-11-16",
+   "ilk_gorulme": "2026-11-16T22:19:07.705290+00:00",
+   "dogrulama": {
+    "durum": "acik",
+    "neden": "ats_acik_ilan_listesinde",
+    "kontrol_zamani": null,
+    "acik_dogrulama_zamani": "2026-11-16T22:19:07.705290+00:00",
+    "bayat": false
+   },
+   "seviye": "staj",
+   "rol": "yapay_zeka",
+   "yapay_zeka": "arti",
+   "ayrinti": null,
+   "alanlar": [
+    "yapay_zeka"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": "2026-11-16",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Staj",
+   "firma_gorunen": "Rapsodo",
+   "sehirler": [
+    "izmir"
    ],
    "uzaktan": false
   },
@@ -304,9 +339,9 @@
    "ilk_gorulme": "2026-11-05T14:58:47.951557+00:00",
    "dogrulama": {
     "durum": "acik",
-    "neden": "lever_ilanina_ozel_basvuru_baglantisi",
+    "neden": "ats_acik_ilan_listesinde",
     "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
-    "acik_dogrulama_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": "2026-11-16T22:19:07.705290+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -434,7 +469,7 @@
     "durum": "acik",
     "neden": "ats_acik_ilan_listesinde",
     "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
-    "acik_dogrulama_zamani": "2026-11-16T11:38:24.891049+00:00",
+    "acik_dogrulama_zamani": "2026-11-16T22:19:07.705290+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -1235,9 +1270,9 @@
    "ilk_gorulme": "2026-10-31T22:29:02.250765+00:00",
    "dogrulama": {
     "durum": "acik",
-    "neden": "lever_ilanina_ozel_basvuru_baglantisi",
+    "neden": "ats_acik_ilan_listesinde",
     "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
-    "acik_dogrulama_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": "2026-11-16T22:19:07.705290+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -1278,9 +1313,9 @@
    "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
    "dogrulama": {
     "durum": "acik",
-    "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
+    "neden": "ats_acik_ilan_listesinde",
     "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
-    "acik_dogrulama_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": "2026-11-16T22:19:07.705290+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -1323,9 +1358,9 @@
    "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
    "dogrulama": {
     "durum": "acik",
-    "neden": "lever_ilanina_ozel_basvuru_baglantisi",
+    "neden": "ats_acik_ilan_listesinde",
     "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
-    "acik_dogrulama_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": "2026-11-16T22:19:07.705290+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -1368,9 +1403,9 @@
    "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
    "dogrulama": {
     "durum": "acik",
-    "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
+    "neden": "ats_acik_ilan_listesinde",
     "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
-    "acik_dogrulama_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": "2026-11-16T22:19:07.705290+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -1417,9 +1452,9 @@
    "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
    "dogrulama": {
     "durum": "acik",
-    "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
+    "neden": "ats_acik_ilan_listesinde",
     "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
-    "acik_dogrulama_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": "2026-11-16T22:19:07.705290+00:00",
     "bayat": false
    },
    "seviye": "yeni_mezun",
@@ -1466,9 +1501,9 @@
    "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
    "dogrulama": {
     "durum": "acik",
-    "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
+    "neden": "ats_acik_ilan_listesinde",
     "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
-    "acik_dogrulama_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": "2026-11-16T22:19:07.705290+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -1514,9 +1549,9 @@
    "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
    "dogrulama": {
     "durum": "acik",
-    "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
+    "neden": "ats_acik_ilan_listesinde",
     "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
-    "acik_dogrulama_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": "2026-11-16T22:19:07.705290+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -1564,7 +1599,7 @@
     "durum": "acik",
     "neden": "ats_acik_ilan_listesinde",
     "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
-    "acik_dogrulama_zamani": "2026-11-16T11:38:24.891049+00:00",
+    "acik_dogrulama_zamani": "2026-11-16T22:19:07.705290+00:00",
     "bayat": false
    },
    "seviye": "yeni_mezun",
