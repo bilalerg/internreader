@@ -1,21 +1,21 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-16T09:47:34.437226+03:00",
- "takip_edilen_firma": 3408,
- "taranan_firma": 939,
- "aktif_ilan": 7989,
- "ogrenci_ilani": 54,
+ "guncelleme": "2026-11-16T15:03:05.264654+03:00",
+ "takip_edilen_firma": 3414,
+ "taranan_firma": 946,
+ "aktif_ilan": 8700,
+ "ogrenci_ilani": 55,
  "sehirler": {
-  "uzaktan": 1361,
-  "istanbul": 746,
+  "uzaktan": 1375,
+  "istanbul": 772,
   "ankara": 201,
   "izmir": 80,
   "kocaeli": 62,
   "bursa": 61,
   "adana": 59,
   "antalya": 53,
+  "kayseri": 53,
   "tekirdag": 53,
-  "kayseri": 52,
   "gaziantep": 52,
   "konya": 50,
   "trabzon": 50,
@@ -86,6 +86,14 @@
  ],
  "kararlar": [
   {
+   "baslik": "Junior Java Developer",
+   "firma": "Checkbox",
+   "seviye": "junior",
+   "rol": "yazilim",
+   "gerekce": "Junior unvan; Java yazılım geliştirme.",
+   "uygun": true
+  },
+  {
    "baslik": "Game Developer - New Grad",
    "firma": "Vertigo Games",
    "seviye": "yeni_mezun",
@@ -99,14 +107,6 @@
    "seviye": "staj",
    "rol": "yapay_zeka",
    "gerekce": "Görüntü işleme proje stajı, yapay zeka bilgisi tercih sebebi",
-   "uygun": true
-  },
-  {
-   "baslik": "Entry-Level Java Software Developer",
-   "firma": "OmegaHires",
-   "seviye": "junior",
-   "rol": "yazilim",
-   "gerekce": "Entry-level Java yazılım geliştirici, uzaktan",
    "uygun": true
   },
   {
@@ -215,34 +215,34 @@
   }
  ],
  "huni": {
-  "aktif": 7989,
-  "konum_disi": 6336,
+  "aktif": 8700,
+  "konum_disi": 7001,
   "siniflanmamis": 0,
   "seviye": {
-   "belirsiz": 842,
-   "deneyimli": 529,
-   "staj": 108,
-   "junior": 97,
+   "belirsiz": 858,
+   "deneyimli": 546,
+   "staj": 111,
+   "junior": 98,
+   "yeni_mezun": 40,
    "yari_zamanli": 32,
-   "yeni_mezun": 31,
    "uzun_donem_staj": 14
   },
   "rol": {
-   "teknik_degil": 803,
-   "yazilim": 405,
-   "diger_teknik": 355,
-   "veri": 46,
+   "teknik_degil": 825,
+   "yazilim": 417,
+   "diger_teknik": 362,
+   "veri": 51,
    "yapay_zeka": 44
   },
   "ogrenciye_uygun": {
-   "yayinda": 54,
-   "hayalet": 10,
+   "yayinda": 55,
+   "hayalet": 11,
+   "eski_ilan_tarihi": 3,
    "supheli": 2,
-   "eski_ilan_tarihi": 1,
    "genel_basvuru": 1
   },
-  "belirsiz_seviye_hedef_rol": 216,
-  "ogrenci_seviye_diger_teknik": 54,
+  "belirsiz_seviye_hedef_rol": 223,
+  "ogrenci_seviye_diger_teknik": 58,
   "ornek_belirsiz": [
    "Rapsodo: Back-End Engineer",
    "ADIM TEKNOLOJİ A.Ş. Yazılım, 3D Simülasyon ve Modelleme: VR Developer",
@@ -257,13 +257,13 @@
    "Algocor Teknoloji A.Ş.: Software Engineer C++",
    "SEKGAMES OYUN YAZILIM TEKNOLOJİ VE PAZARLAMA ANONİM ŞİRKETİ: Marketing Developer",
    "Özgür Yazılım A.Ş.: DevOps & Linux Sistem Yöneticisi (S38)",
+   "Lucida AI: Flutter Developer(Fullstack)",
    "Valven: Linux System Engineer",
    "Vertigo Games: Game Developer",
    "MULTİGOO BİLİŞİM ANONİM ŞİRKETİ: Frontend (React) Developer",
    "ESEN: Software Design Engineer",
    "MAGLAB OYUN TEKNOLOJİLERİ BİLİŞİM YAZILIM TASARIM YAYINCILIK TİCARET ANONİM ŞİRKETİ: Game Developer, On-Site Ankara · Full Time",
-   "SİMOFUN OYUN TEKNOLOJİLERİ ANONİM ŞİRKETİ: Unity Oyun Geliştiricisi",
-   "MULTİGOO BİLİŞİM ANONİM ŞİRKETİ: Backend (.Net) Developer"
+   "SİMOFUN OYUN TEKNOLOJİLERİ ANONİM ŞİRKETİ: Unity Oyun Geliştiricisi"
   ],
   "ornek_diger_teknik": [
    "Özgür Yazılım A.Ş.: Taze (Jr) DevOps & Linux Sistem Yöneticisi (S36)",

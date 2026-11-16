@@ -1,7 +1,7 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-16T09:47:34.437226+03:00",
- "sayi": 54,
+ "guncelleme": "2026-11-16T15:03:05.264654+03:00",
+ "sayi": 55,
  "ilanlar": [
   {
    "kimlik": "440ffe70c38b3897",
@@ -12,6 +12,12 @@
    "kaynak": "jooble",
    "yayin_tarihi": "2026-11-06",
    "ilk_gorulme": "2026-11-07T13:34:00.335732+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "henuz_kontrol_edilmedi",
+    "kontrol_zamani": null,
+    "bayat": false
+   },
    "seviye": "junior",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -49,6 +55,12 @@
    "kaynak": "jooble",
    "yayin_tarihi": "2026-11-04",
    "ilk_gorulme": "2026-11-07T13:34:00.335732+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "henuz_kontrol_edilmedi",
+    "kontrol_zamani": null,
+    "bayat": false
+   },
    "seviye": "uzun_donem_staj",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -88,6 +100,12 @@
    "kaynak": "jooble",
    "yayin_tarihi": "2026-11-14",
    "ilk_gorulme": "2026-11-14T13:50:22.225307+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "henuz_kontrol_edilmedi",
+    "kontrol_zamani": null,
+    "bayat": false
+   },
    "seviye": "junior",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -124,6 +142,12 @@
    "kaynak": "jooble",
    "yayin_tarihi": "2026-11-12",
    "ilk_gorulme": "2026-11-14T13:50:22.225307+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "henuz_kontrol_edilmedi",
+    "kontrol_zamani": null,
+    "bayat": false
+   },
    "seviye": "staj",
    "rol": "yazilim",
    "yapay_zeka": "arti",
@@ -161,6 +185,12 @@
    "kaynak": "jooble",
    "yayin_tarihi": "2026-11-12",
    "ilk_gorulme": "2026-11-14T13:50:22.225307+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "henuz_kontrol_edilmedi",
+    "kontrol_zamani": null,
+    "bayat": false
+   },
    "seviye": "junior",
    "rol": "yazilim",
    "yapay_zeka": "arti",
@@ -195,6 +225,12 @@
    "kaynak": "jooble",
    "yayin_tarihi": "2026-11-12",
    "ilk_gorulme": "2026-11-14T13:50:22.225307+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "henuz_kontrol_edilmedi",
+    "kontrol_zamani": null,
+    "bayat": false
+   },
    "seviye": "staj",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -231,6 +267,13 @@
    "kaynak": "workday",
    "yayin_tarihi": "2026-11-12",
    "ilk_gorulme": "2026-11-12T20:07:09.741477+00:00",
+   "dogrulama": {
+    "durum": "acik",
+    "neden": "ats_acik_ilan_listesinde",
+    "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": "2026-11-16T11:38:24.891049+00:00",
+    "bayat": false
+   },
    "seviye": "staj",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -259,6 +302,13 @@
    "kaynak": "lever",
    "yayin_tarihi": "2026-11-05",
    "ilk_gorulme": "2026-11-05T14:58:47.951557+00:00",
+   "dogrulama": {
+    "durum": "acik",
+    "neden": "lever_ilanina_ozel_basvuru_baglantisi",
+    "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "bayat": false
+   },
    "seviye": "junior",
    "rol": "yazilim",
    "yapay_zeka": "arti",
@@ -293,6 +343,12 @@
    "kaynak": "jooble",
    "yayin_tarihi": "2026-11-04",
    "ilk_gorulme": "2026-11-07T13:34:00.335732+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "henuz_kontrol_edilmedi",
+    "kontrol_zamani": null,
+    "bayat": false
+   },
    "seviye": "junior",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -329,6 +385,12 @@
    "kaynak": "jooble",
    "yayin_tarihi": "2026-11-04",
    "ilk_gorulme": "2026-11-07T13:34:00.335732+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "henuz_kontrol_edilmedi",
+    "kontrol_zamani": null,
+    "bayat": false
+   },
    "seviye": "staj",
    "rol": "veri",
    "yapay_zeka": "yok",
@@ -368,6 +430,13 @@
    "kaynak": "workable",
    "yayin_tarihi": "2026-11-04",
    "ilk_gorulme": "2026-11-04T14:55:26.179925+00:00",
+   "dogrulama": {
+    "durum": "acik",
+    "neden": "ats_acik_ilan_listesinde",
+    "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": "2026-11-16T11:38:24.891049+00:00",
+    "bayat": false
+   },
    "seviye": "staj",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -397,6 +466,12 @@
    "kaynak": "jooble",
    "yayin_tarihi": "2026-10-25",
    "ilk_gorulme": "2026-11-07T13:34:00.335732+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "henuz_kontrol_edilmedi",
+    "kontrol_zamani": null,
+    "bayat": false
+   },
    "seviye": "junior",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -433,6 +508,13 @@
    "kaynak": "kariyer_sayfasi",
    "yayin_tarihi": "2026-10-23",
    "ilk_gorulme": "2026-11-01T13:03:46.911796+00:00",
+   "dogrulama": {
+    "durum": "acik",
+    "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
+    "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "bayat": false
+   },
    "seviye": "staj",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -476,6 +558,13 @@
    "kaynak": "workday",
    "yayin_tarihi": "2026-10-31",
    "ilk_gorulme": "2026-10-31T12:21:20.424356+00:00",
+   "dogrulama": {
+    "durum": "acik",
+    "neden": "ats_acik_ilan_listesinde",
+    "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": "2026-11-16T11:38:24.891049+00:00",
+    "bayat": false
+   },
    "seviye": "staj",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -504,6 +593,12 @@
    "kaynak": "jooble",
    "yayin_tarihi": "2026-10-31",
    "ilk_gorulme": "2026-10-31T17:07:30.982091+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "henuz_kontrol_edilmedi",
+    "kontrol_zamani": null,
+    "bayat": false
+   },
    "seviye": "staj",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -541,6 +636,12 @@
    "kaynak": "jooble",
    "yayin_tarihi": "2026-10-31",
    "ilk_gorulme": "2026-10-31T17:07:30.982091+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "henuz_kontrol_edilmedi",
+    "kontrol_zamani": null,
+    "bayat": false
+   },
    "seviye": "staj",
    "rol": "yazilim",
    "yapay_zeka": "arti",
@@ -578,6 +679,12 @@
    "kaynak": "jooble",
    "yayin_tarihi": "2026-10-31",
    "ilk_gorulme": "2026-10-31T17:07:30.982091+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "henuz_kontrol_edilmedi",
+    "kontrol_zamani": null,
+    "bayat": false
+   },
    "seviye": "staj",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -615,6 +722,12 @@
    "kaynak": "jooble",
    "yayin_tarihi": "2026-10-31",
    "ilk_gorulme": "2026-10-31T17:07:30.982091+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "henuz_kontrol_edilmedi",
+    "kontrol_zamani": null,
+    "bayat": false
+   },
    "seviye": "junior",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -654,6 +767,12 @@
    "kaynak": "jooble",
    "yayin_tarihi": "2026-10-31",
    "ilk_gorulme": "2026-10-31T17:07:30.982091+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "henuz_kontrol_edilmedi",
+    "kontrol_zamani": null,
+    "bayat": false
+   },
    "seviye": "junior",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -690,6 +809,12 @@
    "kaynak": "jooble",
    "yayin_tarihi": "2026-10-31",
    "ilk_gorulme": "2026-10-31T17:07:30.982091+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "henuz_kontrol_edilmedi",
+    "kontrol_zamani": null,
+    "bayat": false
+   },
    "seviye": "junior",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -726,6 +851,12 @@
    "kaynak": "jooble",
    "yayin_tarihi": "2026-10-30",
    "ilk_gorulme": "2026-10-31T17:07:30.982091+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "henuz_kontrol_edilmedi",
+    "kontrol_zamani": null,
+    "bayat": false
+   },
    "seviye": "staj",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -763,6 +894,12 @@
    "kaynak": "jooble",
    "yayin_tarihi": "2026-10-30",
    "ilk_gorulme": "2026-10-31T17:07:30.982091+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "henuz_kontrol_edilmedi",
+    "kontrol_zamani": null,
+    "bayat": false
+   },
    "seviye": "staj",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -800,6 +937,12 @@
    "kaynak": "jooble",
    "yayin_tarihi": "2026-10-30",
    "ilk_gorulme": "2026-10-31T17:07:30.982091+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "henuz_kontrol_edilmedi",
+    "kontrol_zamani": null,
+    "bayat": false
+   },
    "seviye": "staj",
    "rol": "yazilim",
    "yapay_zeka": "arti",
@@ -837,6 +980,12 @@
    "kaynak": "jooble",
    "yayin_tarihi": "2026-10-30",
    "ilk_gorulme": "2026-10-31T17:07:30.982091+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "henuz_kontrol_edilmedi",
+    "kontrol_zamani": null,
+    "bayat": false
+   },
    "seviye": "staj",
    "rol": "yapay_zeka",
    "yapay_zeka": "ozunde",
@@ -874,6 +1023,12 @@
    "kaynak": "jooble",
    "yayin_tarihi": "2026-10-30",
    "ilk_gorulme": "2026-10-31T17:07:30.982091+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "henuz_kontrol_edilmedi",
+    "kontrol_zamani": null,
+    "bayat": false
+   },
    "seviye": "staj",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -911,6 +1066,12 @@
    "kaynak": "jooble",
    "yayin_tarihi": "2026-10-28",
    "ilk_gorulme": "2026-10-31T17:07:30.982091+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "henuz_kontrol_edilmedi",
+    "kontrol_zamani": null,
+    "bayat": false
+   },
    "seviye": "staj",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -945,6 +1106,12 @@
    "kaynak": "jooble",
    "yayin_tarihi": "2026-10-27",
    "ilk_gorulme": "2026-10-31T17:07:30.982091+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "henuz_kontrol_edilmedi",
+    "kontrol_zamani": null,
+    "bayat": false
+   },
    "seviye": "staj",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -981,6 +1148,12 @@
    "kaynak": "jooble",
    "yayin_tarihi": "2026-10-25",
    "ilk_gorulme": "2026-11-07T13:34:00.335732+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "henuz_kontrol_edilmedi",
+    "kontrol_zamani": null,
+    "bayat": false
+   },
    "seviye": "junior",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -1020,6 +1193,12 @@
    "kaynak": "jooble",
    "yayin_tarihi": "2026-10-25",
    "ilk_gorulme": "2026-11-07T13:34:00.335732+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "henuz_kontrol_edilmedi",
+    "kontrol_zamani": null,
+    "bayat": false
+   },
    "seviye": "junior",
    "rol": "yazilim",
    "yapay_zeka": "arti",
@@ -1054,6 +1233,13 @@
    "kaynak": "lever",
    "yayin_tarihi": "2026-10-16",
    "ilk_gorulme": "2026-10-31T22:29:02.250765+00:00",
+   "dogrulama": {
+    "durum": "acik",
+    "neden": "lever_ilanina_ozel_basvuru_baglantisi",
+    "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "bayat": false
+   },
    "seviye": "junior",
    "rol": "yazilim",
    "yapay_zeka": "arti",
@@ -1090,6 +1276,13 @@
    "kaynak": "recruitee",
    "yayin_tarihi": "2026-10-16",
    "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
+   "dogrulama": {
+    "durum": "acik",
+    "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
+    "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "bayat": false
+   },
    "seviye": "junior",
    "rol": "veri",
    "yapay_zeka": "yok",
@@ -1128,6 +1321,13 @@
    "kaynak": "lever",
    "yayin_tarihi": "2026-10-26",
    "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
+   "dogrulama": {
+    "durum": "acik",
+    "neden": "lever_ilanina_ozel_basvuru_baglantisi",
+    "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "bayat": false
+   },
    "seviye": "staj",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -1166,6 +1366,13 @@
    "kaynak": "greenhouse",
    "yayin_tarihi": "2026-09-29",
    "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
+   "dogrulama": {
+    "durum": "acik",
+    "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
+    "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "bayat": false
+   },
    "seviye": "junior",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -1208,6 +1415,13 @@
    "kaynak": "greenhouse",
    "yayin_tarihi": "2026-09-29",
    "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
+   "dogrulama": {
+    "durum": "acik",
+    "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
+    "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "bayat": false
+   },
    "seviye": "yeni_mezun",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -1250,6 +1464,13 @@
    "kaynak": "greenhouse",
    "yayin_tarihi": "2026-09-25",
    "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
+   "dogrulama": {
+    "durum": "acik",
+    "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
+    "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "bayat": false
+   },
    "seviye": "junior",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -1291,6 +1512,13 @@
    "kaynak": "greenhouse",
    "yayin_tarihi": "2026-09-21",
    "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
+   "dogrulama": {
+    "durum": "acik",
+    "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
+    "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "bayat": false
+   },
    "seviye": "junior",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -1332,6 +1560,13 @@
    "kaynak": "workable",
    "yayin_tarihi": "2026-08-06",
    "ilk_gorulme": "2026-10-30T18:52:20.434753+00:00",
+   "dogrulama": {
+    "durum": "acik",
+    "neden": "ats_acik_ilan_listesinde",
+    "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": "2026-11-16T11:38:24.891049+00:00",
+    "bayat": false
+   },
    "seviye": "yeni_mezun",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -1361,6 +1596,13 @@
    "kaynak": "kariyer_sayfasi",
    "yayin_tarihi": "2026-06-03",
    "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
+   "dogrulama": {
+    "durum": "acik",
+    "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
+    "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "bayat": false
+   },
    "seviye": "uzun_donem_staj",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -1404,6 +1646,13 @@
    "kaynak": "kariyer_sayfasi",
    "yayin_tarihi": "",
    "ilk_gorulme": "2026-11-01T13:03:46.911796+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "coklu_ilan_sayfasi",
+    "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": null,
+    "bayat": false
+   },
    "seviye": "staj",
    "rol": "yapay_zeka",
    "yapay_zeka": "ozunde",
@@ -1440,6 +1689,13 @@
    "kaynak": "kariyer_sayfasi",
    "yayin_tarihi": "",
    "ilk_gorulme": "2026-11-01T13:03:46.911796+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "coklu_ilan_sayfasi",
+    "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": null,
+    "bayat": false
+   },
    "seviye": "staj",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -1476,6 +1732,13 @@
    "kaynak": "kariyer_sayfasi",
    "yayin_tarihi": "",
    "ilk_gorulme": "2026-11-01T13:03:46.911796+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "coklu_ilan_sayfasi",
+    "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": null,
+    "bayat": false
+   },
    "seviye": "staj",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -1512,6 +1775,13 @@
    "kaynak": "kariyer_sayfasi",
    "yayin_tarihi": "",
    "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "tek_ilan_basligi_dogrulanamadi",
+    "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": null,
+    "bayat": false
+   },
    "seviye": "uzun_donem_staj",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -1553,6 +1823,13 @@
    "kaynak": "kariyer_sayfasi",
    "yayin_tarihi": "",
    "ilk_gorulme": "2026-11-01T13:03:46.911796+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "coklu_ilan_sayfasi",
+    "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": null,
+    "bayat": false
+   },
    "seviye": "junior",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -1587,6 +1864,13 @@
    "kaynak": "kariyer_sayfasi",
    "yayin_tarihi": "",
    "ilk_gorulme": "2026-11-01T13:47:11.926314+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "coklu_ilan_sayfasi",
+    "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": null,
+    "bayat": false
+   },
    "seviye": "staj",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -1628,6 +1912,13 @@
    "kaynak": "kariyer_sayfasi",
    "yayin_tarihi": "",
    "ilk_gorulme": "2026-11-01T13:47:11.926314+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "coklu_ilan_sayfasi",
+    "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": null,
+    "bayat": false
+   },
    "seviye": "junior",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -1671,6 +1962,13 @@
    "kaynak": "kariyer_sayfasi",
    "yayin_tarihi": "",
    "ilk_gorulme": "2026-11-01T13:47:11.926314+00:00",
+   "dogrulama": {
+    "durum": "acik",
+    "neden": "ilana_ozel_basvuru_formu",
+    "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "bayat": false
+   },
    "seviye": "staj",
    "rol": "yapay_zeka",
    "yapay_zeka": "ozunde",
@@ -1707,6 +2005,13 @@
    "kaynak": "kariyer_sayfasi",
    "yayin_tarihi": "",
    "ilk_gorulme": "2026-11-01T13:47:11.926314+00:00",
+   "dogrulama": {
+    "durum": "acik",
+    "neden": "ilana_ozel_basvuru_formu",
+    "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "bayat": false
+   },
    "seviye": "staj",
    "rol": "yapay_zeka",
    "yapay_zeka": "ozunde",
@@ -1743,6 +2048,13 @@
    "kaynak": "kariyer_sayfasi",
    "yayin_tarihi": "",
    "ilk_gorulme": "2026-11-01T13:47:11.926314+00:00",
+   "dogrulama": {
+    "durum": "acik",
+    "neden": "ilana_ozel_basvuru_formu",
+    "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "bayat": false
+   },
    "seviye": "staj",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -1779,6 +2091,13 @@
    "kaynak": "kariyer_sayfasi",
    "yayin_tarihi": "",
    "ilk_gorulme": "2026-11-01T13:47:11.926314+00:00",
+   "dogrulama": {
+    "durum": "acik",
+    "neden": "ilana_ozel_basvuru_formu",
+    "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "bayat": false
+   },
    "seviye": "staj",
    "rol": "veri",
    "yapay_zeka": "yok",
@@ -1815,6 +2134,13 @@
    "kaynak": "kariyer_sayfasi",
    "yayin_tarihi": "",
    "ilk_gorulme": "2026-11-01T13:47:11.926314+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "basvuru_durumu_icin_yeterli_kanit_yok",
+    "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": null,
+    "bayat": false
+   },
    "seviye": "yari_zamanli",
    "rol": "yapay_zeka",
    "yapay_zeka": "ozunde",
@@ -1849,6 +2175,13 @@
    "kaynak": "kariyer_sayfasi",
    "yayin_tarihi": "",
    "ilk_gorulme": "2026-11-01T13:03:46.911796+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "coklu_ilan_sayfasi",
+    "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": null,
+    "bayat": false
+   },
    "seviye": "junior",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -1883,6 +2216,13 @@
    "kaynak": "kariyer_sayfasi",
    "yayin_tarihi": "",
    "ilk_gorulme": "2026-11-01T13:03:46.911796+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "coklu_ilan_sayfasi",
+    "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": null,
+    "bayat": false
+   },
    "seviye": "junior",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -1917,6 +2257,13 @@
    "kaynak": "kariyer_sayfasi",
    "yayin_tarihi": "",
    "ilk_gorulme": "2026-11-01T13:47:11.926314+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "coklu_ilan_sayfasi",
+    "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": null,
+    "bayat": false
+   },
    "seviye": "staj",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -1951,6 +2298,13 @@
    "kaynak": "kariyer_sayfasi",
    "yayin_tarihi": "",
    "ilk_gorulme": "2026-11-01T13:03:46.911796+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "basvuru_durumu_icin_yeterli_kanit_yok",
+    "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": null,
+    "bayat": false
+   },
    "seviye": "junior",
    "rol": "yazilim",
    "yapay_zeka": "yok",
@@ -1980,6 +2334,47 @@
    "ilan_turu": "is",
    "seviye_etiketi": "Junior",
    "firma_gorunen": "Özgür",
+   "sehirler": [],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "9dd7ad5a1476d934",
+   "firma": "Working at ING",
+   "baslik": "IT apprenticeships",
+   "url": "https://careers.ing.com/en#d1d2e258",
+   "konum": "",
+   "kaynak": "kariyer_sayfasi",
+   "yayin_tarihi": "",
+   "ilk_gorulme": "2026-11-16T11:38:24.891049+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "coklu_ilan_sayfasi",
+    "kontrol_zamani": "2026-11-16T12:02:49.137674+00:00",
+    "acik_dogrulama_zamani": null,
+    "bayat": false
+   },
+   "seviye": "staj",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "ING'de IT alanında staj/çıraklık programı; sistem entegrasyonu, uygulama geliştirme ve veri-süreç analizi gibi alanlarda öğrenim fırsatı sunuyor.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": null,
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": []
+   },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": null,
+   "surekli_acik": false,
+   "ilan_turu": "egitim",
+   "seviye_etiketi": "Eğitim programı",
+   "firma_gorunen": "Working at ING",
    "sehirler": [],
    "uzaktan": false
   }
