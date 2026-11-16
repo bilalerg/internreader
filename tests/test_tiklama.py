@@ -110,7 +110,7 @@ def test_duz_metin_dogrudan_ilana_gider(oturum):
     assert f"Başvur: {i.url}" in bulten_gonder(oturum).metin
 
 
-def test_kurcalanmis_jeton_siteye_gider_kaydedilmez(oturum):
+def test_kurcalanmis_jeton_yalniz_kayitli_ilanin_adresine_gider_kaydedilmez(oturum):
     i = ilan_kur(oturum)
     abone_kur(oturum)
     adres = baglantilar(bulten_gonder(oturum))[0]
@@ -121,7 +121,10 @@ def test_kurcalanmis_jeton_siteye_gider_kaydedilmez(oturum):
     sahte = base64.urlsafe_b64encode(json.dumps({**veri, "u": "https://kotu.test"}).encode()).decode().rstrip("=")
 
     c = istemci(oturum)
-    for bozuk in (f"{sahte}.{imza}", f"{govde}.{'0' * 32}", "cop", "a.b"):
+    for bozuk in (f"{sahte}.{imza}", f"{govde}.{'0' * 32}"):
+        cevap = c.get(f"/api/t/{bozuk}", headers=TARAYICI, follow_redirects=False)
+        assert cevap.status_code == 302 and cevap.headers["location"] == i.url
+    for bozuk in ("cop", "a.b"):
         cevap = c.get(f"/api/t/{bozuk}", headers=TARAYICI, follow_redirects=False)
         assert cevap.status_code == 302 and cevap.headers["location"] == AYAR.site_adresi
     assert tiklamalar(oturum) == []
@@ -132,6 +135,22 @@ def test_kurcalanmis_jeton_siteye_gider_kaydedilmez(oturum):
 def test_baska_anahtarla_imzalanan_jeton_reddedilir():
     jeton = jeton_olustur({"u": "https://a.test"}, "eski-anahtar")
     assert jeton_coz(jeton, "yeni-anahtar") is None and jeton_coz(jeton, "eski-anahtar") == {"u": "https://a.test"}
+
+
+def test_eski_anahtarla_imzalanmis_eposta_baglantisi_kayitli_ilana_gider(oturum):
+    i = ilan_kur(oturum)
+    veri = {"i": i.kimlik, "u": "https://kotu.test", "e": "eski"}
+    jeton = jeton_olustur(veri, "farkli-anahtar")
+    cevap = istemci(oturum).get(f"/api/t/{jeton}", headers=TARAYICI, follow_redirects=False)
+    assert cevap.status_code == 302 and cevap.headers["location"] == i.url
+    assert cevap.headers["cache-control"] == "no-store"
+    assert tiklamalar(oturum) == []
+
+
+def test_kayitli_olmayan_ilan_kimligi_dis_adrese_yonlendirmez(oturum):
+    jeton = jeton_olustur({"i": "f" * 16, "u": "https://kotu.test"}, "farkli-anahtar")
+    cevap = istemci(oturum).get(f"/api/t/{jeton}", headers=TARAYICI, follow_redirects=False)
+    assert cevap.headers["location"] == AYAR.site_adresi
 
 
 def test_ayni_baglanti_bir_kez_sayilir(oturum):

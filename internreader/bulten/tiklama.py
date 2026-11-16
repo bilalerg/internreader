@@ -59,6 +59,19 @@ def jeton_coz(jeton: str, gizli_anahtar: str) -> dict | None:
     return veri if str(veri.get("u", "")).startswith(("https://", "http://")) else None
 
 
+def jetondan_ilan_kimligi(jeton: str) -> str | None:
+    """İmzası bozuk eski bağlantıdan yalnızca ilan kimliğini çıkar; jetondaki adres güvenilmezdir."""
+    govde, ayirac, _ = jeton.rpartition(".")
+    if not ayirac or not govde or len(govde) > 8192:
+        return None
+    try:
+        veri = json.loads(base64.urlsafe_b64decode(govde + "=" * (-len(govde) % 4)))
+    except (ValueError, UnicodeError):
+        return None
+    kimlik = veri.get("i") if isinstance(veri, dict) else None
+    return kimlik if isinstance(kimlik, str) and re.fullmatch(r"[0-9a-f]{16}", kimlik) else None
+
+
 def baglanti_yapici(ayar: Ayarlar, abone_id: int, tur: str, an: datetime) -> Callable[[dict], str]:
     """Bir e-postanın bağlantı üreticisi. `tur`: bulten | hos_geldin | sessizlik | deneme (deneme rapora girmez)."""
     hafta = hafta_etiketi(an)

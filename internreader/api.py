@@ -25,6 +25,7 @@ import time
 from collections import defaultdict, deque
 from collections.abc import Callable
 from typing import Literal
+from urllib.parse import urlsplit
 
 import requests
 from fastapi import FastAPI, Request
@@ -38,8 +39,8 @@ from sqlalchemy.orm import sessionmaker
 from internreader import abonelik, depo
 from internreader.ayar import GELISTIRME_ANAHTARI, Ayarlar, ayarlari_oku
 from internreader.bulten import hos_geldin_gonder
-from internreader.bulten.tiklama import jeton_coz, supheli_mi
-from internreader.db import oturum_fabrikasi, simdi
+from internreader.bulten.tiklama import jeton_coz, jetondan_ilan_kimligi, supheli_mi
+from internreader.db import IlanKaydi, oturum_fabrikasi, simdi
 from internreader.eposta import EpostaGonderici, dogrulama_epostasi, gonderici_olustur
 from internreader.isleme.kategori import ALANLAR
 from internreader.isleme.sehir import SEHIRLER
@@ -210,9 +211,22 @@ def uygulama_olustur(
     @app.api_route("/api/t/{jeton}", methods=["GET", "HEAD"])
     def tikla(jeton: str, istek: Request):
         """Her durumda yönlendirir: ölçüm kaybolabilir, başvuru kaybolmaz. HEAD (güvenlik tarayıcıları) sayılmaz.
-        Geçersiz jeton siteye gider; adres jetonda imzalı olduğu için bu uç başka adreslere yönlendirmek için kullanılamaz."""
+        İmza uyuşmazsa jetondaki adresi değil, veritabanındaki ilanın adresini kullanır."""
         veri = jeton_coz(jeton, ayar.gizli_anahtar)
         if veri is None:
+            kimlik = jetondan_ilan_kimligi(jeton)
+            if kimlik is not None:
+                try:
+                    with oturum() as o:
+                        ilan = o.get(IlanKaydi, kimlik)
+                        adres = ilan.url if ilan else ""
+                    parcali = urlsplit(adres)
+                    if parcali.scheme in {"http", "https"} and parcali.netloc:
+                        return RedirectResponse(
+                            adres, status_code=302, headers={"Cache-Control": "no-store", "X-Robots-Tag": "noindex"}
+                        )
+                except (SQLAlchemyError, ValueError):
+                    kayit.warning("Eski ilan bağlantısı çözülemedi")
             return RedirectResponse(ayar.site_adresi, status_code=302)
         if istek.method == "GET" and tik_siniri.izin_ver(istemci(istek)):
             an = simdi()
