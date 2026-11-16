@@ -1,7 +1,7 @@
 """Ayrıntı çıkarıcı: uydurma denetimi ve boru hattında kayıt (sahte ağ + sahte yapay zekâ)."""
 
 import json
-from datetime import date
+from datetime import date, timedelta
 
 from internreader import boru, depo
 from internreader.ayar import ayarlari_oku
@@ -28,7 +28,11 @@ def test_denetim_metinde_gecmeyen_teknolojiyi_ve_sacma_tarihi_atar():
 
 
 def test_ayrinti_cikarilip_kaydedilir_ve_yayina_girer(oturum, tmp_path):
-    i = Ilan(firma="F", baslik="Data Intern", url="https://jobs.lever.co/f/1", kaynak="lever", aciklama=METIN)
+    son_tarih = date.today() + timedelta(days=30)
+    metin = (
+        f"Python ve SQL bilen, 3. ve 4. sınıf öğrencileri arıyoruz. Hibrit çalışma. Son başvuru {son_tarih:%d.%m.%Y}."
+    )
+    i = Ilan(firma="F", baslik="Data Intern", url="https://jobs.lever.co/f/1", kaynak="lever", aciklama=metin)
     with oturum.begin() as o:
         depo.ilanlari_kaydet(o, [i], set())
         depo.siniflandirma_kaydet(o, {i.kimlik: {"seviye": "staj", "rol": "veri", "yapay_zeka": "yok"}}, "m")
@@ -37,7 +41,7 @@ def test_ayrinti_cikarilip_kaydedilir_ve_yayina_girer(oturum, tmp_path):
         assert tur is IlanAyrintisi and "Bugünün tarihi" in mesaj
         return IlanAyrintisi(
             ozet="Veri ekibinde staj.",
-            son_basvuru="2026-11-15",
+            son_basvuru=son_tarih.isoformat(),
             hedef="3. ve 4. sınıf öğrencileri",
             calisma_modeli="hibrit",
             ucretli="belirsiz",
@@ -51,7 +55,9 @@ def test_ayrinti_cikarilip_kaydedilir_ve_yayina_girer(oturum, tmp_path):
     assert boru.ayrintilari_zenginlestir(ayarlari_oku(), oturum, http=SahteHttp(), yz=SahteYz(cevap))["bekleyen"] == 0
     boru.yayinla(oturum, cikti_dizini=tmp_path)
     ilan = json.loads((tmp_path / "ilanlar.json").read_text(encoding="utf-8"))["ilanlar"][0]
-    assert ilan["ayrinti"]["teknolojiler"] == ["Python", "SQL"] and ilan["ayrinti"]["son_basvuru"] == "2026-11-15"
+    assert (
+        ilan["ayrinti"]["teknolojiler"] == ["Python", "SQL"] and ilan["ayrinti"]["son_basvuru"] == son_tarih.isoformat()
+    )
 
 
 def test_kisaltma_kelime_ortasindan_kesmez():
