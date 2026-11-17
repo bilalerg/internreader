@@ -76,7 +76,7 @@ def _html_ilan(ilan: dict, adres_goster: bool = False) -> str:
         not_ = f"<strong>{e(ilan['onizleme_notu'])}</strong><br>" if ilan.get("onizleme_notu") else ""
         alt_satir += (
             f'<p style="margin:8px 0 0;font:13px/1.5 {SANS};color:{IKINCIL};word-break:break-all">{not_}'
-            f'{e(ilan.get("kaynak", ""))}</p>'
+            f"{e(ilan.get('kaynak', ''))}</p>"
         )
     return f"""
 <tr><td style="padding:20px 0;border-top:1px solid {CIZGI}">

@@ -48,6 +48,7 @@ def komut_ortami(monkeypatch, tmp_path):
     g = SahteGonderici()
     gercek_yayinla = boru.yayinla
     gercek_dogrula = komut.basvurulari_dogrula
+
     class AcikIlanHttp(SahteHttp):
         def sayfa(self, url, **kwargs):
             with fabrika() as o:

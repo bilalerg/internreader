@@ -71,7 +71,9 @@ def baglantilar(eposta: Eposta, oturum, an=None) -> list[str]:
     with oturum() as o:
         abone = o.query(Abone).filter_by(eposta=eposta.alici).one_or_none()
         ilanlar = {i.url: i.kimlik for i in o.query(IlanKaydi).filter(IlanKaydi.url.in_(adresler))}
-    tur = "deneme" if eposta.konu.startswith("[TEST]") else "hos_geldin" if eposta.konu.startswith("Şu an") else "bulten"
+    tur = (
+        "deneme" if eposta.konu.startswith("[TEST]") else "hos_geldin" if eposta.konu.startswith("Şu an") else "bulten"
+    )
     yap = baglanti_yapici(AYAR, abone.id if abone else 0, tur, an or simdi() - timedelta(minutes=10))
     return [yap({"kimlik": ilanlar[url], "url": url}).removeprefix(SITE) for url in adresler]
 
