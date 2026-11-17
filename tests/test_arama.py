@@ -303,6 +303,7 @@ def test_kariyer_aramasi_elenen_sayfalari_raporlar(oturum):
 
     rapor = kariyer_sayfasi_ara(_ayar(), oturum, http=SahteHttp(jsonlar={"serper.dev": cevap}), kuru=True)
     assert rapor["kariyer_degil"] == 1 and rapor["sonucsuz"] == 1
+    assert rapor["sonucsuz_ornekler"] == ["Sessiz: sessiz.com"]
     assert rapor["elenen_ornekler"] == ["https://ekipli.com/ekibimiz"]
 
 

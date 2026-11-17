@@ -409,6 +409,8 @@ def kariyer_sayfasi_ara(
     sayac: Counter = Counter()
     bulunan: list[tuple[int, str, str, str, str]] = []
     elenen: list[str] = []  # kuralın kaçırdığı sayfaları kayıttan görmek için
+    adlar = {firma_id: (ad, alan) for firma_id, ad, alan, _ in hedef}
+    sonucsuz_ornekler: list[str] = []
     with ThreadPoolExecutor(max_workers=ARAMA_IS_PARCACIGI) as havuz:
         for bas in range(0, len(hedef), ARAMA_PARCASI):
             sonuclar = list(havuz.map(tek, hedef[bas : bas + ARAMA_PARCASI]))
@@ -417,6 +419,9 @@ def kariyer_sayfasi_ara(
                 sayac["hata" if hatali else "sorgu"] += 1
                 if sonuc != "bulundu":
                     sayac[sonuc] += 1
+                if sonuc == "sonucsuz" and len(sonucsuz_ornekler) < 15:
+                    ad, alan = adlar[firma_id]
+                    sonucsuz_ornekler.append(f"{ad}: {alan}")
                 if not hatali:
                     denenen.add(firma_id)
                 elenen += atilan
@@ -441,6 +446,7 @@ def kariyer_sayfasi_ara(
         "kalan": max(len(adaylar) - sinir, 0),
         "ornekler": [f"{ad}: {adres}" for _, ad, adres, _, _ in bulunan[:15]],
         "elenen_ornekler": elenen[:25],
+        "sonucsuz_ornekler": sonucsuz_ornekler,
     }
     if kuru:
         return rapor
