@@ -1,4 +1,4 @@
-"""Tıklama ölçümü: e-postadaki "Başvur" bağlantısı önce /api/t/<jeton> adresine gelir, kaydedilir, ilana yönlenir.
+"""Eski e-postaların imzalı /api/t/<jeton> bağlantıları için tıklama ölçümü.
 
 - İlan adresi jetonun içinde ve imzalı. Veritabanı kapalı olsa da öğrenci ilana ulaşır: ölçüm kaybolabilir, başvuru
   kaybolmaz. İmza olmasa bu uç herkesin kullanabileceği bir yönlendirici olurdu (open redirect).

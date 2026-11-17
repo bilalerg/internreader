@@ -10,7 +10,7 @@ from pathlib import Path
 import pytest
 from alembic import command
 from fastapi.testclient import TestClient
-from sqlalchemy import text, update
+from sqlalchemy import select, text, update
 
 from internreader import __main__ as komut
 from internreader import boru, depo
@@ -48,7 +48,13 @@ def komut_ortami(monkeypatch, tmp_path):
     g = SahteGonderici()
     gercek_yayinla = boru.yayinla
     gercek_dogrula = komut.basvurulari_dogrula
-    monkeypatch.setattr(komut, "basvurulari_dogrula", lambda a, o: gercek_dogrula(a, o, http=SahteHttp()))
+    class AcikIlanHttp(SahteHttp):
+        def sayfa(self, url, **kwargs):
+            with fabrika() as o:
+                baslik = o.scalar(select(IlanKaydi.baslik).where(IlanKaydi.url == url))
+            return url, f'<main><h1>{baslik}</h1><a href="{url}/apply">Apply now</a></main>'
+
+    monkeypatch.setattr(komut, "basvurulari_dogrula", lambda a, o: gercek_dogrula(a, o, http=AcikIlanHttp()))
     monkeypatch.setattr(komut, "gonderici_olustur", lambda _: g)
     monkeypatch.setattr(komut, "CIKTI", tmp_path / "cikti")
     monkeypatch.setattr(komut, "firma_listesini_esitle", lambda *_: None)
@@ -87,7 +93,8 @@ def test_elle_modda_sabah_isi_bulten_gondermez_onizleme_verir_bulten_elle_gider(
     cikti = capsys.readouterr()
     (onizleme,) = g.gidenler
     assert onizleme.alici == ADRES and onizleme.konu == "[ÖNİZLEME] Onay bekleyen 1 yeni ilan"
-    assert "https://a.test/staj-1" in onizleme.metin and ">https://a.test/staj-1</a>" in onizleme.html
+    assert "https://a.test/staj-1" in onizleme.metin and "https://a.test/staj-1" in onizleme.html
+    assert 'href="https://a.test/staj-1"' not in onizleme.html
     assert "/api/t/" not in onizleme.html  # tıklama ölçümüne girmez
     assert '"sonuc": "gonderildi"' in cikti.out and ADRES not in cikti.out + cikti.err + caplog.text
     with oturum() as o:

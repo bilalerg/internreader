@@ -31,11 +31,15 @@ def test_epostaya_yalniz_taze_acik_ilan_girer():
     assert [i["kimlik"] for i in dogrulanmis_ilanlar(adaylar)] == ["acik"]
 
 
-def test_ats_acik_listesi_detay_erisim_hatasiyla_unutulmaz(oturum):
+def test_ats_detay_erisim_hatasi_bultenden_cikarilir_ve_listeyle_silinmez(oturum):
     i = ilan_kur(oturum, "lever")
     with oturum.begin() as o:
         dogrulama_yaz(o, i.kimlik, BasvuruSonucu("belirsiz", "HTTPError 403"), AN)
-        assert o.get(IlanDogrulama, i.kimlik).durum == "acik"
+        assert o.get(IlanDogrulama, i.kimlik).durum == "belirsiz"
+        depo.ilanlari_kaydet(o, [i], {"Acme"})
+        assert o.get(IlanDogrulama, i.kimlik).durum == "belirsiz"
+    with oturum() as o:
+        assert dogrulanmis_ilanlar(depo.yayinlanacak_ilanlar(o, an=AN)) == []
 
 
 def test_dogrulama_kuyrugunda_yeni_ilan_once(oturum):

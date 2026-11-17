@@ -1,12 +1,11 @@
 """Sessizlik e-postası: pazartesi, bir haftadır e-posta almamış aboneye "bu hafta yeni ilan yok" + yakın ilanlar.
-Boşken gitmez, haftada en fazla bir tane, yalnızca pazartesi, kotadan düşer, tıklama ölçümüne girer."""
+Boşken gitmez, haftada en fazla bir tane, yalnızca pazartesi, kotadan düşer."""
 
 import dataclasses
 from datetime import UTC, datetime, timedelta
 
 from internreader import depo
 from internreader.bulten import bultenleri_gonder
-from internreader.bulten.tiklama import jeton_coz
 from internreader.db import Abone, Bulten, Gonderim
 from tests.test_bulten import AYAR, HEPSI, SahteGonderici, abone_ekle, ilan_ekle
 from tests.test_hos_geldin import ilan_ekle as tarihli_ilan_ekle
@@ -51,8 +50,7 @@ def test_sessiz_aboneye_yakin_ilanlarla_kisa_eposta(oturum):
     assert "3 şirketin ilan sayfasını her gün taradık" in e.metin and "Yakın ilanlar" in e.html
     assert "Yazılım Stajı" in e.metin and "Veri Stajı" not in e.metin
     assert "List-Unsubscribe" in e.basliklar
-    jeton = e.html.split("/api/t/")[1].split('"')[0]
-    assert jeton_coz(jeton, AYAR.gizli_anahtar)["t"] == "sessizlik"  # tıklama ölçümüne girer
+    assert "https://a.test/1" in e.html and "/api/t/" not in e.html
     with oturum() as o:
         assert [(b.durum, b.ilan_sayisi) for b in o.query(Bulten)] == [("sessizlik", 1)]
         assert o.query(Gonderim).count() == 1  # yakın ilan bir daha önerilmez

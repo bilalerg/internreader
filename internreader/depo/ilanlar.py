@@ -59,7 +59,8 @@ def ilanlari_kaydet(
         kontrol.gorulmeme_sayisi = 0
         if kontrol.neden == "iki_basarili_listede_gorulmedi":
             kontrol.durum, kontrol.neden = "belirsiz", "listede_yeniden_goruldu"
-        if i.kaynak in TOPLAYICILAR and kontrol.durum != "kapali":
+        # ATS listesi ilk kanıttır; sonradan başarısız olan detay kontrolünü geçersiz kılamaz.
+        if i.kaynak in TOPLAYICILAR and kontrol.durum != "kapali" and kontrol.kontrol_zamani is None:
             kontrol.durum, kontrol.neden = "acik", "ats_acik_ilan_listesinde"
             kontrol.acik_dogrulama_zamani = an
 

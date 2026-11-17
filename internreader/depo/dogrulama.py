@@ -32,9 +32,7 @@ def dogrulama_yaz(oturum: Session, kimlik: str, sonuc: BasvuruSonucu, an: dateti
     kayit = dogrulama_kaydi(oturum, kimlik, an)
     kayit.kontrol_zamani = an
     # Kesin kapanış, sonraki bağlantı hatasıyla unutulmaz; ancak olumlu kanıtla tekrar açılabilir.
-    if sonuc.durum == "belirsiz" and (
-        kayit.durum == "kapali" or (kayit.durum == "acik" and kayit.neden == "ats_acik_ilan_listesinde")
-    ):
+    if sonuc.durum == "belirsiz" and kayit.durum == "kapali":
         return
     kayit.durum, kayit.neden = sonuc.durum, sonuc.neden
     if sonuc.durum == "acik":
