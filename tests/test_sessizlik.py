@@ -40,7 +40,7 @@ def firmalar_ekle(oturum, sayi):
 def test_sessiz_aboneye_yakin_ilanlarla_kisa_eposta(oturum):
     firmalar_ekle(oturum, 3)
     ilan_ekle(oturum, "https://a.test/1", "Yazılım Stajı", "Ankara", firma="Acme")  # İzmirliye tam uymaz, yakın
-    ilan_ekle(oturum, "https://a.test/2", "Veri Stajı", "Ankara", firma="Beta", rol="veri")  # alan korunur: gitmez
+    ilan_ekle(oturum, "https://a.test/2", "Veri Stajı", "Ankara", firma="Beta", rol="veri")  # yazılım ana alanına girer
     abone_id = sessiz_abone(oturum, "a@x.com")
     g = SahteGonderici()
     rapor = bultenleri_gonder(oturum, g, AYAR, PAZARTESI)
@@ -48,12 +48,12 @@ def test_sessiz_aboneye_yakin_ilanlarla_kisa_eposta(oturum):
     (e,) = g.gidenler
     assert e.alici == "a@x.com" and e.konu == "Bu hafta sana uyan yeni ilan çıkmadı"
     assert "3 şirketin ilan sayfasını her gün taradık" in e.metin and "Yakın ilanlar" in e.html
-    assert "Yazılım Stajı" in e.metin and "Veri Stajı" not in e.metin
+    assert "Yazılım Stajı" in e.metin and "Veri Stajı" in e.metin
     assert "List-Unsubscribe" in e.basliklar
     assert "https://a.test/1" in e.html and "/api/t/" not in e.html
     with oturum() as o:
-        assert [(b.durum, b.ilan_sayisi) for b in o.query(Bulten)] == [("sessizlik", 1)]
-        assert o.query(Gonderim).count() == 1  # yakın ilan bir daha önerilmez
+        assert [(b.durum, b.ilan_sayisi) for b in o.query(Bulten)] == [("sessizlik", 2)]
+        assert o.query(Gonderim).count() == 2  # yakın ilanlar bir daha önerilmez
         assert o.get(Abone, abone_id).son_bulten is None  # bülten sayılmaz
         assert depo.eposta_sayisi(o, PAZARTESI) == 1
         assert depo.tiklama_raporu(o, PAZARTESI + timedelta(hours=1))["gonderilen_eposta"] == 1

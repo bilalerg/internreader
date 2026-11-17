@@ -40,7 +40,7 @@ export const SEHIRLER: Record<string, { ad: string; konum: [number, number] }> =
 };
 
 export const ALAN_ADI: Record<string, string> = {
-  yazilim: "Yazılım",
+  yazilim: "Yazılımın tüm alanları",
   yapay_zeka: "Yapay zekâ",
   veri: "Veri",
   oyun: "Oyun",

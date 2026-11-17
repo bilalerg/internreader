@@ -287,7 +287,8 @@ export default function Bulten({ ilanlar: gomulu, guncelleme: gomuluTarih }: Pro
                 ))}
               </div>
               <p className="mt-2 text-[0.8rem] text-murekkep-3">
-                Bir ilan birden çok alana girebilir: savunma şirketindeki yazılım stajı hem Yazılım hem Savunma.
+                Yazılımın tüm alanları web, oyun, robotik, otomasyon, veri ve yapay zekâyı kapsar. Yalnızca özel
+                alanları istiyorsan bu seçimi kaldır.
               </p>
             </fieldset>
 

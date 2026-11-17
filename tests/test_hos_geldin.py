@@ -167,8 +167,8 @@ def test_tam_uyan_yoksa_durust_eposta_ve_yakin_ilanlar(oturum):
     assert e.konu == "Şu an seçimlerine tam uyan ilan yok"
     assert "çıkınca ilk sen öğreneceksin" in e.metin and "Yakın ilanlar" in e.metin
     assert "Yakın ilanlar" in e.html
-    # Önce şehir gevşer, alan korunur: yazılım seçene veri ilanı gösterilmez
-    assert "Yazılım Stajı" in e.metin and "Veri Stajı" not in e.metin
+    # Önce şehir gevşer; yazılım ana alanı veri ilanını da kapsar.
+    assert "Yazılım Stajı" in e.metin and "Veri Stajı" in e.metin
     with oturum() as o:
         assert depo.abone_eposta_ile(o, "ogrenci@x.com").son_bulten is None  # yakın ilan bülten sayılmaz
     # Tam uyan ilan çıkınca ilk sabah gider (aynı gün bile)

@@ -267,12 +267,15 @@ def tara(
     adaylar = [i for i in ilanlar if konum_uygun(i)]
     with oturum() as o:
         bekleyen = depo.siniflandirilmamislar(o, [i.kimlik for i in adaylar])
-    siniflanacak = [i for i in adaylar if i.kimlik in bekleyen]
+        yeniden = depo.kapsam_yenilenecekler(o, [i.kimlik for i in adaylar])
+    siniflanacak = [i for i in adaylar if i.kimlik in bekleyen | yeniden]
     # Yeniden yayınlanan ilan: aynı imzalı eski karar varsa yapay zekâya gidilmez
     imzalar = {i.kimlik: siniflandirma_imzasi(i) for i in siniflanacak}
     with oturum() as o:
         eski_kararlar = depo.imzayla_kararlar(o, imzalar.values())
-    imzadan = {k: {**eski_kararlar[im], "imza": im} for k, im in imzalar.items() if im in eski_kararlar}
+    imzadan = {
+        k: {**eski_kararlar[im], "imza": im} for k, im in imzalar.items() if im in eski_kararlar and k not in yeniden
+    }
     siniflanacak = [i for i in siniflanacak if i.kimlik not in imzadan]
     kayit.info(
         "Sınıflandırılacak yeni ilan: %d (konumu uygun toplam: %d, eski karardan: %d)",
@@ -287,8 +290,8 @@ def tara(
     rapor.siniflandirilan, rapor.yedek_karar, rapor.yz_usd = len(sonuclar), len(yedekler), round(yz.harcanan_usd, 4)
     rapor.imzadan = len(imzadan)
     with oturum.begin() as o:
-        depo.siniflandirma_kaydet(o, sonuclar, yz.model)
-        depo.siniflandirma_kaydet(o, imzadan, "imza")
+        depo.siniflandirma_kaydet(o, sonuclar, f"{yz.model}:kapsam2")
+        depo.siniflandirma_kaydet(o, imzadan, "imza:kapsam2")
         depo.siniflandirma_kaydet(o, yedekler, "kural")  # bir sonraki çalıştırmada yapay zekâyla yeniden denenir
         depo.kullanim_yaz(o, yz.kullanimlar[kullanim_basi:])
     if not yalnizca_ats:

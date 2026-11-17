@@ -65,7 +65,8 @@ Yalnızca metinde yazanı kullan; tahmin etme, genel bilgi ekleme.
   olsa da önce eğitim veriliyorsa). yarisma: yarışma, hackathon, etkinlik. genel_basvuru: belirli bir pozisyon
   olmayan, genel CV toplayan sayfa ("uygun ilan bulamadınız mı? CV'nizi gönderin").
 - rol: Görevlerin AĞIRLIĞINA bak; şirketin yazılım firması olması ya da metinde teknoloji adı geçmesi yetmez.
-  yazilim: aday ağırlıklı olarak kod yazıyor, test otomasyonu, DevOps, gömülü yazılım yapıyor.
+  yazilim: aday ağırlıklı olarak kod yazıyor; web/SaaS, oyun, robotik/ROS, kontrol ve endüstriyel otomasyon
+  programlama, gömülü yazılım, test otomasyonu, bulut/platform ve DevOps dahil.
   yapay_zeka: makine öğrenmesi, LLM, bilgisayarlı görü, NLP geliştiriyor. veri: veri analizi, veri mühendisliği, BI.
   diger_teknik: ERP danışmanlığı/uyarlama, raporlama, Excel-Office işleri, BT destek, donanım, elektronik.
   teknik_degil: satış, pazarlama, müşteri kurulumu ve eğitimi, müşteri ilişkileri, danışmanlık, İK, finans.

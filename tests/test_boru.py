@@ -6,8 +6,10 @@ from datetime import UTC, datetime
 
 from internreader import boru, depo
 from internreader.ayar import ayarlari_oku
+from internreader.db import Siniflandirma
+from internreader.model import Ilan
 from internreader.yz.sayfa_okuyucu import Pozisyon, SayfaSonucu
-from internreader.yz.siniflandirici import IlanSinifi, TopluSiniflandirma
+from internreader.yz.siniflandirici import IlanSinifi, TopluSiniflandirma, siniflandirma_imzasi
 from tests.conftest import SahteHttp, SahteYz
 
 LEVER = [
@@ -66,7 +68,7 @@ def test_uctan_uca_tarama_ve_yayin(oturum, tmp_path):
 
     rapor = boru.tara(ayarlari_oku(), oturum, http=http, yz=yz)
     assert rapor.toplam_ilan == 5 and rapor.yeni_ilan == 5
-    assert rapor.siniflandirilan == 4  # Şili'deki uzaktan ilan konum ön seçiminde elendi → yapay zekâya gitmedi
+    assert rapor.siniflandirilan == 5  # Şili'deki uzaktan ilan da incelenir; deneyim seviyesiyle elenir
 
     sonuc = boru.yayinla(oturum, cikti_dizini=tmp_path)
     assert sonuc["acik_ilan"] == 2  # New Grad + uzun dönem staj
@@ -86,6 +88,40 @@ def test_uctan_uca_tarama_ve_yayin(oturum, tmp_path):
         son = depo.istatistik(o)["son_tarama"]
     assert son["sayfa_durumlari"] == {"degismedi": 1} and son["yz_usd"] == 0
     assert boru.yayinla(oturum, cikti_dizini=tmp_path)["whatsapp_dosyasi"] is None
+
+
+def test_eski_robotik_yazilim_karari_bir_kez_yeniden_degerlendirilir(oturum):
+    i = Ilan(
+        firma="Robotik",
+        baslik="Robotics Automation Intern",
+        url="https://jobs.lever.co/robotik/1",
+        kaynak="lever",
+        konum="Istanbul",
+    )
+    with oturum.begin() as o:
+        depo.firma_ekle_veya_guncelle(o, i.firma, ats="lever", slug="robotik")
+        depo.ilanlari_kaydet(o, [i], set())
+        depo.siniflandirma_kaydet(
+            o,
+            {i.kimlik: {"seviye": "staj", "rol": "diger_teknik", "yapay_zeka": "yok", "imza": siniflandirma_imzasi(i)}},
+            "eski-model",
+        )
+    http = SahteHttp(
+        jsonlar={
+            "api.lever.co/v0/postings/robotik": [
+                {"text": i.baslik, "hostedUrl": i.url, "categories": {"location": i.konum}}
+            ]
+        }
+    )
+    yz = SahteYz(cevap)
+    rapor = boru.tara(ayarlari_oku(), oturum, http=http, yz=yz)
+    assert rapor.siniflandirilan == 1 and rapor.imzadan == 0
+    with oturum() as o:
+        karar = o.get(Siniflandirma, i.kimlik)
+        assert karar.rol == "yazilim" and karar.ogrenciye_uygun
+    ikinci = SahteYz(cevap)
+    assert boru.tara(ayarlari_oku(), oturum, http=http, yz=ikinci).siniflandirilan == 0
+    assert ikinci.cagrilar == []
 
 
 def test_panosu_kapanan_firma_yeniden_kesfe_alinir(oturum):

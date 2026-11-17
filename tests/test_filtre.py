@@ -14,8 +14,14 @@ def ilan(baslik="X", konum="", kaynak="lever", url="https://u/1", tip=""):
     [
         ("Istanbul, İstanbul, Türkiye", "lever", True),
         ("Remote - EMEA", "lever", True),
-        ("Chile, Remote", "greenhouse", False),
-        ("Foster City, CA (uzaktan)", "ashby", False),
+        ("Chile, Remote", "greenhouse", True),
+        ("Foster City, CA (uzaktan)", "ashby", True),
+        ("Chile, Hybrid", "greenhouse", False),
+        ("Berlin, On-site", "lever", False),
+        ("Manisa, Türkiye", "lever", True),
+        ("Şanlıurfa, On-site", "greenhouse", True),
+        ("Mugla", "lever", True),
+        ("Vancouver, On-site", "lever", False),
         ("", "kariyer_sayfasi", True),  # listemiz Türk firmaları; konum yoksa Türkiye
         ("", "lever", False),
     ],

@@ -3,7 +3,7 @@
 Maliyet tasarımı:
 - Toplu: tek istekte PARTI_BOYU kadar ilan sınıflanır (her ilan için ayrı istek yerine).
 - Bir kez: sonuç veritabanında saklanır; aynı ilan bir daha asla sınıflanmaz (bkz. depo.siniflandirilmamislar).
-- Ön seçim: yalnızca konumu uygun (Türkiye / genel uzaktan) ilanlar buraya gelir.
+- Ön seçim: Türkiye'deki yerinde/hibrit veya dünyadaki uzaktan ilanlar buraya gelir.
 """
 
 import hashlib
@@ -47,10 +47,12 @@ seviye:
 - belirsiz: seviye çıkarılamıyorsa. Sadece "Mühendis" ya da "Developer" yazan ve deneyim belirtmeyen ilanlar belirsizdir.
 
 rol:
-- yazilim: yazılım geliştirme, backend/frontend/full-stack, mobil, oyun programlama, test/QA otomasyon, DevOps/SRE, gömülü yazılım.
+- yazilim: kod geliştirme işin ağırlığıysa alanına bakma: backend/frontend/full-stack, web/SaaS, mobil, oyun,
+  robotik/ROS, kontrol yazılımı, endüstriyel otomasyon programlama, gömülü yazılım/firmware, API/entegrasyon,
+  siber güvenlik yazılımı, bulut/platform, test/QA otomasyon, DevOps/SRE.
 - yapay_zeka: makine öğrenmesi, LLM, yapay zekâ mühendisliği, bilgisayarlı görü, NLP.
 - veri: veri analisti, veri mühendisi, veri bilimci, BI.
-- diger_teknik: elektronik, mekanik, donanım, RF, endüstri, kalite, üretim, sistem mühendisliği (yazılım değil);
+- diger_teknik: kod geliştirmeyen elektronik, mekanik, donanım, RF, endüstri, kalite, üretim, sistem mühendisliği;
   ERP danışmanlığı/uyarlama, raporlama, Excel-Office ağırlıklı işler, BT destek.
 - teknik_degil: satış, pazarlama, sosyal medya, İK, finans, satın alma, hukuk, idari, müşteri hizmetleri;
   yapay zekâ araçlarını kullanarak reklam, içerik, görsel ya da video üretmek (yapay zekâ geliştirmek değildir);

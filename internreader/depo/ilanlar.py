@@ -9,6 +9,7 @@ from sqlalchemy.orm import Session
 from internreader.db import Firma, IlanAyrinti, IlanDogrulama, IlanKaydi, Siniflandirma, simdi
 from internreader.depo._ortak import _parcalar, utc
 from internreader.depo.dogrulama import dogrulama_kaydi, dogrulama_yayin_bilgisi
+from internreader.isleme.filtre import YAZILIM_YENIDEN_BAK
 from internreader.isleme.guncellik import baslik_yillari, donem_yillari, guncellik, siralama_anahtari, supheli_ilan
 from internreader.isleme.kategori import (
     alanlari_bul,
@@ -147,6 +148,25 @@ def siniflandirilmamislar(oturum: Session, kimlikler: Iterable[str]) -> set[str]
             )
         )
     return set(istenen) - var
+
+
+def kapsam_yenilenecekler(oturum: Session, kimlikler: Iterable[str]) -> set[str]:
+    """Eski 'diğer teknik' kararlarından yazılım olabilecekleri yeni kuralla bir kez yeniden değerlendir."""
+    sonuc = set()
+    for parca in _parcalar(list(set(kimlikler))):
+        sorgu = (
+            select(IlanKaydi.kimlik, IlanKaydi.baslik)
+            .join(Siniflandirma, Siniflandirma.kimlik == IlanKaydi.kimlik)
+            .where(
+                IlanKaydi.kimlik.in_(parca),
+                Siniflandirma.rol == "diger_teknik",
+                Siniflandirma.seviye.in_(OGRENCI_SEVIYELERI),
+                Siniflandirma.model != "kural",
+                ~Siniflandirma.model.endswith(":kapsam2"),
+            )
+        )
+        sonuc.update(kimlik for kimlik, baslik in oturum.execute(sorgu) if YAZILIM_YENIDEN_BAK.search(baslik))
+    return sonuc
 
 
 def siniflandirma_kaydet(oturum: Session, sonuclar: dict[str, dict], model: str) -> None:

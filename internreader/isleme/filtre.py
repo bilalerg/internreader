@@ -1,6 +1,6 @@
 """Kural tabanlı filtreler.
 
-- konum_uygun: yapay zekâya gitmeden ÖNCE ucuz bir ön seçim (Türkiye'deki ya da genel uzaktan ilanlar).
+- konum_uygun: yapay zekâya gitmeden ÖNCE ucuz bir ön seçim (Türkiye'deki yerinde/hibrit ve dünyadaki uzaktan ilanlar).
 - yedek_siniflandirma: yapay zekâ bütçesi biterse ya da çağrı başarısız olursa kullanılan kaba kurallar.
   Yapay zekâ sınıflandırması her zaman önceliklidir; bu yalnızca bir emniyet ağıdır.
 """
@@ -9,11 +9,18 @@ import re
 
 from internreader.model import Ilan
 
-TURKIYE = re.compile(
-    r"(?i)t[üu]rk[iı]ye|turkey|[iİı]stanbul|ankara|[iİı]zmir|bursa|kocaeli|gebze|antalya|eski[sş]ehir|"
-    r"konya|kayseri|sakarya|adana|trabzon|samsun|gaziantep|tekirdağ|tekirdag"
-)
-UZAKTAN = re.compile(r"(?i)remote|uzaktan|anywhere|worldwide|emea|europe|global|hybrid|hibrit")
+ILLER = (
+    "adana adıyaman afyonkarahisar ağrı aksaray amasya ankara antalya ardahan artvin aydın balıkesir bartın "
+    "batman bayburt bilecik bingöl bitlis bolu burdur bursa çanakkale çankırı çorum denizli diyarbakır düzce "
+    "edirne elazığ erzincan erzurum eskişehir gaziantep giresun gümüşhane hakkari hatay ığdır isparta istanbul "
+    "izmir kahramanmaraş karabük karaman kars kastamonu kayseri kırıkkale kırklareli kırşehir kilis kocaeli konya "
+    "kütahya malatya manisa mardin mersin muğla muş nevşehir niğde ordu osmaniye rize sakarya samsun siirt sinop "
+    "sivas şanlıurfa şırnak tekirdağ tokat trabzon tunceli uşak van yalova yozgat zonguldak"
+).split()
+_HARFLER = str.maketrans("çğıöşü", "cgiosu")
+_YERLER = {"türkiye", "turkiye", "turkey", "gebze", *ILLER, *(il.translate(_HARFLER) for il in ILLER)}
+TURKIYE = re.compile(r"(?i)\b(?:" + "|".join(re.escape(yer) for yer in sorted(_YERLER, key=len, reverse=True)) + r")\b")
+UZAKTAN = re.compile(r"(?i)remote|uzaktan|anywhere|worldwide|her yerden")
 
 STAJ = re.compile(r"(?i)\bintern|stajyer|\bstaj|working student|trainee")
 JUNIOR = re.compile(r"(?i)\bjunior\b|\bjr\.?\b|entry[- ]level")
@@ -27,6 +34,11 @@ YAZILIM = re.compile(
     r"(?i)software|developer|yaz[ıi]l[ıi]m|backend|back-end|frontend|front-end|full[- ]?stack|mobile|"
     r"android|\bios\b|devops|\bqa\b|test (automation|engineer)|game developer|sre\b"
 )
+# Eski "diğer teknik" kararlarında yazılım ağırlığı kaçmış olabilecek başlıklar. Kararı yine model verir.
+YAZILIM_YENIDEN_BAK = re.compile(
+    r"(?i)software|developer|yaz[ıi]l[ıi]m|backend|frontend|full[- ]?stack|devops|sre\b|"
+    r"robotik|robotics|otomasyon|automation|\bROS\b|\bPLC\b|firmware|g[öo]m[üu]l[üu]"
+)
 
 
 def konum_uygun(ilan: Ilan) -> bool:
@@ -37,9 +49,8 @@ def konum_uygun(ilan: Ilan) -> bool:
         return True
     if TURKIYE.search(ilan.konum):
         return True
-    # "Remote", "Remote - EMEA" gibi genel uzaktan ilanlar kabul; "Chile, Remote" gibi başka ülkeye bağlı olanlar değil.
-    kalan = re.sub(r"[^a-zçğıöşü]", "", UZAKTAN.sub("", ilan.konum.lower()))
-    return bool(UZAKTAN.search(ilan.konum)) and not kalan
+    # Uzaktan işler başka bir ülkeyle etiketlense de adaydır; hibrit/yüz yüze işler Türkiye'de olmalı.
+    return bool(UZAKTAN.search(ilan.konum))
 
 
 def yedek_siniflandirma(ilan: Ilan) -> dict:

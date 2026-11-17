@@ -50,7 +50,11 @@ def test_alanlar_rol_yapay_zeka_firma_ve_basliktan():
     dogrulanmis = {"savunma", "savunma_dogrulandi"}
     assert alanlari_bul("yazilim", "yok", "Software Intern", "Aselsan", dogrulanmis) == ["yazilim", "savunma"]
     assert alanlari_bul("yazilim", "yok", "Cyber Security Intern", "Banka", set()) == ["yazilim", "savunma"]
-    assert alanlari_bul("veri", "yok", "Veri Stajyeri", "Koyun Yazılım", set()) == ["veri"]  # "koyun" oyun değil
+    assert alanlari_bul("veri", "yok", "Veri Stajyeri", "Koyun Yazılım", set()) == [
+        "yazilim",
+        "veri",
+    ]  # "koyun" oyun değil; yazılım ana alanı veriyi de kapsar
+    assert alanlari_bul("yapay_zeka", "ozunde", "LLM Intern", "Acme", set()) == ["yazilim", "yapay_zeka"]
 
 
 def test_calisma_modeli_once_konum_sonra_ayrinti():
@@ -142,7 +146,7 @@ MATRIS = {
     "veri": ({"alanlar": ["veri"]}, {"A2"}),
     "oyun": ({"alanlar": ["oyun"]}, {"A3"}),
     "savunma": ({"alanlar": ["savunma"]}, {"A4", "A6"}),
-    "yazilim": ({"alanlar": ["yazilim"]}, {"A3", "A4", "A5", "A6", "A7"}),
+    "yazilim": ({"alanlar": ["yazilim"]}, HEPSI),
     "uzaktan": ({"calisma_modelleri": ["uzaktan"]}, {"A5", "A7"}),
     "hibrit": ({"calisma_modelleri": ["hibrit"]}, {"A1"}),
     "yerinde": ({"calisma_modelleri": ["yerinde"]}, {"A2", "A4"}),

@@ -69,6 +69,8 @@ def alanlari_bul(
     rol: str, yapay_zeka: str, baslik: str, firma: str, firma_etiketi: set[str], savunma_kaniti: bool = False
 ) -> list[str]:
     alanlar = {rol}
+    if rol in {"yapay_zeka", "veri"}:
+        alanlar.add("yazilim")  # ana alan: veri/AI dahil yazılımın bütün kullanım alanları
     if yapay_zeka == "ozunde":
         alanlar.add("yapay_zeka")
     if "oyun" in firma_etiketi or _OYUN_FIRMA.search(firma) or _OYUN_BASLIK.search(baslik):
