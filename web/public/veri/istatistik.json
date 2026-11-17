@@ -1,19 +1,19 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-17T01:24:52.265437+03:00",
+ "guncelleme": "2026-11-17T15:43:28.798910+03:00",
  "takip_edilen_firma": 3414,
  "taranan_firma": 946,
- "aktif_ilan": 8828,
- "ogrenci_ilani": 56,
+ "aktif_ilan": 8872,
+ "ogrenci_ilani": 73,
  "sehirler": {
-  "uzaktan": 1395,
-  "istanbul": 767,
-  "ankara": 200,
-  "izmir": 81,
+  "uzaktan": 1391,
+  "istanbul": 781,
+  "ankara": 206,
+  "izmir": 80,
   "kocaeli": 62,
   "bursa": 61,
   "adana": 59,
-  "tekirdag": 54,
+  "tekirdag": 53,
   "antalya": 53,
   "kayseri": 53,
   "gaziantep": 52,
@@ -94,6 +94,14 @@
    "uygun": true
   },
   {
+   "baslik": "Research Engineer, Synthetic Data (Pacific Time)",
+   "firma": "Pragmatike",
+   "seviye": "junior",
+   "rol": "yapay_zeka",
+   "gerekce": "Sentetik veri araştırması, öğrenme potansiyeli yıldan önemli",
+   "uygun": true
+  },
+  {
    "baslik": "Game Developer - New Grad",
    "firma": "Vertigo Games",
    "seviye": "yeni_mezun",
@@ -126,12 +134,12 @@
    "uygun": true
   },
   {
-   "baslik": "Software Development Intern",
-   "firma": "Werover",
-   "seviye": "staj",
+   "baslik": "PHP (Symfony) Software Engineer",
+   "firma": "Teamblue",
+   "seviye": "belirsiz",
    "rol": "yazilim",
-   "gerekce": "Yazılım geliştirme stajı",
-   "uygun": true
+   "gerekce": "Symfony backend geliştirme ağırlıklı, seviye belirtilmemiş",
+   "uygun": false
   },
   {
    "baslik": "Education Strategy & Development Analyst / Associate",
@@ -139,6 +147,30 @@
    "seviye": "junior",
    "rol": "teknik_degil",
    "gerekce": "Eğitim stratejisi analisti, strateji ve kurumsal gelişim ağırlıklı",
+   "uygun": false
+  },
+  {
+   "baslik": "Founding Recruiter (tech freelance) ",
+   "firma": "Pragmatike",
+   "seviye": "deneyimli",
+   "rol": "teknik_degil",
+   "gerekce": "5+ yıl teknik işe alım deneyimi isteniyor",
+   "uygun": false
+  },
+  {
+   "baslik": "Become a Luxury Brand Evaluator in Palm Beach Gardens, US",
+   "firma": "Cxg",
+   "seviye": "belirsiz",
+   "rol": "teknik_degil",
+   "gerekce": "Lüks marka değerlendirme, deneyim şartı belirtilmemiş freelance iş",
+   "uygun": false
+  },
+  {
+   "baslik": "Product Management Intern ",
+   "firma": "Sezzle",
+   "seviye": "staj",
+   "rol": "teknik_degil",
+   "gerekce": "Ürün yönetimi stajı, kod yazımı yok",
    "uygun": false
   },
   {
@@ -150,35 +182,11 @@
    "uygun": false
   },
   {
-   "baslik": "HR Operations Specialist",
-   "firma": "Codeway",
-   "seviye": "belirsiz",
-   "rol": "teknik_degil",
-   "gerekce": "İK operasyonları, deneyim seviyesi belirtilmemiş",
-   "uygun": false
-  },
-  {
    "baslik": "Mekanik Tekniker / Montaj Ustası",
    "firma": "Novatek Endüstriyel Sistemler",
    "seviye": "belirsiz",
    "rol": "diger_teknik",
    "gerekce": "Mekanik tekniker ve montaj, seviye belirtilmemiş",
-   "uygun": false
-  },
-  {
-   "baslik": "Back-End Engineer",
-   "firma": "Rapsodo",
-   "seviye": "belirsiz",
-   "rol": "yazilim",
-   "gerekce": "Back-end geliştirme, seviye belirtilmemiş",
-   "uygun": false
-  },
-  {
-   "baslik": "Country Financial Controller, Türkiye",
-   "firma": "Goodyear",
-   "seviye": "deneyimli",
-   "rol": "teknik_degil",
-   "gerekce": "Ülke finans kontrolörü, finans yönetici rolü",
    "uygun": false
   },
   {
@@ -198,14 +206,6 @@
    "uygun": false
   },
   {
-   "baslik": "Taze (Jr) DevOps & Linux Sistem Yöneticisi (S36)",
-   "firma": "Özgür",
-   "seviye": "junior",
-   "rol": "diger_teknik",
-   "gerekce": "Jr DevOps ve Linux sistem yönetimi",
-   "uygun": false
-  },
-  {
    "baslik": "Senior Data Analyst",
    "firma": "Bilge Adam",
    "seviye": "deneyimli",
@@ -215,35 +215,36 @@
   }
  ],
  "huni": {
-  "aktif": 8828,
-  "konum_disi": 7133,
-  "siniflanmamis": 0,
+  "aktif": 8872,
+  "konum_disi": 5984,
+  "siniflanmamis": 13,
   "seviye": {
-   "belirsiz": 854,
-   "deneyimli": 544,
-   "staj": 112,
-   "junior": 99,
-   "yeni_mezun": 40,
-   "yari_zamanli": 32,
+   "belirsiz": 1500,
+   "deneyimli": 991,
+   "junior": 147,
+   "staj": 138,
+   "yeni_mezun": 44,
+   "yari_zamanli": 41,
    "uzun_donem_staj": 14
   },
   "rol": {
-   "teknik_degil": 818,
-   "yazilim": 418,
-   "diger_teknik": 363,
-   "veri": 51,
-   "yapay_zeka": 45
+   "teknik_degil": 1718,
+   "yazilim": 581,
+   "diger_teknik": 430,
+   "veri": 75,
+   "yapay_zeka": 71
   },
   "ogrenciye_uygun": {
-   "yayinda": 56,
+   "yayinda": 73,
    "hayalet": 11,
    "eski_ilan_tarihi": 3,
    "supheli": 2,
-   "genel_basvuru": 1
+   "genel_basvuru": 2
   },
-  "belirsiz_seviye_hedef_rol": 223,
-  "ogrenci_seviye_diger_teknik": 58,
+  "belirsiz_seviye_hedef_rol": 275,
+  "ogrenci_seviye_diger_teknik": 59,
   "ornek_belirsiz": [
+   "Teamblue: PHP (Symfony) Software Engineer",
    "Rapsodo: Back-End Engineer",
    "ADIM TEKNOLOJİ A.Ş. Yazılım, 3D Simülasyon ve Modelleme: VR Developer",
    "3E ENDÜSTRİYEL MÜHENDİSLİK SAN. VE TİC. LTD. ŞTİ.: Software Engineer",
@@ -252,21 +253,19 @@
    "Trendyol: Software Engineer",
    "LOTEC ArGe Yazılım Donanım İthalat İhracat Danışmanlık Teknoloji Savunma ve Tic. A.Ş: Full Stack Uygulama Geliştirici",
    "Teltonika: Network Software Engineer",
+   "Transperfect: Commerce and Content Front End Technical Consultant",
    "ENHENCER YAZILIM A.Ş: Full Stack Developer",
+   "C-Prot: Database Administrator",
    "Analog Devices: Engineer, Firmware Engineering",
    "Algocor Teknoloji A.Ş.: Software Engineer C++",
-   "SEKGAMES OYUN YAZILIM TEKNOLOJİ VE PAZARLAMA ANONİM ŞİRKETİ: Marketing Developer",
    "Özgür Yazılım A.Ş.: DevOps & Linux Sistem Yöneticisi (S38)",
    "Lucida AI: Flutter Developer(Fullstack)",
    "Valven: Linux System Engineer",
    "Vertigo Games: Game Developer",
    "MULTİGOO BİLİŞİM ANONİM ŞİRKETİ: Frontend (React) Developer",
-   "ESEN: Software Design Engineer",
-   "MAGLAB OYUN TEKNOLOJİLERİ BİLİŞİM YAZILIM TASARIM YAYINCILIK TİCARET ANONİM ŞİRKETİ: Game Developer, On-Site Ankara · Full Time",
-   "SİMOFUN OYUN TEKNOLOJİLERİ ANONİM ŞİRKETİ: Unity Oyun Geliştiricisi"
+   "ESEN: Software Design Engineer"
   ],
   "ornek_diger_teknik": [
-   "Özgür Yazılım A.Ş.: Taze (Jr) DevOps & Linux Sistem Yöneticisi (S36)",
    "Baykar: 2027 Yaz Dönemi Staj | Kullanıcı Teknik Destek",
    "Merck: Clinical Research Intern",
    "Opsin Elektro Optik: Aday Mühendis Programı",
@@ -285,7 +284,8 @@
    "INTERPROBE BİLGİ TEKNOLOJİLERİ: Intern",
    "BİLGİKURUMSAL YAZILIM TEKNOLOJİLERİ A.Ş.: Stajyer",
    "MAPP PAZARLAMA VE TANITIM HİZMETLERİ: Ankara Teknik Servis Teknoloji Asistanı",
-   "Analog Devices: Associate Designer, Layout"
+   "Analog Devices: Associate Designer, Layout",
+   "KoçSistem: KoçSistem Level Up"
   ]
  }
 }
