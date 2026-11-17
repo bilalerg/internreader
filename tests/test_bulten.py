@@ -164,6 +164,10 @@ def test_eposta_bicimi_kacis_ve_tek_tikla_cikis_basligi(oturum):
     bultenleri_gonder(oturum, g, AYAR)
     e = g.gidenler[0]
     assert "<script>" not in e.html and "&lt;script&gt;" in e.html
+    assert "Başvuru adresi (kopyalayıp tarayıcıya yapıştır)" in e.html
+    assert "https://u/1" in e.html
+    assert "href=\"https://internreader.test/api/t/" not in e.html
+    assert "href=\"https://u/1" not in e.html
     jeton = iptal_jetonu(abone_id, "test-anahtari")
     assert e.basliklar["List-Unsubscribe"] == f"<https://internreader.test/api/abone/iptal-tek?jeton={jeton}>"
     assert e.basliklar["List-Unsubscribe-Post"] == "List-Unsubscribe=One-Click"

@@ -60,7 +60,7 @@ def _etiketler(ilan: dict) -> list[str]:
     return parcalar
 
 
-def _html_ilan(ilan: dict, adres: str, adres_goster: bool = False) -> str:
+def _html_ilan(ilan: dict, adres_goster: bool = False) -> str:
     e = html.escape
     a = ilan.get("ayrinti") or {}
     ozet = (
@@ -72,11 +72,11 @@ def _html_ilan(ilan: dict, adres: str, adres_goster: bool = False) -> str:
     if a.get("teknolojiler"):
         alt.append(e(" · ".join(a["teknolojiler"][:5])))
     alt_satir = f'<p style="margin:8px 0 0;font:13px/1.5 {SANS};color:{IKINCIL}">{" &nbsp;|&nbsp; ".join(alt)}</p>'
-    if adres_goster:  # önizleme: ilanın gerçek adresi yazıyla (gizlemek için kopyalanır)
+    if adres_goster:  # önizleme: kaynak ve inceleme notu
         not_ = f"<strong>{e(ilan['onizleme_notu'])}</strong><br>" if ilan.get("onizleme_notu") else ""
         alt_satir += (
             f'<p style="margin:8px 0 0;font:13px/1.5 {SANS};color:{IKINCIL};word-break:break-all">{not_}'
-            f'{e(ilan.get("kaynak", ""))} · <a href="{e(ilan["url"])}" style="color:{MUREKKEP}">{e(ilan["url"])}</a></p>'
+            f'{e(ilan.get("kaynak", ""))}</p>'
         )
     return f"""
 <tr><td style="padding:20px 0;border-top:1px solid {CIZGI}">
@@ -84,7 +84,8 @@ def _html_ilan(ilan: dict, adres: str, adres_goster: bool = False) -> str:
   <p style="margin:6px 0 0;font:600 19px/1.3 {SERIF};color:{MUREKKEP}">{e(ilan["baslik"])}</p>
   <p style="margin:6px 0 0;font:13px/1.5 {SANS};color:{IKINCIL}">{e(" · ".join(_etiketler(ilan)))}</p>
   {ozet}{alt_satir}
-  <p style="margin:12px 0 0"><a href="{e(adres)}" style="display:inline-block;padding:9px 16px;border-radius:999px;background:{MUREKKEP};color:{KAGIT};font:600 14px {SANS};text-decoration:none">Başvur &rarr;</a></p>
+  <p style="margin:12px 0 0;font:600 13px/1.5 {SANS};color:{MUREKKEP}">Başvuru adresi (kopyalayıp tarayıcıya yapıştır):</p>
+  <p style="margin:4px 0 0;font:13px/1.5 {SANS};color:{MUREKKEP};word-break:break-all">{e(ilan["url"])}</p>
 </td></tr>"""
 
 
@@ -118,8 +119,8 @@ def _eposta(
     adres_goster: bool = False,
 ) -> Eposta:
     """Bültenin ve hoş geldin e-postasının ortak gövdesi. `baslik_html` kaçışlanmış olmalı; `bolum`: ilanların üst başlığı.
-    `baglanti`: "Başvur" düğmesinin adresini üretir (tıklama ölçümü); düz metin sürümü doğrudan ilana gider.
-    `adres_goster`: her ilanın adresi yazıyla da görünür (elle onay önizlemesi)."""
+    `baglanti` uyumluluk için tutulur; e-posta sağlayıcısının kırık takip yönlendirmesi nedeniyle HTML'de kullanılmaz.
+    `adres_goster`: elle onay önizlemesinde kaynak ve notu gösterir."""
     e = html.escape
     gun = tarih_yazisi(an.astimezone(TURKIYE_SAATI))
     on_metin = " · ".join(f"{i.get('firma_gorunen') or i['firma']}: {i['baslik']}" for i in ilanlar[:3]) or konu
@@ -129,7 +130,7 @@ def _eposta(
         if bolum
         else ""
     )
-    govde = "".join(_html_ilan(i, baglanti(i) if baglanti else i["url"], adres_goster) for i in ilanlar)
+    govde = "".join(_html_ilan(i, adres_goster) for i in ilanlar)
     dis_aramalar = "<br>".join(
         f'<a href="{e(adres)}" style="color:{MUREKKEP}">{e(ad)}</a>' for ad, adres in DIS_ARAMALAR
     )
@@ -153,6 +154,7 @@ def _eposta(
 <tr><td style="padding:20px 32px 28px;border-top:1px solid {CIZGI}">
   <p style="margin:0;font:13px/1.6 {SANS};color:{IKINCIL}">Bu e-postayı InternReader bültenine abone olduğun için aldın. Yapay zekâ hata yapabilir; başvurmadan önce ilanı şirketin sayfasında oku.</p>
   <p style="margin:10px 0 0;font:13px/1.6 {SANS};color:{IKINCIL}"><a href="{e(site_adresi)}/#bulten" style="color:{MUREKKEP}">Tercihlerini değiştir</a> &nbsp;·&nbsp; <a href="{e(iptal_adresi)}" style="color:{MUREKKEP}">Abonelikten çık</a> &nbsp;·&nbsp; <a href="{e(site_adresi)}/kvkk" style="color:{MUREKKEP}">KVKK</a></p>
+  <p style="margin:8px 0 0;font:12px/1.5 {SANS};color:{IKINCIL};word-break:break-all">Abonelikten çıkış adresi (bağlantı açılmazsa kopyala): {e(iptal_adresi)}</p>
 </td></tr>
 </table></td></tr></table></body></html>"""
 
