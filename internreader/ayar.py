@@ -7,6 +7,7 @@ Yerelde varsayılan veritabanı SQLite dosyasıdır; sunucuda DATABASE_URL ile P
 import os
 from dataclasses import dataclass, field
 from pathlib import Path
+from urllib.parse import urlsplit
 
 KOK = Path(__file__).resolve().parent.parent
 VERI = KOK / "veri"
@@ -96,6 +97,28 @@ def _ortam(ad: str, varsayilan: str) -> str:
     return os.getenv(ad) or varsayilan
 
 
+def _site_adresi() -> str:
+    """Yanlışlıkla URL alanına girilmiş gizli değeri bağlantılara taşıma."""
+    adres = _ortam("INTERNREADER_SITE_ADRESI", "http://localhost:4321").rstrip("/")
+    try:
+        parcalar = urlsplit(adres)
+        _ = parcalar.port  # Geçersiz port için ValueError yükselir.
+        gecerli = (
+            parcalar.scheme in {"http", "https"}
+            and bool(parcalar.hostname)
+            and parcalar.username is None
+            and parcalar.password is None
+            and parcalar.path in {"", "/"}
+            and not parcalar.query
+            and not parcalar.fragment
+        )
+    except ValueError:
+        gecerli = False
+    if gecerli:
+        return adres
+    return "https://internreader.me"
+
+
 def ayarlari_oku() -> Ayarlar:
     env_yukle()
     arama_saglayici, arama_anahtari = arama_ayari()
@@ -108,7 +131,7 @@ def ayarlari_oku() -> Ayarlar:
         yz_is_parcacigi=int(_ortam("INTERNREADER_YZ_IS_PARCACIGI", "4")),
         http_zaman_asimi=int(_ortam("INTERNREADER_HTTP_ZAMAN_ASIMI", "25")),
         kullanici_ajani="InternReader/0.2 (+https://github.com/bilalerg/internreader)",
-        site_adresi=_ortam("INTERNREADER_SITE_ADRESI", "http://localhost:4321").rstrip("/"),
+        site_adresi=_site_adresi(),
         gizli_anahtar=_ortam("INTERNREADER_GIZLI_ANAHTAR", GELISTIRME_ANAHTARI),
         smtp_sunucu=_ortam("SMTP_SUNUCU", ""),
         smtp_port=int(_ortam("SMTP_PORT", "587")),
