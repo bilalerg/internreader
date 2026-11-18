@@ -1,7 +1,7 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-17T15:43:28.798910+03:00",
- "sayi": 73,
+ "guncelleme": "2026-11-18T19:26:22.427785+03:00",
+ "sayi": 74,
  "ilanlar": [
   {
    "kimlik": "a5fb2b24201ae2d4",
@@ -15,8 +15,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
-    "acik_dogrulama_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -64,7 +64,7 @@
    "dogrulama": {
     "durum": "belirsiz",
     "neden": "tek_ilan_basligi_dogrulanamadi",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
     "acik_dogrulama_zamani": "2026-11-17T12:28:06.639129+00:00",
     "bayat": false
    },
@@ -110,7 +110,7 @@
    "dogrulama": {
     "durum": "belirsiz",
     "neden": "tek_ilan_basligi_dogrulanamadi",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
     "acik_dogrulama_zamani": "2026-11-17T12:28:06.639129+00:00",
     "bayat": false
    },
@@ -199,7 +199,7 @@
    "dogrulama": {
     "durum": "belirsiz",
     "neden": "tek_ilan_basligi_dogrulanamadi",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
     "acik_dogrulama_zamani": "2026-11-17T12:28:06.639129+00:00",
     "bayat": false
    },
@@ -245,7 +245,7 @@
    "dogrulama": {
     "durum": "belirsiz",
     "neden": "tek_ilan_basligi_dogrulanamadi",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
     "acik_dogrulama_zamani": "2026-11-17T12:28:06.639129+00:00",
     "bayat": false
    },
@@ -339,7 +339,7 @@
    "dogrulama": {
     "durum": "belirsiz",
     "neden": "baska_sayfaya_yonlendi",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
     "acik_dogrulama_zamani": "2026-11-17T12:28:06.639129+00:00",
     "bayat": false
    },
@@ -541,8 +541,8 @@
    "ilk_gorulme": "2026-11-12T20:07:09.741477+00:00",
    "dogrulama": {
     "durum": "belirsiz",
-    "neden": "tek_ilan_basligi_dogrulanamadi",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "neden": "RetryError",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
     "acik_dogrulama_zamani": "2026-11-16T11:38:24.891049+00:00",
     "bayat": false
    },
@@ -577,8 +577,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "lever_ilanina_ozel_basvuru_baglantisi",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
-    "acik_dogrulama_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -706,7 +706,7 @@
    "dogrulama": {
     "durum": "belirsiz",
     "neden": "baska_sayfaya_yonlendi",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
     "acik_dogrulama_zamani": "2026-11-16T22:19:07.705290+00:00",
     "bayat": false
    },
@@ -784,8 +784,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
-    "acik_dogrulama_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -823,6 +823,104 @@
    "uzaktan": false
   },
   {
+   "kimlik": "94bf67e00d74fbcd",
+   "firma": "Sezzle (Türkiye, uzaktan)",
+   "baslik": "A.I. Engineering Intern ",
+   "url": "https://job-boards.greenhouse.io/sezzle/jobs/7980003003",
+   "konum": "Mexico, Remote",
+   "kaynak": "greenhouse",
+   "yayin_tarihi": "2026-10-07",
+   "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
+   "dogrulama": {
+    "durum": "acik",
+    "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "bayat": false
+   },
+   "seviye": "staj",
+   "rol": "yapay_zeka",
+   "yapay_zeka": "ozunde",
+   "ayrinti": {
+    "ozet": "Sezzle'da temel yapay zeka sistemlerinin tasarlanıp geliştirilmesine, eğitim verisi üretilmesine ve SQL sorgularının yazılmasına destek olunacak bir staj pozisyonu.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": "MIS, Business, Analytics/Data Analytics veya Computer alanında okuyan öğrenciler",
+    "calisma_modeli": "uzaktan",
+    "ucretli": "evet",
+    "teknolojiler": [
+     "Python",
+     "SQL",
+     "Claude",
+     "Golang",
+     "TypeScript",
+     "React"
+    ]
+   },
+   "alanlar": [
+    "yazilim",
+    "yapay_zeka"
+   ],
+   "calisma_modeli": "uzaktan",
+   "girisim": false,
+   "yayin": "2026-10-07",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Staj",
+   "firma_gorunen": "Sezzle",
+   "sehirler": [],
+   "uzaktan": true
+  },
+  {
+   "kimlik": "e0c328166ba95240",
+   "firma": "Sezzle (Türkiye, uzaktan)",
+   "baslik": "A.I. Engineering Intern ",
+   "url": "https://job-boards.greenhouse.io/sezzle/jobs/7979992003",
+   "konum": "Chile, Remote",
+   "kaynak": "greenhouse",
+   "yayin_tarihi": "2026-10-07",
+   "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
+   "dogrulama": {
+    "durum": "acik",
+    "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "bayat": false
+   },
+   "seviye": "staj",
+   "rol": "yapay_zeka",
+   "yapay_zeka": "ozunde",
+   "ayrinti": {
+    "ozet": "Sezzle'ın Data Science ekibinde yapay zeka sistemleri tasarlamak, bu sistemler için güvenilir eğitim verisi üretmek ve doğru SQL sorguları yazmak.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": "MIS, Business, Analytics/Data Analytics veya Computer alanlarında bir yükseköğretim kurumunda okuyan öğrenciler",
+    "calisma_modeli": "uzaktan",
+    "ucretli": "evet",
+    "teknolojiler": [
+     "Python",
+     "SQL",
+     "Claude",
+     "Golang",
+     "TypeScript",
+     "AWS"
+    ]
+   },
+   "alanlar": [
+    "yazilim",
+    "yapay_zeka"
+   ],
+   "calisma_modeli": "uzaktan",
+   "girisim": false,
+   "yayin": "2026-10-07",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Staj",
+   "firma_gorunen": "Sezzle",
+   "sehirler": [],
+   "uzaktan": true
+  },
+  {
    "kimlik": "77538c8e1766be6d",
    "firma": "Analog Devices",
    "baslik": "Software Engineer Intern",
@@ -833,8 +931,8 @@
    "ilk_gorulme": "2026-10-31T12:21:20.424356+00:00",
    "dogrulama": {
     "durum": "belirsiz",
-    "neden": "tek_ilan_basligi_dogrulanamadi",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "neden": "RetryError",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
     "acik_dogrulama_zamani": "2026-11-16T11:38:24.891049+00:00",
     "bayat": false
    },
@@ -1510,8 +1608,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "lever_ilanina_ozel_basvuru_baglantisi",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
-    "acik_dogrulama_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -1553,8 +1651,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
-    "acik_dogrulama_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -1599,8 +1697,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "lever_ilanina_ozel_basvuru_baglantisi",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
-    "acik_dogrulama_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -1644,8 +1742,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
-    "acik_dogrulama_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -1693,8 +1791,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
-    "acik_dogrulama_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
     "bayat": false
    },
    "seviye": "yeni_mezun",
@@ -1742,8 +1840,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
-    "acik_dogrulama_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -1790,8 +1888,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
-    "acik_dogrulama_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -1838,8 +1936,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
-    "acik_dogrulama_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -1886,8 +1984,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
-    "acik_dogrulama_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -1934,8 +2032,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
-    "acik_dogrulama_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -1982,8 +2080,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
-    "acik_dogrulama_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -2030,8 +2128,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
-    "acik_dogrulama_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -2078,7 +2176,7 @@
    "dogrulama": {
     "durum": "belirsiz",
     "neden": "tek_ilan_basligi_dogrulanamadi",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
     "acik_dogrulama_zamani": "2026-11-17T12:28:06.639129+00:00",
     "bayat": false
    },
@@ -2120,7 +2218,7 @@
    "dogrulama": {
     "durum": "belirsiz",
     "neden": "tek_ilan_basligi_dogrulanamadi",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
     "acik_dogrulama_zamani": "2026-11-17T12:28:06.639129+00:00",
     "bayat": false
    },
@@ -2152,6 +2250,55 @@
    "uzaktan": true
   },
   {
+   "kimlik": "c8c57892fa0511fd",
+   "firma": "Sezzle (Türkiye, uzaktan)",
+   "baslik": "A.I. Engineering Intern ",
+   "url": "https://job-boards.greenhouse.io/sezzle/jobs/7980015003",
+   "konum": "Brazil, Remote",
+   "kaynak": "greenhouse",
+   "yayin_tarihi": "2026-08-31",
+   "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
+   "dogrulama": {
+    "durum": "acik",
+    "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "bayat": false
+   },
+   "seviye": "staj",
+   "rol": "yapay_zeka",
+   "yapay_zeka": "ozunde",
+   "ayrinti": {
+    "ozet": "Sezzle Data Science ekibinde yapay zekâ sistemlerinin sıfırdan tasarlanması, eğitim verisi üretilmesi ve SQL sorguları yazılması görevlerini içeren bir staj pozisyonu.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": "MIS, Business, Analytics/Data Analytics veya Computer alanlarında yükseköğretimde okuyan öğrenciler",
+    "calisma_modeli": "uzaktan",
+    "ucretli": "evet",
+    "teknolojiler": [
+     "Python",
+     "SQL",
+     "Claude",
+     "Golang",
+     "React",
+     "AWS"
+    ]
+   },
+   "alanlar": [
+    "yazilim",
+    "yapay_zeka"
+   ],
+   "calisma_modeli": "uzaktan",
+   "girisim": false,
+   "yayin": "2026-08-31",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Staj",
+   "firma_gorunen": "Sezzle",
+   "sehirler": [],
+   "uzaktan": true
+  },
+  {
    "kimlik": "f934dd8886dcce41",
    "firma": "Docplanner",
    "baslik": "Junior Software Engineer – Early Career (Strong Problem solving & Coding Focus) - 100% Remote within Spain",
@@ -2163,7 +2310,7 @@
    "dogrulama": {
     "durum": "belirsiz",
     "neden": "tek_ilan_basligi_dogrulanamadi",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
     "acik_dogrulama_zamani": "2026-11-17T12:28:06.639129+00:00",
     "bayat": false
    },
@@ -2211,7 +2358,7 @@
    "dogrulama": {
     "durum": "belirsiz",
     "neden": "tek_ilan_basligi_dogrulanamadi",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
     "acik_dogrulama_zamani": "2026-11-17T12:28:06.639129+00:00",
     "bayat": false
    },
@@ -2259,7 +2406,7 @@
    "dogrulama": {
     "durum": "belirsiz",
     "neden": "baska_sayfaya_yonlendi",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
     "acik_dogrulama_zamani": "2026-11-16T22:19:07.705290+00:00",
     "bayat": false
    },
@@ -2295,8 +2442,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
-    "acik_dogrulama_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
     "bayat": false
    },
    "seviye": "uzun_donem_staj",
@@ -2345,7 +2492,7 @@
    "dogrulama": {
     "durum": "belirsiz",
     "neden": "coklu_ilan_sayfasi",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
     "acik_dogrulama_zamani": null,
     "bayat": false
    },
@@ -2389,7 +2536,7 @@
    "dogrulama": {
     "durum": "belirsiz",
     "neden": "coklu_ilan_sayfasi",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
     "acik_dogrulama_zamani": null,
     "bayat": false
    },
@@ -2432,7 +2579,7 @@
    "dogrulama": {
     "durum": "belirsiz",
     "neden": "coklu_ilan_sayfasi",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
     "acik_dogrulama_zamani": null,
     "bayat": false
    },
@@ -2475,7 +2622,7 @@
    "dogrulama": {
     "durum": "belirsiz",
     "neden": "tek_ilan_basligi_dogrulanamadi",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
     "acik_dogrulama_zamani": null,
     "bayat": false
    },
@@ -2523,7 +2670,7 @@
    "dogrulama": {
     "durum": "belirsiz",
     "neden": "coklu_ilan_sayfasi",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
     "acik_dogrulama_zamani": null,
     "bayat": false
    },
@@ -2564,7 +2711,7 @@
    "dogrulama": {
     "durum": "belirsiz",
     "neden": "coklu_ilan_sayfasi",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
     "acik_dogrulama_zamani": null,
     "bayat": false
    },
@@ -2605,7 +2752,7 @@
    "dogrulama": {
     "durum": "belirsiz",
     "neden": "coklu_ilan_sayfasi",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
     "acik_dogrulama_zamani": null,
     "bayat": false
    },
@@ -2646,7 +2793,7 @@
    "dogrulama": {
     "durum": "belirsiz",
     "neden": "coklu_ilan_sayfasi",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
     "acik_dogrulama_zamani": null,
     "bayat": false
    },
@@ -2694,7 +2841,7 @@
    "dogrulama": {
     "durum": "belirsiz",
     "neden": "coklu_ilan_sayfasi",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
     "acik_dogrulama_zamani": null,
     "bayat": false
    },
@@ -2744,8 +2891,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilana_ozel_basvuru_formu",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
-    "acik_dogrulama_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -2788,8 +2935,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilana_ozel_basvuru_formu",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
-    "acik_dogrulama_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -2832,8 +2979,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilana_ozel_basvuru_formu",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
-    "acik_dogrulama_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -2875,8 +3022,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilana_ozel_basvuru_formu",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
-    "acik_dogrulama_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -2919,7 +3066,7 @@
    "dogrulama": {
     "durum": "belirsiz",
     "neden": "basvuru_durumu_icin_yeterli_kanit_yok",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
     "acik_dogrulama_zamani": null,
     "bayat": false
    },
@@ -2961,7 +3108,7 @@
    "dogrulama": {
     "durum": "belirsiz",
     "neden": "coklu_ilan_sayfasi",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
     "acik_dogrulama_zamani": null,
     "bayat": false
    },
@@ -3002,7 +3149,7 @@
    "dogrulama": {
     "durum": "belirsiz",
     "neden": "coklu_ilan_sayfasi",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
     "acik_dogrulama_zamani": null,
     "bayat": false
    },
@@ -3032,47 +3179,6 @@
    "uzaktan": false
   },
   {
-   "kimlik": "572480d4d0f0c82b",
-   "firma": "SMARTICT BİLİŞİM A.Ş. Yönetim yazılımları, Web yazılımlar, Mobil Yazılımlar, Akıllı yazılımlar, IOT, Uzaktan eği",
-   "baslik": "Staj",
-   "url": "https://www.smartict.com.tr/insan-kaynaklari#194e9833",
-   "konum": "",
-   "kaynak": "kariyer_sayfasi",
-   "yayin_tarihi": "",
-   "ilk_gorulme": "2026-11-01T13:47:11.926314+00:00",
-   "dogrulama": {
-    "durum": "belirsiz",
-    "neden": "coklu_ilan_sayfasi",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
-    "acik_dogrulama_zamani": null,
-    "bayat": false
-   },
-   "seviye": "staj",
-   "rol": "yazilim",
-   "yapay_zeka": "yok",
-   "ayrinti": {
-    "ozet": "SmartICT Bilişim'de staj pozisyonu için başvuru kabul ediliyor. İlanda görev detayı yazmıyor.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": null,
-    "calisma_modeli": "belirsiz",
-    "ucretli": "belirsiz",
-    "teknolojiler": []
-   },
-   "alanlar": [
-    "yazilim"
-   ],
-   "calisma_modeli": "belirsiz",
-   "girisim": false,
-   "yayin": null,
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Staj",
-   "firma_gorunen": "SMARTICT",
-   "sehirler": [],
-   "uzaktan": false
-  },
-  {
    "kimlik": "03e1d67093d3cc29",
    "firma": "Özgür Yazılım A.Ş.",
    "baslik": "Taze (Jr) DevOps & Linux Sistem Yöneticisi (S36)",
@@ -3084,7 +3190,7 @@
    "dogrulama": {
     "durum": "belirsiz",
     "neden": "basvuru_durumu_icin_yeterli_kanit_yok",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
     "acik_dogrulama_zamani": null,
     "bayat": false
    },
@@ -3128,7 +3234,7 @@
    "dogrulama": {
     "durum": "belirsiz",
     "neden": "basvuru_durumu_icin_yeterli_kanit_yok",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
+    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
     "acik_dogrulama_zamani": null,
     "bayat": false
    },
@@ -3161,47 +3267,6 @@
    "ilan_turu": "is",
    "seviye_etiketi": "Junior",
    "firma_gorunen": "Özgür",
-   "sehirler": [],
-   "uzaktan": false
-  },
-  {
-   "kimlik": "9dd7ad5a1476d934",
-   "firma": "Working at ING",
-   "baslik": "IT apprenticeships",
-   "url": "https://careers.ing.com/en#d1d2e258",
-   "konum": "",
-   "kaynak": "kariyer_sayfasi",
-   "yayin_tarihi": "",
-   "ilk_gorulme": "2026-11-16T11:38:24.891049+00:00",
-   "dogrulama": {
-    "durum": "belirsiz",
-    "neden": "coklu_ilan_sayfasi",
-    "kontrol_zamani": "2026-11-17T12:43:19.769756+00:00",
-    "acik_dogrulama_zamani": null,
-    "bayat": false
-   },
-   "seviye": "staj",
-   "rol": "yazilim",
-   "yapay_zeka": "yok",
-   "ayrinti": {
-    "ozet": "ING'de IT alanında staj/çıraklık programı; sistem entegrasyonu, uygulama geliştirme ve veri-süreç analizi gibi alanlarda öğrenim fırsatı sunuyor.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": null,
-    "calisma_modeli": "belirsiz",
-    "ucretli": "belirsiz",
-    "teknolojiler": []
-   },
-   "alanlar": [
-    "yazilim"
-   ],
-   "calisma_modeli": "belirsiz",
-   "girisim": false,
-   "yayin": null,
-   "surekli_acik": false,
-   "ilan_turu": "egitim",
-   "seviye_etiketi": "Eğitim programı",
-   "firma_gorunen": "Working at ING",
    "sehirler": [],
    "uzaktan": false
   }
