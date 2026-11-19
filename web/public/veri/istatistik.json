@@ -1,14 +1,14 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-18T19:26:22.427785+03:00",
+ "guncelleme": "2026-11-19T10:46:22.529691+03:00",
  "takip_edilen_firma": 3414,
  "taranan_firma": 946,
- "aktif_ilan": 8913,
+ "aktif_ilan": 8756,
  "ogrenci_ilani": 74,
  "sehirler": {
-  "uzaktan": 1417,
+  "uzaktan": 1416,
   "istanbul": 771,
-  "ankara": 203,
+  "ankara": 202,
   "izmir": 79,
   "kocaeli": 64,
   "bursa": 61,
@@ -215,12 +215,12 @@
   }
  ],
  "huni": {
-  "aktif": 8913,
-  "konum_disi": 6010,
+  "aktif": 8756,
+  "konum_disi": 5856,
   "siniflanmamis": 3,
   "seviye": {
-   "belirsiz": 1508,
-   "deneyimli": 1003,
+   "belirsiz": 1500,
+   "deneyimli": 1008,
    "junior": 147,
    "staj": 141,
    "yari_zamanli": 44,
@@ -228,11 +228,11 @@
    "uzun_donem_staj": 14
   },
   "rol": {
-   "teknik_degil": 1742,
-   "yazilim": 575,
-   "diger_teknik": 434,
-   "veri": 75,
-   "yapay_zeka": 74
+   "teknik_degil": 1743,
+   "yazilim": 574,
+   "diger_teknik": 433,
+   "veri": 74,
+   "yapay_zeka": 73
   },
   "ogrenciye_uygun": {
    "yayinda": 74,
@@ -241,7 +241,7 @@
    "supheli": 2,
    "genel_basvuru": 2
   },
-  "belirsiz_seviye_hedef_rol": 278,
+  "belirsiz_seviye_hedef_rol": 275,
   "ogrenci_seviye_diger_teknik": 59,
   "ornek_belirsiz": [
    "Teamblue: PHP (Symfony) Software Engineer",
@@ -253,7 +253,6 @@
    "Trendyol: Software Engineer",
    "LOTEC ArGe Yazılım Donanım İthalat İhracat Danışmanlık Teknoloji Savunma ve Tic. A.Ş: Full Stack Uygulama Geliştirici",
    "Teltonika: Network Software Engineer",
-   "Transperfect: Commerce and Content Front End Technical Consultant",
    "ENHENCER YAZILIM A.Ş: Full Stack Developer",
    "C-Prot: Database Administrator",
    "Analog Devices: Engineer, Firmware Engineering",
@@ -263,7 +262,8 @@
    "Valven: Linux System Engineer",
    "Vertigo Games: Game Developer",
    "MULTİGOO BİLİŞİM ANONİM ŞİRKETİ: Frontend (React) Developer",
-   "ESEN: Software Design Engineer"
+   "ESEN: Software Design Engineer",
+   "MAGLAB OYUN TEKNOLOJİLERİ BİLİŞİM YAZILIM TASARIM YAYINCILIK TİCARET ANONİM ŞİRKETİ: Game Developer, On-Site Ankara · Full Time"
   ],
   "ornek_diger_teknik": [
    "Baykar: 2027 Yaz Dönemi Staj | Kullanıcı Teknik Destek",
