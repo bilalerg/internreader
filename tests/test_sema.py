@@ -34,3 +34,27 @@ def test_goc_oncesi_veritabani_verisiyle_birlikte_guncellenir(tmp_path):
         assert "ilan_ayrintilari" in inspect(baglanti).get_table_names()
     assert guncel_surum(motor) == son_surum()
     semayi_hazirla(motor)  # ikinci kez çalıştırmak zararsız
+
+
+def test_dogrulanmis_kariyer_adresleri_yalnizca_eski_degeri_degistirir(tmp_path):
+    motor = motor_olustur(f"sqlite:///{(tmp_path / 'kariyer.db').as_posix()}")
+    with motor.begin() as baglanti:
+        command.upgrade(alembic_ayari(baglanti), "0009")
+        ekle = text(
+            "INSERT INTO firmalar (anahtar, ad, kariyer, etiket, aktif, eklenme) "
+            "VALUES (:key, :name, :career, '[]', 1, '2026-11-01')"
+        )
+        for key, name, career in (
+            ("avikon.com.tr", "Avikon", "https://www.avikon.com.tr/tr/kariyer"),
+            ("idenfit.com", "Idenfit", "https://idenfit.com/insan-kaynaklari-yonetimi-modulu/"),
+            ("techsign.com.tr", "Techsign", "https://techsign.ai/en/career/"),
+        ):
+            baglanti.execute(ekle, {"key": key, "name": name, "career": career})
+    semayi_hazirla(motor)
+    with motor.connect() as baglanti:
+        got = {ad: kariyer for ad, kariyer in baglanti.execute(text("SELECT ad, kariyer FROM firmalar"))}
+        assert got == {
+            "Avikon": "https://avikon.com.tr/kariyer",
+            "Idenfit": None,
+            "Techsign": "https://techsign.ai/en/career/",
+        }
