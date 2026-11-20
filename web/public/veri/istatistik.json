@@ -1,17 +1,17 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-19T19:11:22.320070+03:00",
+ "guncelleme": "2026-11-20T10:37:32.463893+03:00",
  "takip_edilen_firma": 3414,
  "taranan_firma": 946,
- "aktif_ilan": 8866,
- "ogrenci_ilani": 61,
+ "aktif_ilan": 8853,
+ "ogrenci_ilani": 59,
  "sehirler": {
-  "uzaktan": 1435,
-  "istanbul": 779,
-  "ankara": 194,
+  "uzaktan": 1439,
+  "istanbul": 782,
+  "ankara": 195,
   "izmir": 80,
-  "kocaeli": 64,
-  "bursa": 62,
+  "kocaeli": 66,
+  "bursa": 64,
   "adana": 59,
   "antalya": 53,
   "kayseri": 53,
@@ -20,7 +20,7 @@
   "konya": 50,
   "trabzon": 50,
   "samsun": 50,
-  "sakarya": 2
+  "sakarya": 3
  },
  "firmalar": [
   "Analog Devices",
@@ -215,12 +215,12 @@
   }
  ],
  "huni": {
-  "aktif": 8866,
-  "konum_disi": 5955,
+  "aktif": 8853,
+  "konum_disi": 5931,
   "siniflanmamis": 3,
   "seviye": {
-   "belirsiz": 1505,
-   "deneyimli": 1015,
+   "belirsiz": 1514,
+   "deneyimli": 1017,
    "junior": 147,
    "staj": 140,
    "yari_zamanli": 44,
@@ -228,21 +228,21 @@
    "uzun_donem_staj": 14
   },
   "rol": {
-   "teknik_degil": 1759,
-   "yazilim": 571,
-   "diger_teknik": 431,
+   "teknik_degil": 1766,
+   "yazilim": 573,
+   "diger_teknik": 433,
    "veri": 74,
    "yapay_zeka": 73
   },
   "ogrenciye_uygun": {
-   "yayinda": 61,
-   "basvuru_dogrulanamadi": 24,
-   "hayalet": 5,
+   "yayinda": 59,
+   "basvuru_dogrulanamadi": 28,
+   "hayalet": 3,
    "supheli": 2,
    "genel_basvuru": 1
   },
   "belirsiz_seviye_hedef_rol": 273,
-  "ogrenci_seviye_diger_teknik": 57,
+  "ogrenci_seviye_diger_teknik": 59,
   "ornek_belirsiz": [
    "Teamblue: PHP (Symfony) Software Engineer",
    "Rapsodo: Back-End Engineer",
@@ -270,8 +270,10 @@
    "Merck: Clinical Research Intern",
    "Opsin Elektro Optik: Aday Mühendis Programı",
    "Opsin Elektro Optik: Staj Programı",
+   "Goodyear: Quality Engineer Associate (Equipment NPI)",
    "Luxoft: (Graduate) Home Trial Engineer",
    "RENA MEKATRONİK SİSTEMLERİ SAN. VE TİC. LTD.ŞTİ: Stajyer Mühendis (Tüm Bölümler)",
+   "Siemens: Part-Time Working Student - Talents with Disabilities",
    "Analog Devices: RF Design Engineering Summer Intern",
    "Siemens: Part Time Working Student (Project Engineer)",
    "Analog Devices: Associate Engineer, RF Design Engineering",
@@ -283,9 +285,7 @@
    "Valven: New Graduate Program",
    "INTERPROBE BİLGİ TEKNOLOJİLERİ: Intern",
    "BİLGİKURUMSAL YAZILIM TEKNOLOJİLERİ A.Ş.: Stajyer",
-   "MAPP PAZARLAMA VE TANITIM HİZMETLERİ: Ankara Teknik Servis Teknoloji Asistanı",
-   "Analog Devices: Associate Designer, Layout",
-   "KoçSistem: KoçSistem Level Up"
+   "MAPP PAZARLAMA VE TANITIM HİZMETLERİ: Ankara Teknik Servis Teknoloji Asistanı"
   ]
  }
 }
