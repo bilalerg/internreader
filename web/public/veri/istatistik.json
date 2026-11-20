@@ -1,17 +1,17 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-20T10:37:32.463893+03:00",
+ "guncelleme": "2026-11-20T19:14:34.924496+03:00",
  "takip_edilen_firma": 3414,
  "taranan_firma": 946,
- "aktif_ilan": 8853,
- "ogrenci_ilani": 59,
+ "aktif_ilan": 8827,
+ "ogrenci_ilani": 49,
  "sehirler": {
-  "uzaktan": 1439,
-  "istanbul": 782,
-  "ankara": 195,
-  "izmir": 80,
+  "uzaktan": 1445,
+  "istanbul": 795,
+  "ankara": 213,
+  "izmir": 79,
+  "bursa": 66,
   "kocaeli": 66,
-  "bursa": 64,
   "adana": 59,
   "antalya": 53,
   "kayseri": 53,
@@ -215,34 +215,33 @@
   }
  ],
  "huni": {
-  "aktif": 8853,
-  "konum_disi": 5931,
+  "aktif": 8827,
+  "konum_disi": 5867,
   "siniflanmamis": 3,
   "seviye": {
-   "belirsiz": 1514,
-   "deneyimli": 1017,
-   "junior": 147,
-   "staj": 140,
+   "belirsiz": 1539,
+   "deneyimli": 1024,
+   "junior": 146,
+   "staj": 142,
+   "yeni_mezun": 48,
    "yari_zamanli": 44,
-   "yeni_mezun": 43,
    "uzun_donem_staj": 14
   },
   "rol": {
-   "teknik_degil": 1766,
-   "yazilim": 573,
-   "diger_teknik": 433,
-   "veri": 74,
-   "yapay_zeka": 73
+   "teknik_degil": 1769,
+   "yazilim": 580,
+   "diger_teknik": 456,
+   "yapay_zeka": 77,
+   "veri": 75
   },
   "ogrenciye_uygun": {
-   "yayinda": 59,
-   "basvuru_dogrulanamadi": 28,
+   "yayinda": 49,
+   "basvuru_dogrulanamadi": 40,
    "hayalet": 3,
-   "supheli": 2,
-   "genel_basvuru": 1
+   "supheli": 2
   },
-  "belirsiz_seviye_hedef_rol": 273,
-  "ogrenci_seviye_diger_teknik": 59,
+  "belirsiz_seviye_hedef_rol": 280,
+  "ogrenci_seviye_diger_teknik": 61,
   "ornek_belirsiz": [
    "Teamblue: PHP (Symfony) Software Engineer",
    "Rapsodo: Back-End Engineer",
@@ -255,6 +254,7 @@
    "C-Prot: Database Administrator",
    "Analog Devices: Engineer, Firmware Engineering",
    "Algocor Teknoloji A.Ş.: Software Engineer C++",
+   "Codeway: QA Engineer",
    "Özgür Yazılım A.Ş.: DevOps & Linux Sistem Yöneticisi (S38)",
    "Lucida AI: Flutter Developer(Fullstack)",
    "Valven: Linux System Engineer",
@@ -262,8 +262,7 @@
    "MULTİGOO BİLİŞİM ANONİM ŞİRKETİ: Frontend (React) Developer",
    "ESEN: Software Design Engineer",
    "MAGLAB OYUN TEKNOLOJİLERİ BİLİŞİM YAZILIM TASARIM YAYINCILIK TİCARET ANONİM ŞİRKETİ: Game Developer, On-Site Ankara · Full Time",
-   "SİMOFUN OYUN TEKNOLOJİLERİ ANONİM ŞİRKETİ: Unity Oyun Geliştiricisi",
-   "Pragmatike: Research Engineer, Privacy and Anonymization (Pacific Time)"
+   "SİMOFUN OYUN TEKNOLOJİLERİ ANONİM ŞİRKETİ: Unity Oyun Geliştiricisi"
   ],
   "ornek_diger_teknik": [
    "Baykar: 2027 Yaz Dönemi Staj | Kullanıcı Teknik Destek",
@@ -273,7 +272,7 @@
    "Goodyear: Quality Engineer Associate (Equipment NPI)",
    "Luxoft: (Graduate) Home Trial Engineer",
    "RENA MEKATRONİK SİSTEMLERİ SAN. VE TİC. LTD.ŞTİ: Stajyer Mühendis (Tüm Bölümler)",
-   "Siemens: Part-Time Working Student - Talents with Disabilities",
+   "Siemens: Part-Time Working Student – Talents with Disabilities",
    "Analog Devices: RF Design Engineering Summer Intern",
    "Siemens: Part Time Working Student (Project Engineer)",
    "Analog Devices: Associate Engineer, RF Design Engineering",

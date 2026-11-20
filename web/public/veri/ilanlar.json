@@ -1,8 +1,51 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-20T10:37:32.463893+03:00",
- "sayi": 59,
+ "guncelleme": "2026-11-20T19:14:34.924496+03:00",
+ "sayi": 49,
  "ilanlar": [
+  {
+   "kimlik": "78a5773545307a2a",
+   "firma": "Midas",
+   "baslik": "New Grad - Engineering",
+   "url": "https://jobs.lever.co/getmidas/5934d4a2-14d7-4056-a336-b470b60df581",
+   "konum": "İstanbul, Turkey",
+   "kaynak": "lever",
+   "yayin_tarihi": "2026-11-18",
+   "ilk_gorulme": "2026-11-20T15:51:25.236331+00:00",
+   "dogrulama": {
+    "durum": "acik",
+    "neden": "lever_ilanina_ozel_basvuru_baglantisi",
+    "kontrol_zamani": "2026-11-20T16:14:15.158952+00:00",
+    "acik_dogrulama_zamani": "2026-11-20T16:14:15.158952+00:00",
+    "bayat": false
+   },
+   "seviye": "yeni_mezun",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Midas'ta yeni mezun mühendis olarak, ölçeklenebilir sistemler kurarak kullanıcılar için sorunsuz bir deneyim geliştirme işi. Ekipler çapraz çalışarak ürünleri uçtan uca hızlıca teslim ediyor.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": "Yeni mezunlar (new grad)",
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": []
+   },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": true,
+   "yayin": "2026-11-18",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Yeni mezun",
+   "firma_gorunen": "Midas",
+   "sehirler": [
+    "istanbul"
+   ],
+   "uzaktan": false
+  },
   {
    "kimlik": "6031583a14f82f7d",
    "firma": "Sezzle (Türkiye, uzaktan)",
@@ -15,8 +58,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-19T16:11:21.927988+00:00",
-    "acik_dogrulama_zamani": "2026-11-19T16:11:21.927988+00:00",
+    "kontrol_zamani": "2026-11-20T16:14:15.158952+00:00",
+    "acik_dogrulama_zamani": "2026-11-20T16:14:15.158952+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -62,8 +105,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "kontrol_zamani": "2026-11-20T16:14:15.158952+00:00",
+    "acik_dogrulama_zamani": "2026-11-20T16:14:15.158952+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -96,98 +139,6 @@
    "ilan_turu": "is",
    "seviye_etiketi": "Staj",
    "firma_gorunen": "Sezzle",
-   "sehirler": [],
-   "uzaktan": true
-  },
-  {
-   "kimlik": "0275c0fdcfb2796c",
-   "firma": "Pragmatike",
-   "baslik": "Research Engineer, Synthetic Data (Pacific Time)",
-   "url": "https://jobs.ashbyhq.com/pragmatike/e51d910a-a3e6-459d-b3b5-ffa1d300c256",
-   "konum": "United States (uzaktan)",
-   "kaynak": "ashby",
-   "yayin_tarihi": "2026-11-12",
-   "ilk_gorulme": "2026-11-12T15:37:48.127390+00:00",
-   "dogrulama": {
-    "durum": "belirsiz",
-    "neden": "tek_ilan_basligi_dogrulanamadi",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "acik_dogrulama_zamani": "2026-11-17T12:28:06.639129+00:00",
-    "bayat": false
-   },
-   "seviye": "junior",
-   "rol": "yapay_zeka",
-   "yapay_zeka": "ozunde",
-   "ayrinti": {
-    "ozet": "Sentetik eğitim verisi üretim hattını tasarlayacak bir Research Engineer; alana özgü iş akışlarını AI ajanları için sentetik görevlere dönüştürüp bu görevleri üretmek, doğrulamak ve model performansını analiz etmek.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": null,
-    "calisma_modeli": "belirsiz",
-    "ucretli": "evet",
-    "teknolojiler": [
-     "Python",
-     "Docker",
-     "Linux"
-    ]
-   },
-   "alanlar": [
-    "yazilim",
-    "yapay_zeka"
-   ],
-   "calisma_modeli": "uzaktan",
-   "girisim": false,
-   "yayin": "2026-11-12",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Junior",
-   "firma_gorunen": "Pragmatike",
-   "sehirler": [],
-   "uzaktan": true
-  },
-  {
-   "kimlik": "0a237a5f444f7f1e",
-   "firma": "Pragmatike",
-   "baslik": "Research Engineer, Synthetic Data (Singapore Time)",
-   "url": "https://jobs.ashbyhq.com/pragmatike/b06518cd-5b52-4ed4-8dfe-69e1884de1ee",
-   "konum": "Singapore (uzaktan)",
-   "kaynak": "ashby",
-   "yayin_tarihi": "2026-11-12",
-   "ilk_gorulme": "2026-11-12T15:37:48.127390+00:00",
-   "dogrulama": {
-    "durum": "belirsiz",
-    "neden": "tek_ilan_basligi_dogrulanamadi",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "acik_dogrulama_zamani": "2026-11-17T12:28:06.639129+00:00",
-    "bayat": false
-   },
-   "seviye": "junior",
-   "rol": "yapay_zeka",
-   "yapay_zeka": "ozunde",
-   "ayrinti": {
-    "ozet": "Synthetic training görevleri üreten bir veri hattı tasarlanacak; görevler oluşturulup mutasyona uğratılıp doğrulanacak ve model performansı analiz edilecek. Tam zamanlı, ASAP başlangıçlı araştırma mühendisliği pozisyonu.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": null,
-    "calisma_modeli": "hibrit",
-    "ucretli": "evet",
-    "teknolojiler": [
-     "Python",
-     "Docker",
-     "Linux"
-    ]
-   },
-   "alanlar": [
-    "yazilim",
-    "yapay_zeka"
-   ],
-   "calisma_modeli": "uzaktan",
-   "girisim": false,
-   "yayin": "2026-11-12",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Junior",
-   "firma_gorunen": "Pragmatike",
    "sehirler": [],
    "uzaktan": true
   },
@@ -231,137 +182,6 @@
    "firma_gorunen": "Manc Games",
    "sehirler": [
     "istanbul"
-   ],
-   "uzaktan": false
-  },
-  {
-   "kimlik": "86cc79877b72e902",
-   "firma": "Secfix",
-   "baslik": "Backend Engineer – GTM Engineering (Fresh grad, India)",
-   "url": "https://jobs.ashbyhq.com/secfix/583140f4-b26c-47b4-a9be-c7a88dc3c0f5",
-   "konum": "Remote - India (uzaktan)",
-   "kaynak": "ashby",
-   "yayin_tarihi": "2026-11-06",
-   "ilk_gorulme": "2026-11-06T19:32:07.216658+00:00",
-   "dogrulama": {
-    "durum": "belirsiz",
-    "neden": "tek_ilan_basligi_dogrulanamadi",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "acik_dogrulama_zamani": "2026-11-17T12:28:06.639129+00:00",
-    "bayat": false
-   },
-   "seviye": "yeni_mezun",
-   "rol": "yazilim",
-   "yapay_zeka": "arti",
-   "ayrinti": {
-    "ozet": "Secfix'te GTM ekibi için backend sistemleri geliştirilecek: veri hatları, CRM entegrasyonları, sinyal tespiti ve AI ajanları. Tam zamanlı, uzaktan çalışılacak bir pozisyon.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": "0–2 yıllık deneyimi olan, yeni mezun Bilgisayar Mühendisliği veya ilgili alan adayları (Hindistan'dan uzaktan…",
-    "calisma_modeli": "uzaktan",
-    "ucretli": "evet",
-    "teknolojiler": [
-     "Python",
-     "SQL",
-     "REST API",
-     "Claude API"
-    ]
-   },
-   "alanlar": [
-    "yazilim"
-   ],
-   "calisma_modeli": "uzaktan",
-   "girisim": false,
-   "yayin": "2026-11-06",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Yeni mezun",
-   "firma_gorunen": "Secfix",
-   "sehirler": [],
-   "uzaktan": true
-  },
-  {
-   "kimlik": "50e5b49b96178c22",
-   "firma": "Secfix",
-   "baslik": "GTM Engineer (Fresh grad, India)",
-   "url": "https://jobs.ashbyhq.com/secfix/59670476-4f25-48a3-a11e-66c7a72416bf",
-   "konum": "Remote - India (uzaktan)",
-   "kaynak": "ashby",
-   "yayin_tarihi": "2026-11-06",
-   "ilk_gorulme": "2026-11-06T19:32:07.216658+00:00",
-   "dogrulama": {
-    "durum": "belirsiz",
-    "neden": "tek_ilan_basligi_dogrulanamadi",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "acik_dogrulama_zamani": "2026-11-17T12:28:06.639129+00:00",
-    "bayat": false
-   },
-   "seviye": "yeni_mezun",
-   "rol": "yazilim",
-   "yapay_zeka": "ozunde",
-   "ayrinti": {
-    "ozet": "Secfix'te ilk GTM Engineer olarak satış ekibinin kullandığı merkezi, otomatik sistemi kuracak; Python ve SQL ile veri hatları, API entegrasyonları ve AI araçları geliştirecek.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": "Yeni mezun (0–2 yıl deneyimli), Claude deneyimi olan, İngilizceyi akıcı konuşan ve Hindistan'da yaşayan adaylar",
-    "calisma_modeli": "uzaktan",
-    "ucretli": "evet",
-    "teknolojiler": [
-     "Python",
-     "SQL",
-     "Claude",
-     "Git",
-     "API",
-     "Gather"
-    ]
-   },
-   "alanlar": [
-    "yazilim",
-    "yapay_zeka"
-   ],
-   "calisma_modeli": "uzaktan",
-   "girisim": false,
-   "yayin": "2026-11-06",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Yeni mezun",
-   "firma_gorunen": "Secfix",
-   "sehirler": [],
-   "uzaktan": true
-  },
-  {
-   "kimlik": "6ca5038b7243b96c",
-   "firma": "Rapsodo",
-   "baslik": "Research Intern",
-   "url": "https://apply.workable.com/j/A9979DC759",
-   "konum": "İzmir, Turkey",
-   "kaynak": "workable",
-   "yayin_tarihi": "2026-11-16",
-   "ilk_gorulme": "2026-11-16T22:19:07.705290+00:00",
-   "dogrulama": {
-    "durum": "belirsiz",
-    "neden": "baska_sayfaya_yonlendi",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "acik_dogrulama_zamani": "2026-11-17T12:28:06.639129+00:00",
-    "bayat": false
-   },
-   "seviye": "staj",
-   "rol": "yapay_zeka",
-   "yapay_zeka": "arti",
-   "ayrinti": null,
-   "alanlar": [
-    "yazilim",
-    "yapay_zeka"
-   ],
-   "calisma_modeli": "belirsiz",
-   "girisim": false,
-   "yayin": "2026-11-16",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Staj",
-   "firma_gorunen": "Rapsodo",
-   "sehirler": [
-    "izmir"
    ],
    "uzaktan": false
   },
@@ -631,8 +451,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "kontrol_zamani": "2026-11-20T16:14:15.158952+00:00",
+    "acik_dogrulama_zamani": "2026-11-20T16:14:15.158952+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -670,55 +490,6 @@
    "uzaktan": false
   },
   {
-   "kimlik": "e0c328166ba95240",
-   "firma": "Sezzle (Türkiye, uzaktan)",
-   "baslik": "A.I. Engineering Intern ",
-   "url": "https://job-boards.greenhouse.io/sezzle/jobs/7979992003",
-   "konum": "Chile, Remote",
-   "kaynak": "greenhouse",
-   "yayin_tarihi": "2026-10-07",
-   "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
-   "dogrulama": {
-    "durum": "acik",
-    "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "bayat": false
-   },
-   "seviye": "staj",
-   "rol": "yapay_zeka",
-   "yapay_zeka": "ozunde",
-   "ayrinti": {
-    "ozet": "Sezzle'ın Data Science ekibinde yapay zeka sistemleri tasarlamak, bu sistemler için güvenilir eğitim verisi üretmek ve doğru SQL sorguları yazmak.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": "MIS, Business, Analytics/Data Analytics veya Computer alanlarında bir yükseköğretim kurumunda okuyan öğrenciler",
-    "calisma_modeli": "uzaktan",
-    "ucretli": "evet",
-    "teknolojiler": [
-     "Python",
-     "SQL",
-     "Claude",
-     "Golang",
-     "TypeScript",
-     "AWS"
-    ]
-   },
-   "alanlar": [
-    "yazilim",
-    "yapay_zeka"
-   ],
-   "calisma_modeli": "uzaktan",
-   "girisim": false,
-   "yayin": "2026-10-07",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Staj",
-   "firma_gorunen": "Sezzle",
-   "sehirler": [],
-   "uzaktan": true
-  },
-  {
    "kimlik": "94bf67e00d74fbcd",
    "firma": "Sezzle (Türkiye, uzaktan)",
    "baslik": "A.I. Engineering Intern ",
@@ -730,8 +501,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "kontrol_zamani": "2026-11-20T16:14:15.158952+00:00",
+    "acik_dogrulama_zamani": "2026-11-20T16:14:15.158952+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -768,6 +539,55 @@
    "uzaktan": true
   },
   {
+   "kimlik": "e0c328166ba95240",
+   "firma": "Sezzle (Türkiye, uzaktan)",
+   "baslik": "A.I. Engineering Intern ",
+   "url": "https://job-boards.greenhouse.io/sezzle/jobs/7979992003",
+   "konum": "Chile, Remote",
+   "kaynak": "greenhouse",
+   "yayin_tarihi": "2026-10-07",
+   "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
+   "dogrulama": {
+    "durum": "acik",
+    "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
+    "kontrol_zamani": "2026-11-20T16:14:15.158952+00:00",
+    "acik_dogrulama_zamani": "2026-11-20T16:14:15.158952+00:00",
+    "bayat": false
+   },
+   "seviye": "staj",
+   "rol": "yapay_zeka",
+   "yapay_zeka": "ozunde",
+   "ayrinti": {
+    "ozet": "Sezzle'ın Data Science ekibinde yapay zeka sistemleri tasarlamak, bu sistemler için güvenilir eğitim verisi üretmek ve doğru SQL sorguları yazmak.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": "MIS, Business, Analytics/Data Analytics veya Computer alanlarında bir yükseköğretim kurumunda okuyan öğrenciler",
+    "calisma_modeli": "uzaktan",
+    "ucretli": "evet",
+    "teknolojiler": [
+     "Python",
+     "SQL",
+     "Claude",
+     "Golang",
+     "TypeScript",
+     "AWS"
+    ]
+   },
+   "alanlar": [
+    "yazilim",
+    "yapay_zeka"
+   ],
+   "calisma_modeli": "uzaktan",
+   "girisim": false,
+   "yayin": "2026-10-07",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Staj",
+   "firma_gorunen": "Sezzle",
+   "sehirler": [],
+   "uzaktan": true
+  },
+  {
    "kimlik": "5a40af0ef5371f0b",
    "firma": "Insiderone",
    "baslik": "Junior Software Engineer (AI-Enabled) — Remote",
@@ -779,8 +599,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "lever_ilanina_ozel_basvuru_baglantisi",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "kontrol_zamani": "2026-11-20T16:14:15.158952+00:00",
+    "acik_dogrulama_zamani": "2026-11-20T16:14:15.158952+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -1547,9 +1367,9 @@
    "yayin_tarihi": "2026-10-16",
    "ilk_gorulme": "2026-10-31T22:29:02.250765+00:00",
    "dogrulama": {
-    "durum": "acik",
-    "neden": "lever_ilanina_ozel_basvuru_baglantisi",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "durum": "belirsiz",
+    "neden": "HTTPError 404",
+    "kontrol_zamani": "2026-11-20T16:14:15.158952+00:00",
     "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
     "bayat": false
    },
@@ -1592,8 +1412,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "kontrol_zamani": "2026-11-20T16:14:15.158952+00:00",
+    "acik_dogrulama_zamani": "2026-11-20T16:14:15.158952+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -1638,8 +1458,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "lever_ilanina_ozel_basvuru_baglantisi",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "kontrol_zamani": "2026-11-20T16:14:15.158952+00:00",
+    "acik_dogrulama_zamani": "2026-11-20T16:14:15.158952+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -1681,9 +1501,9 @@
    "yayin_tarihi": "2026-09-29",
    "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
    "dogrulama": {
-    "durum": "acik",
-    "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "durum": "belirsiz",
+    "neden": "HTTPError 404",
+    "kontrol_zamani": "2026-11-20T16:14:15.158952+00:00",
     "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
     "bayat": false
    },
@@ -1730,9 +1550,9 @@
    "yayin_tarihi": "2026-09-29",
    "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
    "dogrulama": {
-    "durum": "acik",
-    "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "durum": "belirsiz",
+    "neden": "HTTPError 404",
+    "kontrol_zamani": "2026-11-20T16:14:15.158952+00:00",
     "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
     "bayat": false
    },
@@ -1781,8 +1601,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "kontrol_zamani": "2026-11-20T16:14:15.158952+00:00",
+    "acik_dogrulama_zamani": "2026-11-20T16:14:15.158952+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -1829,8 +1649,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "kontrol_zamani": "2026-11-20T16:14:15.158952+00:00",
+    "acik_dogrulama_zamani": "2026-11-20T16:14:15.158952+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -1877,8 +1697,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "kontrol_zamani": "2026-11-20T16:14:15.158952+00:00",
+    "acik_dogrulama_zamani": "2026-11-20T16:14:15.158952+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -1925,8 +1745,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "kontrol_zamani": "2026-11-20T16:14:15.158952+00:00",
+    "acik_dogrulama_zamani": "2026-11-20T16:14:15.158952+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -1973,8 +1793,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "kontrol_zamani": "2026-11-20T16:14:15.158952+00:00",
+    "acik_dogrulama_zamani": "2026-11-20T16:14:15.158952+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -2021,8 +1841,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "kontrol_zamani": "2026-11-20T16:14:15.158952+00:00",
+    "acik_dogrulama_zamani": "2026-11-20T16:14:15.158952+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -2069,8 +1889,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "kontrol_zamani": "2026-11-20T16:14:15.158952+00:00",
+    "acik_dogrulama_zamani": "2026-11-20T16:14:15.158952+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -2106,91 +1926,6 @@
    "uzaktan": true
   },
   {
-   "kimlik": "5c241d38c59b1320",
-   "firma": "Replit",
-   "baslik": "Cohort 0 ",
-   "url": "https://jobs.ashbyhq.com/replit/2c147ccb-2557-40f8-aab9-64422cef220c",
-   "konum": "Foster City, CA (uzaktan)",
-   "kaynak": "ashby",
-   "yayin_tarihi": "2026-09-05",
-   "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
-   "dogrulama": {
-    "durum": "belirsiz",
-    "neden": "tek_ilan_basligi_dogrulanamadi",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "acik_dogrulama_zamani": "2026-11-17T12:28:06.639129+00:00",
-    "bayat": false
-   },
-   "seviye": "staj",
-   "rol": "yapay_zeka",
-   "yapay_zeka": "arti",
-   "ayrinti": {
-    "ozet": "Replit'in AI Research, Stratejik Finans veya CEO ofisi ekiplerinde çalışacak, matematik ağırlıklı ücretli bir staj programı. Ajan akıl yürütme, sistem optimizasyonu ve model öğrenme gibi konularda çalışılacak.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": "Matematik, bilgisayar bilimi, istatistik, fizik veya ilgili nicel alanlarda lisans, yüksek lisans ya da doktora…",
-    "calisma_modeli": "belirsiz",
-    "ucretli": "evet",
-    "teknolojiler": []
-   },
-   "alanlar": [
-    "yazilim",
-    "yapay_zeka"
-   ],
-   "calisma_modeli": "uzaktan",
-   "girisim": false,
-   "yayin": "2026-09-05",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Staj",
-   "firma_gorunen": "Replit",
-   "sehirler": [],
-   "uzaktan": true
-  },
-  {
-   "kimlik": "dc00a3424d9050ab",
-   "firma": "Voodoo",
-   "baslik": "Operations Engineer- V.I.E- New York- Blitz",
-   "url": "https://jobs.ashbyhq.com/voodoo/cdbc5d64-684b-469b-afc2-8a8c5a29f759",
-   "konum": "New York (uzaktan)",
-   "kaynak": "ashby",
-   "yayin_tarihi": "2026-09-01",
-   "ilk_gorulme": "2026-10-31T22:29:02.250765+00:00",
-   "dogrulama": {
-    "durum": "belirsiz",
-    "neden": "tek_ilan_basligi_dogrulanamadi",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "acik_dogrulama_zamani": "2026-11-17T12:28:06.639129+00:00",
-    "bayat": false
-   },
-   "seviye": "yeni_mezun",
-   "rol": "yazilim",
-   "yapay_zeka": "yok",
-   "ayrinti": {
-    "ozet": "Blitz oyun platformunda operasyon mühendisi olarak, ödeme, dolandırıcılık, destek, finans ve CRM süreçlerinde teknik ürün yönetimi, veri analizi ve Python ile süreç otomasyonu yapılacak.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": "Fransa'nın önde gelen mühendislik okullarından mezun, en az 1 yıl deneyimli, V.I.E. programına uygun (AB vatandaşı…",
-    "calisma_modeli": "belirsiz",
-    "ucretli": "evet",
-    "teknolojiler": [
-     "Python"
-    ]
-   },
-   "alanlar": [
-    "yazilim"
-   ],
-   "calisma_modeli": "uzaktan",
-   "girisim": false,
-   "yayin": "2026-09-01",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Yeni mezun",
-   "firma_gorunen": "Voodoo",
-   "sehirler": [],
-   "uzaktan": true
-  },
-  {
    "kimlik": "c8c57892fa0511fd",
    "firma": "Sezzle (Türkiye, uzaktan)",
    "baslik": "A.I. Engineering Intern ",
@@ -2202,8 +1937,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "kontrol_zamani": "2026-11-20T16:14:15.158952+00:00",
+    "acik_dogrulama_zamani": "2026-11-20T16:14:15.158952+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -2240,102 +1975,6 @@
    "uzaktan": true
   },
   {
-   "kimlik": "f934dd8886dcce41",
-   "firma": "Docplanner",
-   "baslik": "Junior Software Engineer – Early Career (Strong Problem solving & Coding Focus) - 100% Remote within Spain",
-   "url": "https://jobs.ashbyhq.com/docplanner/7b4577e9-a005-4a0a-bd2d-8213042380b2",
-   "konum": "Barcelona (uzaktan)",
-   "kaynak": "ashby",
-   "yayin_tarihi": "2026-10-02",
-   "ilk_gorulme": "2026-10-31T22:29:02.250765+00:00",
-   "dogrulama": {
-    "durum": "belirsiz",
-    "neden": "tek_ilan_basligi_dogrulanamadi",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "acik_dogrulama_zamani": "2026-11-17T12:28:06.639129+00:00",
-    "bayat": false
-   },
-   "seviye": "junior",
-   "rol": "yazilim",
-   "yapay_zeka": "arti",
-   "ayrinti": {
-    "ozet": "Docplanner'da uzaktan çalışan junior yazılım mühendisi pozisyonu; sağlık ürünleri için ürün özellikleri geliştirmek ve üretim sistemlerine katkı vermek.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": "Early career (giriş seviyesi, junior) yazılım mühendisi adayları",
-    "calisma_modeli": "uzaktan",
-    "ucretli": "belirsiz",
-    "teknolojiler": [
-     "Node.js",
-     "TypeScript",
-     "React",
-     "React Native",
-     "AWS",
-     "Kubernetes"
-    ]
-   },
-   "alanlar": [
-    "yazilim"
-   ],
-   "calisma_modeli": "uzaktan",
-   "girisim": false,
-   "yayin": "2026-10-02",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Junior",
-   "firma_gorunen": "Docplanner",
-   "sehirler": [],
-   "uzaktan": true
-  },
-  {
-   "kimlik": "6aa2fafc24471b96",
-   "firma": "Docplanner",
-   "baslik": "Junior Software Engineer – Early Career (Strong Problem solving & Coding Focus) – 100% Remote within Poland",
-   "url": "https://jobs.ashbyhq.com/docplanner/9031585a-7b58-4d06-8d4d-6bf6522a5dda",
-   "konum": "Warsaw (uzaktan)",
-   "kaynak": "ashby",
-   "yayin_tarihi": "2026-10-02",
-   "ilk_gorulme": "2026-10-31T22:29:02.250765+00:00",
-   "dogrulama": {
-    "durum": "belirsiz",
-    "neden": "tek_ilan_basligi_dogrulanamadi",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "acik_dogrulama_zamani": "2026-11-17T12:28:06.639129+00:00",
-    "bayat": false
-   },
-   "seviye": "junior",
-   "rol": "yazilim",
-   "yapay_zeka": "arti",
-   "ayrinti": {
-    "ozet": "Docplanner'da junior yazılım mühendisi olarak, sağlık platformları için Node.js, TypeScript, React gibi teknolojilerle özellik geliştirme ve ürünleri uçtan uca sahiplenme işi. İlan tam uzaktan (Polonya içinden) çalışmayı öngörüyor.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": "Erken kariyer seviyesinde (junior) yazılım mühendisi adayları",
-    "calisma_modeli": "uzaktan",
-    "ucretli": "belirsiz",
-    "teknolojiler": [
-     "Node.js",
-     "TypeScript",
-     "React",
-     "React Native",
-     "AWS",
-     "Kubernetes"
-    ]
-   },
-   "alanlar": [
-    "yazilim"
-   ],
-   "calisma_modeli": "uzaktan",
-   "girisim": false,
-   "yayin": "2026-10-02",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Junior",
-   "firma_gorunen": "Docplanner",
-   "sehirler": [],
-   "uzaktan": true
-  },
-  {
    "kimlik": "c335ba7185cdae09",
    "firma": "Beakwise Bilişim Teknolojileri ve Danışmanlık A.Ş.",
    "baslik": "Long-Term Software Engineering Intern (Istanbul R&D Hub)",
@@ -2347,8 +1986,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "kontrol_zamani": "2026-11-20T16:14:15.158952+00:00",
+    "acik_dogrulama_zamani": "2026-11-20T16:14:15.158952+00:00",
     "bayat": false
    },
    "seviye": "uzun_donem_staj",
@@ -2386,88 +2025,6 @@
    "uzaktan": false
   },
   {
-   "kimlik": "a0107510f7ce089f",
-   "firma": "Working at ING",
-   "baslik": "IT specialist for application development",
-   "url": "https://careers.ing.com/en#e7fe9360",
-   "konum": "",
-   "kaynak": "kariyer_sayfasi",
-   "yayin_tarihi": "",
-   "ilk_gorulme": "2026-11-17T12:28:06.639129+00:00",
-   "dogrulama": {
-    "durum": "belirsiz",
-    "neden": "coklu_ilan_sayfasi",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "acik_dogrulama_zamani": null,
-    "bayat": false
-   },
-   "seviye": "staj",
-   "rol": "yazilim",
-   "yapay_zeka": "yok",
-   "ayrinti": {
-    "ozet": "",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": null,
-    "calisma_modeli": "belirsiz",
-    "ucretli": "belirsiz",
-    "teknolojiler": []
-   },
-   "alanlar": [
-    "yazilim"
-   ],
-   "calisma_modeli": "belirsiz",
-   "girisim": false,
-   "yayin": null,
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Staj",
-   "firma_gorunen": "Working at ING",
-   "sehirler": [],
-   "uzaktan": false
-  },
-  {
-   "kimlik": "17b7ace03b1c3b0a",
-   "firma": "Working at ING",
-   "baslik": "IT specialist for system integration or application development",
-   "url": "https://careers.ing.com/en#970a0ce3",
-   "konum": "",
-   "kaynak": "kariyer_sayfasi",
-   "yayin_tarihi": "",
-   "ilk_gorulme": "2026-11-17T12:28:06.639129+00:00",
-   "dogrulama": {
-    "durum": "belirsiz",
-    "neden": "coklu_ilan_sayfasi",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "acik_dogrulama_zamani": null,
-    "bayat": false
-   },
-   "seviye": "staj",
-   "rol": "yazilim",
-   "yapay_zeka": "yok",
-   "ayrinti": {
-    "ozet": "",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": null,
-    "calisma_modeli": "belirsiz",
-    "ucretli": "belirsiz",
-    "teknolojiler": []
-   },
-   "alanlar": [
-    "yazilim"
-   ],
-   "calisma_modeli": "belirsiz",
-   "girisim": false,
-   "yayin": null,
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Staj",
-   "firma_gorunen": "Working at ING",
-   "sehirler": [],
-   "uzaktan": false
-  },
-  {
    "kimlik": "608f6bb47890f70a",
    "firma": "Curiosity Tech",
    "baslik": "AI Developer Stajyeri",
@@ -2479,8 +2036,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilana_ozel_basvuru_formu",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "kontrol_zamani": "2026-11-20T16:14:15.158952+00:00",
+    "acik_dogrulama_zamani": "2026-11-20T16:14:15.158952+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -2523,8 +2080,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilana_ozel_basvuru_formu",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "kontrol_zamani": "2026-11-20T16:14:15.158952+00:00",
+    "acik_dogrulama_zamani": "2026-11-20T16:14:15.158952+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -2567,8 +2124,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilana_ozel_basvuru_formu",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "kontrol_zamani": "2026-11-20T16:14:15.158952+00:00",
+    "acik_dogrulama_zamani": "2026-11-20T16:14:15.158952+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -2610,8 +2167,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilana_ozel_basvuru_formu",
-    "kontrol_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
+    "kontrol_zamani": "2026-11-20T16:14:15.158952+00:00",
+    "acik_dogrulama_zamani": "2026-11-20T16:14:15.158952+00:00",
     "bayat": false
    },
    "seviye": "staj",
