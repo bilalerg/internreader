@@ -1,7 +1,7 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-21T18:03:52.059364+03:00",
- "sayi": 63,
+ "guncelleme": "2026-11-21T22:38:31.608935+03:00",
+ "sayi": 60,
  "ilanlar": [
   {
    "kimlik": "78a5773545307a2a",
@@ -1978,49 +1978,6 @@
    "uzaktan": false
   },
   {
-   "kimlik": "71217068e2f59c58",
-   "firma": "Appnation",
-   "baslik": "Software Engineer (Backend)",
-   "url": "https://jobs.lever.co/appnation/090895b2-15dd-4c50-a3ff-a5f0362a3a76",
-   "konum": "İstanbul",
-   "kaynak": "lever",
-   "yayin_tarihi": "2026-10-16",
-   "ilk_gorulme": "2026-10-31T22:29:02.250765+00:00",
-   "dogrulama": {
-    "durum": "belirsiz",
-    "neden": "HTTPError 404",
-    "kontrol_zamani": "2026-11-20T16:14:15.158952+00:00",
-    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "bayat": false
-   },
-   "seviye": "junior",
-   "rol": "yazilim",
-   "yapay_zeka": "arti",
-   "ayrinti": {
-    "ozet": "Mobil uygulamaların arka uç sistemlerini geliştirip iyileştirecek; API'ler, veri akışları ve entegrasyonlar üzerinde çalışacak bir backend yazılım mühendisi.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": null,
-    "calisma_modeli": "belirsiz",
-    "ucretli": "belirsiz",
-    "teknolojiler": []
-   },
-   "alanlar": [
-    "yazilim"
-   ],
-   "calisma_modeli": "belirsiz",
-   "girisim": false,
-   "yayin": "2026-10-16",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Junior",
-   "firma_gorunen": "Appnation",
-   "sehirler": [
-    "istanbul"
-   ],
-   "uzaktan": false
-  },
-  {
    "kimlik": "12abda4e2ede08b9",
    "firma": "Obilet",
    "baslik": "Jr. Data Analyst",
@@ -2106,104 +2063,6 @@
    "ilan_turu": "egitim",
    "seviye_etiketi": "Eğitim programı",
    "firma_gorunen": "Commencis",
-   "sehirler": [
-    "istanbul"
-   ],
-   "uzaktan": false
-  },
-  {
-   "kimlik": "ef22582e5c504cb2",
-   "firma": "Good Job Games",
-   "baslik": "Junior Game Developer",
-   "url": "https://job-boards.greenhouse.io/goodjobgames/jobs/5332845003",
-   "konum": "Sarıyer, Istanbul",
-   "kaynak": "greenhouse",
-   "yayin_tarihi": "2026-09-29",
-   "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
-   "dogrulama": {
-    "durum": "belirsiz",
-    "neden": "ilk_basarili_listede_gorulmedi",
-    "kontrol_zamani": "2026-11-20T16:14:15.158952+00:00",
-    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "bayat": false
-   },
-   "seviye": "junior",
-   "rol": "yazilim",
-   "yapay_zeka": "yok",
-   "ayrinti": {
-    "ozet": "Mobil oyunlar için Unity ve C# ile yeni özellikler tasarlayıp geliştirecek, mevcut oyunları bakımını yapıp optimize edecek bir junior oyun geliştiricisi aranıyor.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": null,
-    "calisma_modeli": "ofis",
-    "ucretli": "belirsiz",
-    "teknolojiler": [
-     "Unity",
-     "C#",
-     "Git",
-     "Plastic"
-    ]
-   },
-   "alanlar": [
-    "yazilim",
-    "oyun"
-   ],
-   "calisma_modeli": "yerinde",
-   "girisim": true,
-   "yayin": "2026-09-29",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Junior",
-   "firma_gorunen": "Good Job Games",
-   "sehirler": [
-    "istanbul"
-   ],
-   "uzaktan": false
-  },
-  {
-   "kimlik": "11f59bb98a0feedf",
-   "firma": "Good Job Games",
-   "baslik": "Software Engineer - New Grad",
-   "url": "https://job-boards.greenhouse.io/goodjobgames/jobs/7574002003",
-   "konum": "Sarıyer, Istanbul",
-   "kaynak": "greenhouse",
-   "yayin_tarihi": "2026-09-29",
-   "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
-   "dogrulama": {
-    "durum": "belirsiz",
-    "neden": "ilk_basarili_listede_gorulmedi",
-    "kontrol_zamani": "2026-11-20T16:14:15.158952+00:00",
-    "acik_dogrulama_zamani": "2026-11-18T16:26:03.071119+00:00",
-    "bayat": false
-   },
-   "seviye": "yeni_mezun",
-   "rol": "yazilim",
-   "yapay_zeka": "yok",
-   "ayrinti": {
-    "ozet": "Backend geliştirici olarak dağıtık, yüksek performanslı oyun servisleri geliştirilecek, operasyon, veri analizi ve otomasyon için iç araçlar yazılacak.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": "Bilgisayar mühendisliği veya diğer mühendislik bölümlerinden lisans derecesi olan yeni mezunlar",
-    "calisma_modeli": "ofis",
-    "ucretli": "belirsiz",
-    "teknolojiler": [
-     "Go",
-     "AWS",
-     "NoSQL",
-     "CI/CD"
-    ]
-   },
-   "alanlar": [
-    "yazilim",
-    "oyun"
-   ],
-   "calisma_modeli": "yerinde",
-   "girisim": true,
-   "yayin": "2026-09-29",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Yeni mezun",
-   "firma_gorunen": "Good Job Games",
    "sehirler": [
     "istanbul"
    ],
