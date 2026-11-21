@@ -1,19 +1,19 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-20T19:14:34.924496+03:00",
+ "guncelleme": "2026-11-21T18:03:52.059364+03:00",
  "takip_edilen_firma": 3414,
  "taranan_firma": 946,
- "aktif_ilan": 8827,
- "ogrenci_ilani": 49,
+ "aktif_ilan": 8747,
+ "ogrenci_ilani": 63,
  "sehirler": {
-  "uzaktan": 1445,
-  "istanbul": 795,
-  "ankara": 213,
-  "izmir": 79,
-  "bursa": 66,
+  "uzaktan": 1421,
+  "istanbul": 809,
+  "ankara": 214,
+  "izmir": 81,
+  "bursa": 67,
   "kocaeli": 66,
-  "adana": 59,
-  "antalya": 53,
+  "adana": 60,
+  "antalya": 54,
   "kayseri": 53,
   "tekirdag": 53,
   "gaziantep": 52,
@@ -102,6 +102,14 @@
    "uygun": true
   },
   {
+   "baslik": "Junior Veri Bilimci",
+   "firma": "Skillbourg",
+   "seviye": "junior",
+   "rol": "veri",
+   "gerekce": "Junior veri bilimci pozisyonu",
+   "uygun": true
+  },
+  {
    "baslik": "Game Developer - New Grad",
    "firma": "Vertigo Games",
    "seviye": "yeni_mezun",
@@ -115,14 +123,6 @@
    "seviye": "staj",
    "rol": "yapay_zeka",
    "gerekce": "Görüntü işleme proje stajı, yapay zeka bilgisi tercih sebebi",
-   "uygun": true
-  },
-  {
-   "baslik": "Jr. Data Analyst",
-   "firma": "Obilet",
-   "seviye": "junior",
-   "rol": "veri",
-   "gerekce": "Jr. unvanı; veri analisti pozisyonu",
    "uygun": true
   },
   {
@@ -215,33 +215,33 @@
   }
  ],
  "huni": {
-  "aktif": 8827,
-  "konum_disi": 5867,
+  "aktif": 8747,
+  "konum_disi": 5787,
   "siniflanmamis": 3,
   "seviye": {
-   "belirsiz": 1539,
-   "deneyimli": 1024,
-   "junior": 146,
-   "staj": 142,
+   "belirsiz": 1530,
+   "deneyimli": 1005,
+   "junior": 156,
+   "staj": 151,
+   "yari_zamanli": 52,
    "yeni_mezun": 48,
-   "yari_zamanli": 44,
-   "uzun_donem_staj": 14
+   "uzun_donem_staj": 15
   },
   "rol": {
-   "teknik_degil": 1769,
-   "yazilim": 580,
+   "teknik_degil": 1782,
+   "yazilim": 564,
    "diger_teknik": 456,
-   "yapay_zeka": 77,
-   "veri": 75
+   "yapay_zeka": 79,
+   "veri": 76
   },
   "ogrenciye_uygun": {
-   "yayinda": 49,
+   "yayinda": 63,
    "basvuru_dogrulanamadi": 40,
-   "hayalet": 3,
-   "supheli": 2
+   "supheli": 4,
+   "hayalet": 3
   },
-  "belirsiz_seviye_hedef_rol": 280,
-  "ogrenci_seviye_diger_teknik": 61,
+  "belirsiz_seviye_hedef_rol": 270,
+  "ogrenci_seviye_diger_teknik": 63,
   "ornek_belirsiz": [
    "Teamblue: PHP (Symfony) Software Engineer",
    "Rapsodo: Back-End Engineer",
@@ -278,7 +278,7 @@
    "Analog Devices: Associate Engineer, RF Design Engineering",
    "Solenis: Associate Scientist - Gebze",
    "DEMSAY ELEKTRONİK San. ve Tic. A.Ş: Ar-Ge Merkezi Staj Programı",
-   "Mesut Bilgisayar San. Tic. Ltd. Şti.: Mesut Bilgisayar San. Tic. Ltd. Şti. İçin Ağ İşletmenliği Stajyeri",
+   "Mesut Bilgisayar San. Tic. Ltd. Şti.: Ağ İşletmenliği Stajyeri",
    "BRY BİREY EĞİTİM YAYIN BASIM PAZARLAMA SAN. VE TİC. A.Ş.: Bilgi İşlem ve Grafik Tasarım Stajyeri",
    "Analog Devices: RF Design Engineering Intern",
    "Valven: New Graduate Program",
