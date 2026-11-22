@@ -1,13 +1,18 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-21T22:38:31.608935+03:00",
+ "guncelleme": "2026-11-22T18:17:59.330763+03:00",
  "takip_edilen_firma": 3414,
  "taranan_firma": 946,
- "aktif_ilan": 8539,
+ "firma_faaliyeti": {
+  "faal": 0,
+  "belirsiz": 3414,
+  "adres_sorunlu": 0
+ },
+ "aktif_ilan": 8526,
  "ogrenci_ilani": 60,
  "sehirler": {
-  "uzaktan": 1409,
-  "istanbul": 806,
+  "uzaktan": 1408,
+  "istanbul": 774,
   "ankara": 214,
   "izmir": 81,
   "bursa": 67,
@@ -215,33 +220,33 @@
   }
  ],
  "huni": {
-  "aktif": 8539,
-  "konum_disi": 5595,
+  "aktif": 8526,
+  "konum_disi": 5617,
   "siniflanmamis": 3,
   "seviye": {
-   "belirsiz": 1524,
-   "deneyimli": 1000,
-   "junior": 151,
-   "staj": 151,
-   "yari_zamanli": 52,
-   "yeni_mezun": 48,
+   "belirsiz": 1505,
+   "deneyimli": 993,
+   "staj": 150,
+   "junior": 148,
+   "yari_zamanli": 51,
+   "yeni_mezun": 44,
    "uzun_donem_staj": 15
   },
   "rol": {
-   "teknik_degil": 1767,
-   "yazilim": 563,
-   "diger_teknik": 456,
-   "yapay_zeka": 79,
-   "veri": 76
+   "teknik_degil": 1744,
+   "yazilim": 556,
+   "diger_teknik": 454,
+   "yapay_zeka": 78,
+   "veri": 74
   },
   "ogrenciye_uygun": {
    "yayinda": 60,
-   "basvuru_dogrulanamadi": 43,
+   "basvuru_dogrulanamadi": 41,
    "supheli": 4,
    "hayalet": 3
   },
-  "belirsiz_seviye_hedef_rol": 270,
-  "ogrenci_seviye_diger_teknik": 63,
+  "belirsiz_seviye_hedef_rol": 265,
+  "ogrenci_seviye_diger_teknik": 62,
   "ornek_belirsiz": [
    "Teamblue: PHP (Symfony) Software Engineer",
    "Rapsodo: Back-End Engineer",
