@@ -137,7 +137,13 @@ def main(argv: list[str] | None = None) -> int:
     if arg.komut == "dogrula":
         print(json.dumps(basvurulari_dogrula(ayar, oturum, sinir=arg.sinir), ensure_ascii=False))
     elif arg.komut == "firma-denetle":
-        print(json.dumps(firmalari_denetle(oturum, ayar.kullanici_ajani, arg.sinir, kuru=not arg.yaz), ensure_ascii=False, indent=1))
+        print(
+            json.dumps(
+                firmalari_denetle(oturum, ayar.kullanici_ajani, arg.sinir, kuru=not arg.yaz),
+                ensure_ascii=False,
+                indent=1,
+            )
+        )
     elif arg.komut == "ice-aktar":
         firmalari_ice_aktar(oturum, arg.csv, arg.kaynak)
         if arg.eski_onbellek:
