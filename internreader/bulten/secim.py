@@ -17,7 +17,7 @@ from collections.abc import Set
 
 from internreader.isleme.tekillestirme import ilan_anahtari
 
-FIRMA_BASINA_AZAMI = 2  # bir e-postada aynı firmadan en fazla; kalanlar sonraki bültene kalır
+FIRMA_BASINA_AZAMI = 2  # bir e-postada aynı firmadan en fazla; yenilik süresi dolanlar sonraki bültene taşınmaz
 YAKIN_ILAN_SAYISI = 5  # tam uyan ilan yokken gösterilen "yakın ilan" sayısı
 # Tam uyan ilan yoksa önce en az önemli tercih gevşetilir; alan en son: yapay zekâ isteyene önce yapay zekâ gösterilir
 GEVSETME_SIRASI = ("sadece_girisim", "calisma_modelleri", "sehirler", "seviyeler", "alanlar")
@@ -47,7 +47,7 @@ def eslesir(ilan: dict, tercihler: dict) -> bool:
 
 def bulten_sec(ilanlar: list[dict], tercihler: dict, gonderilmis: Set[str], azami: int) -> list[dict]:
     """Abonenin bu bültende alacağı ilanlar. Sıra depodan gelir (isleme/guncellik.py → siralama_anahtari). Seçilmeyen
-    ilan "gönderildi" sayılmaz: sınır ya da firma kotası yüzünden kalan ilan sonraki bültende gider.
+    ilan "gönderildi" sayılmaz: sınır ya da firma kotası yüzünden kalan ilan, yenilik süresi içindeyse sonraki bültende gider.
     `gonderilmis`: aboneye daha önce giden ilanların kimlikleri ve firma + başlık anahtarları (depo.gonderilen_kimlikler).
     Anahtar yalnızca seçilen ilan için ayrılır: İstanbul'daki kopyası uymayan aboneye Ankara'daki kopyası gider."""
     secilen: list[dict] = []

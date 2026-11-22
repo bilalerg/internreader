@@ -20,7 +20,7 @@ Kurallar:
 import dataclasses
 import logging
 from contextlib import nullcontext
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 from sqlalchemy.orm import sessionmaker
@@ -46,6 +46,8 @@ kayit = logging.getLogger(__name__)
 
 
 ARDISIK_HATA_SINIRI = 5  # art arda bu kadar hata: sorun tek abonede değil, gönderimin kendisinde
+GUNLUK_YENILIK = timedelta(hours=36)  # günlük iş birkaç saat gecikse de bir önceki taramadaki ilan kaçmasın
+HAFTALIK_YENILIK = timedelta(days=8)  # haftalık gönderim günü birkaç saat kaysa da haftanın keşifleri kalsın
 SON_GONDERIM = "son_bulten_gonderimi"  # durum: son bülten gönderiminin kapsadığı an
 SON_ONIZLEME = "son_bulten_onizlemesi"  # yalnızca başarıyla e-posta olarak giden önizlemenin kapsadığı an
 HAZIRLIK = "bulten_hazirligi"  # durum: elle onay modunda sabah işinin ilanları hazırladığı an (önizleme ve bülten sonu)
@@ -90,6 +92,8 @@ def bultenleri_gonder(
         aboneler = [(a.id, a.eposta, dict(a.tercihler or {}), a.siklik) for a in depo.gonderime_hazir_aboneler(o, an)]
         firma_sayisi = depo.taranan_firma_sayisi(o)
     ilanlar = [i for i in guncel if taze_mi(i, an)]
+    gunluk_ilanlar = [i for i in ilanlar if datetime.fromisoformat(i["ilk_gorulme"]) >= an - GUNLUK_YENILIK]
+    haftalik_ilanlar = [i for i in ilanlar if datetime.fromisoformat(i["ilk_gorulme"]) >= an - HAFTALIK_YENILIK]
 
     rapor = {
         "hazir_abone": len(aboneler),
@@ -116,7 +120,9 @@ def bultenleri_gonder(
                 break
             with oturum() as o:
                 gonderilmis = depo.gonderilen_kimlikler(o, abone_id)
-            secilen = bulten_sec(ilanlar, tercihler, gonderilmis, AZAMI_ILAN)
+            secilen = bulten_sec(
+                haftalik_ilanlar if siklik == "haftalik" else gunluk_ilanlar, tercihler, gonderilmis, AZAMI_ILAN
+            )
             if not secilen:
                 rapor["bos"] += 1
                 continue
@@ -312,7 +318,8 @@ def onizleme_gonder(
             son_bulten = depo.son_bulten_tarihi(o)
             if son_bulten:
                 baslangiclar.append(son_bulten)
-        baslangic = max(baslangiclar) if baslangiclar else None
+        # İlk bülten/önizleme bütün geçmiş birikimi "yeni" diye göndermesin.
+        baslangic = max([*baslangiclar, an - GUNLUK_YENILIK])
     bitis = onay_siniri(oturum) if ayar.bulten_elle else None
     with oturum() as o:
         ilanlar = [

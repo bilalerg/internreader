@@ -13,7 +13,7 @@ from internreader.ayar import GELISTIRME_ANAHTARI, ayarlari_oku
 from internreader.bakim import bakim_yap
 from internreader.bulten import bultenleri_gonder, eslesir
 from internreader.bulten.sablon import DIS_ARAMA_NOTU, DIS_ARAMALAR, bulten_epostasi
-from internreader.db import Abone, simdi
+from internreader.db import Abone, IlanKaydi, simdi
 from internreader.eposta import Eposta, SmtpGonderici
 from internreader.model import Ilan
 from internreader.yayin import TURKIYE_SAATI
@@ -88,6 +88,17 @@ def test_yalnizca_onayli_abonelere_uyan_yeni_ilanlar_bir_kez_gider(oturum):
     bultenleri_gonder(oturum, g3, AYAR, yarin)
     metin = next(e.metin for e in g3.gidenler if e.alici == "ist@x.com")
     assert "Junior Backend Developer" in metin and "Software Engineering Intern" not in metin
+
+
+def test_ilk_bulten_onceden_birikmis_ilanlari_yeni_diye_gondermez(oturum):
+    eski = ilan_ekle(oturum, "https://u/eski", "Eski Staj", "Istanbul")
+    ilan_ekle(oturum, "https://u/yeni", "Yeni Staj", "Istanbul")
+    with oturum.begin() as o:
+        o.get(IlanKaydi, eski).ilk_gorulme = simdi() - timedelta(days=5)
+    abone_ekle(oturum, "ogrenci@x.com", HEPSI)
+    g = SahteGonderici()
+    assert bultenleri_gonder(oturum, g, AYAR)["ilan"] == 1
+    assert "Yeni Staj" in g.gidenler[0].metin and "Eski Staj" not in g.gidenler[0].metin
 
 
 def test_haftalik_abone_pazartesi_sabahi_alir(oturum):

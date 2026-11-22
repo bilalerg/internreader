@@ -196,6 +196,17 @@ def test_bulten_gonderilmese_bile_ayni_onizleme_ertesi_gun_tekrarlanmaz(oturum, 
     assert "Veri Stajı" in g.gidenler[-1].metin and "Yazılım Stajı" not in g.gidenler[-1].metin
 
 
+def test_ilk_onizleme_gecmiste_birikmis_ilanlari_yeni_diye_gostermez(oturum, tmp_path):
+    eski = ilan_ekle(oturum, "https://a.test/eski", "Eski Staj", "Istanbul", firma="Acme")
+    ilk_gorulmeyi_ayarla(oturum, eski, simdi() - timedelta(days=5))
+    g = SahteGonderici()
+    assert onizleme_gonder(oturum, g, ELLE, ADRES, klasor=tmp_path)["sonuc"] == "yeni_ilan_yok"
+    assert g.gidenler == []
+    ilan_ekle(oturum, "https://b.test/yeni", "Yeni Staj", "Istanbul", firma="Beta")
+    assert onizleme_gonder(oturum, g, ELLE, ADRES, klasor=tmp_path)["ilan"] == 1
+    assert "Yeni Staj" in g.gidenler[0].metin and "Eski Staj" not in g.gidenler[0].metin
+
+
 def test_kuru_ve_basarisiz_onizleme_siniri_ilerletmez(oturum, tmp_path):
     ilan_ekle(oturum, "https://a.test/1", "Yazılım Stajı", "Istanbul", firma="Acme")
     g = SahteGonderici()
