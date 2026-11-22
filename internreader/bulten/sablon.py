@@ -299,11 +299,12 @@ def onizleme_epostasi(
     n = len(ilanlar)
     return _eposta(
         alici,
-        f"[ÖNİZLEME] Onay bekleyen {n} yeni ilan",
-        f'Onay bekleyen <span style="background:{FOSFOR};color:{MUREKKEP};padding:0 4px">{n} yeni ilan</span>',
-        "Son bültenden sonra ilk kez görülen ilanların hepsi (tercih, 15 ilan ve firma sınırı yok). Yanlış olanın "
-        "adresini kopyala: GitHub → Actions → İlan gizle. Hepsi doğruysa: Actions → Bülteni gönder. Göndermezsen bu "
-        "ilanlar yarınki önizlemede de görünür.",
+        f"[ÖNİZLEME] Kontrol edilecek {n} ilan",
+        f'İlk kez gördüğümüz <span style="background:{FOSFOR};color:{MUREKKEP};padding:0 4px">{n} ilan</span>',
+        "Son önizleme veya bültenden sonra ilk kez gördüğümüz ilanlar (tercih, 15 ilan ve firma sınırı yok). "
+        "Bu, ilanların bugün yayımlandığı anlamına gelmez; yayın tarihini ve başvuru adresini kontrol et. "
+        "Yanlış olanın adresini kopyala: GitHub → Actions → İlan gizle. Uygun olanları göndermek için: "
+        "Actions → Bülteni gönder. Göndermezsen aynı önizleme tekrar e-postalanmaz.",
         ilanlar,
         an,
         site_adresi,

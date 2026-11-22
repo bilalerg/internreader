@@ -101,7 +101,7 @@ jobs:
             git push
           fi
       - name: Önizleme (elle onay modu)
-        # Son bültenden beri görülen yeni ilanlar adresleriyle TEST_EPOSTA'ya; yeni ilan yoksa e-posta gitmez.
+        # Son başarılı önizleme/bültenden beri ilk kez görülen ilanlar TEST_EPOSTA'ya; yoksa e-posta gitmez.
         # Gizli değer yoksa iş başarısız olmaz, uyarı yazılır. Adres kayıtlarda görünmez (test_bulten.yml ile aynı).
         if: ${{ steps.kontrol.outputs.atla != 'true' && env.INTERNREADER_BULTEN_ELLE == '1' }}
         env:

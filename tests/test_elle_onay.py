@@ -18,7 +18,7 @@ from internreader.api import uygulama_olustur
 from internreader.ayar import ayarlari_oku
 from internreader.boru import TaramaRaporu
 from internreader.bulten import bultenleri_gonder, hos_geldin_gonder
-from internreader.bulten.gonderim import HAZIRLIK, SON_GONDERIM, hazirligi_yaz, onizleme_gonder
+from internreader.bulten.gonderim import HAZIRLIK, SON_GONDERIM, SON_ONIZLEME, hazirligi_yaz, onizleme_gonder
 from internreader.db import Bulten, IlanKaydi, motor_olustur, oturum_fabrikasi, simdi
 from internreader.model import Ilan
 from internreader.sema import alembic_ayari, semayi_hazirla
@@ -93,13 +93,14 @@ def test_elle_modda_sabah_isi_bulten_gondermez_onizleme_verir_bulten_elle_gider(
         assert komut.main(["bulten-dene", ADRES, "--yeni"]) == 0
     cikti = capsys.readouterr()
     (onizleme,) = g.gidenler
-    assert onizleme.alici == ADRES and onizleme.konu == "[ÖNİZLEME] Onay bekleyen 1 yeni ilan"
+    assert onizleme.alici == ADRES and onizleme.konu == "[ÖNİZLEME] Kontrol edilecek 1 ilan"
     assert "https://a.test/staj-1" in onizleme.metin and "https://a.test/staj-1" in onizleme.html
     assert 'href="https://a.test/staj-1"' not in onizleme.html
     assert "/api/t/" not in onizleme.html  # tıklama ölçümüne girmez
     assert '"sonuc": "gonderildi"' in cikti.out and ADRES not in cikti.out + cikti.err + caplog.text
     with oturum() as o:
         assert o.query(Bulten).count() == 0  # önizleme kayıt yazmaz
+        assert depo.durum_al(o, SON_ONIZLEME)  # yalnızca tekrar göndermeyi önleyen sınır kaydedilir
 
     # Önizlemeden sonra ara tarama yeni ilan buldu: önizlemesi gitmediği için bu bültene girmez
     gec = ilan_ekle(oturum, "https://b.test/staj-2", "Veri Stajı", "Istanbul", firma="Beta", rol="veri")
@@ -148,7 +149,7 @@ def test_elle_modda_hos_geldin_otomatik(oturum):
     assert "Yazılım Stajı" in g.gidenler[-1].metin
 
 
-def test_onizleme_butun_yeni_ilanlari_sinirsiz_gosterir_eski_tarihliyi_isaretler(oturum, tmp_path):
+def test_onizleme_butun_yeni_ilanlari_sinirsiz_gosterir_eski_tarihliyi_dislar(oturum, tmp_path):
     for n in range(20):  # bültende firma başına 2, e-posta başına 15; önizlemede hepsi
         ilan_ekle(oturum, f"https://a.test/{n}", f"Staj {n}", "Istanbul", firma="Acme")
     with oturum.begin() as o:
@@ -158,12 +159,11 @@ def test_onizleme_butun_yeni_ilanlari_sinirsiz_gosterir_eski_tarihliyi_isaretler
         depo.siniflandirma_kaydet(o, {eski.kimlik: {"seviye": "staj", "rol": "yazilim", "yapay_zeka": "yok"}}, "t")
     g = SahteGonderici()
     rapor = onizleme_gonder(oturum, g, AYAR, ADRES, klasor=tmp_path, an=simdi())
-    assert rapor["ilan"] == 21 and len(g.gidenler) == 1
+    assert rapor["ilan"] == 20 and len(g.gidenler) == 1
     (e,) = g.gidenler
     assert all(f"https://a.test/{n}" in e.metin for n in range(20))
-    # Eski tarihli ilan bültene girmez ama sessizlik e-postasında yakın ilan olabilir: listede, işaretli
-    assert "Eski Staj" in e.metin and e.metin.count("Eski tarihli: bültene girmez") == 1
-    assert "Eski tarihli: bültene girmez" in e.html
+    # Bültene girmeyecek eski tarihli ilan, onay bekleyenler önizlemesine de girmez.
+    assert "Eski Staj" not in e.metin and "Eski Staj" not in e.html
     assert (tmp_path / "onizleme.html").exists()
 
 
@@ -181,6 +181,37 @@ def test_onizleme_son_gonderimden_sonrasini_gosterir_yeni_yoksa_gitmez(oturum, t
     assert "Veri Stajı" in g.gidenler[0].metin and "Yazılım Stajı" not in g.gidenler[0].metin
     with oturum() as o:
         assert depo.durum_al(o, SON_GONDERIM)
+
+
+def test_bulten_gonderilmese_bile_ayni_onizleme_ertesi_gun_tekrarlanmaz(oturum, tmp_path):
+    ilan_ekle(oturum, "https://a.test/1", "Yazılım Stajı", "Istanbul", firma="Acme")
+    g = SahteGonderici()
+    ilk = onizleme_gonder(oturum, g, ELLE, ADRES, klasor=tmp_path)
+    assert ilk["ilan"] == 1 and len(g.gidenler) == 1
+    ikinci = onizleme_gonder(oturum, g, ELLE, ADRES, klasor=tmp_path, an=simdi() + timedelta(days=1))
+    assert ikinci["sonuc"] == "yeni_ilan_yok" and len(g.gidenler) == 1
+    ilan_ekle(oturum, "https://b.test/2", "Veri Stajı", "Istanbul", firma="Beta", rol="veri")
+    ucuncu = onizleme_gonder(oturum, g, ELLE, ADRES, klasor=tmp_path, an=simdi() + timedelta(days=1))
+    assert ucuncu["ilan"] == 1 and len(g.gidenler) == 2
+    assert "Veri Stajı" in g.gidenler[-1].metin and "Yazılım Stajı" not in g.gidenler[-1].metin
+
+
+def test_kuru_ve_basarisiz_onizleme_siniri_ilerletmez(oturum, tmp_path):
+    ilan_ekle(oturum, "https://a.test/1", "Yazılım Stajı", "Istanbul", firma="Acme")
+    g = SahteGonderici()
+    assert onizleme_gonder(oturum, g, ELLE, ADRES, gonder=False, klasor=tmp_path)["ilan"] == 1
+    with oturum() as o:
+        assert depo.durum_al(o, SON_ONIZLEME) is None
+
+    class HataGonderici:
+        def gonder(self, _ileti):
+            raise RuntimeError("SMTP hatası")
+
+    with pytest.raises(RuntimeError, match="SMTP hatası"):
+        onizleme_gonder(oturum, HataGonderici(), ELLE, ADRES, klasor=tmp_path)
+    with oturum() as o:
+        assert depo.durum_al(o, SON_ONIZLEME) is None
+    assert onizleme_gonder(oturum, g, ELLE, ADRES, klasor=tmp_path)["ilan"] == 1
 
 
 def test_gizli_ilan_yayindan_eposta_dan_duser_yeniden_taramada_donmez(oturum, tmp_path):

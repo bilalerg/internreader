@@ -99,7 +99,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("eski", type=Path)
     alt.add_parser("durum")
     alt.add_parser("bulten-gonder", help="abonelere kişiye özel bülten")
-    p = alt.add_parser("bulten-dene", help="o anki veriyle tek adrese test e-postası; veritabanına hiçbir şey yazmaz")
+    p = alt.add_parser("bulten-dene", help="tek adrese test e-postası; --yeni başarılı önizleme sınırını kaydeder")
     p.add_argument("eposta")
     tur = p.add_mutually_exclusive_group()
     tur.add_argument("--hos-geldin", action="store_true", help="bülten yerine yeni aboneye giden hoş geldin e-postası")

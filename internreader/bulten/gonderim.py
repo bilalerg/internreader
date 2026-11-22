@@ -46,7 +46,8 @@ kayit = logging.getLogger(__name__)
 
 
 ARDISIK_HATA_SINIRI = 5  # art arda bu kadar hata: sorun tek abonede değil, gönderimin kendisinde
-SON_GONDERIM = "son_bulten_gonderimi"  # durum: son bülten gönderiminin kapsadığı an (önizleme buradan başlar)
+SON_GONDERIM = "son_bulten_gonderimi"  # durum: son bülten gönderiminin kapsadığı an
+SON_ONIZLEME = "son_bulten_onizlemesi"  # yalnızca başarıyla e-posta olarak giden önizlemenin kapsadığı an
 HAZIRLIK = "bulten_hazirligi"  # durum: elle onay modunda sabah işinin ilanları hazırladığı an (önizleme ve bülten sonu)
 
 
@@ -297,22 +298,29 @@ def onizleme_gonder(
     klasor: Path = CIKTI,
     an: datetime | None = None,
 ) -> dict:
-    """Elle onay modunun sabah önizlemesi: son bülten gönderiminden sonra ilk kez görülen BÜTÜN güncel ilanlar (tercih,
-    15 ilan ve firma sınırı yok), her birinin adresiyle. Eski tarihli ilan bültene girmez ama sessizlik e-postasında
-    yakın ilan olabilir: listede kalır, işaretlenir. Elle onay modunda sabah işinin hazırlık anıyla sınırlıdır:
-    "Bülteni gönder" tam olarak bu ilanları kullanır. Yeni ilan yoksa e-posta gitmez. Veritabanına yazmaz, adres
-    yazdırmaz (deneme_gonder gibi)."""
+    """Elle onay modunun sabah önizlemesi: son bülten/önizlemeden sonra ilk kez görülen BÜTÜN güncel ilanlar (tercih,
+    15 ilan ve firma sınırı yok), her birinin adresiyle. Eski tarihli ilan bültene girmeyeceği için önizlemede de
+    gösterilmez. Elle onay modunda sabah işinin hazırlık anıyla sınırlıdır:
+    "Bülteni gönder" hazırlık anına kadarki onay bekleyen ilanları kullanır. Yeni ilan yoksa e-posta gitmez.
+    Yalnızca başarılı önizleme gönderiminin sınırı saklanır; kuru deneme ve gönderim hatası sınırı ilerletmez."""
     an = an or simdi()
     with oturum() as o:
         son = depo.durum_al(o, SON_GONDERIM)
-        baslangic = datetime.fromisoformat(son) if son else depo.son_bulten_tarihi(o)
+        son_onizleme = depo.durum_al(o, SON_ONIZLEME)
+        baslangiclar = [datetime.fromisoformat(x) for x in (son, son_onizleme) if x]
+        if not son:
+            son_bulten = depo.son_bulten_tarihi(o)
+            if son_bulten:
+                baslangiclar.append(son_bulten)
+        baslangic = max(baslangiclar) if baslangiclar else None
     bitis = onay_siniri(oturum) if ayar.bulten_elle else None
     with oturum() as o:
         ilanlar = [
-            i if taze_mi(i, an) else {**i, "onizleme_notu": "Eski tarihli: bültene girmez, yakın ilan olarak gidebilir"}
+            i
             for i in dogrulanmis_ilanlar(
                 [zenginlestir(x) for x in depo.yayinlanacak_ilanlar(o, sonra=baslangic, an=an, once=bitis)]
             )
+            if taze_mi(i, an)
         ]
     rapor = {
         "tur": "onizleme",
@@ -340,6 +348,11 @@ def onizleme_gonder(
     rapor["onizleme"] = str(onizleme)
     if gonder:
         gonderici.gonder(ileti)
+        with oturum.begin() as o:
+            kapsanan = (bitis or an).astimezone(UTC)
+            onceki = depo.durum_al(o, SON_ONIZLEME)
+            if onceki is None or datetime.fromisoformat(onceki) < kapsanan:
+                depo.durum_yaz(o, SON_ONIZLEME, kapsanan.isoformat())
         rapor["gonderildi"] = True
     return rapor
 
