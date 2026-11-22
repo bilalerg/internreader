@@ -46,7 +46,11 @@ def test_tek_adrese_test_konusuyla_gider_ve_hic_kayit_yazmaz(oturum, tmp_path):
     g = SahteGonderici()
     rapor = deneme_gonder(oturum, g, AYAR, ADRES, klasor=tmp_path)
     (e,) = g.gidenler
-    assert e.alici == ADRES and e.konu == "[TEST] Bugün sana uygun 1 yeni staj ilanı" and "Yazılım Stajı" in e.metin
+    assert (
+        e.alici == ADRES
+        and e.konu == "[TEST] Son taramalarda sana uygun 1 ilan keşfettik"
+        and "Yazılım Stajı" in e.metin
+    )
     assert rapor["gonderildi"] and rapor["tur"] == "bulten" and rapor["ilan"] == 1 and not rapor["kayitli_abone"]
     assert kayit_sayilari(oturum) == (0, 0)
     assert "Yazılım Stajı" in (tmp_path / "test_bulten.html").read_text(encoding="utf-8")  # önizleme
@@ -83,7 +87,7 @@ def test_kayitli_aboneye_kendi_tercihleri_degilse_tum_ilanlar(oturum, tmp_path):
     g = SahteGonderici()
     deneme_gonder(oturum, g, AYAR, ADRES.upper(), klasor=tmp_path)  # büyük harfle de abone bulunur
     assert "Veri Stajı" in g.gidenler[0].metin and "Yazılım Stajı" not in g.gidenler[0].metin
-    assert "Bu hafta" in g.gidenler[0].konu
+    assert "Son haftada" in g.gidenler[0].konu
     h = SahteGonderici()
     deneme_gonder(oturum, h, AYAR, "baska@ornek.com", klasor=tmp_path)
     assert "Veri Stajı" in h.gidenler[0].metin and "Yazılım Stajı" in h.gidenler[0].metin

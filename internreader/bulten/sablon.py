@@ -195,12 +195,13 @@ def bulten_epostasi(
 ) -> Eposta:
     """`ilanlar` en fazla AZAMI_ILAN olmalı (çağıran keser). iptal_adresi: sayfa; tek_tik_adresi: RFC 8058 POST adresi."""
     n = len(ilanlar)
-    donem = "Bugün" if siklik == "gunluk" else "Bu hafta"
+    donem = "Son taramalarda" if siklik == "gunluk" else "Son haftada"
     return _eposta(
         alici,
-        f"{donem} sana uygun {n} yeni staj ilanı",
-        f'{donem} sana uygun <span style="background:{FOSFOR};color:{MUREKKEP};padding:0 4px">{n} yeni ilan</span>',
-        "Şirketlerin sayfalarından ve ilan sitelerinden, seçtiğin şehir, alan ve seviyeye göre ayıklandı.",
+        f"{donem} sana uygun {n} ilan keşfettik",
+        f'{donem} sana uygun <span style="background:{FOSFOR};color:{MUREKKEP};padding:0 4px">{n} ilan keşfettik</span>',
+        "İlanları şirketlerin sayfalarında ve ilan sistemlerinde ilk kez gördük. Bu, bugün yayımlandıkları anlamına "
+        "gelmez; yayın tarihini ve başvuru koşullarını kontrol et.",
         ilanlar,
         an,
         site_adresi,
