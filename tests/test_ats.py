@@ -107,6 +107,21 @@ def test_teamtailor_rss_ayristirma():
     assert i.aciklama == "Python & SQL"
 
 
+@pytest.mark.parametrize(
+    ("slug", "adres"),
+    [
+        ("careers.sekgames.com", "https://careers.sekgames.com/jobs.rss"),
+        ("acme", "https://acme.teamtailor.com/jobs.rss"),
+    ],
+)
+def test_teamtailor_rss_adresi(slug, adres):
+    from internreader.kaynaklar.ats import teamtailor
+
+    http = SahteHttp(sayfalar={adres: TEAMTAILOR_RSS})
+    ilanlar = teamtailor(http, "SekGames", slug)
+    assert len(ilanlar) == 1 and ilanlar[0].baslik == "Backend Intern"
+
+
 def test_personio_xml_ayristirma():
     from internreader.kaynaklar.ats import personio_ayristir
 

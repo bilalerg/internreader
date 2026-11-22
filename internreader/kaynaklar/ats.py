@@ -345,7 +345,8 @@ def bamboohr(http: HttpIstemci, firma: str, slug: str) -> list[Ilan]:
 
 
 def teamtailor(http: HttpIstemci, firma: str, slug: str) -> list[Ilan]:
-    return teamtailor_ayristir(firma, http.sayfa(f"https://{slug}.teamtailor.com/jobs.rss")[1])
+    alan = slug if "." in slug else f"{slug}.teamtailor.com"
+    return teamtailor_ayristir(firma, http.sayfa(f"https://{alan}/jobs.rss")[1])
 
 
 def personio(http: HttpIstemci, firma: str, slug: str) -> list[Ilan]:
