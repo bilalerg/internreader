@@ -73,6 +73,7 @@ export interface Istatistik {
   guncelleme: string;
   takip_edilen_firma: number; // listedeki tüm firmalar (ayda bir keşif)
   taranan_firma: number; // ilan sayfası bilinen, her sabah okunanlar
+  firma_faaliyeti?: { faal: number; belirsiz: number; adres_sorunlu: number };
   aktif_ilan: number;
   ogrenci_ilani: number;
   sehirler: Record<string, number>;

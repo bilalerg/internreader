@@ -34,12 +34,14 @@ def istatistik_metni(
     firma_adlari: list[str],
     kararlar: list[dict],
     huni: dict | None = None,
+    firma_faaliyeti: dict[str, int] | None = None,
 ) -> str:
     veri = {
         "surum": SURUM,
         "guncelleme": an.isoformat(),
         "takip_edilen_firma": takip_edilen_firma,
         "taranan_firma": taranan_firma,
+        "firma_faaliyeti": firma_faaliyeti or {"faal": 0, "belirsiz": takip_edilen_firma, "adres_sorunlu": 0},
         "aktif_ilan": aktif_ilan,
         "ogrenci_ilani": ogrenci_ilani,
         "sehirler": sehir_dagilimi(konumlar),

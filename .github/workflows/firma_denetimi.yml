@@ -1,0 +1,48 @@
+name: Firma faaliyeti denetimi
+
+on:
+  schedule:
+    - cron: "0 1 * * *" # Her gün 04:00 Türkiye; 250 firma ile liste yaklaşık iki haftada dolaşılır.
+  workflow_dispatch:
+    inputs:
+      sinir:
+        description: "Denetlenecek firma sayısı (1-500)"
+        type: number
+        default: 100
+      yaz:
+        description: "Kanıtları veritabanına kaydet (önce kuru pilotu inceleyin)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: internreader-veritabani
+  cancel-in-progress: false
+
+jobs:
+  denetle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      PYTHONUTF8: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - run: pip install -r requirements.txt
+      - name: Firma denetimi
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            python -m internreader firma-denetle --sinir 250 --yaz > firma-denetimi.json
+          elif [ "${{ inputs.yaz }}" = "true" ]; then
+            python -m internreader firma-denetle --sinir "${{ inputs.sinir }}" --yaz > firma-denetimi.json
+          else
+            python -m internreader firma-denetle --sinir "${{ inputs.sinir }}" > firma-denetimi.json
+          fi
+          cat firma-denetimi.json >> "$GITHUB_STEP_SUMMARY"

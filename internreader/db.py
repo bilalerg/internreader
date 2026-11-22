@@ -58,6 +58,12 @@ class Firma(Taban):
     etiket: Mapped[list] = mapped_column(JSON, default=list)
     kaynak: Mapped[str | None] = mapped_column(Text)  # virgülle birleşen liste adları; uzayabilir
     aktif: Mapped[bool] = mapped_column(Boolean, default=True)
+    # Tarama izni (aktif) ile şirketin faal olduğuna dair kanıt ayrı tutulur.
+    faaliyet_durumu: Mapped[str] = mapped_column(String(20), default="belirsiz", server_default="belirsiz")
+    faaliyet_kontrol_zamani: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    faaliyet_kanit_tarihi: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    faaliyet_kanit_url: Mapped[str | None] = mapped_column(Text)
+    faaliyet_neden: Mapped[str | None] = mapped_column(String(80))
     kesif_tarihi: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     eklenme: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=simdi)
 

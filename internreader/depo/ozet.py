@@ -30,6 +30,15 @@ def takip_edilen_firma_sayisi(oturum: Session) -> int:
     return oturum.scalar(select(func.count()).select_from(Firma).where(Firma.aktif.is_(True)))
 
 
+def firma_faaliyet_sayilari(oturum: Session) -> dict[str, int]:
+    sayilar = {"faal": 0, "belirsiz": 0, "adres_sorunlu": 0}
+    for durum, adet in oturum.execute(
+        select(Firma.faaliyet_durumu, func.count()).where(Firma.aktif.is_(True)).group_by(Firma.faaliyet_durumu)
+    ):
+        sayilar[durum] = adet
+    return sayilar
+
+
 def aktif_konumlar(oturum: Session) -> list[str]:
     return list(oturum.scalars(select(IlanKaydi.konum).where(IlanKaydi.aktif.is_(True))))
 
@@ -123,6 +132,7 @@ def ornek_kararlar(oturum: Session, uygun: bool, sinir: int = 8) -> list[dict]:
 def istatistik(oturum: Session) -> dict:
     return {
         "firma": oturum.scalar(select(func.count()).select_from(Firma)),
+        "firma_faaliyeti": firma_faaliyet_sayilari(oturum),
         "ilan_sistemi_bilinen": oturum.scalar(select(func.count()).select_from(Firma).where(Firma.ats.is_not(None))),
         "kariyer_sayfasi": oturum.scalar(select(func.count()).select_from(Firma).where(Firma.kariyer.is_not(None))),
         "aktif_ilan": oturum.scalar(select(func.count()).select_from(IlanKaydi).where(IlanKaydi.aktif.is_(True))),

@@ -38,6 +38,7 @@ from internreader.bulten.gonderim import deneme_gonder, hazirligi_yaz, onay_sini
 from internreader.db import oturum_fabrikasi, simdi
 from internreader.dogrulama import basvurulari_dogrula
 from internreader.eposta import gonderici_olustur
+from internreader.firma_faaliyeti import firmalari_denetle
 from internreader.gunluk import kayit_kur
 from internreader.ice_aktar import eski_onbellegi_ice_aktar, firma_listesini_esitle, firmalari_ice_aktar
 from internreader.kesif import kesfet
@@ -75,6 +76,9 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--web-bul", type=int, default=0, metavar="N", help="ayrıca adresi olmayan N firmaya web adresi ara")
     p = alt.add_parser("firma-kapat", help='"ilanımı kaldır" talebi: firmayı taramadan ve yayından çıkar')
     p.add_argument("firma", help='firma adı ("Acme Teknoloji") ya da alan adı ("acme.com")')
+    p = alt.add_parser("firma-denetle", help="şirket faaliyeti kanıtlarını kontrol et; varsayılan olarak yazmaz")
+    p.add_argument("--sinir", type=int, default=100)
+    p.add_argument("--yaz", action="store_true", help="sonuçları veritabanına kaydet")
 
     for ad in ("tara", "calistir"):
         p = alt.add_parser(ad)
@@ -132,6 +136,8 @@ def main(argv: list[str] | None = None) -> int:
 
     if arg.komut == "dogrula":
         print(json.dumps(basvurulari_dogrula(ayar, oturum, sinir=arg.sinir), ensure_ascii=False))
+    elif arg.komut == "firma-denetle":
+        print(json.dumps(firmalari_denetle(oturum, ayar.kullanici_ajani, arg.sinir, kuru=not arg.yaz), ensure_ascii=False, indent=1))
     elif arg.komut == "ice-aktar":
         firmalari_ice_aktar(oturum, arg.csv, arg.kaynak)
         if arg.eski_onbellek:

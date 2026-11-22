@@ -82,6 +82,7 @@ from internreader.depo.onbellek import (
 )
 from internreader.depo.ozet import (
     aktif_konumlar,
+    firma_faaliyet_sayilari,
     ilan_hunisi,
     istatistik,
     ornek_firma_adlari,
@@ -151,6 +152,7 @@ __all__ = [
     "durum_yaz",
     "taranan_firma_sayisi",
     "takip_edilen_firma_sayisi",
+    "firma_faaliyet_sayilari",
     "aktif_konumlar",
     "ornek_firma_adlari",
     "ornek_kararlar",

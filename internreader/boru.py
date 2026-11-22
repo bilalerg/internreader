@@ -403,6 +403,7 @@ def yayinla(oturum: sessionmaker, cikti_dizini: Path = CIKTI, tam_liste_linki: s
             an,
             takip_edilen_firma=depo.takip_edilen_firma_sayisi(o),
             taranan_firma=depo.taranan_firma_sayisi(o),
+            firma_faaliyeti=depo.firma_faaliyet_sayilari(o),
             aktif_ilan=len(depo.aktif_konumlar(o)),
             ogrenci_ilani=len(hepsi),
             konumlar=depo.aktif_konumlar(o),
