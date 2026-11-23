@@ -12,7 +12,7 @@ from internreader.api import HizSiniri, uygulama_olustur
 from internreader.ayar import GELISTIRME_ANAHTARI, ayarlari_oku
 from internreader.bulten import bultenleri_gonder
 from internreader.bulten.secim import yakin_ilanlar
-from internreader.db import Bulten, Gonderim, simdi
+from internreader.db import Bulten, Gonderim, IlanKaydi, simdi
 from internreader.eposta import Eposta
 from internreader.model import Ilan
 
@@ -264,7 +264,10 @@ def test_haftalik_abone_pazartesi_mantigi_bozulmaz(oturum):
     sali = pazartesi + timedelta(days=1)
     assert bultenleri_gonder(oturum, SahteGonderici(), AYAR, sali)["hazir_abone"] == 0
     assert bultenleri_gonder(oturum, SahteGonderici(), AYAR, pazartesi)["gonderilen"] == 0  # yeni ilan yok
-    ilan_ekle(oturum, "https://j.test/2", "Yeni Staj", firma="Beta")
+    kimlik = ilan_ekle(oturum, "https://j.test/2", "Yeni Staj", firma="Beta")
+    # Test saati ileri alındığından, yeni ilanı iki bülten arasındaki güne yerleştir.
+    with oturum.begin() as o:
+        o.get(IlanKaydi, kimlik).ilk_gorulme = pazartesi + timedelta(days=1)
     sonraki = SahteGonderici()
     assert bultenleri_gonder(oturum, sonraki, AYAR, pazartesi + timedelta(days=7))["gonderilen"] == 1
     assert "Yeni Staj" in sonraki.gidenler[0].metin and "Yazılım Stajı" not in sonraki.gidenler[0].metin
