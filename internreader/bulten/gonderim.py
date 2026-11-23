@@ -18,6 +18,7 @@ Kurallar:
 """
 
 import dataclasses
+import json
 import logging
 from contextlib import nullcontext
 from datetime import UTC, datetime, timedelta
@@ -39,6 +40,7 @@ from internreader.bulten.secim import bulten_sec, yakin_ilanlar
 from internreader.bulten.tiklama import baglanti_yapici
 from internreader.db import simdi
 from internreader.eposta import EpostaGonderici
+from internreader.isleme.tekillestirme import ilan_anahtari
 from internreader.yayin import TURKIYE_SAATI, zenginlestir
 from internreader.yayin.whatsapp import taze_mi
 
@@ -50,6 +52,7 @@ GUNLUK_YENILIK = timedelta(hours=36)  # günlük iş birkaç saat gecikse de bir
 HAFTALIK_YENILIK = timedelta(days=8)  # haftalık gönderim günü birkaç saat kaysa da haftanın keşifleri kalsın
 SON_GONDERIM = "son_bulten_gonderimi"  # durum: son bülten gönderiminin kapsadığı an
 SON_ONIZLEME = "son_bulten_onizlemesi"  # yalnızca başarıyla e-posta olarak giden önizlemenin kapsadığı an
+SON_ONIZLEME_ANAHTARLARI = "onizlemede_gonderilen_ilan_anahtarlari"  # yeni URL ile gelen aynı rol tekrar önizlenmesin
 HAZIRLIK = "bulten_hazirligi"  # durum: elle onay modunda sabah işinin ilanları hazırladığı an (önizleme ve bülten sonu)
 
 
@@ -313,6 +316,7 @@ def onizleme_gonder(
     with oturum() as o:
         son = depo.durum_al(o, SON_GONDERIM)
         son_onizleme = depo.durum_al(o, SON_ONIZLEME)
+        onizlenen_anahtarlar = set(json.loads(depo.durum_al(o, SON_ONIZLEME_ANAHTARLARI) or "[]"))
         baslangiclar = [datetime.fromisoformat(x) for x in (son, son_onizleme) if x]
         if not son:
             son_bulten = depo.son_bulten_tarihi(o)
@@ -322,13 +326,20 @@ def onizleme_gonder(
         baslangic = max([*baslangiclar, an - GUNLUK_YENILIK])
     bitis = onay_siniri(oturum) if ayar.bulten_elle else None
     with oturum() as o:
-        ilanlar = [
+        adaylar = [
             i
             for i in dogrulanmis_ilanlar(
                 [zenginlestir(x) for x in depo.yayinlanacak_ilanlar(o, sonra=baslangic, an=an, once=bitis)]
             )
             if taze_mi(i, an)
         ]
+    ilanlar = []
+    secilen_anahtarlar = set()
+    for ilan in adaylar:
+        anahtar = ilan_anahtari(ilan["firma"], ilan["baslik"])
+        if anahtar not in onizlenen_anahtarlar and anahtar not in secilen_anahtarlar:
+            ilanlar.append(ilan)
+            secilen_anahtarlar.add(anahtar)
     rapor = {
         "tur": "onizleme",
         "sonuc": "gonderildi" if ilanlar else "yeni_ilan_yok",
@@ -360,6 +371,7 @@ def onizleme_gonder(
             onceki = depo.durum_al(o, SON_ONIZLEME)
             if onceki is None or datetime.fromisoformat(onceki) < kapsanan:
                 depo.durum_yaz(o, SON_ONIZLEME, kapsanan.isoformat())
+            depo.durum_yaz(o, SON_ONIZLEME_ANAHTARLARI, json.dumps(sorted(onizlenen_anahtarlar | secilen_anahtarlar)))
         rapor["gonderildi"] = True
     return rapor
 

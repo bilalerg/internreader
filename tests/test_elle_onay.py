@@ -207,6 +207,21 @@ def test_ilk_onizleme_gecmiste_birikmis_ilanlari_yeni_diye_gostermez(oturum, tmp
     assert "Yeni Staj" in g.gidenler[0].metin and "Eski Staj" not in g.gidenler[0].metin
 
 
+def test_onizlemede_ayni_rol_yeni_url_ile_tekrar_gonderilmez(oturum, tmp_path):
+    ilan_ekle(oturum, "https://a.test/ilk", "Yazılım Stajı", "Istanbul", firma="Acme")
+    g = SahteGonderici()
+    assert onizleme_gonder(oturum, g, ELLE, ADRES, klasor=tmp_path)["ilan"] == 1
+
+    ilan_ekle(oturum, "https://a.test/yeni", "YAZILIM STAJI", "Istanbul", firma="Acme")
+    tekrar = onizleme_gonder(oturum, g, ELLE, ADRES, klasor=tmp_path)
+    assert tekrar["sonuc"] == "yeni_ilan_yok"
+    assert len(g.gidenler) == 1
+
+    ilan_ekle(oturum, "https://a.test/veri", "Veri Stajı", "Istanbul", firma="Acme", rol="veri")
+    assert onizleme_gonder(oturum, g, ELLE, ADRES, klasor=tmp_path)["ilan"] == 1
+    assert "Veri Stajı" in g.gidenler[-1].metin
+
+
 def test_kuru_ve_basarisiz_onizleme_siniri_ilerletmez(oturum, tmp_path):
     ilan_ekle(oturum, "https://a.test/1", "Yazılım Stajı", "Istanbul", firma="Acme")
     g = SahteGonderici()
