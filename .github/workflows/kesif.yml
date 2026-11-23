@@ -1,7 +1,7 @@
 # Firma keşfi (yapay zekâ kullanmaz):
 # - her pazartesi: arama API'siyle listede olmayan firmaları bul (SERPER_API_KEY ya da BRAVE_API_KEY yoksa atlanır)
 # - ayın 1'i: listedeki tüm firmaların ilan sistemi / kariyer sayfası keşfi
-# - elle çalıştırma: ikisi birden, kaynağı bilinmeyen bütün firmalar için (Serper kredisi harcar, aşağıdaki sayılar kadar)
+# - elle çalıştırma: CSV'yi eşitle, sonra kaynağı bilinmeyen firmalar için iki aramayı da yap
 name: Keşif
 
 on:
@@ -13,11 +13,11 @@ on:
       kariyer_ara:
         description: "Kaç firmanın kariyer sayfası aransın (firma başına bir Serper kredisi)"
         type: number
-        default: 1200
+        default: 3000
       web_bul:
         description: "Sitesi bilinmeyen kaç firmanın web adresi aransın (firma başına bir Serper kredisi)"
         type: number
-        default: 300
+        default: 3000
 
 permissions:
   contents: read
@@ -44,6 +44,9 @@ jobs:
           cache-dependency-path: requirements.txt
       - name: Bağımlılıklar
         run: pip install -r requirements.txt
+      - name: Firma listesini eşitle
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: python -m internreader ice-aktar veri/firmalar.csv
       # Önce ücretsiz keşif: ana sayfasında kariyer bağlantısı olan firmaya arama kredisi harcanmaz
       - name: Aylık keşif
         if: ${{ github.event.schedule == '0 2 1 * *' || github.event_name == 'workflow_dispatch' }}
