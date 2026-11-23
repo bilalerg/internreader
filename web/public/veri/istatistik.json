@@ -1,26 +1,26 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-22T18:17:59.330763+03:00",
- "takip_edilen_firma": 3414,
- "taranan_firma": 946,
+ "guncelleme": "2026-11-23T22:21:17.062004+03:00",
+ "takip_edilen_firma": 3418,
+ "taranan_firma": 952,
  "firma_faaliyeti": {
-  "faal": 0,
-  "belirsiz": 3414,
-  "adres_sorunlu": 0
+  "faal": 57,
+  "belirsiz": 3360,
+  "adres_sorunlu": 1
  },
- "aktif_ilan": 8526,
- "ogrenci_ilani": 60,
+ "aktif_ilan": 9156,
+ "ogrenci_ilani": 56,
  "sehirler": {
-  "uzaktan": 1408,
-  "istanbul": 774,
-  "ankara": 214,
+  "uzaktan": 1458,
+  "istanbul": 790,
+  "ankara": 205,
   "izmir": 81,
   "bursa": 67,
-  "kocaeli": 66,
+  "kocaeli": 65,
   "adana": 60,
-  "antalya": 54,
-  "kayseri": 53,
+  "antalya": 56,
   "tekirdag": 53,
+  "kayseri": 53,
   "gaziantep": 52,
   "konya": 50,
   "trabzon": 50,
@@ -131,11 +131,11 @@
    "uygun": true
   },
   {
-   "baslik": "Yazılım Geliştirme Uzmanı",
-   "firma": "BEŞ YILDIZ EĞİTİM KURUMLARI",
+   "baslik": "Veri Bilimci",
+   "firma": "Skillbourg",
    "seviye": "yari_zamanli",
-   "rol": "yazilim",
-   "gerekce": "Yarı zamanlı eğitim kurumu yazılım geliştirme uzmanı arıyor",
+   "rol": "veri",
+   "gerekce": "Yarı zamanlı veri bilimci, canlı proje tercihi",
    "uygun": true
   },
   {
@@ -163,11 +163,11 @@
    "uygun": false
   },
   {
-   "baslik": "Become a Luxury Brand Evaluator in Palm Beach Gardens, US",
-   "firma": "Cxg",
+   "baslik": "Compliance Officer/MLRO",
+   "firma": "Bybit",
    "seviye": "belirsiz",
    "rol": "teknik_degil",
-   "gerekce": "Lüks marka değerlendirme, deneyim şartı belirtilmemiş freelance iş",
+   "gerekce": "Uyum görevlisi ve MLRO, mevzuat ağırlıklı",
    "uygun": false
   },
   {
@@ -220,32 +220,32 @@
   }
  ],
  "huni": {
-  "aktif": 8526,
-  "konum_disi": 5617,
+  "aktif": 9156,
+  "konum_disi": 6179,
   "siniflanmamis": 3,
   "seviye": {
-   "belirsiz": 1505,
-   "deneyimli": 993,
-   "staj": 150,
-   "junior": 148,
-   "yari_zamanli": 51,
-   "yeni_mezun": 44,
+   "belirsiz": 1552,
+   "deneyimli": 1023,
+   "staj": 147,
+   "junior": 146,
+   "yari_zamanli": 50,
+   "yeni_mezun": 41,
    "uzun_donem_staj": 15
   },
   "rol": {
-   "teknik_degil": 1744,
-   "yazilim": 556,
-   "diger_teknik": 454,
-   "yapay_zeka": 78,
+   "teknik_degil": 1782,
+   "yazilim": 568,
+   "diger_teknik": 470,
+   "yapay_zeka": 80,
    "veri": 74
   },
   "ogrenciye_uygun": {
-   "yayinda": 60,
+   "yayinda": 56,
    "basvuru_dogrulanamadi": 41,
-   "supheli": 4,
-   "hayalet": 3
+   "hayalet": 3,
+   "supheli": 2
   },
-  "belirsiz_seviye_hedef_rol": 265,
+  "belirsiz_seviye_hedef_rol": 273,
   "ogrenci_seviye_diger_teknik": 62,
   "ornek_belirsiz": [
    "Teamblue: PHP (Symfony) Software Engineer",
@@ -254,6 +254,7 @@
    "Lotus AI Yapay Zeka ve Bilişim Çözümleri A.Ş.: Java Spring Developer",
    "VERİ-SİS VERİ VE İLETİŞİM SİSTEMLERİ SAN.VE TİC.AŞ: Front End Developer",
    "Trendyol: Software Engineer",
+   "KARTACA BİLİŞİM A.Ş.: Veri Mühendisi",
    "Teltonika: Network Software Engineer",
    "ENHENCER YAZILIM A.Ş: Full Stack Developer",
    "C-Prot: Database Administrator",
@@ -266,16 +267,15 @@
    "Vertigo Games: Game Developer",
    "MULTİGOO BİLİŞİM ANONİM ŞİRKETİ: Frontend (React) Developer",
    "ESEN: Software Design Engineer",
-   "MAGLAB OYUN TEKNOLOJİLERİ BİLİŞİM YAZILIM TASARIM YAYINCILIK TİCARET ANONİM ŞİRKETİ: Game Developer, On-Site Ankara · Full Time",
-   "SİMOFUN OYUN TEKNOLOJİLERİ ANONİM ŞİRKETİ: Unity Oyun Geliştiricisi"
+   "MAGLAB OYUN TEKNOLOJİLERİ BİLİŞİM YAZILIM TASARIM YAYINCILIK TİCARET ANONİM ŞİRKETİ: Game Developer, On-Site Ankara · Full Time"
   ],
   "ornek_diger_teknik": [
    "Baykar: 2027 Yaz Dönemi Staj | Kullanıcı Teknik Destek",
    "Merck: Clinical Research Intern",
    "Opsin Elektro Optik: Aday Mühendis Programı",
    "Opsin Elektro Optik: Staj Programı",
+   "BİLGİKURUMSAL YAZILIM TEKNOLOJİLERİ A.Ş.: Stajyer",
    "Goodyear: Quality Engineer Associate (Equipment NPI)",
-   "Luxoft: (Graduate) Home Trial Engineer",
    "RENA MEKATRONİK SİSTEMLERİ SAN. VE TİC. LTD.ŞTİ: Stajyer Mühendis (Tüm Bölümler)",
    "Siemens: Part-Time Working Student – Talents with Disabilities",
    "Analog Devices: RF Design Engineering Summer Intern",

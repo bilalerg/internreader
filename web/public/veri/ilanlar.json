@@ -1,7 +1,7 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-22T18:17:59.330763+03:00",
- "sayi": 60,
+ "guncelleme": "2026-11-23T22:21:17.062004+03:00",
+ "sayi": 56,
  "ilanlar": [
   {
    "kimlik": "78a5773545307a2a",
@@ -15,8 +15,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "lever_ilanina_ozel_basvuru_baglantisi",
-    "kontrol_zamani": "2026-11-22T15:17:39.703685+00:00",
-    "acik_dogrulama_zamani": "2026-11-22T15:17:39.703685+00:00",
+    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
     "bayat": false
    },
    "seviye": "yeni_mezun",
@@ -58,8 +58,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-22T15:17:39.703685+00:00",
-    "acik_dogrulama_zamani": "2026-11-22T15:17:39.703685+00:00",
+    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -105,8 +105,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-22T15:17:39.703685+00:00",
-    "acik_dogrulama_zamani": "2026-11-22T15:17:39.703685+00:00",
+    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -1070,8 +1070,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-22T15:17:39.703685+00:00",
-    "acik_dogrulama_zamani": "2026-11-22T15:17:39.703685+00:00",
+    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -1106,47 +1106,6 @@
    "sehirler": [
     "istanbul"
    ],
-   "uzaktan": false
-  },
-  {
-   "kimlik": "5a40af0ef5371f0b",
-   "firma": "Insiderone",
-   "baslik": "Junior Software Engineer (AI-Enabled) — Remote",
-   "url": "https://jobs.lever.co/insiderone/176f6234-e706-492e-a984-9eee80d28d22",
-   "konum": "Turkey",
-   "kaynak": "lever",
-   "yayin_tarihi": "2026-11-05",
-   "ilk_gorulme": "2026-11-05T14:58:47.951557+00:00",
-   "dogrulama": {
-    "durum": "acik",
-    "neden": "lever_ilanina_ozel_basvuru_baglantisi",
-    "kontrol_zamani": "2026-11-22T15:17:39.703685+00:00",
-    "acik_dogrulama_zamani": "2026-11-22T15:17:39.703685+00:00",
-    "bayat": false
-   },
-   "seviye": "junior",
-   "rol": "yazilim",
-   "yapay_zeka": "arti",
-   "ayrinti": {
-    "ozet": "Junior yazılım mühendisi olarak backend tarafında, AI destekli özellikler geliştirilmesine katkı sağlanacak uzaktan çalışma pozisyonu.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": null,
-    "calisma_modeli": "uzaktan",
-    "ucretli": "belirsiz",
-    "teknolojiler": []
-   },
-   "alanlar": [
-    "yazilim"
-   ],
-   "calisma_modeli": "uzaktan",
-   "girisim": false,
-   "yayin": "2026-11-05",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Junior",
-   "firma_gorunen": "Insiderone",
-   "sehirler": [],
    "uzaktan": false
   },
   {
@@ -1413,48 +1372,6 @@
    "uzaktan": false
   },
   {
-   "kimlik": "d32bf84f503b6df9",
-   "firma": "P.I. Works Inc",
-   "baslik": "Junior Software Support Engineer",
-   "url": "https://tr.jooble.org/away/5145558948917604049?p=1&pos=5&rgn=0&cid=215&ckey=junior+software+developer&jobAge=19&relb=69&brelb=10&scr=4142.707077&bscr=600.39233&aq=289116116297788624&elckey=6063536846274726013",
-   "konum": "İstanbul, Fatih",
-   "kaynak": "jooble",
-   "yayin_tarihi": "2026-10-31",
-   "ilk_gorulme": "2026-10-31T17:07:30.982091+00:00",
-   "dogrulama": {
-    "durum": "belirsiz",
-    "neden": "henuz_kontrol_edilmedi",
-    "kontrol_zamani": null,
-    "bayat": false
-   },
-   "seviye": "junior",
-   "rol": "yazilim",
-   "yapay_zeka": "yok",
-   "ayrinti": {
-    "ozet": "",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": null,
-    "calisma_modeli": "belirsiz",
-    "ucretli": "belirsiz",
-    "teknolojiler": []
-   },
-   "alanlar": [
-    "yazilim"
-   ],
-   "calisma_modeli": "belirsiz",
-   "girisim": false,
-   "yayin": "2026-10-31",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Junior",
-   "firma_gorunen": "P.I. Works Inc",
-   "sehirler": [
-    "istanbul"
-   ],
-   "uzaktan": false
-  },
-  {
    "kimlik": "2f231601a46fe224",
    "firma": "Utilwork Information Technology",
    "baslik": "Junior PL/SQL Developers",
@@ -1491,49 +1408,6 @@
    "ilan_turu": "is",
    "seviye_etiketi": "Junior",
    "firma_gorunen": "Utilwork Information Technology",
-   "sehirler": [
-    "istanbul"
-   ],
-   "uzaktan": false
-  },
-  {
-   "kimlik": "eea08c0b85f4bab7",
-   "firma": "Baykar",
-   "baslik": "2027 Yaz Dönemi Staj | Elektro-Optik Sistemler Yazılım Ekibi",
-   "url": "https://tr.jooble.org/away/1177191568228028321?p=1&pos=27&rgn=0&cid=215&ckey=uzun+d%c3%b6nem+stajyer+yaz%c4%b1l%c4%b1m&jobAge=34&relb=69&brelb=10&scr=3123.9972869999997&bscr=452.75323&aq=-5631039591400048331&elckey=5665357516356375486",
-   "konum": "İstanbul, Fatih",
-   "kaynak": "jooble",
-   "yayin_tarihi": "2026-10-30",
-   "ilk_gorulme": "2026-10-31T17:07:30.982091+00:00",
-   "dogrulama": {
-    "durum": "belirsiz",
-    "neden": "henuz_kontrol_edilmedi",
-    "kontrol_zamani": null,
-    "bayat": false
-   },
-   "seviye": "staj",
-   "rol": "yazilim",
-   "yapay_zeka": "yok",
-   "ayrinti": {
-    "ozet": "Baykar'ın 2027 yaz döneminde Elektro-Optik Sistemler Yazılım Ekibi için staj ilanı. İnsansız hava araçlarında kullanılan gimbal kamera ve görüntüleme sistemleri projelerinde AR-GE faaliyetlerini kapsıyor.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": null,
-    "calisma_modeli": "belirsiz",
-    "ucretli": "belirsiz",
-    "teknolojiler": []
-   },
-   "alanlar": [
-    "yazilim",
-    "savunma"
-   ],
-   "calisma_modeli": "belirsiz",
-   "girisim": false,
-   "yayin": "2026-10-30",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Staj",
-   "firma_gorunen": "Baykar",
    "sehirler": [
     "istanbul"
    ],
@@ -1713,88 +1587,6 @@
    "uzaktan": false
   },
   {
-   "kimlik": "92b485bcdd689d21",
-   "firma": "2078 Bentley Systems Yazılım Çözümleri Limited Şirketi",
-   "baslik": "Software Quality Analyst, Intern",
-   "url": "https://tr.jooble.org/away/-1039121458242137194?p=1&pos=3&rgn=0&cid=215&ckey=software+intern&jobAge=91&relb=70&brelb=10&scr=3795.7654&bscr=542.2522&aq=-9018227981068880028&elckey=-4540692779024497765",
-   "konum": "Türkiye",
-   "kaynak": "jooble",
-   "yayin_tarihi": "2026-10-28",
-   "ilk_gorulme": "2026-10-31T17:07:30.982091+00:00",
-   "dogrulama": {
-    "durum": "belirsiz",
-    "neden": "henuz_kontrol_edilmedi",
-    "kontrol_zamani": null,
-    "bayat": false
-   },
-   "seviye": "staj",
-   "rol": "yazilim",
-   "yapay_zeka": "yok",
-   "ayrinti": {
-    "ozet": "Bentley Systems Ankara ekibinde Software Quality Analyst stajı; ekibin yazılım kalite güvence çalışmalarına katılınacak.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": null,
-    "calisma_modeli": "belirsiz",
-    "ucretli": "belirsiz",
-    "teknolojiler": []
-   },
-   "alanlar": [
-    "yazilim"
-   ],
-   "calisma_modeli": "belirsiz",
-   "girisim": false,
-   "yayin": "2026-10-28",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Staj",
-   "firma_gorunen": "2078 Bentley Systems",
-   "sehirler": [],
-   "uzaktan": false
-  },
-  {
-   "kimlik": "f93b74066408668a",
-   "firma": "Analog Devices, Inc.",
-   "baslik": "Software Development Engineering Intern",
-   "url": "https://tr.jooble.org/away/6156243530307154941?p=1&pos=2&rgn=0&cid=215&ckey=software+intern&jobAge=115&relb=70&brelb=10&scr=3875.6606&bscr=553.6658&aq=-9018227981068880028&elckey=-4540692779024497765",
-   "konum": "Kocaeli, Dilovası",
-   "kaynak": "jooble",
-   "yayin_tarihi": "2026-10-27",
-   "ilk_gorulme": "2026-10-31T17:07:30.982091+00:00",
-   "dogrulama": {
-    "durum": "belirsiz",
-    "neden": "henuz_kontrol_edilmedi",
-    "kontrol_zamani": null,
-    "bayat": false
-   },
-   "seviye": "staj",
-   "rol": "yazilim",
-   "yapay_zeka": "yok",
-   "ayrinti": {
-    "ozet": "",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": null,
-    "calisma_modeli": "belirsiz",
-    "ucretli": "belirsiz",
-    "teknolojiler": []
-   },
-   "alanlar": [
-    "yazilim"
-   ],
-   "calisma_modeli": "belirsiz",
-   "girisim": false,
-   "yayin": "2026-10-27",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Staj",
-   "firma_gorunen": "Analog Devices, Inc",
-   "sehirler": [
-    "kocaeli"
-   ],
-   "uzaktan": false
-  },
-  {
    "kimlik": "8b8c077c008ea42a",
    "firma": "GoFasti",
    "baslik": "1182 - Junior Frontend Developer",
@@ -1891,8 +1683,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-22T15:17:39.703685+00:00",
-    "acik_dogrulama_zamani": "2026-11-22T15:17:39.703685+00:00",
+    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -1937,8 +1729,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "lever_ilanina_ozel_basvuru_baglantisi",
-    "kontrol_zamani": "2026-11-22T15:17:39.703685+00:00",
-    "acik_dogrulama_zamani": "2026-11-22T15:17:39.703685+00:00",
+    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -1982,8 +1774,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-22T15:17:39.703685+00:00",
-    "acik_dogrulama_zamani": "2026-11-22T15:17:39.703685+00:00",
+    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -2031,8 +1823,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-22T15:17:39.703685+00:00",
-    "acik_dogrulama_zamani": "2026-11-22T15:17:39.703685+00:00",
+    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -2080,8 +1872,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-22T15:17:39.703685+00:00",
-    "acik_dogrulama_zamani": "2026-11-22T15:17:39.703685+00:00",
+    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -2128,8 +1920,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-22T15:17:39.703685+00:00",
-    "acik_dogrulama_zamani": "2026-11-22T15:17:39.703685+00:00",
+    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -2176,8 +1968,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-22T15:17:39.703685+00:00",
-    "acik_dogrulama_zamani": "2026-11-22T15:17:39.703685+00:00",
+    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -2224,8 +2016,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-22T15:17:39.703685+00:00",
-    "acik_dogrulama_zamani": "2026-11-22T15:17:39.703685+00:00",
+    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -2272,8 +2064,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-22T15:17:39.703685+00:00",
-    "acik_dogrulama_zamani": "2026-11-22T15:17:39.703685+00:00",
+    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -2320,8 +2112,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-22T15:17:39.703685+00:00",
-    "acik_dogrulama_zamani": "2026-11-22T15:17:39.703685+00:00",
+    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -2368,8 +2160,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-22T15:17:39.703685+00:00",
-    "acik_dogrulama_zamani": "2026-11-22T15:17:39.703685+00:00",
+    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -2416,8 +2208,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-22T15:17:39.703685+00:00",
-    "acik_dogrulama_zamani": "2026-11-22T15:17:39.703685+00:00",
+    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -2454,6 +2246,53 @@
    "uzaktan": true
   },
   {
+   "kimlik": "75e4bbceddf71956",
+   "firma": "Sezzle (Türkiye, uzaktan)",
+   "baslik": "Software Engineer Intern ",
+   "url": "https://job-boards.greenhouse.io/sezzle/jobs/6233081003",
+   "konum": "Colombia, Remote",
+   "kaynak": "greenhouse",
+   "yayin_tarihi": "2026-08-31",
+   "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
+   "dogrulama": {
+    "durum": "acik",
+    "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
+    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "bayat": false
+   },
+   "seviye": "staj",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Sezzle'da uzaktan çalışan yazılım mühendisi stajı; backend ve frontend servislerinin geliştirilmesi ve bakımına, kod incelemelerine ve hata düzeltmelerine destek verilecek.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": "Öğrenciler veya yeni mezunlar",
+    "calisma_modeli": "uzaktan",
+    "ucretli": "evet",
+    "teknolojiler": [
+     "Golang",
+     "TypeScript",
+     "Python",
+     "React",
+     "MySQL"
+    ]
+   },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "uzaktan",
+   "girisim": false,
+   "yayin": "2026-08-31",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Staj",
+   "firma_gorunen": "Sezzle",
+   "sehirler": [],
+   "uzaktan": true
+  },
+  {
    "kimlik": "c335ba7185cdae09",
    "firma": "Beakwise Bilişim Teknolojileri ve Danışmanlık A.Ş.",
    "baslik": "Long-Term Software Engineering Intern (Istanbul R&D Hub)",
@@ -2465,8 +2304,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-22T15:17:39.703685+00:00",
-    "acik_dogrulama_zamani": "2026-11-22T15:17:39.703685+00:00",
+    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
     "bayat": false
    },
    "seviye": "uzun_donem_staj",
@@ -2515,8 +2354,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilana_ozel_basvuru_formu",
-    "kontrol_zamani": "2026-11-22T15:17:39.703685+00:00",
-    "acik_dogrulama_zamani": "2026-11-22T15:17:39.703685+00:00",
+    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -2559,8 +2398,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilana_ozel_basvuru_formu",
-    "kontrol_zamani": "2026-11-22T15:17:39.703685+00:00",
-    "acik_dogrulama_zamani": "2026-11-22T15:17:39.703685+00:00",
+    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -2603,8 +2442,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilana_ozel_basvuru_formu",
-    "kontrol_zamani": "2026-11-22T15:17:39.703685+00:00",
-    "acik_dogrulama_zamani": "2026-11-22T15:17:39.703685+00:00",
+    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -2646,8 +2485,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilana_ozel_basvuru_formu",
-    "kontrol_zamani": "2026-11-22T15:17:39.703685+00:00",
-    "acik_dogrulama_zamani": "2026-11-22T15:17:39.703685+00:00",
+    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
     "bayat": false
    },
    "seviye": "staj",
