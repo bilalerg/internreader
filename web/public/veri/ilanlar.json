@@ -1,7 +1,7 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-24T21:42:36.819240+03:00",
- "sayi": 40,
+ "guncelleme": "2026-11-25T01:49:02.113944+03:00",
+ "sayi": 41,
  "ilanlar": [
   {
    "kimlik": "78a5773545307a2a",
@@ -141,6 +141,42 @@
    "firma_gorunen": "Sezzle",
    "sehirler": [],
    "uzaktan": true
+  },
+  {
+   "kimlik": "b8da60f8008d7512",
+   "firma": "Lostar",
+   "baslik": "Cybersecurity Internship (Exclusive for ITU SGMYO Students)",
+   "url": "https://jobs.smartrecruiters.com/Lostar/744000163545119",
+   "konum": "Istanbul, tr",
+   "kaynak": "smartrecruiters",
+   "yayin_tarihi": "2026-11-24",
+   "ilk_gorulme": "2026-11-24T22:36:27.038300+00:00",
+   "dogrulama": {
+    "durum": "acik",
+    "neden": "ats_acik_ilan_listesinde",
+    "kontrol_zamani": null,
+    "acik_dogrulama_zamani": "2026-11-24T22:36:27.038300+00:00",
+    "bayat": false
+   },
+   "seviye": "staj",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": null,
+   "alanlar": [
+    "yazilim",
+    "savunma"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": "2026-11-24",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Staj",
+   "firma_gorunen": "Lostar",
+   "sehirler": [
+    "istanbul"
+   ],
+   "uzaktan": false
   },
   {
    "kimlik": "6ee33cd60bf18862",
@@ -1065,55 +1101,6 @@
    "uzaktan": false
   },
   {
-   "kimlik": "e0c328166ba95240",
-   "firma": "Sezzle (Türkiye, uzaktan)",
-   "baslik": "A.I. Engineering Intern ",
-   "url": "https://job-boards.greenhouse.io/sezzle/jobs/7979992003",
-   "konum": "Chile, Remote",
-   "kaynak": "greenhouse",
-   "yayin_tarihi": "2026-10-07",
-   "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
-   "dogrulama": {
-    "durum": "acik",
-    "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
-    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
-    "bayat": false
-   },
-   "seviye": "staj",
-   "rol": "yapay_zeka",
-   "yapay_zeka": "ozunde",
-   "ayrinti": {
-    "ozet": "Sezzle'ın Data Science ekibinde yapay zeka sistemleri tasarlamak, bu sistemler için güvenilir eğitim verisi üretmek ve doğru SQL sorguları yazmak.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": "MIS, Business, Analytics/Data Analytics veya Computer alanlarında bir yükseköğretim kurumunda okuyan öğrenciler",
-    "calisma_modeli": "uzaktan",
-    "ucretli": "evet",
-    "teknolojiler": [
-     "Python",
-     "SQL",
-     "Claude",
-     "Golang",
-     "TypeScript",
-     "AWS"
-    ]
-   },
-   "alanlar": [
-    "yazilim",
-    "yapay_zeka"
-   ],
-   "calisma_modeli": "uzaktan",
-   "girisim": false,
-   "yayin": "2026-10-07",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Staj",
-   "firma_gorunen": "Sezzle",
-   "sehirler": [],
-   "uzaktan": true
-  },
-  {
    "kimlik": "94bf67e00d74fbcd",
    "firma": "Sezzle (Türkiye, uzaktan)",
    "baslik": "A.I. Engineering Intern ",
@@ -1146,6 +1133,55 @@
      "Golang",
      "TypeScript",
      "React"
+    ]
+   },
+   "alanlar": [
+    "yazilim",
+    "yapay_zeka"
+   ],
+   "calisma_modeli": "uzaktan",
+   "girisim": false,
+   "yayin": "2026-10-07",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Staj",
+   "firma_gorunen": "Sezzle",
+   "sehirler": [],
+   "uzaktan": true
+  },
+  {
+   "kimlik": "e0c328166ba95240",
+   "firma": "Sezzle (Türkiye, uzaktan)",
+   "baslik": "A.I. Engineering Intern ",
+   "url": "https://job-boards.greenhouse.io/sezzle/jobs/7979992003",
+   "konum": "Chile, Remote",
+   "kaynak": "greenhouse",
+   "yayin_tarihi": "2026-10-07",
+   "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
+   "dogrulama": {
+    "durum": "acik",
+    "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
+    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "bayat": false
+   },
+   "seviye": "staj",
+   "rol": "yapay_zeka",
+   "yapay_zeka": "ozunde",
+   "ayrinti": {
+    "ozet": "Sezzle'ın Data Science ekibinde yapay zeka sistemleri tasarlamak, bu sistemler için güvenilir eğitim verisi üretmek ve doğru SQL sorguları yazmak.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": "MIS, Business, Analytics/Data Analytics veya Computer alanlarında bir yükseköğretim kurumunda okuyan öğrenciler",
+    "calisma_modeli": "uzaktan",
+    "ucretli": "evet",
+    "teknolojiler": [
+     "Python",
+     "SQL",
+     "Claude",
+     "Golang",
+     "TypeScript",
+     "AWS"
     ]
    },
    "alanlar": [
