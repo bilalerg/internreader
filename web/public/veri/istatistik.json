@@ -1,26 +1,26 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-24T13:20:58.904115+03:00",
+ "guncelleme": "2026-11-24T21:42:36.819240+03:00",
  "takip_edilen_firma": 3418,
  "taranan_firma": 952,
  "firma_faaliyeti": {
-  "faal": 57,
-  "belirsiz": 3360,
+  "faal": 91,
+  "belirsiz": 3326,
   "adres_sorunlu": 1
  },
- "aktif_ilan": 9247,
- "ogrenci_ilani": 57,
+ "aktif_ilan": 9236,
+ "ogrenci_ilani": 40,
  "sehirler": {
-  "uzaktan": 1449,
-  "istanbul": 792,
-  "ankara": 205,
+  "uzaktan": 1447,
+  "istanbul": 793,
+  "ankara": 196,
   "izmir": 84,
   "kocaeli": 66,
   "bursa": 64,
   "adana": 60,
   "antalya": 56,
-  "kayseri": 53,
   "tekirdag": 53,
+  "kayseri": 53,
   "gaziantep": 52,
   "konya": 50,
   "trabzon": 50,
@@ -195,6 +195,14 @@
    "uygun": false
   },
   {
+   "baslik": "Early Talent (All Teams)",
+   "firma": "Loom Games",
+   "seviye": "yeni_mezun",
+   "rol": "diger_teknik",
+   "gerekce": "Early talent programı, tüm ekipler, açıklama yok",
+   "uygun": false
+  },
+  {
    "baslik": "Senior Specialist, Generative AI & LLM",
    "firma": "Etiya",
    "seviye": "deneyimli",
@@ -209,44 +217,35 @@
    "rol": "yazilim",
    "gerekce": "Yazılım mimarı, en az 10 yıl deneyim",
    "uygun": false
-  },
-  {
-   "baslik": "Senior Data Analyst",
-   "firma": "Bilge Adam",
-   "seviye": "deneyimli",
-   "rol": "veri",
-   "gerekce": "Kıdemli veri analisti, analiz ağırlıklı iş",
-   "uygun": false
   }
  ],
  "huni": {
-  "aktif": 9247,
-  "konum_disi": 6275,
+  "aktif": 9236,
+  "konum_disi": 6277,
   "siniflanmamis": 3,
   "seviye": {
-   "belirsiz": 1550,
-   "deneyimli": 1020,
-   "staj": 146,
-   "junior": 145,
-   "yari_zamanli": 52,
-   "yeni_mezun": 41,
+   "belirsiz": 1543,
+   "deneyimli": 1015,
+   "staj": 144,
+   "junior": 143,
+   "yari_zamanli": 53,
+   "yeni_mezun": 43,
    "uzun_donem_staj": 15
   },
   "rol": {
-   "teknik_degil": 1777,
-   "yazilim": 567,
-   "diger_teknik": 471,
+   "teknik_degil": 1783,
+   "yazilim": 562,
+   "diger_teknik": 459,
    "yapay_zeka": 80,
-   "veri": 74
+   "veri": 72
   },
   "ogrenciye_uygun": {
-   "yayinda": 57,
-   "basvuru_dogrulanamadi": 41,
-   "hayalet": 3,
-   "supheli": 2
+   "basvuru_dogrulanamadi": 60,
+   "yayinda": 40,
+   "hayalet": 3
   },
   "belirsiz_seviye_hedef_rol": 271,
-  "ogrenci_seviye_diger_teknik": 62,
+  "ogrenci_seviye_diger_teknik": 60,
   "ornek_belirsiz": [
    "Teamblue: PHP (Symfony) Software Engineer",
    "Rapsodo: Back-End Engineer",
@@ -270,6 +269,7 @@
    "SİMOFUN OYUN TEKNOLOJİLERİ ANONİM ŞİRKETİ: Unity Oyun Geliştiricisi"
   ],
   "ornek_diger_teknik": [
+   "Loom Games: Early Talent (All Teams)",
    "Baykar: 2027 Yaz Dönemi Staj | Kullanıcı Teknik Destek",
    "Merck: Clinical Research Intern",
    "Opsin Elektro Optik: Aday Mühendis Programı",
@@ -287,9 +287,8 @@
    "BRY BİREY EĞİTİM YAYIN BASIM PAZARLAMA SAN. VE TİC. A.Ş.: Bilgi İşlem ve Grafik Tasarım Stajyeri",
    "Analog Devices: RF Design Engineering Intern",
    "Valven: New Graduate Program",
-   "INTERPROBE BİLGİ TEKNOLOJİLERİ: Intern",
-   "BİLGİKURUMSAL YAZILIM TEKNOLOJİLERİ A.Ş.: Stajyer",
-   "MAPP PAZARLAMA VE TANITIM HİZMETLERİ: Ankara Teknik Servis Teknoloji Asistanı"
+   "MAPP PAZARLAMA VE TANITIM HİZMETLERİ: Ankara Teknik Servis Teknoloji Asistanı",
+   "Analog Devices: Associate Designer, Layout"
   ]
  }
 }
