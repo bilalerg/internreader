@@ -1,6 +1,6 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-23T22:21:17.062004+03:00",
+ "guncelleme": "2026-11-24T13:20:58.904115+03:00",
  "takip_edilen_firma": 3418,
  "taranan_firma": 952,
  "firma_faaliyeti": {
@@ -8,19 +8,19 @@
   "belirsiz": 3360,
   "adres_sorunlu": 1
  },
- "aktif_ilan": 9156,
- "ogrenci_ilani": 56,
+ "aktif_ilan": 9247,
+ "ogrenci_ilani": 57,
  "sehirler": {
-  "uzaktan": 1458,
-  "istanbul": 790,
+  "uzaktan": 1449,
+  "istanbul": 792,
   "ankara": 205,
-  "izmir": 81,
-  "bursa": 67,
-  "kocaeli": 65,
+  "izmir": 84,
+  "kocaeli": 66,
+  "bursa": 64,
   "adana": 60,
   "antalya": 56,
-  "tekirdag": 53,
   "kayseri": 53,
+  "tekirdag": 53,
   "gaziantep": 52,
   "konya": 50,
   "trabzon": 50,
@@ -220,32 +220,32 @@
   }
  ],
  "huni": {
-  "aktif": 9156,
-  "konum_disi": 6179,
+  "aktif": 9247,
+  "konum_disi": 6275,
   "siniflanmamis": 3,
   "seviye": {
-   "belirsiz": 1552,
-   "deneyimli": 1023,
-   "staj": 147,
-   "junior": 146,
-   "yari_zamanli": 50,
+   "belirsiz": 1550,
+   "deneyimli": 1020,
+   "staj": 146,
+   "junior": 145,
+   "yari_zamanli": 52,
    "yeni_mezun": 41,
    "uzun_donem_staj": 15
   },
   "rol": {
-   "teknik_degil": 1782,
-   "yazilim": 568,
-   "diger_teknik": 470,
+   "teknik_degil": 1777,
+   "yazilim": 567,
+   "diger_teknik": 471,
    "yapay_zeka": 80,
    "veri": 74
   },
   "ogrenciye_uygun": {
-   "yayinda": 56,
+   "yayinda": 57,
    "basvuru_dogrulanamadi": 41,
    "hayalet": 3,
    "supheli": 2
   },
-  "belirsiz_seviye_hedef_rol": 273,
+  "belirsiz_seviye_hedef_rol": 271,
   "ogrenci_seviye_diger_teknik": 62,
   "ornek_belirsiz": [
    "Teamblue: PHP (Symfony) Software Engineer",
@@ -260,14 +260,14 @@
    "C-Prot: Database Administrator",
    "Analog Devices: Engineer, Firmware Engineering",
    "Algocor Teknoloji A.Ş.: Software Engineer C++",
-   "Codeway: QA Engineer",
    "Özgür Yazılım A.Ş.: DevOps & Linux Sistem Yöneticisi (S38)",
    "Lucida AI: Flutter Developer(Fullstack)",
    "Valven: Linux System Engineer",
    "Vertigo Games: Game Developer",
    "MULTİGOO BİLİŞİM ANONİM ŞİRKETİ: Frontend (React) Developer",
    "ESEN: Software Design Engineer",
-   "MAGLAB OYUN TEKNOLOJİLERİ BİLİŞİM YAZILIM TASARIM YAYINCILIK TİCARET ANONİM ŞİRKETİ: Game Developer, On-Site Ankara · Full Time"
+   "MAGLAB OYUN TEKNOLOJİLERİ BİLİŞİM YAZILIM TASARIM YAYINCILIK TİCARET ANONİM ŞİRKETİ: Game Developer, On-Site Ankara · Full Time",
+   "SİMOFUN OYUN TEKNOLOJİLERİ ANONİM ŞİRKETİ: Unity Oyun Geliştiricisi"
   ],
   "ornek_diger_teknik": [
    "Baykar: 2027 Yaz Dönemi Staj | Kullanıcı Teknik Destek",

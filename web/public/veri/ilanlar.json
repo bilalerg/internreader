@@ -1,7 +1,7 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-23T22:21:17.062004+03:00",
- "sayi": 56,
+ "guncelleme": "2026-11-24T13:20:58.904115+03:00",
+ "sayi": 57,
  "ilanlar": [
   {
    "kimlik": "78a5773545307a2a",
@@ -141,6 +141,56 @@
    "firma_gorunen": "Sezzle",
    "sehirler": [],
    "uzaktan": true
+  },
+  {
+   "kimlik": "6ee33cd60bf18862",
+   "firma": "Siemens",
+   "baslik": "Part-Time Working Student (Software Engineering) for Talents with Disabilities",
+   "url": "https://jobs.siemens.com/externaljobs/JobDetail/T-rkiye-Part-Time-Working-Student-Software-Engineering-for-Talents-with-Disabilities/530560",
+   "konum": "Istanbul, Istanbul, Türkiye (Hibrit)",
+   "kaynak": "avature",
+   "yayin_tarihi": "2026-11-24",
+   "ilk_gorulme": "2026-11-24T10:05:44.338587+00:00",
+   "dogrulama": {
+    "durum": "acik",
+    "neden": "ats_acik_ilan_listesinde",
+    "kontrol_zamani": null,
+    "acik_dogrulama_zamani": "2026-11-24T10:05:44.338587+00:00",
+    "bayat": false
+   },
+   "seviye": "yari_zamanli",
+   "rol": "yazilim",
+   "yapay_zeka": "yok",
+   "ayrinti": {
+    "ozet": "Siemens Türkiye Ar-Ge Departmanında Kartal'da yarı zamanlı çalışan öğrenci olarak yazılım geliştirme projelerini destekleyeceksiniz. Yazılım geliştirici, test otomasyonu, siber güvenlik veya DevOps alanlarından birinde görev alacaksınız.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": "Engelli raporu (en az %40) sahibi, lisans 2-4. sınıf veya lisansüstü Bilgisayar Mühendisliği, Matematik…",
+    "calisma_modeli": "hibrit",
+    "ucretli": "belirsiz",
+    "teknolojiler": [
+     "Java",
+     "C",
+     "C++",
+     "C#",
+     "Python",
+     "Git"
+    ]
+   },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "hibrit",
+   "girisim": false,
+   "yayin": "2026-11-24",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Yarı zamanlı",
+   "firma_gorunen": "Siemens",
+   "sehirler": [
+    "istanbul"
+   ],
+   "uzaktan": false
   },
   {
    "kimlik": "d063482d7c9733fc",
