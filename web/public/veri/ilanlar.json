@@ -1,6 +1,6 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-25T01:49:02.113944+03:00",
+ "guncelleme": "2026-11-25T12:03:03.773128+03:00",
  "sayi": 41,
  "ilanlar": [
   {
@@ -155,7 +155,7 @@
     "durum": "acik",
     "neden": "ats_acik_ilan_listesinde",
     "kontrol_zamani": null,
-    "acik_dogrulama_zamani": "2026-11-24T22:36:27.038300+00:00",
+    "acik_dogrulama_zamani": "2026-11-25T08:51:20.736041+00:00",
     "bayat": false
    },
    "seviye": "staj",
