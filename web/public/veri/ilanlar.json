@@ -1,7 +1,7 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-25T12:03:03.773128+03:00",
- "sayi": 41,
+ "guncelleme": "2026-11-25T21:09:20.092721+03:00",
+ "sayi": 42,
  "ilanlar": [
   {
    "kimlik": "78a5773545307a2a",
@@ -15,8 +15,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "lever_ilanina_ozel_basvuru_baglantisi",
-    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
-    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "kontrol_zamani": "2026-11-25T18:08:58.012470+00:00",
+    "acik_dogrulama_zamani": "2026-11-25T18:08:58.012470+00:00",
     "bayat": false
    },
    "seviye": "yeni_mezun",
@@ -58,8 +58,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
-    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "kontrol_zamani": "2026-11-25T18:08:58.012470+00:00",
+    "acik_dogrulama_zamani": "2026-11-25T18:08:58.012470+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -105,8 +105,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
-    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "kontrol_zamani": "2026-11-25T18:08:58.012470+00:00",
+    "acik_dogrulama_zamani": "2026-11-25T18:08:58.012470+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -152,10 +152,10 @@
    "yayin_tarihi": "2026-11-24",
    "ilk_gorulme": "2026-11-24T22:36:27.038300+00:00",
    "dogrulama": {
-    "durum": "acik",
-    "neden": "ats_acik_ilan_listesinde",
-    "kontrol_zamani": null,
-    "acik_dogrulama_zamani": "2026-11-25T08:51:20.736041+00:00",
+    "durum": "belirsiz",
+    "neden": "tek_ilan_basligi_dogrulanamadi",
+    "kontrol_zamani": "2026-11-25T18:08:58.012470+00:00",
+    "acik_dogrulama_zamani": "2026-11-25T17:39:20.267047+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -455,8 +455,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
-    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "kontrol_zamani": "2026-11-25T18:08:58.012470+00:00",
+    "acik_dogrulama_zamani": "2026-11-25T18:08:58.012470+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -1010,6 +1010,49 @@
    "uzaktan": false
   },
   {
+   "kimlik": "71217068e2f59c58",
+   "firma": "Appnation",
+   "baslik": "Software Engineer (Backend)",
+   "url": "https://jobs.lever.co/appnation/090895b2-15dd-4c50-a3ff-a5f0362a3a76",
+   "konum": "İstanbul",
+   "kaynak": "lever",
+   "yayin_tarihi": "2026-10-16",
+   "ilk_gorulme": "2026-10-31T22:29:02.250765+00:00",
+   "dogrulama": {
+    "durum": "acik",
+    "neden": "lever_ilanina_ozel_basvuru_baglantisi",
+    "kontrol_zamani": "2026-11-25T18:08:58.012470+00:00",
+    "acik_dogrulama_zamani": "2026-11-25T18:08:58.012470+00:00",
+    "bayat": false
+   },
+   "seviye": "junior",
+   "rol": "yazilim",
+   "yapay_zeka": "arti",
+   "ayrinti": {
+    "ozet": "Mobil uygulamaların arka uç sistemlerini geliştirip iyileştirecek; API'ler, veri akışları ve entegrasyonlar üzerinde çalışacak bir backend yazılım mühendisi.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": null,
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": []
+   },
+   "alanlar": [
+    "yazilim"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": "2026-10-16",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Junior",
+   "firma_gorunen": "Appnation",
+   "sehirler": [
+    "istanbul"
+   ],
+   "uzaktan": false
+  },
+  {
    "kimlik": "12abda4e2ede08b9",
    "firma": "Obilet",
    "baslik": "Jr. Data Analyst",
@@ -1021,8 +1064,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
-    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "kontrol_zamani": "2026-11-25T18:08:58.012470+00:00",
+    "acik_dogrulama_zamani": "2026-11-25T18:08:58.012470+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -1067,8 +1110,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "lever_ilanina_ozel_basvuru_baglantisi",
-    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
-    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "kontrol_zamani": "2026-11-25T18:08:58.012470+00:00",
+    "acik_dogrulama_zamani": "2026-11-25T18:08:58.012470+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -1112,8 +1155,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
-    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "kontrol_zamani": "2026-11-25T18:08:58.012470+00:00",
+    "acik_dogrulama_zamani": "2026-11-25T18:08:58.012470+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -1161,8 +1204,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
-    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "kontrol_zamani": "2026-11-25T18:08:58.012470+00:00",
+    "acik_dogrulama_zamani": "2026-11-25T18:08:58.012470+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -1208,9 +1251,9 @@
    "yayin_tarihi": "2026-09-25",
    "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
    "dogrulama": {
-    "durum": "acik",
-    "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "durum": "belirsiz",
+    "neden": "baska_sayfaya_yonlendi",
+    "kontrol_zamani": "2026-11-25T18:08:58.012470+00:00",
     "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
     "bayat": false
    },
@@ -1258,8 +1301,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
-    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "kontrol_zamani": "2026-11-25T18:08:58.012470+00:00",
+    "acik_dogrulama_zamani": "2026-11-25T18:08:58.012470+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -1306,8 +1349,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
-    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "kontrol_zamani": "2026-11-25T18:08:58.012470+00:00",
+    "acik_dogrulama_zamani": "2026-11-25T18:08:58.012470+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -1354,8 +1397,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
-    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "kontrol_zamani": "2026-11-25T18:08:58.012470+00:00",
+    "acik_dogrulama_zamani": "2026-11-25T18:08:58.012470+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -1402,8 +1445,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
-    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "kontrol_zamani": "2026-11-25T18:08:58.012470+00:00",
+    "acik_dogrulama_zamani": "2026-11-25T18:08:58.012470+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -1450,8 +1493,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
-    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "kontrol_zamani": "2026-11-25T18:08:58.012470+00:00",
+    "acik_dogrulama_zamani": "2026-11-25T18:08:58.012470+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -1498,8 +1541,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
-    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "kontrol_zamani": "2026-11-25T18:08:58.012470+00:00",
+    "acik_dogrulama_zamani": "2026-11-25T18:08:58.012470+00:00",
     "bayat": false
    },
    "seviye": "junior",
@@ -1546,8 +1589,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
-    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "kontrol_zamani": "2026-11-25T18:08:58.012470+00:00",
+    "acik_dogrulama_zamani": "2026-11-25T18:08:58.012470+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -1595,8 +1638,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
-    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "kontrol_zamani": "2026-11-25T18:08:58.012470+00:00",
+    "acik_dogrulama_zamani": "2026-11-25T18:08:58.012470+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -1642,8 +1685,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
-    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "kontrol_zamani": "2026-11-25T18:08:58.012470+00:00",
+    "acik_dogrulama_zamani": "2026-11-25T18:08:58.012470+00:00",
     "bayat": false
    },
    "seviye": "uzun_donem_staj",
@@ -1692,8 +1735,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilana_ozel_basvuru_formu",
-    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
-    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "kontrol_zamani": "2026-11-25T18:08:58.012470+00:00",
+    "acik_dogrulama_zamani": "2026-11-25T18:08:58.012470+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -1736,8 +1779,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilana_ozel_basvuru_formu",
-    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
-    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "kontrol_zamani": "2026-11-25T18:08:58.012470+00:00",
+    "acik_dogrulama_zamani": "2026-11-25T18:08:58.012470+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -1780,8 +1823,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilana_ozel_basvuru_formu",
-    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
-    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "kontrol_zamani": "2026-11-25T18:08:58.012470+00:00",
+    "acik_dogrulama_zamani": "2026-11-25T18:08:58.012470+00:00",
     "bayat": false
    },
    "seviye": "staj",
@@ -1823,8 +1866,8 @@
    "dogrulama": {
     "durum": "acik",
     "neden": "ilana_ozel_basvuru_formu",
-    "kontrol_zamani": "2026-11-23T19:20:57.549234+00:00",
-    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "kontrol_zamani": "2026-11-25T18:08:58.012470+00:00",
+    "acik_dogrulama_zamani": "2026-11-25T18:08:58.012470+00:00",
     "bayat": false
    },
    "seviye": "staj",
