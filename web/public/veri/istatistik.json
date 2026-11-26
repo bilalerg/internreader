@@ -1,6 +1,6 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-25T21:09:20.092721+03:00",
+ "guncelleme": "2026-11-26T11:43:21.818145+03:00",
  "takip_edilen_firma": 3418,
  "taranan_firma": 952,
  "firma_faaliyeti": {
@@ -8,11 +8,11 @@
   "belirsiz": 3297,
   "adres_sorunlu": 2
  },
- "aktif_ilan": 9300,
- "ogrenci_ilani": 42,
+ "aktif_ilan": 9202,
+ "ogrenci_ilani": 41,
  "sehirler": {
-  "uzaktan": 1454,
-  "istanbul": 800,
+  "uzaktan": 1460,
+  "istanbul": 794,
   "ankara": 198,
   "izmir": 84,
   "kocaeli": 65,
@@ -139,14 +139,6 @@
    "uygun": true
   },
   {
-   "baslik": "PHP (Symfony) Software Engineer",
-   "firma": "Teamblue",
-   "seviye": "belirsiz",
-   "rol": "yazilim",
-   "gerekce": "Symfony backend geliştirme ağırlıklı, seviye belirtilmemiş",
-   "uygun": false
-  },
-  {
    "baslik": "Education Strategy & Development Analyst / Associate",
    "firma": "Constructor Tech",
    "seviye": "junior",
@@ -203,6 +195,14 @@
    "uygun": false
   },
   {
+   "baslik": "Back-End Engineer",
+   "firma": "Rapsodo",
+   "seviye": "belirsiz",
+   "rol": "yazilim",
+   "gerekce": "Back-end geliştirme, seviye belirtilmemiş",
+   "uygun": false
+  },
+  {
    "baslik": "Senior Specialist, Generative AI & LLM",
    "firma": "Etiya",
    "seviye": "deneyimli",
@@ -220,34 +220,33 @@
   }
  ],
  "huni": {
-  "aktif": 9300,
-  "konum_disi": 6330,
+  "aktif": 9202,
+  "konum_disi": 6231,
   "siniflanmamis": 3,
   "seviye": {
-   "belirsiz": 1550,
-   "deneyimli": 1018,
+   "belirsiz": 1552,
+   "deneyimli": 1017,
    "staj": 145,
-   "junior": 144,
-   "yari_zamanli": 53,
+   "junior": 143,
+   "yari_zamanli": 54,
    "yeni_mezun": 42,
    "uzun_donem_staj": 15
   },
   "rol": {
-   "teknik_degil": 1789,
-   "yazilim": 568,
+   "teknik_degil": 1787,
+   "yazilim": 571,
    "diger_teknik": 458,
    "yapay_zeka": 79,
    "veri": 73
   },
   "ogrenciye_uygun": {
    "basvuru_dogrulanamadi": 59,
-   "yayinda": 42,
+   "yayinda": 41,
    "hayalet": 3
   },
-  "belirsiz_seviye_hedef_rol": 276,
-  "ogrenci_seviye_diger_teknik": 61,
+  "belirsiz_seviye_hedef_rol": 275,
+  "ogrenci_seviye_diger_teknik": 62,
   "ornek_belirsiz": [
-   "Teamblue: PHP (Symfony) Software Engineer",
    "Rapsodo: Back-End Engineer",
    "3E ENDÜSTRİYEL MÜHENDİSLİK SAN. VE TİC. LTD. ŞTİ.: Software Engineer",
    "Lotus AI Yapay Zeka ve Bilişim Çözümleri A.Ş.: Java Spring Developer",
@@ -262,11 +261,12 @@
    "Özgür Yazılım A.Ş.: DevOps & Linux Sistem Yöneticisi (S38)",
    "Lucida AI: Flutter Developer(Fullstack)",
    "Valven: Linux System Engineer",
-   "Vertigo Games: Game Developer",
    "MULTİGOO BİLİŞİM ANONİM ŞİRKETİ: Frontend (React) Developer",
    "ESEN: Software Design Engineer",
    "MAGLAB OYUN TEKNOLOJİLERİ BİLİŞİM YAZILIM TASARIM YAYINCILIK TİCARET ANONİM ŞİRKETİ: Game Developer, On-Site Ankara · Full Time",
-   "SİMOFUN OYUN TEKNOLOJİLERİ ANONİM ŞİRKETİ: Unity Oyun Geliştiricisi"
+   "SİMOFUN OYUN TEKNOLOJİLERİ ANONİM ŞİRKETİ: Unity Oyun Geliştiricisi",
+   "Pragmatike: Research Engineer, Privacy and Anonymization (Pacific Time)",
+   "D Ploy: Data Analyst with spectroscopy background"
   ],
   "ornek_diger_teknik": [
    "Loom Games: Early Talent (All Teams)",

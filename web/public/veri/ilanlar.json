@@ -1,7 +1,7 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-25T21:09:20.092721+03:00",
- "sayi": 42,
+ "guncelleme": "2026-11-26T11:43:21.818145+03:00",
+ "sayi": 41,
  "ilanlar": [
   {
    "kimlik": "78a5773545307a2a",
@@ -1144,55 +1144,6 @@
    "uzaktan": false
   },
   {
-   "kimlik": "94bf67e00d74fbcd",
-   "firma": "Sezzle (Türkiye, uzaktan)",
-   "baslik": "A.I. Engineering Intern ",
-   "url": "https://job-boards.greenhouse.io/sezzle/jobs/7980003003",
-   "konum": "Mexico, Remote",
-   "kaynak": "greenhouse",
-   "yayin_tarihi": "2026-10-07",
-   "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
-   "dogrulama": {
-    "durum": "acik",
-    "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
-    "kontrol_zamani": "2026-11-25T18:08:58.012470+00:00",
-    "acik_dogrulama_zamani": "2026-11-25T18:08:58.012470+00:00",
-    "bayat": false
-   },
-   "seviye": "staj",
-   "rol": "yapay_zeka",
-   "yapay_zeka": "ozunde",
-   "ayrinti": {
-    "ozet": "Sezzle'da temel yapay zeka sistemlerinin tasarlanıp geliştirilmesine, eğitim verisi üretilmesine ve SQL sorgularının yazılmasına destek olunacak bir staj pozisyonu.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": "MIS, Business, Analytics/Data Analytics veya Computer alanında okuyan öğrenciler",
-    "calisma_modeli": "uzaktan",
-    "ucretli": "evet",
-    "teknolojiler": [
-     "Python",
-     "SQL",
-     "Claude",
-     "Golang",
-     "TypeScript",
-     "React"
-    ]
-   },
-   "alanlar": [
-    "yazilim",
-    "yapay_zeka"
-   ],
-   "calisma_modeli": "uzaktan",
-   "girisim": false,
-   "yayin": "2026-10-07",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Staj",
-   "firma_gorunen": "Sezzle",
-   "sehirler": [],
-   "uzaktan": true
-  },
-  {
    "kimlik": "e0c328166ba95240",
    "firma": "Sezzle (Türkiye, uzaktan)",
    "baslik": "A.I. Engineering Intern ",
@@ -1242,52 +1193,53 @@
    "uzaktan": true
   },
   {
-   "kimlik": "dbd868a0ecad88e3",
+   "kimlik": "94bf67e00d74fbcd",
    "firma": "Sezzle (Türkiye, uzaktan)",
-   "baslik": "Mobile Engineer (Turkey, All Levels)",
-   "url": "https://job-boards.greenhouse.io/sezzle/jobs/7541145003",
-   "konum": "Türkiye",
+   "baslik": "A.I. Engineering Intern ",
+   "url": "https://job-boards.greenhouse.io/sezzle/jobs/7980003003",
+   "konum": "Mexico, Remote",
    "kaynak": "greenhouse",
-   "yayin_tarihi": "2026-09-25",
+   "yayin_tarihi": "2026-10-07",
    "ilk_gorulme": "2026-10-29T14:21:09.432121+00:00",
    "dogrulama": {
-    "durum": "belirsiz",
-    "neden": "baska_sayfaya_yonlendi",
+    "durum": "acik",
+    "neden": "ilan_sayfasinda_etkin_basvuru_kontrolu",
     "kontrol_zamani": "2026-11-25T18:08:58.012470+00:00",
-    "acik_dogrulama_zamani": "2026-11-23T19:20:57.549234+00:00",
+    "acik_dogrulama_zamani": "2026-11-25T18:08:58.012470+00:00",
     "bayat": false
    },
-   "seviye": "junior",
-   "rol": "yazilim",
-   "yapay_zeka": "yok",
+   "seviye": "staj",
+   "rol": "yapay_zeka",
+   "yapay_zeka": "ozunde",
    "ayrinti": {
-    "ozet": "Sezzle'ın mobil uygulamasında React Native ile yeni özellikler geliştirilecek, kod inceleme ve tasarım tartışmalarına katılınacak. Tam zamanlı, uzaktan çalışma modeli geçerli.",
+    "ozet": "Sezzle'da temel yapay zeka sistemlerinin tasarlanıp geliştirilmesine, eğitim verisi üretilmesine ve SQL sorgularının yazılmasına destek olunacak bir staj pozisyonu.",
     "son_basvuru": null,
     "ilan_tarihi": null,
-    "hedef": null,
+    "hedef": "MIS, Business, Analytics/Data Analytics veya Computer alanında okuyan öğrenciler",
     "calisma_modeli": "uzaktan",
     "ucretli": "evet",
     "teknolojiler": [
-     "React Native",
-     "TypeScript",
-     "Swift",
-     "Golang",
      "Python",
-     "Kubernetes"
+     "SQL",
+     "Claude",
+     "Golang",
+     "TypeScript",
+     "React"
     ]
    },
    "alanlar": [
-    "yazilim"
+    "yazilim",
+    "yapay_zeka"
    ],
    "calisma_modeli": "uzaktan",
    "girisim": false,
-   "yayin": "2026-09-25",
+   "yayin": "2026-10-07",
    "surekli_acik": false,
    "ilan_turu": "is",
-   "seviye_etiketi": "Tüm seviyeler",
+   "seviye_etiketi": "Staj",
    "firma_gorunen": "Sezzle",
    "sehirler": [],
-   "uzaktan": false
+   "uzaktan": true
   },
   {
    "kimlik": "f7652ebe347e75ee",
