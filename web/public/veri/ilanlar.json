@@ -1,6 +1,6 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-26T20:31:48.741672+03:00",
+ "guncelleme": "2026-11-27T00:50:36.014465+03:00",
  "sayi": 41,
  "ilanlar": [
   {
@@ -271,49 +271,6 @@
    "uzaktan": false
   },
   {
-   "kimlik": "9a404799a4660a95",
-   "firma": "Baykar",
-   "baslik": "2027 Yaz Dönemi Staj | NSosyal Yazılım Test",
-   "url": "https://tr.jooble.org/away/-5069388994423947873?p=1&pos=46&rgn=0&cid=215&ckey=yapay+zeka+stajyeri&jobAge=63&relb=70&brelb=10&scr=648.28946&bscr=92.61278&aq=1405082747023060073&elckey=6793422712524964886",
-   "konum": "İstanbul, Fatih",
-   "kaynak": "jooble",
-   "yayin_tarihi": "2026-11-12",
-   "ilk_gorulme": "2026-11-14T13:50:22.225307+00:00",
-   "dogrulama": {
-    "durum": "belirsiz",
-    "neden": "henuz_kontrol_edilmedi",
-    "kontrol_zamani": null,
-    "bayat": false
-   },
-   "seviye": "staj",
-   "rol": "yazilim",
-   "yapay_zeka": "arti",
-   "ayrinti": {
-    "ozet": "Yazılım test süreçlerinde yer alacak, yapay zekâ destekli test ve geliştirme araçlarını kullanacak bir yaz stajı. Performans ve yük testi konusunda temel bilgi beklenmektedir.",
-    "son_basvuru": null,
-    "ilan_tarihi": null,
-    "hedef": null,
-    "calisma_modeli": "belirsiz",
-    "ucretli": "belirsiz",
-    "teknolojiler": []
-   },
-   "alanlar": [
-    "yazilim",
-    "savunma"
-   ],
-   "calisma_modeli": "belirsiz",
-   "girisim": false,
-   "yayin": "2026-11-12",
-   "surekli_acik": false,
-   "ilan_turu": "is",
-   "seviye_etiketi": "Staj",
-   "firma_gorunen": "Baykar",
-   "sehirler": [
-    "istanbul"
-   ],
-   "uzaktan": false
-  },
-  {
    "kimlik": "440ffe70c38b3897",
    "firma": "Manc Games",
    "baslik": "Junior Game Developer (Unity)",
@@ -488,6 +445,49 @@
    "ilan_turu": "is",
    "seviye_etiketi": "Staj",
    "firma_gorunen": "PİXA",
+   "sehirler": [
+    "istanbul"
+   ],
+   "uzaktan": false
+  },
+  {
+   "kimlik": "9a404799a4660a95",
+   "firma": "Baykar",
+   "baslik": "2027 Yaz Dönemi Staj | NSosyal Yazılım Test",
+   "url": "https://tr.jooble.org/away/-5069388994423947873?p=1&pos=46&rgn=0&cid=215&ckey=yapay+zeka+stajyeri&jobAge=63&relb=70&brelb=10&scr=648.28946&bscr=92.61278&aq=1405082747023060073&elckey=6793422712524964886",
+   "konum": "İstanbul, Fatih",
+   "kaynak": "jooble",
+   "yayin_tarihi": "2026-11-12",
+   "ilk_gorulme": "2026-11-14T13:50:22.225307+00:00",
+   "dogrulama": {
+    "durum": "belirsiz",
+    "neden": "henuz_kontrol_edilmedi",
+    "kontrol_zamani": null,
+    "bayat": false
+   },
+   "seviye": "staj",
+   "rol": "yazilim",
+   "yapay_zeka": "arti",
+   "ayrinti": {
+    "ozet": "Yazılım test süreçlerinde yer alacak, yapay zekâ destekli test ve geliştirme araçlarını kullanacak bir yaz stajı. Performans ve yük testi konusunda temel bilgi beklenmektedir.",
+    "son_basvuru": null,
+    "ilan_tarihi": null,
+    "hedef": null,
+    "calisma_modeli": "belirsiz",
+    "ucretli": "belirsiz",
+    "teknolojiler": []
+   },
+   "alanlar": [
+    "yazilim",
+    "savunma"
+   ],
+   "calisma_modeli": "belirsiz",
+   "girisim": false,
+   "yayin": "2026-11-12",
+   "surekli_acik": false,
+   "ilan_turu": "is",
+   "seviye_etiketi": "Staj",
+   "firma_gorunen": "Baykar",
    "sehirler": [
     "istanbul"
    ],
