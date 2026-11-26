@@ -1,6 +1,6 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-26T11:43:21.818145+03:00",
+ "guncelleme": "2026-11-26T20:31:48.741672+03:00",
  "sayi": 41,
  "ilanlar": [
   {
@@ -190,7 +190,7 @@
    "dogrulama": {
     "durum": "belirsiz",
     "neden": "baska_sayfaya_yonlendi",
-    "kontrol_zamani": "2026-11-24T18:42:32.329275+00:00",
+    "kontrol_zamani": "2026-11-26T17:31:45.209380+00:00",
     "acik_dogrulama_zamani": "2026-11-24T18:18:45.057388+00:00",
     "bayat": false
    },

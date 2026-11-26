@@ -1,18 +1,18 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-26T11:43:21.818145+03:00",
+ "guncelleme": "2026-11-26T20:31:48.741672+03:00",
  "takip_edilen_firma": 3418,
  "taranan_firma": 952,
  "firma_faaliyeti": {
-  "faal": 119,
-  "belirsiz": 3297,
+  "faal": 146,
+  "belirsiz": 3270,
   "adres_sorunlu": 2
  },
- "aktif_ilan": 9202,
+ "aktif_ilan": 9284,
  "ogrenci_ilani": 41,
  "sehirler": {
-  "uzaktan": 1460,
-  "istanbul": 794,
+  "uzaktan": 1458,
+  "istanbul": 799,
   "ankara": 198,
   "izmir": 84,
   "kocaeli": 65,
@@ -220,23 +220,23 @@
   }
  ],
  "huni": {
-  "aktif": 9202,
-  "konum_disi": 6231,
+  "aktif": 9284,
+  "konum_disi": 6306,
   "siniflanmamis": 3,
   "seviye": {
-   "belirsiz": 1552,
-   "deneyimli": 1017,
-   "staj": 145,
-   "junior": 143,
+   "belirsiz": 1554,
+   "deneyimli": 1021,
+   "staj": 146,
+   "junior": 144,
    "yari_zamanli": 54,
-   "yeni_mezun": 42,
+   "yeni_mezun": 41,
    "uzun_donem_staj": 15
   },
   "rol": {
    "teknik_degil": 1787,
-   "yazilim": 571,
-   "diger_teknik": 458,
-   "yapay_zeka": 79,
+   "yazilim": 572,
+   "diger_teknik": 463,
+   "yapay_zeka": 80,
    "veri": 73
   },
   "ogrenciye_uygun": {
@@ -244,7 +244,7 @@
    "yayinda": 41,
    "hayalet": 3
   },
-  "belirsiz_seviye_hedef_rol": 275,
+  "belirsiz_seviye_hedef_rol": 274,
   "ogrenci_seviye_diger_teknik": 62,
   "ornek_belirsiz": [
    "Rapsodo: Back-End Engineer",
