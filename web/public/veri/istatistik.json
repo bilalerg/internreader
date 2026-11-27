@@ -1,22 +1,22 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-27T00:50:36.014465+03:00",
+ "guncelleme": "2026-11-27T20:29:14.230822+03:00",
  "takip_edilen_firma": 3418,
  "taranan_firma": 952,
  "firma_faaliyeti": {
-  "faal": 146,
-  "belirsiz": 3270,
+  "faal": 155,
+  "belirsiz": 3261,
   "adres_sorunlu": 2
  },
- "aktif_ilan": 9061,
- "ogrenci_ilani": 41,
+ "aktif_ilan": 9679,
+ "ogrenci_ilani": 43,
  "sehirler": {
-  "uzaktan": 1454,
-  "istanbul": 797,
-  "ankara": 198,
-  "izmir": 84,
+  "uzaktan": 1460,
+  "istanbul": 806,
+  "ankara": 201,
+  "izmir": 86,
   "kocaeli": 65,
-  "bursa": 64,
+  "bursa": 65,
   "adana": 60,
   "antalya": 56,
   "kayseri": 53,
@@ -131,11 +131,11 @@
    "uygun": true
   },
   {
-   "baslik": "Veri Bilimci",
-   "firma": "Skillbourg",
+   "baslik": "Full-Stack Candidate Engineer (Part-Time)",
+   "firma": "Akdoğan",
    "seviye": "yari_zamanli",
-   "rol": "veri",
-   "gerekce": "Yarı zamanlı veri bilimci, canlı proje tercihi",
+   "rol": "yazilim",
+   "gerekce": "Yarı zamanlı full-stack aday mühendis; kod geliştirme",
    "uygun": true
   },
   {
@@ -220,32 +220,32 @@
   }
  ],
  "huni": {
-  "aktif": 9061,
-  "konum_disi": 6090,
+  "aktif": 9679,
+  "konum_disi": 6688,
   "siniflanmamis": 3,
   "seviye": {
-   "belirsiz": 1551,
-   "deneyimli": 1018,
-   "staj": 145,
-   "junior": 144,
-   "yari_zamanli": 54,
+   "belirsiz": 1558,
+   "deneyimli": 1026,
+   "staj": 147,
+   "junior": 145,
+   "yari_zamanli": 56,
    "yeni_mezun": 41,
    "uzun_donem_staj": 15
   },
   "rol": {
-   "teknik_degil": 1783,
-   "yazilim": 571,
-   "diger_teknik": 462,
-   "yapay_zeka": 79,
-   "veri": 73
+   "teknik_degil": 1788,
+   "yazilim": 577,
+   "diger_teknik": 468,
+   "yapay_zeka": 81,
+   "veri": 74
   },
   "ogrenciye_uygun": {
    "basvuru_dogrulanamadi": 59,
-   "yayinda": 41,
+   "yayinda": 43,
    "hayalet": 3
   },
-  "belirsiz_seviye_hedef_rol": 274,
-  "ogrenci_seviye_diger_teknik": 62,
+  "belirsiz_seviye_hedef_rol": 277,
+  "ogrenci_seviye_diger_teknik": 65,
   "ornek_belirsiz": [
    "Rapsodo: Back-End Engineer",
    "3E ENDÜSTRİYEL MÜHENDİSLİK SAN. VE TİC. LTD. ŞTİ.: Software Engineer",
@@ -272,6 +272,7 @@
    "Loom Games: Early Talent (All Teams)",
    "Baykar: 2027 Yaz Dönemi Staj | Kullanıcı Teknik Destek",
    "Merck: Clinical Research Intern",
+   "Oakslab: Junior Finance Specialist (Part-time)",
    "Opsin Elektro Optik: Aday Mühendis Programı",
    "Opsin Elektro Optik: Staj Programı",
    "BİLGİKURUMSAL YAZILIM TEKNOLOJİLERİ A.Ş.: Stajyer",
@@ -285,10 +286,9 @@
    "DEMSAY ELEKTRONİK San. ve Tic. A.Ş: Ar-Ge Merkezi Staj Programı",
    "Mesut Bilgisayar San. Tic. Ltd. Şti.: Ağ İşletmenliği Stajyeri",
    "BRY BİREY EĞİTİM YAYIN BASIM PAZARLAMA SAN. VE TİC. A.Ş.: Bilgi İşlem ve Grafik Tasarım Stajyeri",
+   "Figes: Staj Olanakları",
    "Analog Devices: RF Design Engineering Intern",
-   "Valven: New Graduate Program",
-   "MAPP PAZARLAMA VE TANITIM HİZMETLERİ: Ankara Teknik Servis Teknoloji Asistanı",
-   "Analog Devices: Associate Designer, Layout"
+   "Valven: New Graduate Program"
   ]
  }
 }
