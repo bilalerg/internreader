@@ -1,6 +1,6 @@
 {
  "surum": 1,
- "guncelleme": "2026-11-27T20:29:14.230822+03:00",
+ "guncelleme": "2026-11-28T11:18:13.127069+03:00",
  "takip_edilen_firma": 3418,
  "taranan_firma": 952,
  "firma_faaliyeti": {
@@ -8,11 +8,11 @@
   "belirsiz": 3261,
   "adres_sorunlu": 2
  },
- "aktif_ilan": 9679,
- "ogrenci_ilani": 43,
+ "aktif_ilan": 9238,
+ "ogrenci_ilani": 41,
  "sehirler": {
-  "uzaktan": 1460,
-  "istanbul": 806,
+  "uzaktan": 1446,
+  "istanbul": 795,
   "ankara": 201,
   "izmir": 86,
   "kocaeli": 65,
@@ -220,32 +220,32 @@
   }
  ],
  "huni": {
-  "aktif": 9679,
-  "konum_disi": 6688,
+  "aktif": 9238,
+  "konum_disi": 6273,
   "siniflanmamis": 3,
   "seviye": {
-   "belirsiz": 1558,
-   "deneyimli": 1026,
-   "staj": 147,
-   "junior": 145,
+   "belirsiz": 1545,
+   "deneyimli": 1015,
+   "staj": 146,
+   "junior": 144,
    "yari_zamanli": 56,
    "yeni_mezun": 41,
    "uzun_donem_staj": 15
   },
   "rol": {
-   "teknik_degil": 1788,
-   "yazilim": 577,
-   "diger_teknik": 468,
-   "yapay_zeka": 81,
-   "veri": 74
+   "teknik_degil": 1771,
+   "yazilim": 571,
+   "diger_teknik": 467,
+   "yapay_zeka": 80,
+   "veri": 73
   },
   "ogrenciye_uygun": {
-   "basvuru_dogrulanamadi": 59,
-   "yayinda": 43,
+   "basvuru_dogrulanamadi": 60,
+   "yayinda": 41,
    "hayalet": 3
   },
-  "belirsiz_seviye_hedef_rol": 277,
-  "ogrenci_seviye_diger_teknik": 65,
+  "belirsiz_seviye_hedef_rol": 273,
+  "ogrenci_seviye_diger_teknik": 64,
   "ornek_belirsiz": [
    "Rapsodo: Back-End Engineer",
    "3E ENDÜSTRİYEL MÜHENDİSLİK SAN. VE TİC. LTD. ŞTİ.: Software Engineer",
